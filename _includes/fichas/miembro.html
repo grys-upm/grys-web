@@ -1,0 +1,15 @@
+{%- comment -%} Cuerpo de la ficha de un miembro: biografía + proyectos que dirige + líneas. {%- endcomment -%}
+{%- assign fm_slug = page.page_id | remove_first: "members/" -%}
+{{ include.cuerpo }}
+{%- assign fm_proj = "" | split: "" -%}
+{%- for p in site.projects -%}{%- if p.pi contains fm_slug -%}{%- assign fm_proj = fm_proj | push: p -%}{%- endif -%}{%- endfor -%}
+{%- if fm_proj.size > 0 %}
+<h2 class="rule">{{ t.members.projects }}</h2>
+<ul class="nodes">
+{%- for p in fm_proj %}<li><a href="{{ p | detail_url }}">{{ p.acronym }}</a> · {{ p | tr: "title" }}</li>{% endfor %}
+</ul>
+{%- endif %}
+{%- if page.lines and page.lines.size > 0 %}
+<h2 class="rule">{{ t.members.lines }}</h2>
+<div class="chips">{% for lid in page.lines %}{% assign fm_l = site.lines | where: "id", lid | first %}{% if fm_l %}<a class="chip" href="{{ fm_l | detail_url }}">{{ fm_l | tr: "title" }}</a>{% endif %}{% endfor %}</div>
+{%- endif %}

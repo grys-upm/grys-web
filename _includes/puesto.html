@@ -1,0 +1,5 @@
+{%- comment -%} Puesto de un miembro en el idioma de la página (en español, según «gender»). Parámetro: m {%- endcomment -%}
+{%- assign p_pos = site.data.positions[include.m.position] -%}
+{%- if p_pos -%}
+  {%- if lang == "es" -%}{%- if include.m.gender == "f" -%}{{ p_pos.es_f }}{%- else -%}{{ p_pos.es_m }}{%- endif -%}{%- else -%}{{ p_pos.en }}{%- endif -%}
+{%- else -%}<span class="todo">{{ t.tbc }}</span>{%- endif -%}

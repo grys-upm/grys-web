@@ -424,3 +424,44 @@ p.todo,div.todo{display:inline-block;white-space:normal;font-size:14px;padding:6
 .notice{padding:80px 0}
 .notice h1{font-size:40px;color:var(--accent)}
 .notice p{margin-top:16px;font-size:19px}
+
+/* =================================================================
+   FASE 2 · elementos de contenido migrado (provisional; se pule en la fase 3)
+   ================================================================= */
+.fig{margin:22px 0}
+.fig img{display:block;max-width:100%;height:auto;border-radius:8px}
+.fig figcaption,.pie,.galeria figcaption,.video figcaption{font-size:14px;color:var(--muted);margin-top:8px}
+.galeria{margin:22px 0}
+.galeria ul{list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin:0!important}
+.galeria li{margin:0!important}
+.galeria img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;border-radius:6px}
+.video{margin:22px 0}
+.video-marco{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;background:var(--alt)}
+.video-marco iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.aviso-idioma{border-left:4px solid var(--accent);padding:6px 12px;margin-bottom:18px;background:var(--alt)}
+.page-body h2.rule,.detail h2.rule{margin-top:40px}
+.page-body h2.rule:first-child{margin-top:0}
+.equipo{margin:24px 0 8px}
+.avatar.foto{background:none}
+.avatar.foto img{width:100%;height:100%;object-fit:cover}
+.former{margin-top:20px}
+.memoriam{margin-top:20px}
+.memoriam h3 a{color:var(--text)}
+.ambito{padding:28px 0;border-top:2px dashed var(--line)}
+.ambito:first-child{border-top:0;padding-top:0}
+.ambito h2{font-size:28px;margin:6px 0 10px}
+.ambito .chips{margin-top:12px}
+.events{margin:16px 0 8px}
+.news .thumb{width:136px;height:88px;object-fit:cover;border-radius:8px}
+.opp{margin:16px 0}
+.opp h3{font-size:21px;margin-bottom:10px}
+.opp details{margin-top:12px}
+.opp summary{cursor:pointer;color:var(--link);font-weight:700}
+.perfiles{list-style:none;display:flex;flex-wrap:wrap;gap:4px 12px}
+.factsheet dd ul{margin:0}
+.ptable .acr{margin-right:6px}
+.pubs + h2,.page-body .count + .datos{margin-top:8px}
+.prose blockquote{border-left:4px solid var(--line);padding-left:14px;color:var(--muted);margin:14px 0}
+.prose hr{border:0;border-top:2px dashed var(--line);margin:28px 0}
+.prose ol{margin:10px 0 0 22px}
+@media(max-width:640px){.news .thumb{display:none}}

@@ -1,0 +1,86 @@
+# Repositorios de software y datos abiertos (github.com/grys-upm).
+# desc_es/desc_en: descripción corta. featured: se muestra en «Software y datos».
+# Fuente: _data/repositories.yml de la web anterior + descripciones del mockup v4.
+- name: NexTArc-AURA
+  owner: grys-upm
+  language: Python
+  desc_es: 'Plataforma AURA: microservicios, runtime en el borde y frontend.'
+  desc_en: 'AURA platform: microservices, edge runtime and frontend.'
+  projects: []
+  featured: true
+- name: opentechlab-smartpm
+  owner: grys-upm
+  language: Python
+  desc_es: Módulo de IA modular y escalable para procesamiento en tiempo real (OpenTech Lab).
+  desc_en: Scalable Modular AI for Real-Time Processing Module (OpenTech Lab).
+  projects: []
+  featured: true
+- name: SISS-Semantic-Interoperability-Support-System
+  owner: grys-upm
+  language: Java
+  desc_es: Sistema de soporte a la interoperabilidad semántica.
+  desc_en: Semantic Interoperability Support System.
+  projects: []
+  featured: true
+- name: AFarCloud-Mission-Manager
+  owner: grys-upm
+  language: Java
+  desc_es: Gestor de misiones (middleware) del proyecto europeo AFarCloud.
+  desc_en: Mission Manager (middleware) for the AFarCloud EU project.
+  projects: []
+  featured: true
+- name: Semantic-Middleware-REST-Mobile
+  owner: grys-upm
+  language: Java
+  desc_es: Componente de middleware del proyecto AFarCloud.
+  desc_en: Middleware component of the AFarCloud project.
+  projects: []
+  featured: true
+- name: Spatio-Temporal-Semantic_DataModel
+  owner: grys-upm
+  language: JSON Schema
+  desc_es: 'Modelo de datos para agricultura de precisión: observaciones, collares de ganado y vectores de estado.'
+  desc_en: 'Precision-agriculture data model: observations, livestock collars and vehicle state vectors.'
+  projects: []
+  featured: true
+- name: swarms-mtrr-tr-tp
+  owner: grys-upm
+  language: Java
+  desc_es: Registro y notificación de misiones y tareas, y proxy Thrift (SWARMs).
+  desc_en: Missions and Tasks Register and Reporter, Task Reporter and Thrift Proxy (SWARMs).
+  projects: []
+  featured: true
+- name: Reasoning-Engine-for-SunSPOT
+  owner: grys-upm
+  language: Java
+  desc_es: Motor de razonamiento para SunSPOT (DEMANES). Fork.
+  desc_en: Reasoning Engine module for SunSPOT (DEMANES). Fork.
+  projects: []
+  featured: true
+- name: agri-jetson-nano-guide
+  owner: grys-upm
+  language: Python
+  license: Apache-2.0
+  desc_es: Guía de NVIDIA Jetson Nano para agricultura de precisión.
+  desc_en: A guide to NVIDIA Jetson Nano for precision agriculture.
+  projects: []
+  featured: true
+- name: LLM-based-HMI_Evaluations
+  owner: grys-upm
+  language: Python
+  desc_es: Experimentos de evaluación de LLM para traducción de lenguaje natural a SQL.
+  desc_en: Experiments evaluating LLMs for natural-language-to-SQL translation.
+  projects: []
+  featured: true
+- name: Data-Access-Manager_Data-Query
+  owner: grys-upm
+  projects: []
+  featured: false
+- name: DEMETER-enabler-Data-Query-Interoperability-enabler
+  owner: grys-upm
+  projects: []
+  featured: false
+- name: STS_DataModel_IoT
+  owner: grys-upm
+  projects: []
+  featured: false

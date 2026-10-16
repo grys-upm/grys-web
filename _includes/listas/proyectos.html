@@ -1,0 +1,33 @@
+{%- comment -%}
+  Tabla de proyectos (más recientes primero). El estado lo calcula el plugin
+  (campo «state») a partir de las fechas. Fase 3: filtros (filters) y tarjetas.
+{%- endcomment -%}
+{%- include page-vars.html -%}
+{%- assign pr_list = site.projects | sort: "start", "first" | reverse -%}
+<p class="count">{{ pr_list.size }} {{ t.projects.count }}</p>
+<table class="ptable">
+  <caption class="sr">{{ page_title }}</caption>
+  <thead><tr>
+    <th scope="col">{{ t.projects.project }}</th>
+    <th scope="col">{{ t.projects.type }}</th>
+    <th scope="col">{{ t.period }}</th>
+    <th scope="col">{{ t.projects.domains }}</th>
+    <th scope="col">{{ t.projects.status }}</th>
+  </tr></thead>
+  <tbody>
+  {%- for p in pr_list %}
+    {%- assign pr_title = p | tr: "title" %}
+    <tr>
+      <td><a class="acr" href="{{ p | detail_url }}">{{ p.acronym }}</a>{% if pr_title %}{{ pr_title }}{% else %}<span class="todo">{{ t.tbc }}</span>{% endif %}</td>
+      <td>{% if p.type == "private" %}{{ t.projects.private }}{% elsif p.type == "competitive" %}{{ t.projects.competitive }}{% else %}<span class="todo">{{ t.tbc }}</span>{% endif %}</td>
+      <td class="datos">{% if p.start %}{{ p.start | date: "%Y" }}–{{ p.end | date: "%Y" }}{% else %}<span class="todo">{{ t.tbc }}</span>{% endif %}</td>
+      <td><div class="chips">
+        {%- for d_id in p.domains %}{% assign pr_dom = site.domains | where: "id", d_id | first %}{% if pr_dom %}<span class="chip">{% include icono.html n=pr_dom.icon %}{{ pr_dom | tr: "title" }}</span>{% endif %}{% endfor -%}
+        {%- if p.domains.size == 0 %}—{% endif -%}
+      </div></td>
+      <td>{% include estado.html st=p.state %}</td>
+    </tr>
+  {%- endfor %}
+  </tbody>
+</table>
+<p class="datos">{{ t.proposal_note }} ({{ t.projects.domains }})</p>

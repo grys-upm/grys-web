@@ -1,0 +1,37 @@
+{%- comment -%}
+  Convocatorias ABIERTAS: solo las que no han pasado su «deadline» en la fecha
+  de compilación (el sitio se recompila cada día). Si no hay ninguna, bloque vacío.
+  Las caducadas no se publican (se conservan en _opportunities/ como archivo).
+{%- endcomment -%}
+{%- include page-vars.html -%}
+{%- assign op_now = site.time | date: "%s" | plus: 0 -%}
+{%- assign op_open = "" | split: "" -%}
+{%- assign op_all = site.opportunities | sort: "deadline" -%}
+{%- for o in op_all -%}
+  {%- assign op_dl = o.deadline | date: "%s" | plus: 0 -%}
+  {%- if op_dl > op_now -%}{%- assign op_open = op_open | push: o -%}{%- endif -%}
+{%- endfor -%}
+
+{%- if op_open.size > 0 %}
+<h2 class="rule">{{ t.opps.open }} ({{ op_open.size }})</h2>
+{%- for o in op_open %}
+<article class="card opp">
+  <h3>{{ o | tr: "title" }}</h3>
+  <dl class="spec">
+    <dt>{{ t.opps.type }}</dt><dd>{{ t.opps[o.type] }}</dd>
+    <dt>{{ t.opps.deadline }}</dt><dd><time datetime="{{ o.deadline | date: '%Y-%m-%dT%H:%M%z' }}">{{ o.deadline | date: "%d/%m/%Y %H:%M" }}</time></dd>
+    {%- if o.project %}{% assign op_p = site.projects | where_exp: "p", "p.path contains o.project" | first %}{% if op_p %}<dt>{{ t.projects.project }}</dt><dd><a href="{{ op_p | detail_url }}">{{ op_p.acronym }}</a></dd>{% endif %}{% endif %}
+    <dt>{{ t.opps.contact }}</dt><dd><a href="mailto:{{ o.contact | default: site.data.grupo.email }}">{{ o.contact | default: site.data.grupo.email }}</a></dd>
+  </dl>
+  {%- if o.pdf %}<p><a href="{{ o.pdf | relative_url }}">{{ t.opps.pdf }}</a></p>{% endif %}
+  <details><summary>{{ t.opps.details }}</summary>
+    <div class="prose"{% if o.lang != lang %} lang="{{ o.lang }}"{% endif %}>{{ o.content | markdownify }}</div>
+  </details>
+</article>
+{%- endfor %}
+{%- else %}
+<div class="empty"><span class="bub">{% include icono.html n="cal" %}</span><div>
+  <h3>{{ t.opps.none_title }}</h3>
+  <p>{{ t.opps.none_text }} <a href="{{ 'students' | route_url }}">{{ site.data.routes.pages | where: "id", "students" | map: "title" | first | l10n }}</a> · <a href="mailto:{{ site.data.grupo.email }}">{{ site.data.grupo.email }}</a></p>
+</div></div>
+{%- endif %}

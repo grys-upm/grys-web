@@ -1,22 +1,31 @@
 # frozen_string_literal: true
 
 # =====================================================================
-#  GRyS · rutas bilingües, fichas de detalle y redirecciones
+#  GRyS · rutas bilingües, fichas de detalle, estados y redirecciones
 # ---------------------------------------------------------------------
 #  · Filtros Liquid:
 #      {{ 'team' | route_url }}            URL de una página de _data/routes.yml
 #      {{ 'team' | route_url: 'en' }}      … en otro idioma
 #      {{ '/ruta/' | url_lang }}           añade baseurl y prefijo de idioma
-#      {{ doc | detail_url: 'projects' }}  URL de la ficha de un elemento
+#      {{ doc | detail_url }}              URL de la ficha de un elemento (o nil)
 #      {{ page | alt_url: 'en' }}          URL equivalente en otro idioma
 #      {{ campo | l10n }}                  elige {es:…, en:…} según el idioma
-#  · Generador: crea, en cada pasada de idioma de polyglot, las fichas de
-#    detalle de las colecciones declaradas en routes.yml > details, y (solo
-#    en la pasada del idioma por defecto) las páginas de redirección.
+#      {{ doc | tr: 'title' }}             campo title_<idioma> con respaldo
+#      {{ 'slug' | member }}               documento de _members por su slug
+#  · Generador (en cada pasada de idioma de polyglot):
+#      - calcula el estado de los proyectos a partir de las fechas;
+#      - crea las fichas de detalle de routes.yml > details;
+#      - (solo en el idioma por defecto) crea las páginas de redirección.
+#  · Idioma del contenido: el campo «lang» de un elemento indica en qué
+#    idioma está escrito su texto (es/en). Los elementos se publican en
+#    los dos idiomas; si el texto no está en el idioma de la página, la
+#    plantilla lo marca con lang="…" y un aviso. «only_lang: es» restringe
+#    la publicación a un idioma.
 # =====================================================================
 
+require "date"
+
 module GRyS
-  # Utilidades compartidas por filtros y generador
   module Util
     module_function
 
@@ -41,7 +50,7 @@ module GRyS
       Array(routes(site)["pages"]).find { |r| r["id"].to_s == id.to_s }
     end
 
-    # Ruta de la pasada (sin baseurl ni /en) -> ruta pública completa
+    # Ruta de la pasada (sin baseurl ni prefijo) -> ruta pública completa
     def full_path(site, lang, path)
       return nil if path.nil?
 
@@ -55,9 +64,18 @@ module GRyS
       r && r[lang.to_s]
     end
 
+    def to_date(value)
+      return nil if value.nil? || value.to_s.strip.empty?
+      return value.to_date if value.respond_to?(:to_date)
+
+      Date.parse(value.to_s)
+    rescue ArgumentError
+      nil
+    end
+
     def date_str(doc)
-      d = doc.data["date"]
-      d.respond_to?(:strftime) ? d.strftime("%Y-%m-%d") : d.to_s[0, 10]
+      d = to_date(doc.data["date"])
+      d ? d.strftime("%Y-%m-%d") : doc.basename_without_ext[0, 10]
     end
 
     def base_slug(doc)
@@ -68,22 +86,25 @@ module GRyS
       (doc.data["slug_#{lang}"] || doc.data["slug"] || base_slug(doc)).to_s
     end
 
+    def has_detail?(doc)
+      doc.data["detail"] != false && doc.data["published"] != false
+    end
+
     def detail_path(site, coll, doc, lang)
       cfg = (routes(site)["details"] || {})[coll.to_s]
-      return nil unless cfg && cfg[lang.to_s]
+      return nil unless cfg && cfg[lang.to_s] && has_detail?(doc)
 
       cfg[lang.to_s].gsub(":date", date_str(doc)).gsub(":slug", detail_slug(doc, lang))
     end
 
-    # Un elemento sin «lang» (o con lang: both) se publica en todos los idiomas
     def doc_in_lang?(doc, lang)
-      l = doc.data["lang"]
-      return true if l.nil? || l.to_s.empty? || l.to_s == "both"
+      only = doc.data["only_lang"]
+      return true if only.nil? || only.to_s.empty?
 
-      Array(l).map(&:to_s).include?(lang.to_s)
+      Array(only).map(&:to_s).include?(lang.to_s)
     end
 
-    def find_doc(site, drop, coll)
+    def find_doc(site, drop, coll = nil)
       return drop if drop.is_a?(Jekyll::Document)
       return nil unless drop.respond_to?(:[])
 
@@ -95,19 +116,57 @@ module GRyS
       collection.docs.find { |d| d.relative_path == rel }
     end
 
-    # Ojo: Jekyll rellena data["title"] con el nombre del fichero si falta,
-    # por eso los campos propios (nombre, acrónimo) van antes.
-    def title_for(doc, lang)
-      d = doc.data
-      return [d["given"], d["family"]].compact.join(" ").strip if d["given"]
+    # Campo traducible: <campo>_<idioma>, si no el del otro idioma, si no <campo>
+    def tr(data, field, lang, langs)
+      v = data["#{field}_#{lang}"]
+      return v unless v.nil? || v.to_s.strip.empty?
 
-      d["acronym"] || d["title_#{lang}"] || d["title"]
+      (langs - [lang]).each do |l|
+        v = data["#{field}_#{l}"]
+        return v unless v.nil? || v.to_s.strip.empty?
+      end
+      data[field]
     end
 
-    # Entradilla bajo el <h1>: en proyectos, el título largo
-    def lead_for(doc, lang)
+    # Jekyll rellena data["title"] con el nombre del fichero si falta, por eso
+    # los campos propios (nombre, acrónimo, title_xx) van antes.
+    def title_for(doc, lang, langs)
       d = doc.data
-      d["lead_#{lang}"] || (d["acronym"] ? d["title_#{lang}"] : nil)
+      return [d["given"], d["family"]].compact.join(" ").strip if d["given"]
+      return d["acronym"] if d["acronym"]
+
+      tr(d, "title", lang, langs)
+    end
+
+    # true si el título mostrado no está en el idioma de la página
+    def title_fallback?(doc, lang)
+      d = doc.data
+      return false if d["given"] || d["acronym"]
+
+      v = d["title_#{lang}"]
+      v.nil? || v.to_s.strip.empty?
+    end
+
+    # Entradilla bajo el <h1>: en proyectos, el título largo; en líneas, la descripción
+    def lead_for(doc, lang, langs)
+      d = doc.data
+      return tr(d, "title", lang, langs) if d["acronym"]
+      return tr(d, "desc", lang, langs) if d["desc_es"] || d["desc_en"]
+
+      nil
+    end
+
+    # Estado de un proyecto: «status» explícito, o calculado con las fechas
+    def project_status(doc, today)
+      explicit = doc.data["status"].to_s
+      return explicit unless explicit.empty?
+
+      start = to_date(doc.data["start"])
+      finish = to_date(doc.data["end"])
+      return "unknown" if finish.nil?
+      return "upcoming" if start && start > today
+
+      finish >= today ? "ongoing" : "completed"
     end
   end
 
@@ -153,6 +212,22 @@ module GRyS
       lang = (lang || Util.active_lang(site)).to_s
       value[lang] || value[Util.default_lang(site)] || value.values.first
     end
+
+    def tr(item, field, lang = nil)
+      return nil unless item.respond_to?(:[])
+
+      site = @context.registers[:site]
+      lang = (lang || Util.active_lang(site)).to_s
+      Util.tr(item, field.to_s, lang, Util.languages(site))
+    end
+
+    def member(slug)
+      site = @context.registers[:site]
+      coll = site.collections["members"]
+      return nil unless coll
+
+      coll.docs.find { |d| Util.detail_slug(d, Util.default_lang(site)) == slug.to_s }
+    end
   end
 
   # ---------------------------------------------------------------------
@@ -164,33 +239,42 @@ module GRyS
 
     def generate(site)
       lang = Util.active_lang(site)
+      compute_status(site)
       generate_details(site, lang)
       generate_redirects(site) if lang == Util.default_lang(site)
     end
 
     private
 
+    def compute_status(site)
+      coll = site.collections["projects"]
+      return unless coll
+
+      today = site.time.to_date
+      coll.docs.each { |doc| doc.data["state"] = Util.project_status(doc, today) }
+    end
+
     def generate_details(site, lang)
+      langs = Util.languages(site)
       (Util.routes(site)["details"] || {}).each do |coll, cfg|
         collection = site.collections[coll]
         next unless collection
 
         collection.docs.each do |doc|
-          next if doc.data["published"] == false
           next unless Util.doc_in_lang?(doc, lang)
 
           path = Util.detail_path(site, coll, doc, lang)
-          site.pages << build_detail(site, doc, coll, cfg, lang, path) if path
+          site.pages << build_detail(site, doc, coll, cfg, lang, langs, path) if path
         end
       end
     end
 
-    def build_detail(site, doc, coll, cfg, lang, path)
+    def build_detail(site, doc, coll, cfg, lang, langs, path)
       page = Jekyll::PageWithoutAFile.new(site, site.source, path, "index.md")
       doc.data.each { |k, v| page.data[k] = v unless SKIP_KEYS.include?(k) }
 
       alt = {}
-      Util.languages(site).each do |l|
+      langs.each do |l|
         next unless Util.doc_in_lang?(doc, l)
 
         alt[l] = Util.full_path(site, l, Util.detail_path(site, coll, doc, l))
@@ -199,10 +283,12 @@ module GRyS
       page.data.merge!(
         "layout" => cfg["layout"] || "detail",
         "lang" => lang,
+        "content_lang" => (doc.data["lang"] || lang).to_s,
         "page_id" => "#{coll}/#{Util.detail_slug(doc, Util.default_lang(site))}",
         "permalink" => path,
-        "title" => Util.title_for(doc, lang),
-        "lead" => Util.lead_for(doc, lang),
+        "title" => Util.title_for(doc, lang, langs),
+        "title_fallback" => Util.title_fallback?(doc, lang),
+        "lead" => Util.lead_for(doc, lang, langs),
         "kind" => coll,
         "parent" => cfg["parent"],
         "source_path" => doc.relative_path,
@@ -212,32 +298,42 @@ module GRyS
       page
     end
 
+    # -------------------------------------------------------------- redirecciones
     def generate_redirects(site)
       list = Array(site.data["redirects"]).map(&:dup)
       list.concat(redirects_from_collections(site))
 
+      seen = {}
       list.each do |r|
         from = r["from"].to_s
-        next if from.empty?
+        next if from.empty? || seen[from]
 
         to = r["to_path"] || resolve_target(site, r)
         next unless to
 
+        seen[from] = true
         site.pages << build_redirect(site, from, to)
       end
     end
 
+    # old_urls de cada elemento: a su ficha si la tiene; si no, a la página de lista
     def redirects_from_collections(site)
       out = []
-      (Util.routes(site)["details"] || {}).each_key do |coll|
-        collection = site.collections[coll]
-        next unless collection
-
+      details = Util.routes(site)["details"] || {}
+      lists = Util.routes(site)["lists"] || {}
+      site.collections.each do |coll, collection|
         collection.docs.each do |doc|
+          urls = Array(doc.data["old_urls"])
+          next if urls.empty?
+
           lang = (doc.data["old_urls_lang"] || "en").to_s
           lang = Util.default_lang(site) unless Util.doc_in_lang?(doc, lang)
-          target = Util.full_path(site, lang, Util.detail_path(site, coll, doc, lang))
-          Array(doc.data["old_urls"]).each { |from| out << { "from" => from, "to_path" => target } }
+          path = details[coll] ? Util.detail_path(site, coll, doc, lang) : nil
+          path ||= Util.route_path(site, lists[coll], lang) if lists[coll]
+          next unless path
+
+          target = Util.full_path(site, lang, path)
+          urls.each { |from| out << { "from" => from, "to_path" => target } }
         end
       end
       out

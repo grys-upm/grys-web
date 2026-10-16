@@ -5,4 +5,4 @@ page_id: events
 permalink: /events/
 ---
 
-<p class="todo">Content pending migration (phase 2).</p>
+{% include listas/eventos.html %}

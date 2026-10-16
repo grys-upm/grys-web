@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Evento (_events/*.md)",
+  "description": "Se clasifica en próximo/pasado según la fecha de compilación.",
+  "type": "object",
+  "properties": {
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "end": {
+      "type": "string",
+      "format": "date"
+    },
+    "title_es": {
+      "type": "string",
+      "minLength": 1
+    },
+    "title_en": {
+      "type": "string",
+      "minLength": 1
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "workshop",
+        "conference",
+        "seminar",
+        "summer_school",
+        "meeting",
+        "fair",
+        "award",
+        "other"
+      ]
+    },
+    "involvement": {
+      "type": "string",
+      "enum": [
+        "organizer",
+        "presenter",
+        "participant",
+        "exhibitor",
+        "awardee",
+        "guest",
+        "attendee"
+      ]
+    },
+    "place": {
+      "type": "string",
+      "minLength": 1
+    },
+    "format": {
+      "type": "string",
+      "enum": [
+        "in_person",
+        "online",
+        "hybrid"
+      ]
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https?://"
+    },
+    "projects": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "news": {
+      "type": "string"
+    },
+    "summary_es": {
+      "type": "string",
+      "minLength": 1
+    },
+    "summary_en": {
+      "type": "string",
+      "minLength": 1
+    },
+    "lang": {
+      "type": "string",
+      "enum": [
+        "es",
+        "en"
+      ],
+      "description": "Idioma en el que está escrito el texto"
+    },
+    "old_urls": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^/"
+      },
+      "description": "URL de la web anterior que redirigen aquí"
+    },
+    "published": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "date",
+    "lang"
+  ],
+  "additionalProperties": false,
+  "anyOf": [
+    {
+      "required": [
+        "title_es"
+      ]
+    },
+    {
+      "required": [
+        "title_en"
+      ]
+    }
+  ]
+}

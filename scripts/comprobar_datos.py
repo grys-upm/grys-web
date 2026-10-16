@@ -162,31 +162,107 @@ for r in load_yaml(os.path.join(ROOT, "_data", "redirects.yml")) or []:
         err(f"redirects.yml: «{src}» pisaría una página real del sitio")
 
 # ---------------------------------------------------------------- colecciones
-REQUIRED = {
-    "members": ["given", "family", "status"],
-    "projects": ["acronym", "type"],
-    "lines": ["title_es", "title_en"],
-    "domains": ["title_es", "title_en"],
-    "news": ["date"],
-    "events": ["date"],
-    "opportunities": ["deadline"],
-}
-for coll, req in REQUIRED.items():
+sys.path.insert(0, os.path.dirname(__file__))
+from esquemas import normalize, validate  # noqa: E402
+
+SCHEMAS = os.path.join(ROOT, "schemas")
+
+
+def schema(name):
+    import json
+    with open(os.path.join(SCHEMAS, f"{name}.schema.json"), encoding="utf-8") as fh:
+        return json.load(fh)
+
+
+COLLECTIONS = ["members", "projects", "lines", "domains", "news", "events", "opportunities"]
+items = {c: {} for c in COLLECTIONS}
+includes = {os.path.relpath(p, os.path.join(ROOT, "_includes")).replace(os.sep, "/")
+            for p in glob.glob(os.path.join(ROOT, "_includes", "**", "*"), recursive=True)}
+for coll in COLLECTIONS:
+    sch = schema(coll)
     for f in sorted(glob.glob(os.path.join(ROOT, f"_{coll}", "*.md"))):
         name = os.path.basename(f)
-        if not re.fullmatch(r"[a-z0-9][a-z0-9-]*\.md", name):
-            err(f"{rel(f)}: el nombre del fichero solo puede llevar minúsculas, números y guiones")
+        pat = r"\d{4}-\d{2}-\d{2}-[a-z0-9][a-z0-9-]*\.md" if coll in ("news",) else r"[a-z0-9][a-z0-9-]*\.md"
+        if not re.fullmatch(pat, name):
+            err(f"{rel(f)}: nombre de fichero no válido (minúsculas, números y guiones"
+                f"{'; las noticias empiezan por AAAA-MM-DD-' if coll == 'news' else ''})")
         fm, body = front_matter(f)
         if fm is None:
             continue
-        for k in req:
-            if fm.get(k) in (None, ""):
-                err(f"{rel(f)}: falta el campo obligatorio «{k}»")
-        for u in fm.get("old_urls") or []:
-            if not str(u).startswith("/"):
-                err(f"{rel(f)}: old_urls «{u}» debe empezar por /")
-        if re.search(r"{%\s*include\s", body):
-            warn(f"{rel(f)}: usa {{% include %}} en el texto; revisa que exista en _includes/")
+        items[coll][name[:-3]] = fm
+        for e in validate(normalize(fm), sch):
+            err(f"{rel(f)}: {e}")
+        for k, v in fm.items():
+            if str(k).startswith(("title", "subtitle", "given", "family", "acronym")) and isinstance(v, str) \
+                    and (re.search(r"[\n<>]", v) or len(v) > 250):
+                err(f"{rel(f)}: «{k}» debe ser una sola línea de texto, sin HTML ni más de 250 caracteres")
+        if coll == "news" and fm.get("date") and not name.startswith(str(normalize(fm["date"]))[:10]):
+            err(f"{rel(f)}: la fecha del nombre del fichero y el campo date no coinciden")
+        for inc in re.findall(r"{%-?\s*include\s+([\w./-]+)", body):
+            if inc not in includes:
+                err(f"{rel(f)}: incluye «{inc}», que no existe en _includes/")
+        for src in re.findall(r'(?:src|image|photo|pdf)="?(/assets/[^"\s,]+)', body) + \
+                [fm.get(k) for k in ("image", "photo", "pdf") if fm.get(k)]:
+            if not os.path.exists(os.path.join(ROOT, src.lstrip("/"))):
+                warn(f"{rel(f)}: falta el fichero {src} (¿pendiente de scripts/migrar_imagenes.py?)")
+        for src in re.findall(r'fotos="([^"]+)"', body):
+            for s1 in src.split(","):
+                if not os.path.exists(os.path.join(ROOT, s1.strip().lstrip("/"))):
+                    warn(f"{rel(f)}: falta el fichero {s1.strip()} (¿pendiente de scripts/migrar_imagenes.py?)")
+
+# Referencias cruzadas entre colecciones
+repos_data = load_yaml(os.path.join(ROOT, "_data", "repos.yml")) or []
+repo_names = {r.get("name") for r in repos_data}
+for e in validate(normalize(repos_data), schema("repos")):
+    err(f"_data/repos.yml: {e}")
+for dname in ("positions", "roles", "metrics", "axes"):
+    data = load_yaml(os.path.join(ROOT, "_data", f"{dname}.yml"))
+    for e in validate(normalize(data), schema(dname)):
+        err(f"_data/{dname}.yml: {e}")
+for slug, p in items["projects"].items():
+    for m in p.get("pi") or []:
+        if m not in items["members"]:
+            err(f"_projects/{slug}.md: pi «{m}» no existe en _members/")
+    for r in p.get("repos") or []:
+        if r not in repo_names:
+            err(f"_projects/{slug}.md: repo «{r}» no está en _data/repos.yml")
+for slug, o in items["opportunities"].items():
+    if o.get("project") and o["project"] not in items["projects"]:
+        err(f"_opportunities/{slug}.md: project «{o['project']}» no existe en _projects/")
+for slug, ev in items["events"].items():
+    if ev.get("news") and ev["news"] not in items["news"]:
+        err(f"_events/{slug}.md: news «{ev['news']}» no existe en _news/")
+    for p in ev.get("projects") or []:
+        if p not in items["projects"]:
+            err(f"_events/{slug}.md: proyecto «{p}» no existe en _projects/")
+# Etiquetas propias del BibTeX (_bibliography/etiquetas.yml)
+import aplicar_etiquetas  # noqa: E402
+pend, unknown_keys = aplicar_etiquetas.apply(check_only=True)
+if pend:
+    err(f"_bibliography: {pend} campos de etiquetas.yml sin aplicar → python3 scripts/aplicar_etiquetas.py")
+for k in unknown_keys:
+    warn(f"_bibliography/etiquetas.yml: la clave «{k}» no está en ningún .bib")
+for k, v in (aplicar_etiquetas.load_tags() or {}).items():
+    for p in str(v.get("project") or "").replace(" ", "").split(","):
+        if p and p not in items["projects"]:
+            err(f"_bibliography/etiquetas.yml [{k}]: project «{p}» no existe en _projects/")
+    for ln_id in str(v.get("lines") or "").replace(" ", "").split(","):
+        if ln_id and ln_id not in items["lines"]:
+            err(f"_bibliography/etiquetas.yml [{k}]: line «{ln_id}» no existe en _lines/")
+    for f_ in ("portal_upm", "archivo_upm"):
+        if v.get(f_) and not str(v[f_]).isdigit():
+            err(f"_bibliography/etiquetas.yml [{k}]: {f_} debe ser un número")
+
+seen_ids = {}
+for slug, ln in items["lines"].items():
+    if ln.get("id") != slug:
+        err(f"_lines/{slug}.md: el id «{ln.get('id')}» debe coincidir con el nombre del fichero")
+for coll in ("members", "projects", "news"):
+    for slug, it in items[coll].items():
+        for u in it.get("old_urls") or []:
+            if u in seen_ids:
+                err(f"_{coll}/{slug}.md: old_urls «{u}» repetida (también en {seen_ids[u]})")
+            seen_ids[u] = f"_{coll}/{slug}.md"
 
 # ---------------------------------------------------------------- Liquid
 # Comprobación ligera (sin Ruby) de bloques abiertos/cerrados y filtros.
@@ -196,16 +272,18 @@ BLOCKS = {"if": "endif", "unless": "endunless", "for": "endfor", "case": "endcas
 SIMPLE = {"else", "elsif", "when", "assign", "include", "include_relative", "break", "continue",
           "bibliography", "cite", "reference", "increment", "decrement", "cycle", "echo", "liquid",
           "I18n_Headers", "highlight", "endhighlight", "post_url", "link"}
-FILTERS = set("""default l10n route_url url_lang detail_url alt_url relative_url absolute_url append prepend
+FILTERS = set("""default l10n route_url url_lang detail_url alt_url tr member relative_url absolute_url append prepend
 escape escape_once xml_escape cgi_escape uri_escape url_encode strip_html strip_newlines newline_to_br
 upcase downcase capitalize strip lstrip rstrip date date_to_xmlschema date_to_string date_to_long_string
 split where where_exp group_by group_by_exp find first last map size join sort sort_natural reverse uniq
 compact concat push pop shift unshift sample replace replace_first remove remove_first truncate
 truncatewords slice plus minus times divided_by modulo abs ceil floor round at_least at_most
-jsonify markdownify smartify slugify number_of_words inspect normalize_whitespace array_to_sentence_string""".split())
+jsonify markdownify smartify slugify number_of_words inspect normalize_whitespace array_to_sentence_string
+remove_last replace_last""".split())
 
 LIQ_FILES = []
-for pat in ("_layouts/*.html", "_includes/*.html", "_includes/*.svg", "_pages/*/*.md", "*.html", "*.xml", "*.txt",
+for pat in ("_layouts/*.html", "_includes/*.html", "_includes/*/*.html", "_includes/*.svg", "_pages/*/*.md",
+            "*.html", "*.xml", "*.txt",
             "_members/*.md", "_projects/*.md", "_lines/*.md", "_domains/*.md", "_news/*.md",
             "_events/*.md", "_opportunities/*.md"):
     LIQ_FILES += glob.glob(os.path.join(ROOT, pat))
@@ -247,6 +325,13 @@ for f in sorted(set(LIQ_FILES)):
                 err(f"{rel(f)}:{line}: filtro desconocido «{flt}»")
 
 # ---------------------------------------------------------------- informe
+missing_files = [w for w in warnings if "falta el fichero" in w]
+warnings = [w for w in warnings if "falta el fichero" not in w]
+if missing_files:
+    warnings.append(f"faltan {len(missing_files)} imágenes/PDF referenciados; ejecuta "
+                    "scripts/migrar_imagenes.py (detalle: --detalle)")
+    if "--detalle" in sys.argv:
+        warnings += missing_files
 for w in warnings:
     print(f"AVISO  {w}")
 for e in errors:

@@ -54,3 +54,104 @@ hero:
     ciudad y al aire.
   cta_research: Qué investigamos
   cta_collab: Colabora con nosotros
+
+video: Vídeo
+video_link: Ver en YouTube
+lang_notice: "Este contenido solo está disponible en inglés."
+title_notice: "(título en inglés)"
+period: Periodo
+since: desde
+present: actualidad
+more_info: Más información
+none_yet: Todavía no hay elementos.
+proposal_note: "Propuesta pendiente de validar por el grupo."
+members:
+  current: Miembros actuales
+  former: Antiguos miembros
+  memoriam: In memoriam
+  position: Puesto
+  role: Rol en el grupo
+  email: Correo
+  website: Web personal
+  portal: Portal Científico UPM
+  profiles: Perfiles
+  projects: Proyectos que dirige
+  lines: Líneas de investigación
+projects:
+  type: Tipo
+  competitive: Competitivo
+  private: Contrato privado
+  programme: Programa
+  call: Convocatoria
+  funder: Organismo
+  funding: Financiación
+  grant_ids: Referencias
+  role: Rol de GRyS
+  role_coordinator: Coordinador
+  role_partner: Socio
+  role_subcontractor: Subcontratado
+  pi: Responsable en GRyS
+  coordinator: Coordinación
+  partners: Socios
+  budget: Presupuesto (GRyS)
+  website: Web oficial
+  links: Enlaces
+  domains: Ámbitos
+  repos: Código
+  status: Estado
+  status_ongoing: En curso
+  status_completed: Finalizado
+  status_upcoming: Próximo
+  status_unknown: Estado por confirmar
+  project: Proyecto
+  count: proyectos
+  publications: Publicaciones del proyecto
+lines:
+  axis: Eje
+  people: Quién trabaja en esta línea
+  projects: Proyectos relacionados
+domains:
+  projects: Proyectos en este ámbito
+news:
+  categories:
+    award: Premios
+    event: Eventos
+    project: Proyectos
+    people: Personas
+    transfer: Transferencia
+    lab: OpenTech Lab
+events:
+  upcoming: Próximos eventos
+  past: Eventos anteriores
+  none_upcoming: No hay eventos programados.
+  place: Lugar
+  related_news: Noticia relacionada
+  website: Web del evento
+opps:
+  open: Convocatorias abiertas
+  none_title: Ahora no hay convocatorias abiertas
+  none_text: "Consulta las propuestas de TFG y TFM o escríbenos."
+  deadline: Plazo
+  type: Tipo
+  job: Contrato
+  scholarship: Beca
+  pdf: Oferta completa (PDF)
+  details: Ver la oferta
+  contact: Contacto
+theses:
+  phd: Tesis doctorales
+  master: Trabajos de máster y DEA
+  bachelor: Trabajos fin de grado
+  supervisor: Dirección
+  school: Centro
+  award: Premio
+  in_site: "en esta web"
+  in_portal: "según el Portal Científico UPM"
+pubs_extra:
+  portal: Portal Científico
+  archivo: Archivo Digital UPM
+  scholar: Google Scholar
+  count: publicaciones en esta web
+software:
+  repos: Repositorios
+  more: Ver todos en GitHub

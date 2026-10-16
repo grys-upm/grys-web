@@ -1,0 +1,121 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Línea de investigación (_lines/*.md)",
+  "description": "",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "enum": [
+        "cps",
+        "wsan",
+        "iot",
+        "sec",
+        "nca",
+        "rob",
+        "dss",
+        "mw",
+        "sw",
+        "edge",
+        "smart"
+      ]
+    },
+    "axis": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 4
+    },
+    "icon": {
+      "type": "string",
+      "enum": [
+        "campo",
+        "mar",
+        "ciudad",
+        "aire",
+        "personas",
+        "check",
+        "search",
+        "menu",
+        "net",
+        "doc",
+        "cal",
+        "sun",
+        "moon",
+        "mail",
+        "pin",
+        "phone",
+        "code",
+        "award",
+        "cap",
+        "lab",
+        "play",
+        "handshake",
+        "globe",
+        "news",
+        "mega",
+        "ext"
+      ]
+    },
+    "order": {
+      "type": "integer"
+    },
+    "title_es": {
+      "type": "string",
+      "minLength": 1
+    },
+    "title_en": {
+      "type": "string",
+      "minLength": 1
+    },
+    "desc_es": {
+      "type": "string",
+      "minLength": 1
+    },
+    "desc_en": {
+      "type": "string",
+      "minLength": 1
+    },
+    "slug_es": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "slug_en": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "lang": {
+      "type": "string",
+      "enum": [
+        "es",
+        "en"
+      ],
+      "description": "Idioma en el que está escrito el texto"
+    },
+    "keywords": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "old_urls": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^/"
+      },
+      "description": "URL de la web anterior que redirigen aquí"
+    }
+  },
+  "required": [
+    "id",
+    "axis",
+    "icon",
+    "title_es",
+    "title_en",
+    "desc_es",
+    "desc_en",
+    "slug_es",
+    "slug_en"
+  ],
+  "additionalProperties": false
+}

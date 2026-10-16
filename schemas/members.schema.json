@@ -1,0 +1,173 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Miembro (_members/*.md)",
+  "description": "Una persona del grupo. El nombre del fichero es su slug (URL).",
+  "type": "object",
+  "properties": {
+    "given": {
+      "type": "string",
+      "minLength": 1
+    },
+    "family": {
+      "type": "string",
+      "minLength": 1
+    },
+    "gender": {
+      "type": "string",
+      "enum": [
+        "m",
+        "f"
+      ],
+      "description": "Para el puesto en español"
+    },
+    "position": {
+      "type": "string",
+      "enum": [
+        "full",
+        "assoc",
+        "assist",
+        "gta",
+        "predoc",
+        "postdoc",
+        "r1",
+        "tech",
+        "intern",
+        "admin"
+      ],
+      "description": "Clave de _data/positions.yml"
+    },
+    "role": {
+      "type": "string",
+      "enum": [
+        "pi",
+        "ext"
+      ],
+      "description": "Clave de _data/roles.yml (vacío = investigador/a)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "current",
+        "former",
+        "memoriam"
+      ]
+    },
+    "since": {
+      "type": "string",
+      "format": "date"
+    },
+    "until": {
+      "type": "string",
+      "format": "date"
+    },
+    "photo": {
+      "type": "string",
+      "pattern": "^/assets/"
+    },
+    "orcid": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{4}-\\d{4}-\\d{3}[\\dX]$"
+    },
+    "scholar": {
+      "type": "string",
+      "pattern": "^[\\w-]{12}$"
+    },
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "website": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https?://"
+    },
+    "portal_upm": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https?://"
+    },
+    "scopus": {
+      "type": "string",
+      "pattern": "^\\d+$"
+    },
+    "researcherid": {
+      "type": "string",
+      "minLength": 1
+    },
+    "researchgate": {
+      "type": "string",
+      "minLength": 1
+    },
+    "linkedin": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https?://"
+    },
+    "github": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sciprofiles": {
+      "type": "string"
+    },
+    "lines": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "cps",
+          "wsan",
+          "iot",
+          "sec",
+          "nca",
+          "rob",
+          "dss",
+          "mw",
+          "sw",
+          "edge",
+          "smart"
+        ]
+      }
+    },
+    "lang": {
+      "type": "string",
+      "enum": [
+        "es",
+        "en"
+      ],
+      "description": "Idioma en el que está escrito el texto"
+    },
+    "only_lang": {
+      "type": "string",
+      "enum": [
+        "es",
+        "en"
+      ],
+      "description": "Idioma en el que está escrito el texto"
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "old_urls": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^/"
+      },
+      "description": "URL de la web anterior que redirigen aquí"
+    },
+    "published": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "given",
+    "family",
+    "gender",
+    "position",
+    "status",
+    "lang"
+  ],
+  "additionalProperties": false
+}

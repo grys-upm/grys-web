@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Ámbito de aplicación (_domains/*.md)",
+  "description": "",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "enum": [
+        "campo",
+        "mar",
+        "ciudad",
+        "aire",
+        "personas"
+      ]
+    },
+    "icon": {
+      "type": "string",
+      "enum": [
+        "campo",
+        "mar",
+        "ciudad",
+        "aire",
+        "personas",
+        "check",
+        "search",
+        "menu",
+        "net",
+        "doc",
+        "cal",
+        "sun",
+        "moon",
+        "mail",
+        "pin",
+        "phone",
+        "code",
+        "award",
+        "cap",
+        "lab",
+        "play",
+        "handshake",
+        "globe",
+        "news",
+        "mega",
+        "ext"
+      ]
+    },
+    "order": {
+      "type": "integer"
+    },
+    "title_es": {
+      "type": "string",
+      "minLength": 1
+    },
+    "title_en": {
+      "type": "string",
+      "minLength": 1
+    },
+    "subtitle_es": {
+      "type": "string",
+      "minLength": 1
+    },
+    "subtitle_en": {
+      "type": "string",
+      "minLength": 1
+    },
+    "desc_es": {
+      "type": "string",
+      "minLength": 1
+    },
+    "desc_en": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "id",
+    "icon",
+    "title_es",
+    "title_en",
+    "desc_es",
+    "desc_en"
+  ],
+  "additionalProperties": false
+}

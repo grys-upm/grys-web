@@ -1,0 +1,20 @@
+{%- comment -%}
+  Galería de fotos (cuadrícula, sin JavaScript). Uso:
+    include galeria.html fotos="/ruta/a.webp,/ruta/b.webp" alts="Texto a|Texto b" pie="Pie común"
+  · fotos: rutas separadas por comas.
+  · alts: textos alternativos separados por «|», en el mismo orden (recomendado).
+{%- endcomment -%}
+{%- assign g_fotos = include.fotos | split: "," -%}
+{%- assign g_alts = include.alts | default: "" | split: "|" -%}
+<figure class="galeria">
+  <ul>
+  {%- for g_f in g_fotos %}
+    {%- assign g_src = g_f | strip -%}
+    {%- assign g_small = g_src | replace: ".webp", "-480.webp" -%}
+    <li><a href="{{ g_src | relative_url }}"><img src="{{ g_small | relative_url }}" alt="{{ g_alts[forloop.index0] | strip | escape }}" loading="lazy" decoding="async" width="480" height="320"></a></li>
+  {%- endfor %}
+  </ul>
+  {%- if include.pie %}
+  <figcaption>{{ include.pie }}</figcaption>
+  {%- endif %}
+</figure>

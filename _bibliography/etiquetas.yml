@@ -1,0 +1,97 @@
+# Campos propios del sitio para cada entrada del BibTeX (clave → campos).
+# Sobreviven a la sincronización con Zotero: scripts/aplicar_etiquetas.py los
+# vuelve a escribir en papers.bib y theses.bib.
+#   portal_upm: ID en el Portal Científico UPM · archivo_upm: ID en oa.upm.es
+#   project: slug(s) de _projects (separados por comas) · lines: id(s) de _lines
+beck_doninelli_improvements_2019:
+  archivo_upm: '65747'
+bergesgarcíaContribuciónDesarrolloMetodologías2018:
+  archivo_upm: '53211'
+castillejoparrillaContributionIntelligentService2015:
+  archivo_upm: '37254'
+chenContributionAuthenticationData2019:
+  archivo_upm: '58144'
+chen_aplicaciones_2022:
+  archivo_upm: '71842'
+cuerva__garcia_modelo_2016:
+  archivo_upm: '43690'
+cuervagarcíaRedesServiciosUbicuos2012:
+  archivo_upm: '13950'
+delgado_marquez_sistema_2025:
+  archivo_upm: '92637'
+duanRosNodeProcessing2018:
+  archivo_upm: '53127'
+garcia_moreno_diseno_2024:
+  archivo_upm: '88486'
+garcia_moreno_sistema_2024:
+  archivo_upm: '88178'
+garcíaparedesAnticipativeSystemPlanner2018:
+  archivo_upm: '53110'
+garcíaserranoSimulacionPlanificacionAcciones2019:
+  archivo_upm: '62815'
+gomez_sanchez-pascuala_desarrollo_2015:
+  archivo_upm: '38261'
+gorgues_valenciano_arquitectura_2019:
+  archivo_upm: '58703'
+herradormuñozSistemaAparcamientoInteligente2013:
+  archivo_upm: '21414'
+hu_decision-making_2019:
+  archivo_upm: '65635'
+huangContributionsResilienceManagement2015:
+  archivo_upm: '37209'
+jimbara_usability_2018:
+  archivo_upm: '54392'
+liContextAwarenessCooperation2017:
+  archivo_upm: '48359'
+liContributionsCommunicationNetworking2018:
+  archivo_upm: '52562'
+li_context_2014:
+  archivo_upm: '38177'
+lopez_gavilanez_environmental_2019:
+  archivo_upm: '65638'
+lucas-martinez_development_2016:
+  archivo_upm: '40506'
+lucas-martínezContributionsAdaptiveMission2021:
+  archivo_upm: '67426'
+lucas-martínezVirtualizacionDispositivosPara2013:
+  archivo_upm: '22159'
+martínezabascalOpenTechnologiesPrototyping2013:
+  archivo_upm: '22441'
+mateos_barrado_iot_2019:
+  archivo_upm: '65641'
+mora_barba_device_2025:
+  archivo_upm: '90982'
+mora_barba_smart_2025:
+  archivo_upm: '89100'
+morenobelinchónIntegracionIndustria402018:
+  archivo_upm: '53061'
+muriel_elduayen_sistema_2020:
+  archivo_upm: '65270'
+parsamehrIntrusionDetectionPrevention2021:
+  archivo_upm: '67763'
+paytuvi_egui_smartbnb_2018:
+  archivo_upm: '52140'
+perez_sechi_arquitectura_2016:
+  archivo_upm: '44527'
+rodriguez-molina_distribution_2015:
+  archivo_upm: '38136'
+rodríguezmolinaContributionDesignImplementation2017:
+  archivo_upm: '47152'
+rodríguezmolinaSemanticMiddlewareDevelopment2012:
+  archivo_upm: '13841'
+san_emeterio_de_la_parte_contributions_2024:
+  archivo_upm: '83151'
+sanzbarrioDisenoAplicacionMovil2024:
+  archivo_upm: '90970'
+su_aplicaciones_2023:
+  archivo_upm: '73158'
+sánchezalcónSistemaAyudaSelección2016:
+  archivo_upm: '39379'
+yuanContributionsRoboticUnderwater2018:
+  archivo_upm: '52563'
+zhaiContributionsCaseBasedReasoning2020:
+  archivo_upm: '64746'
+zhai_mission_2018:
+  archivo_upm: '54417'
+zuoPerceptionNetworkedRobot2016:
+  archivo_upm: '44487'

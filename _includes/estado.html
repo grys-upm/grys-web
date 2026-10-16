@@ -1,0 +1,11 @@
+{%- comment -%}
+  Estado de un proyecto con nodo de marca (§1.3), siempre con texto:
+  en curso = nodo verde lleno · finalizado = nodo hueco · por confirmar = nodo discontinuo.
+  Parámetro: st (ongoing | completed | upcoming | unknown), calculado en _plugins/grys.rb
+{%- endcomment -%}
+{%- case include.st -%}
+  {%- when "ongoing" -%}<span class="st on">{{ t.projects.status_ongoing }}</span>
+  {%- when "completed" -%}<span class="st off">{{ t.projects.status_completed }}</span>
+  {%- when "upcoming" -%}<span class="st unk">{{ t.projects.status_upcoming }}</span>
+  {%- else -%}<span class="st unk">{{ t.projects.status_unknown }}</span>
+{%- endcase -%}

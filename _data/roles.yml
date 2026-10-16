@@ -1,0 +1,10 @@
+# Roles especiales en el grupo (campo «role» de cada miembro). Vacío = investigador/a.
+# Traducción al español: PROPUESTA · pendiente de validar.
+pi:
+  es_m: Investigador principal
+  es_f: Investigadora principal
+  en: Principal Investigator
+ext:
+  es_m: Colaborador externo
+  es_f: Colaboradora externa
+  en: External Collaborator

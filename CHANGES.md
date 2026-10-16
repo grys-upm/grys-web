@@ -1,5 +1,102 @@
 # Registro de cambios
 
+## Fase 2 · Datos y migración del contenido (16-10-2026)
+
+### Migración
+Todo el contenido repetible de la web anterior es ahora **un fichero de datos por elemento**. Se ha migrado con `scripts/migracion/migrar_desde_alfolio.py`, que queda en el repositorio como documentación y no hay que volver a ejecutar. No se ha inventado ningún dato: lo que falta queda vacío y lo recoge el informe de pendientes.
+
+| Contenido | Origen | Destino | Elementos |
+|---|---|---|---|
+| Miembros | `_people/` | `_members/` | 40 (11 actuales, 28 antiguos, 1 *in memoriam*) |
+| Proyectos | `_projects/` (+ tablas HTML «Project Information») | `_projects/` | 32 + 2 (HumAMI y AFarEdge: título y referencias de sus convocatorias; programa y fechas confirmados por el grupo; AFarEdge, además, desde CORDIS 101252360) |
+| Líneas | `research-areas.md` + mockup | `_lines/` + `_data/axes.yml` | 11 líneas en 4 ejes |
+| Ámbitos | mockup | `_domains/` | 5 |
+| Noticias | `_news/` | `_news/` | 16 (8 con página propia y 8 breves) |
+| Eventos | `_events/` | `_events/` | 6 |
+| Convocatorias | `_opportunities/` | `_opportunities/` | 4 (todas caducadas: no se publican) |
+| Publicaciones | `papers.bib` | `papers.bib` limpio | 169 |
+| Tesis | 3 ficheros `.bib` | `theses.bib` unificado | 52 (14 de doctorado, 17 de máster y 21 de grado) |
+| Puestos y roles | `_people` + mockup | `_data/positions.yml`, `roles.yml` | 10 + 2 |
+| Repositorios | `repositories.yml` + mockup | `_data/repos.yml` | 13 |
+| Métricas externas | Portal Científico (sep. 2026) | `_data/metrics.yml` | Scopus y tesis, con fuente y fecha |
+
+**Transformaciones:**
+- **Proyectos:** los datos de las tablas HTML pasan a campos: organismo, programa, financiación, referencias, fechas, responsable en la UPM, coordinación, DOI y enlaces. El rol y el responsable se enlazan a la ficha del miembro cuando es del grupo. AFarCloud tenía la **plantilla de ejemplo de al-folio** (imágenes `1.jpg`…`11.jpg` y cita `einstein1950meaning`); se ha eliminado.
+- **Textos:** el HTML de al-folio se convierte en Markdown con *includes* propios:
+  - `figure.liquid` → `figura.html`;
+  - galerías *swiper* → `galeria.html`;
+  - YouTube → `video.html` con `youtube-nocookie`;
+  - pies de foto → `<p class="pie">`.
+  Además se quitan los contenedores de Bootstrap, los emojis y `target="_blank"`, y los títulos empiezan en `h2`.
+- **Nombres:** «OpenTechLab» y «Open TechLab» pasan a «OpenTech Lab»; no se tocan las URL ni los nombres de repositorio.
+- **Bibliografía:**
+  - fuera `urldate`, `copyright`, `dimensions`, `altmetric` y `bibtex_show`;
+  - las tesis llevan el tipo correcto: `@phdthesis`, `@mastersthesis` y `@thesis`, más el campo `level`. Se han corregido 21 TFG tipados como `@phdthesis` y 1 TFM;
+  - `archivo_upm` se extrae de las URL de oa.upm.es: 47 tesis y 1 publicación.
+- **Campos propios del BibTeX** (`portal_upm`, `archivo_upm`, `project`, `lines`): viven en `_bibliography/etiquetas.yml` y `scripts/aplicar_etiquetas.py` los vuelve a escribir en el `.bib`. Así **sobreviven a la sincronización con Zotero**.
+- **Convocatoria HumAMI:** el plazo queda en el 6-08-2026 a las 23:00, como confirmaste. También se ha corregido en el texto.
+- **Redirecciones automáticas:** cada elemento lleva en `old_urls` sus URL antiguas, y estas redirigen a su ficha o a su página de lista. Por ejemplo: `/team/jf/`, `/research/projects/µswn/` y `/news/….html`.
+
+### Sitio
+- **Plugin `grys.rb`:**
+  - el campo `lang` es el idioma del texto; todo se publica en ES y EN, y si el texto no está en el idioma de la página se marca con `lang="en"` y un aviso (WCAG 3.1.2);
+  - estado de los proyectos calculado con las fechas en cada compilación (campo `state`);
+  - fichas opcionales (`detail: false`);
+  - redirecciones desde `old_urls`;
+  - filtros nuevos `tr` y `member`.
+- **Plugin `bib_stats.rb`:** recuentos calculados desde el BibTeX (`site.data.bib_stats`).
+- **Páginas con datos:** Equipo, Líneas, Ámbitos, Proyectos, Publicaciones, Tesis, Noticias, Eventos (próximos y pasados según la fecha de compilación), Convocatorias (solo las abiertas; si no hay, el bloque vacío) y Software.
+- **Fichas de detalle con su tabla de datos:**
+  - miembro: puesto según el género, periodo, perfiles y proyectos que dirige;
+  - proyecto: tabla completa con «por completar» en los campos mínimos que faltan;
+  - línea: personas y proyectos;
+  - noticia.
+- **Publicaciones (`bib.html`):** enlaces a DOI, Portal Científico, Archivo Digital, Altmetric, Dimensions y Google Scholar (por ID o por título); en las tesis, también TESEO, dirección y premio.
+- **Diseño:** el marcado y el CSS de esta fase son provisionales; el diseño definitivo de los componentes llega en la fase 3.
+
+### Calidad
+- **Esquemas JSON** (`schemas/*.schema.json`) para las 7 colecciones y 5 ficheros de datos, con un validador propio sin dependencias (`scripts/esquemas.py`). Al validar los datos migrados aparecieron 6 errores reales, ya corregidos: un ORCID escrito como URL, 4 tipos de evento y 1 tipo de participación fuera de la lista.
+- **`comprobar_datos.py`** comprueba además:
+  - referencias cruzadas: responsables, repositorios, proyecto de cada convocatoria, noticia de cada evento y etiquetas del BibTeX;
+  - que el nombre de fichero de cada noticia coincide con su fecha;
+  - que los *includes* usados existen y que no hay `old_urls` repetidas;
+  - que las etiquetas del BibTeX están aplicadas;
+  - las imágenes que faltan, como aviso.
+- **Scripts nuevos:**
+  - `informe_pendientes.py`: informe por elemento, que también aparece en el resumen de Actions y como artefacto;
+  - `cruce_portal.py`: BibTeX ↔ Portal Científico o Archivo Digital en ambos sentidos, desde CSV o RIS;
+  - `migrar_imagenes.py`: WebP de 1600 px y miniatura de 480 px;
+  - `aplicar_etiquetas.py`;
+  - `doc_esquemas.py`: genera `docs/DATOS.md`.
+- **`verificar_sitio.py`:** las imágenes que faltan son aviso hasta la migración (`--estricto` para tratarlas como error).
+
+### Probado aquí (sin Ruby)
+- **Lector y escritor de BibTeX:** reconstruye exactamente los 7 `.bib` (2.504 campos en `papers.bib`).
+- **`migrar_imagenes.py`:** con 119 imágenes y PDF sintéticos, convierte todos y no repite el trabajo en una segunda ejecución. Después, `comprobar_datos.py` da 0 avisos.
+- **`cruce_portal.py`:** con un CSV sintético de 121 registros encuentra 120 coincidencias (por DOI y por título), 1 discrepancia de año, 1 registro que solo está en el Portal y 49 que solo están en el BibTeX, y aplica los enlaces a `etiquetas.yml`. Con RIS, encuentra la coincidencia.
+- **Comprobaciones finales:** `comprobar_datos.py` da 0 errores; `contraste.py`, 35/35 pares AA. La sintaxis de Python, JS y los *workflows* es correcta.
+
+### Ficheros
+- **Nuevos:**
+  - colecciones: `_members/` (40), `_projects/` (34), `_lines/` (11), `_domains/` (5), `_news/` (16), `_events/` (6), `_opportunities/` (4);
+  - datos: `_data/{positions,roles,axes,repos,metrics}.yml`;
+  - bibliografía: `_bibliography/{theses.bib,etiquetas.yml}`;
+  - *plugins*: `_plugins/bib_stats.rb`;
+  - *includes*: `_includes/{figura,galeria,video,puesto,rol,estado,avatar}.html`, `_includes/listas/*` (11), `_includes/fichas/*` (7);
+  - esquemas: `schemas/*` (12);
+  - scripts: `scripts/{esquemas,informe_pendientes,cruce_portal,migrar_imagenes,aplicar_etiquetas,doc_esquemas}.py`, `scripts/migracion/*`;
+  - documentación: `docs/DATOS.md`.
+- **Modificados:**
+  - `_plugins/grys.rb`, `_layouts/{detail,bib}.html`, `_includes/pagehead.html`;
+  - `_pages/{es,en}/{team,lines,domains,projects,publications,theses,news,events,opportunities,software}.md`;
+  - `_data/routes.yml` (sección `lists`), `_data/i18n/{es,en}.yml`;
+  - `_config.yml`, `_config.staging.yml` (repositorio `grys-web`);
+  - `_bibliography/papers.bib`, `assets/css/grys.css`;
+  - `scripts/{comprobar_datos,verificar_sitio}.py`, `.github/workflows/{deploy,pr}.yml`, `docs/COMPILAR.md`, `PENDIENTES.md`.
+- **Eliminadas:** las muestras de la fase 1, sustituidas por los datos migrados.
+
+---
+
 ## Fase 1 · Base del sitio nuevo (16-10-2026)
 
 Es un repositorio nuevo, en paralelo a `grys-upm.github.io`. No se ha copiado nada de al-folio: la limpieza consiste en traer al sitio nuevo solo lo que se usa.

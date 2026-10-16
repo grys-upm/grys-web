@@ -5,4 +5,4 @@ page_id: domains
 permalink: /investigacion/ambitos/
 ---
 
-<p class="todo">Contenido pendiente de migración (fase 2).</p>
+{% include listas/ambitos.html %}

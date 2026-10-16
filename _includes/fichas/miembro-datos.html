@@ -1,0 +1,21 @@
+{%- comment -%} Datos de un miembro (factsheet). {%- endcomment -%}
+<dl class="factsheet">
+  <dt>{{ t.members.position }}</dt><dd>{% include puesto.html m=page %}</dd>
+  {%- capture fmd_rol %}{% include rol.html m=page %}{% endcapture %}
+  {%- if fmd_rol != "" %}<dt>{{ t.members.role }}</dt><dd>{{ fmd_rol }}</dd>{% endif %}
+  <dt>{{ t.period }}</dt>
+  <dd>{% if page.since %}{{ page.since | date: "%m/%Y" }}{% else %}<span class="todo">{{ t.tbc }}</span>{% endif %} – {% if page.until %}{{ page.until | date: "%m/%Y" }}{% elsif page.status == "current" %}{{ t.present }}{% else %}<span class="todo">{{ t.tbc }}</span>{% endif %}</dd>
+  {%- if page.email and page.status == "current" %}<dt>{{ t.members.email }}</dt><dd><a href="mailto:{{ page.email }}">{{ page.email }}</a></dd>{% endif %}
+  {%- if page.website %}<dt>{{ t.members.website }}</dt><dd><a href="{{ page.website }}">{{ page.website | remove: "https://" | remove: "http://" | remove_last: "/" }}</a></dd>{% endif %}
+  <dt>{{ t.members.profiles }}</dt>
+  <dd><ul class="perfiles">
+    {%- if page.orcid %}<li><a href="https://orcid.org/{{ page.orcid }}">ORCID</a></li>{% endif %}
+    {%- if page.scholar %}<li><a href="https://scholar.google.com/citations?user={{ page.scholar }}">Google Scholar</a></li>{% endif %}
+    {%- if page.portal_upm %}<li><a href="{{ page.portal_upm }}">{{ t.members.portal }}</a></li>{% endif %}
+    {%- if page.scopus %}<li><a href="https://www.scopus.com/authid/detail.uri?authorId={{ page.scopus }}">Scopus</a></li>{% endif %}
+    {%- if page.researchgate %}<li><a href="https://www.researchgate.net/profile/{{ page.researchgate }}">ResearchGate</a></li>{% endif %}
+    {%- if page.linkedin %}<li><a href="{{ page.linkedin }}">LinkedIn</a></li>{% endif %}
+    {%- if page.github %}<li><a href="https://github.com/{{ page.github }}">GitHub</a></li>{% endif %}
+    {%- unless page.orcid or page.scholar or page.portal_upm %}<li><span class="todo">{{ t.tbc }}</span></li>{% endunless %}
+  </ul></dd>
+</dl>

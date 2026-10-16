@@ -1,0 +1,5 @@
+{%- comment -%} Rol especial (pi, ext) de un miembro. Parámetro: m {%- endcomment -%}
+{%- assign r_rol = site.data.roles[include.m.role] -%}
+{%- if r_rol -%}
+  {%- if lang == "es" -%}{%- if include.m.gender == "f" -%}{{ r_rol.es_f }}{%- else -%}{{ r_rol.es_m }}{%- endif -%}{%- else -%}{{ r_rol.en }}{%- endif -%}
+{%- endif -%}

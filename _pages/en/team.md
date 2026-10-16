@@ -5,4 +5,4 @@ page_id: team
 permalink: /group/team/
 ---
 
-<p class="todo">Content pending migration (phase 2).</p>
+{% include listas/equipo.html %}

@@ -49,6 +49,14 @@ jobs:
       - name: Comprobar datos
         run: python scripts/comprobar_datos.py
 
+      - name: Informe de pendientes de los datos
+        run: |
+          python scripts/informe_pendientes.py
+          cat reports/pendientes-datos.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v6
+        with:
+          name: informe-pendientes
+          path: reports/
       - name: Contraste AA de los tokens (ambos temas)
         run: python scripts/contraste.py
 

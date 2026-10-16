@@ -1,0 +1,14 @@
+# Métricas EXTERNAS del grupo (no se pueden calcular desde el BibTeX).
+# Los recuentos de publicaciones y tesis del sitio se calculan del BibTeX al compilar
+# (_plugins/bib_stats.rb → site.data.bib_stats). Estas cifras son de referencia y se
+# muestran siempre con su fuente y su fecha. Actualizar a mano cuando cambien.
+scopus_docs: 150
+scopus_citations: 1935
+scopus_h: 20
+phd_theses: 23
+master_theses: 30
+master_theses_detail: 21 DEA/máster + 9 TFM
+bachelor_theses: 88
+source: Portal Científico UPM
+source_url: https://portalcientifico.upm.es/es/ipublic/entity/16280
+date: 2026-09
