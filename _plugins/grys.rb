@@ -221,6 +221,20 @@ module GRyS
       Util.tr(item, field.to_s, lang, Util.languages(site))
     end
 
+    # Texto de un campo BibTeX para mostrar: sin llaves de protección ni
+    # órdenes LaTeX básicas. (En Liquid no se puede escribir "}" dentro de
+    # {{ … }}: el analizador lo toma como cierre. Por eso existe este filtro.)
+    def bib_text(value)
+      return value if value.nil?
+
+      value.to_s
+           .gsub(/\\&/, "&").gsub(/\\%/, "%").gsub(/\\_/, "_")
+           .gsub(/\\textendash\s*|--/, "–").gsub(/\\textemdash\s*|---/, "—")
+           .gsub(/\\[a-zA-Z]+\s*/, "")
+           .delete("{}\\")
+           .gsub(/\s+/, " ").strip
+    end
+
     def member(slug)
       site = @context.registers[:site]
       coll = site.collections["members"]

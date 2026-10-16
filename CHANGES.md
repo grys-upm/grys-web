@@ -1,5 +1,13 @@
 # Registro de cambios
 
+## Fase 2 · Corrección 1 (16-10-2026)
+
+Errores de la primera compilación de la fase 2 en Actions:
+- **Error de Liquid en `_layouts/bib.html`:** `remove: "}"` dentro de `{{ … }}` cortaba la variable, porque Liquid 4 la cierra en el primer «}». Ahora se usa un filtro nuevo, `bib_text` (`_plugins/grys.rb`), que quita las llaves y las órdenes LaTeX básicas.
+- **3 avisos `Lexer: unexpected token '('`:** venían de BibTeX-Ruby. El comentario de cabecera de `theses.bib` contenía «@phdthesis», «@mastersthesis» y «@thesis», y la biblioteca los tomaba como entradas. He reescrito las cabeceras de `papers.bib` y `theses.bib` sin «@» ni paréntesis; las entradas no cambian.
+- **`comprobar_datos.py`** detecta ahora los dos casos antes de compilar: un «}» dentro de `{{ … }}` (con el mismo troceado que Liquid 4) y un «@» fuera de las entradas de un `.bib`. Los números de línea de sus mensajes ya son correctos.
+- **Workflows:** la compilación falla también con los avisos `WARN --` de BibTeX-Ruby, que antes no se filtraban.
+
 ## Fase 2 · Datos y migración del contenido (16-10-2026)
 
 ### Migración

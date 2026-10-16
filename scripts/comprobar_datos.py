@@ -235,6 +235,28 @@ for slug, ev in items["events"].items():
     for p in ev.get("projects") or []:
         if p not in items["projects"]:
             err(f"_events/{slug}.md: proyecto «{p}» no existe en _projects/")
+# .bib: el texto fuera de las entradas no puede llevar «@» (BibTeX-Ruby lo toma como una entrada)
+for bib in sorted(glob.glob(os.path.join(ROOT, "_bibliography", "*.bib"))):
+    btext = open(bib, encoding="utf-8").read()
+    depth, start = 0, 0
+    outside = []
+    for i, ch in enumerate(btext):
+        if ch == "@" and depth == 0:
+            m_e = re.match(r"@\w+\s*\{", btext[i:])
+            if not m_e:
+                outside.append(i)
+        if ch == "{":
+            depth += 1
+        elif ch == "}":
+            depth = max(0, depth - 1)
+    first = re.search(r"^@\w+\s*\{", btext, re.M)
+    head = btext[:first.start()] if first else btext
+    for m_at in re.finditer(r"@", head):
+        outside.append(m_at.start())
+    for pos in sorted(set(outside)):
+        line = btext.count("\n", 0, pos) + 1
+        err(f"{rel(bib)}:{line}: «@» fuera de una entrada (BibTeX-Ruby avisaría «Lexer: unexpected token»)")
+
 # Etiquetas propias del BibTeX (_bibliography/etiquetas.yml)
 import aplicar_etiquetas  # noqa: E402
 pend, unknown_keys = aplicar_etiquetas.apply(check_only=True)
@@ -272,7 +294,7 @@ BLOCKS = {"if": "endif", "unless": "endunless", "for": "endfor", "case": "endcas
 SIMPLE = {"else", "elsif", "when", "assign", "include", "include_relative", "break", "continue",
           "bibliography", "cite", "reference", "increment", "decrement", "cycle", "echo", "liquid",
           "I18n_Headers", "highlight", "endhighlight", "post_url", "link"}
-FILTERS = set("""default l10n route_url url_lang detail_url alt_url tr member relative_url absolute_url append prepend
+FILTERS = set("""default l10n route_url url_lang detail_url alt_url tr member bib_text relative_url absolute_url append prepend
 escape escape_once xml_escape cgi_escape uri_escape url_encode strip_html strip_newlines newline_to_br
 upcase downcase capitalize strip lstrip rstrip date date_to_xmlschema date_to_string date_to_long_string
 split where where_exp group_by group_by_exp find first last map size join sort sort_natural reverse uniq
@@ -295,8 +317,18 @@ for f in sorted(set(LIQ_FILES)):
         if re.search(r"{%|{{", c.group(1)):
             line = text.count("\n", 0, c.start()) + 1
             err(f"{rel(f)}:{line}: hay una etiqueta Liquid dentro de un comentario (Liquid la procesa); escríbela sin llaves")
-    text = re.sub(r"{%-?\s*comment\s*-?%}.*?{%-?\s*endcomment\s*-?%}", "", text, flags=re.S)
-    text = re.sub(r"{%-?\s*raw\s*-?%}.*?{%-?\s*endraw\s*-?%}", "", text, flags=re.S)
+    # Se vacían comentarios y raw conservando los saltos de línea (números de línea correctos)
+    blank = lambda m: "\n" * m.group(0).count("\n")  # noqa: E731
+    text = re.sub(r"{%-?\s*comment\s*-?%}.*?{%-?\s*endcomment\s*-?%}", blank, text, flags=re.S)
+    text = re.sub(r"{%-?\s*raw\s*-?%}.*?{%-?\s*endraw\s*-?%}", blank, text, flags=re.S)
+    # Mismo troceado que Liquid 4: una variable {{ … }} termina en el PRIMER «}».
+    # Por eso no puede haber «}» dentro de {{ … }} (p. ej. remove: "}")
+    for m in re.finditer(r"\{%.*?%\}|\{\{.*?\}\}?", text, re.S):
+        tok = m.group(0)
+        if tok.startswith("{{") and not tok.endswith("}}"):
+            line = text.count("\n", 0, m.start()) + 1
+            err(f"{rel(f)}:{line}: hay un «}}» dentro de {{{{ … }}}} y Liquid cortaría ahí la variable; "
+                "usa un filtro (p. ej. bib_text) o un assign dentro de {% … %}")
     stack = []
     for m in re.finditer(r"{%-?\s*(\w+)(.*?)-?%}", text, re.S):
         tag, rest = m.group(1), m.group(2)

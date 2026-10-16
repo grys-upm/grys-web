@@ -862,6 +862,8 @@ def migrate_opportunities(origen, imgs):
 # =====================================================================
 #  Bibliografía
 # =====================================================================
+BIB_HEAD = {'papers.bib': '% Publicaciones del GRyS. Fuente: biblioteca Zotero del grupo, numero 5287048.\n% Campos propios del sitio: portal_upm, archivo_upm, project y lines.\n% Se mantienen en _bibliography/etiquetas.yml. Ver scripts/aplicar_etiquetas.py\n% No escribir el signo arroba en estos comentarios.\n\n', 'theses.bib': '% Tesis y trabajos fin de estudios dirigidos en el GRyS.\n% Tipos de entrada: phdthesis para doctorado, mastersthesis para master o DEA, thesis para grado.\n% Campo level: phd, master o bachelor. Lo usan los filtros y los recuentos.\n% supervisor: direccion. award: premio. archivo_upm: identificador en oa.upm.es.\n% No escribir el signo arroba en estos comentarios.\n\n'}
+
 PAPER_DROP = {"urldate", "copyright", "dimensions", "altmetric", "bibtex_show"}
 THESIS_DROP = PAPER_DROP | {"keywords", "teseo_show"}
 
@@ -887,9 +889,7 @@ def migrate_bib(origen):
             log("bib", "papers.bib", f"clave repetida: {e['key']}")
         seen.add(e["key"])
     with open(os.path.join(DEST, "_bibliography", "papers.bib"), "w", encoding="utf-8", newline="\n") as fh:
-        fh.write("% Publicaciones del GRyS. Fuente: biblioteca Zotero del grupo (grupo 5287048).\n"
-                 "% Campos propios: portal_upm (ID del ítem en el Portal Científico UPM),\n"
-                 "% archivo_upm (ID en el Archivo Digital UPM, oa.upm.es), project, lines.\n\n")
+        fh.write(BIB_HEAD["papers.bib"])
         fh.write(dump(papers))
 
     theses = []
@@ -913,10 +913,7 @@ def migrate_bib(origen):
                 log("bib", "theses.bib", f"{e['key']}: sin director/a (supervisor)")
             theses.append(e)
     with open(os.path.join(DEST, "_bibliography", "theses.bib"), "w", encoding="utf-8", newline="\n") as fh:
-        fh.write("% Tesis y trabajos fin de estudios dirigidos en el GRyS.\n"
-                 "% Tipo de entrada: @phdthesis (doctorado), @mastersthesis (máster/DEA), @thesis (grado).\n"
-                 "% Campo «level»: phd | master | bachelor (lo usan los filtros y los recuentos).\n"
-                 "% supervisor: dirección; award: premio (texto libre); archivo_upm: ID en oa.upm.es.\n\n")
+        fh.write(BIB_HEAD["theses.bib"])
         fh.write(dump(theses))
     # Campos propios → _bibliography/etiquetas.yml (sobreviven a la sincronización con Zotero)
     sys.path.insert(0, os.path.join(DEST, "scripts"))

@@ -5,11 +5,12 @@
   Archivo Digital UPM (archivo_upm), Google Scholar, Altmetric y Dimensions.
   Fase 3: insignias oficiales de Altmetric y Dimensions (JS) y diseño pub-item.
   El BibTeX publicado omite los campos de scholar.bibtex_skip_fields.
+  Para limpiar llaves y LaTeX de un campo se usa el filtro bib_text (_plugins/grys.rb).
 {%- endcomment -%}
 {%- assign lang = page.lang | default: site.active_lang | default: site.default_lang -%}
 {%- assign t = site.data.i18n[lang] -%}
-{%- assign b_title = entry.title | remove: "{" | remove: "}" | remove: "\" -%}
-{%- assign b_venue = entry.journal | default: entry.booktitle | default: entry.school | default: entry.publisher | remove: "{" | remove: "}" | remove: "\" -%}
+{%- assign b_title = entry.title | bib_text -%}
+{%- assign b_venue = entry.journal | default: entry.booktitle | default: entry.school | default: entry.publisher | bib_text -%}
 {%- assign b_thesis = false -%}
 {%- comment -%} entry.type no sirve: el campo «type» de las tesis lo sobrescribe. Se usa «level». {%- endcomment -%}
 {%- if entry.level -%}{%- assign b_thesis = true -%}{%- endif -%}
@@ -19,9 +20,9 @@
   <p class="au">{% for a in entry.author_array %}{{ a.first }} {{ a.last }}{% unless forloop.last %}, {% endunless %}{% endfor %}</p>
   {%- if b_thesis %}
   <dl class="spec">
-    {%- if entry.supervisor %}<dt>{{ t.theses.supervisor }}</dt><dd>{{ entry.supervisor | remove: "{" | remove: "}" | replace: " and ", "; " }}</dd>{% endif %}
-    {%- if entry.school %}<dt>{{ t.theses.school }}</dt><dd>{{ entry.school | remove: "{" | remove: "}" }}</dd>{% endif %}
-    {%- if entry.award %}<dt>{{ t.theses.award }}</dt><dd lang="en">{{ entry.award | remove: "{" | remove: "}" }}</dd>{% endif %}
+    {%- if entry.supervisor %}<dt>{{ t.theses.supervisor }}</dt><dd>{{ entry.supervisor | bib_text | replace: " and ", "; " }}</dd>{% endif %}
+    {%- if entry.school %}<dt>{{ t.theses.school }}</dt><dd>{{ entry.school | bib_text }}</dd>{% endif %}
+    {%- if entry.award %}<dt>{{ t.theses.award }}</dt><dd lang="en">{{ entry.award | bib_text }}</dd>{% endif %}
   </dl>
   {%- endif %}
   <div class="acts2">
