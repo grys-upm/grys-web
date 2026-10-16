@@ -2,10 +2,7 @@
   Avatar hexagonal (arista plana). Con foto si existe el fichero; si no, iniciales.
   Parámetro: m (miembro)
 {%- endcomment -%}
-{%- assign a_has = false -%}
-{%- if include.m.photo -%}
-  {%- for sf in site.static_files -%}{%- if sf.relative_path == include.m.photo -%}{%- assign a_has = true -%}{%- break -%}{%- endif -%}{%- endfor -%}
-{%- endif -%}
+{%- assign a_has = include.m.photo | asset_exists -%}
 {%- if a_has -%}
 <div class="avatar foto"><img src="{{ include.m.photo | replace: '.webp', '-480.webp' | relative_url }}" alt="" loading="lazy" decoding="async" width="104" height="92"></div>
 {%- else -%}
