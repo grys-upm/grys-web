@@ -1,0 +1,32 @@
+# Resultado de la compilación y cachés
+_site/
+.jekyll-cache/
+.jekyll-metadata
+.sass-cache/
+.bundle/
+vendor/
+
+# Informes generados en local (en CI se publican como artefactos)
+reports/
+
+# Sistema y editores
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+__pycache__/
+
+# Exportaciones de trabajo
+grys_export/
+
+# Si tu .gitignore global ignora "_*", estas líneas lo deshacen
+!_bibliography/
+!_config.yml
+!_config.staging.yml
+!_data/
+!_includes/
+!_layouts/
+!_members/
+!_pages/
+!_plugins/
+!_projects/
