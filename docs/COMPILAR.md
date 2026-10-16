@@ -7,11 +7,8 @@
    - Sin Git: *Add file → Upload files*, arrastrando las carpetas.
    - Con Git: `git init`, `git add .`, `git commit -m "Fase 1"` y `git push`.
 3. **Activar Pages.** En *Settings → Pages → Build and deployment → Source*, elige **GitHub Actions**.
-4. **Descargar las fuentes** (una vez, en un ordenador con Internet) y subirlas:
-   ```bash
-   python3 scripts/descargar_fuentes.py
-   ```
-   Se añaden 8 ficheros `assets/fonts/*.woff2`.
+4. **Fuentes: no hay que hacer nada.** Si `assets/fonts/` no tiene los `.woff2`, GitHub Actions los descarga en cada compilación con `scripts/descargar_fuentes.py`. Se sirven desde el propio sitio, no desde Google Fonts.
+   *Opcional, para no depender de la descarga:* ejecuta en tu ordenador, dentro de la carpeta del proyecto, `python3 scripts/descargar_fuentes.py`. Después sube los 8 ficheros que aparecen en `assets/fonts/` a esa misma carpeta del repositorio: entra en ella en GitHub y usa *Add file → Upload files*.
 5. **Ver la compilación.** Cada *push* lanza *Actions → Compilar y publicar*.
    - **Dónde se publica.** Como la organización ya tiene dominio propio, el sitio de pruebas debería quedar en `https://grys.etsist.upm.es/web-grys/`. Si no fuera así, estará en `https://grys-upm.github.io/web-grys/`.
    - **Fuera de buscadores.** Lleva `noindex`.

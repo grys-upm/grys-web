@@ -20,6 +20,8 @@ jobs:
         with:
           python-version: "3.12"
       - run: python -m pip install --quiet pyyaml
+      - name: Fuentes (se descargan si no están en el repositorio)
+        run: ls assets/fonts/*.woff2 >/dev/null 2>&1 || python scripts/descargar_fuentes.py
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true

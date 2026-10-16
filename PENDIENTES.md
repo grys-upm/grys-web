@@ -31,7 +31,7 @@ Aquí no se ha podido ejecutar Ruby ni Jekyll, así que estos puntos hay que con
 | B5 🟠 | Marca del OpenTech Lab con la paleta unificada (§15.5) | En la fase 3 |
 | B6 🟠 | Validar el azul `#52BAFF` del modo oscuro | Es el token `--link`/`--accent` en `assets/css/grys.css` |
 | B7 🟠 | **Validar el nuevo velo oscuro `#324153`** | Con `rgba(82,186,255,.14)`, el del mockup, el acento daba **4,49:1** sobre el velo y **3,99:1** dentro de los menús. Ahora da 4,85:1. Ha ganado la legibilidad |
-| B8 🔴 | Fuentes en `assets/fonts/` | Ejecutar `scripts/descargar_fuentes.py` y subir los `.woff2` |
+| B8 🔵 | Fuentes en `assets/fonts/` | Las descarga Actions al compilar si no están. Opcional: subirlas al repositorio para no depender de esa descarga |
 
 ## C. Datos por confirmar
 
