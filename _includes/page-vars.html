@@ -1,0 +1,14 @@
+{%- comment -%}
+  Variables comunes de la página. Se incluye al principio de cada layout:
+  lang, t (textos de interfaz), route, page_title, page_desc, nav_id, cur_menu.
+{%- endcomment -%}
+{%- assign lang = page.lang | default: site.default_lang -%}
+{%- assign t = site.data.i18n[lang] -%}
+{%- assign route = site.data.routes.pages | where: "id", page.page_id | first -%}
+{%- assign page_title = page.title | default: route.title -%}
+{%- assign page_title = page_title | l10n: lang -%}
+{%- assign page_desc = page.lead | default: page.description | default: route.desc -%}
+{%- assign page_desc = page_desc | l10n: lang -%}
+{%- assign nav_id = page.parent | default: page.page_id -%}
+{%- assign nav_route = site.data.routes.pages | where: "id", nav_id | first -%}
+{%- assign cur_menu = nav_route.menu -%}

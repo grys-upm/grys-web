@@ -1,0 +1,52 @@
+{%- comment -%}
+  Barra institucional + cabecera con logotipo y menús + cajón móvil.
+  Menús generados desde _data/routes.yml. Accesibilidad: <button
+  aria-expanded> + Esc (assets/js/grys.js). Sin JS: menús por foco/ratón y
+  cajón siempre visible en pantallas estrechas.
+{%- endcomment -%}
+<div class="util"><div class="wrap">
+  <span class="inst">{{ t.inst }}</span>
+  <div class="r">
+    <a class="opt" href="{{ 'contact' | route_url: lang }}">{{ t.contact }}</a>
+    {% include theme-toggle.html %}
+    {% include lang-switch.html %}
+  </div>
+</div></div>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="{{ 'home' | route_url: lang }}">
+      {%- capture logo_alt %}{{ t.logo_alt }}. {{ t.go_home }}{% endcapture -%}
+      {%- include logo.html kind="logo" w="236" h="77" alt=logo_alt -%}
+    </a>
+    <nav class="mainnav" aria-label="{{ t.main_nav }}">
+      <ul>
+      {%- for m in site.data.routes.menus %}
+        <li>
+          <button class="top{% if cur_menu == m.id %} cur{% endif %}" type="button" aria-expanded="false" aria-controls="dd-{{ m.id }}">{{ m.title | l10n: lang }}</button>
+          <ul class="dd" id="dd-{{ m.id }}">
+          {%- for r in site.data.routes.pages %}{% if r.menu == m.id %}
+            <li><a href="{{ r.id | route_url: lang }}"{% if r.id == page.page_id %} aria-current="page"{% elsif r.id == nav_id %} aria-current="true"{% endif %}>{{ r.title | l10n: lang }}{% if r.desc %}<small>{{ r.desc | l10n: lang }}</small>{% endif %}</a></li>
+          {%- endif %}{% endfor %}
+          </ul>
+        </li>
+      {%- endfor %}
+      </ul>
+    </nav>
+    <button class="iconbtn burger" id="burger" type="button" aria-expanded="false" aria-controls="drawer">{% include icono.html n="menu" %}<span class="sr">{{ t.menu }}</span></button>
+  </div>
+  <div class="drawer" id="drawer">
+    <div class="wrap">
+      <nav aria-label="{{ t.mobile_nav }}">
+      {%- for m in site.data.routes.menus %}
+        <details{% if cur_menu == m.id %} open{% endif %}>
+          <summary>{{ m.title | l10n: lang }}</summary>
+          {%- for r in site.data.routes.pages %}{% if r.menu == m.id %}
+          <a href="{{ r.id | route_url: lang }}"{% if r.id == page.page_id %} aria-current="page"{% endif %}>{{ r.title | l10n: lang }}</a>
+          {%- endif %}{% endfor %}
+        </details>
+      {%- endfor %}
+      </nav>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,25 @@
+---
+layout: default
+---
+{%- comment -%}
+  Portada. Fase 1: solo el bloque principal (hero). Ejes, ámbitos, proyectos,
+  noticias, agenda, convocatorias, publicaciones y banda del laboratorio
+  llegan en la fase 3 como includes.
+{%- endcomment -%}
+{%- include page-vars.html -%}
+<section class="hero" aria-labelledby="h-hero" style="padding:0">
+  <div class="trama" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="txt">
+      <div class="label"><span class="bub">{% include icono.html n="net" %}</span>{{ t.hero.label }}</div>
+      <h1 id="h-hero">{{ t.hero.title }}</h1>
+      <p class="sub rule">{{ t.hero.sub }}</p>
+      <p class="lead">{{ t.hero.lead }}</p>
+      <div class="acts">
+        <a class="btn primary" href="{{ 'lines' | route_url: lang }}">{{ t.hero.cta_research }}</a>
+        <a class="btn secondary" href="{{ 'transfer' | route_url: lang }}">{{ t.hero.cta_collab }}</a>
+      </div>
+    </div>
+  </div>
+</section>
+{{ content }}

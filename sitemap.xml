@@ -1,0 +1,32 @@
+---
+layout: null
+lang: es
+lang-exclusive: [es]
+page_id: sitemap
+permalink: /sitemap.xml
+sitemap: false
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+{%- for r in site.data.routes.pages %}
+  {%- for l in site.languages %}
+  <url>
+    <loc>{{ site.url }}{{ r.id | route_url: l }}</loc>
+    {%- for l2 in site.languages %}
+    <xhtml:link rel="alternate" hreflang="{{ l2 }}" href="{{ site.url }}{{ r.id | route_url: l2 }}"/>
+    {%- endfor %}
+  </url>
+  {%- endfor %}
+{%- endfor %}
+{%- for d in site.data.routes.details %}
+  {%- assign coll = d[0] %}
+  {%- for item in site[coll] %}
+    {%- for l in site.languages %}
+      {%- assign u = item | detail_url: coll, l %}
+      {%- if u %}
+  <url><loc>{{ site.url }}{{ u }}</loc></url>
+      {%- endif %}
+    {%- endfor %}
+  {%- endfor %}
+{%- endfor %}
+</urlset>

@@ -1,0 +1,12 @@
+{%- comment -%}
+  Selector de idioma: enlaces reales a la página equivalente en el otro idioma.
+  {% static_href %} impide que polyglot reescriba el enlace al idioma activo.
+  Si la página no tiene equivalente, lleva a la portada de ese idioma.
+{%- endcomment -%}
+<span class="lang" role="group" aria-label="{{ t.lang_group }}">
+{%- for l in site.languages -%}
+  {%- assign alt = page | alt_url: l -%}
+  {%- if alt == nil -%}{%- assign alt = "home" | route_url: l -%}{%- endif -%}
+  <a {% static_href %}href="{{ alt }}"{% endstatic_href %} hreflang="{{ l }}" lang="{{ l }}"{% if l == lang %} aria-current="true"{% endif %}>{{ l | upcase }}<span class="sr"> · {{ site.data.i18n[l].lang_name }}</span></a>
+{%- endfor -%}
+</span>

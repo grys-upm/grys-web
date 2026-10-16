@@ -1,0 +1,35 @@
+# Datos de contacto y enlaces institucionales (comunes a ambos idiomas).
+# Fuente: _pages/communication-contact.md, _data/socials.yml y _pages/grys.md
+# de la web anterior.
+email: gi.grys@upm.es
+phone: "+34 910 67 33 18"
+address:
+  school: Escuela Técnica Superior de Ingeniería y Sistemas de Telecomunicación (ETSIST)
+  campus: Campus Sur UPM
+  office: A9401
+  street: Nikola Tesla, s/n
+  postcode: "28031"
+  city: Madrid
+  country: { es: España, en: Spain }
+
+links:
+  upm:
+    - title: { es: Portal Científico, en: Scientific Portal }
+      url: https://portalcientifico.upm.es/es/ipublic/entity/16280
+    - title: { es: HUB de Innovación, en: Innovation Hub }
+      url: https://www.upm.es/recursosidi/map/grupo-de-redes-y-servicios-de-proxima-generacion-grys/
+    - title: { es: Observatorio I+D+i, en: "R&D&I Observatory" }
+      url: https://www.upm.es/observatorio/vi/index.jsp?pageac=estructuras/grupo.jsp&idGrupo=400&h=1
+    - title: { es: ETSIST, en: ETSIST }
+      url: https://www.etsist.upm.es/
+  open:
+    - title: { es: GitHub, en: GitHub }
+      url: https://github.com/grys-upm
+    - title: { es: Zenodo, en: Zenodo }
+      url: https://zenodo.org/communities/grys-upm
+    - title: { es: Zotero, en: Zotero }
+      url: https://www.zotero.org/groups/5287048/grys
+    - title: { es: LinkedIn, en: LinkedIn }
+      url: https://www.linkedin.com/in/grys-upm   # PENDIENTE: confirmar (¿/in/ o /company/?)
+    - title: { es: Bluesky, en: Bluesky }
+      url: https://bsky.app/profile/grys-upm.bsky.social

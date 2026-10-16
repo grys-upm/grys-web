@@ -1,0 +1,8 @@
+{%- comment -%}
+  Botón de tema. El texto inicial supone tema oscuro (el de por defecto);
+  assets/js/grys.js lo actualiza si el usuario eligió el claro.
+  Sin JavaScript se oculta (no podría funcionar).
+{%- endcomment -%}
+<button class="themebtn" id="themebtn" type="button" aria-label="{{ t.to_light_a }}"
+  data-to-light="{{ t.to_light }}" data-to-dark="{{ t.to_dark }}"
+  data-to-light-a="{{ t.to_light_a }}" data-to-dark-a="{{ t.to_dark_a }}"><svg class="ic" aria-hidden="true" focusable="false"><use id="themeicon" href="#i-sun"/></svg><span id="themelbl">{{ t.to_light }}</span></button>

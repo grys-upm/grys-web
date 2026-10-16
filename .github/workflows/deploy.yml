@@ -1,0 +1,89 @@
+# Compila el sitio y lo publica en GitHub Pages.
+# · Cada push a main, a mano (Run workflow) y todos los días a las 05:15 UTC
+#   (para que eventos y convocatorias se reclasifiquen según la fecha).
+# · En el repositorio de pruebas añade _config.staging.yml (noindex) y usa
+#   como baseurl la ruta que da GitHub Pages (/nombre-del-repo).
+# Requisito: Settings → Pages → Source: «GitHub Actions».
+name: Compilar y publicar
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: "15 5 * * *"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Python (para los scripts de comprobación)
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --quiet pyyaml
+
+      - name: Ruby y gemas
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true   # lee .ruby-version; genera Gemfile.lock si falta
+
+      - name: Configurar Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Comprobar datos
+        run: python scripts/comprobar_datos.py
+
+      - name: Contraste AA de los tokens (ambos temas)
+        run: python scripts/contraste.py
+
+      - name: Compilar
+        env:
+          JEKYLL_ENV: production
+        run: |
+          set -o pipefail
+          CONFIG="_config.yml"
+          if [ "${GITHUB_REPOSITORY}" != "grys-upm/grys-upm.github.io" ]; then
+            CONFIG="_config.yml,_config.staging.yml"
+          fi
+          bundle exec jekyll build --config "$CONFIG" --baseurl "${{ steps.pages.outputs.base_path }}" --trace 2>&1 | tee build.log
+          # Criterio de aceptación: ni errores ni avisos
+          if grep -E "Liquid (Warning|Exception|syntax)|Build Warning|Conflict:|GRyS:" build.log; then
+            echo "::error::La compilación ha producido avisos (ver arriba)"; exit 1
+          fi
+
+      - name: Verificar el resultado
+        run: python scripts/verificar_sitio.py _site --baseurl "${{ steps.pages.outputs.base_path }}"
+
+      - name: Guardar Gemfile.lock (para añadirlo al repositorio si no existe)
+        if: hashFiles('Gemfile.lock') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: Gemfile.lock
+          path: Gemfile.lock
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

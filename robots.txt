@@ -1,0 +1,12 @@
+---
+layout: null
+lang: es
+lang-exclusive: [es]
+page_id: robots
+permalink: /robots.txt
+sitemap: false
+---
+User-agent: *
+{% if site.noindex %}Disallow: /{% else %}Allow: /
+
+Sitemap: {{ site.url }}{{ '/sitemap.xml' | relative_url }}{% endif %}

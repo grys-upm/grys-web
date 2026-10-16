@@ -1,0 +1,44 @@
+# Compila cada Pull Request (sin publicar) y deja el sitio como artefacto
+# descargable «sitio-compilado» para revisarlo. La vista previa publicada
+# por PR llega en la fase 5.
+name: Comprobar PR
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Python (para los scripts de comprobación)
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --quiet pyyaml
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - name: Comprobar datos
+        run: python scripts/comprobar_datos.py
+
+      - name: Contraste AA de los tokens (ambos temas)
+        run: python scripts/contraste.py
+      - name: Compilar
+        run: |
+          set -o pipefail
+          bundle exec jekyll build --config _config.yml,_config.staging.yml --trace 2>&1 | tee build.log
+          if grep -E "Liquid (Warning|Exception|syntax)|Build Warning|Conflict:|GRyS:" build.log; then
+            echo "::error::La compilación ha producido avisos (ver arriba)"; exit 1
+          fi
+      - name: Verificar el resultado
+        run: python scripts/verificar_sitio.py _site
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sitio-compilado
+          path: _site
+          retention-days: 7

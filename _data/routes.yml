@@ -1,0 +1,190 @@
+# =====================================================================
+#  MAPA DEL SITIO · fuente única de menús, URL y títulos de las páginas
+# ---------------------------------------------------------------------
+#  · Las rutas «en» se escriben SIN el prefijo /en/ (lo añade polyglot).
+#  · Cada página fija tiene dos ficheros: _pages/es/<id>.md y _pages/en/<id>.md
+#    con el mismo «page_id» y el «permalink» de esta tabla.
+#    scripts/comprobar_datos.py verifica que coinciden.
+#  · Cambiar una URL aquí exige cambiar el permalink de los dos ficheros y
+#    añadir una redirección en _data/redirects.yml.
+# =====================================================================
+
+menus:
+  - id: group
+    title: { es: Grupo, en: Group }
+  - id: research
+    title: { es: Investigación, en: Research }
+  - id: lab
+    title: { es: OpenTech Lab, en: OpenTech Lab }
+  - id: collab
+    title: { es: Colabora, en: Collaborate }
+  - id: news
+    title: { es: Actualidad, en: News }
+
+# Orden = orden en los menús
+pages:
+  - id: home
+    menu: null
+    es: /
+    en: /
+    title: { es: Inicio, en: Home }
+
+  # ---- Grupo ----
+  - id: about
+    menu: group
+    es: /grupo/quienes-somos/
+    en: /group/about/
+    title: { es: Quiénes somos, en: About us }
+    desc: { es: Misión, historia y valores, en: Mission, history and values }
+  - id: team
+    menu: group
+    es: /grupo/equipo/
+    en: /group/team/
+    title: { es: Equipo, en: Team }
+    desc: { es: Personas actuales y antiguas, en: Current and former members }
+  - id: sdgs
+    menu: group
+    es: /grupo/ods/
+    en: /group/sdgs/
+    title: { es: Objetivos de Desarrollo Sostenible, en: Sustainable Development Goals }
+    desc: { es: Nuestra alineación con la Agenda 2030, en: Our alignment with the 2030 Agenda }
+  - id: contact
+    menu: group
+    es: /grupo/contacto/
+    en: /group/contact/
+    title: { es: Contacto, en: Contact }
+    desc: { es: Dónde estamos y cómo escribirnos, en: Where we are and how to reach us }
+
+  # ---- Investigación ----
+  - id: lines
+    menu: research
+    es: /investigacion/lineas/
+    en: /research/lines/
+    title: { es: Líneas de investigación, en: Research lines }
+    desc: { es: Once líneas en cuatro ejes, en: Eleven lines in four axes }
+  - id: domains
+    menu: research
+    es: /investigacion/ambitos/
+    en: /research/application-domains/
+    title: { es: Ámbitos de aplicación, en: Application domains }
+    desc: { es: "Campo, mar, ciudad, aire y personas", en: "Field, sea, city, air and people" }
+  - id: projects
+    menu: research
+    es: /investigacion/proyectos/
+    en: /research/projects/
+    title: { es: Proyectos, en: Projects }
+    desc: { es: Proyectos competitivos y contratos, en: Competitive projects and contracts }
+  - id: publications
+    menu: research
+    es: /investigacion/publicaciones/
+    en: /research/publications/
+    title: { es: Publicaciones, en: Publications }
+    desc: { es: "Artículos, congresos y libros", en: "Journals, conferences and books" }
+  - id: theses
+    menu: research
+    es: /investigacion/tesis/
+    en: /research/theses/
+    title: { es: Tesis y trabajos fin de estudios, en: Theses }
+    desc: { es: "Doctorado, máster y grado", en: "PhD, MSc and BSc" }
+
+  # ---- OpenTech Lab ----
+  - id: lab
+    menu: lab
+    es: /opentech-lab/
+    en: /opentech-lab/
+    title: { es: El laboratorio, en: The lab }
+    desc: { es: Qué es y qué permite, en: What it is and what it enables }
+  - id: demonstrators
+    menu: lab
+    es: /opentech-lab/demostradores/
+    en: /opentech-lab/demonstrators/
+    title: { es: Demostradores, en: Demonstrators }
+    desc: { es: Prototipos en funcionamiento, en: Working prototypes }
+  - id: software
+    menu: lab
+    es: /opentech-lab/software-y-datos/
+    en: /opentech-lab/software-and-data/
+    title: { es: Software y datos abiertos, en: Open software and data }
+    desc: { es: GitHub y Zenodo, en: GitHub and Zenodo }
+
+  # ---- Colabora ----
+  - id: transfer
+    menu: collab
+    es: /colabora/transferencia/
+    en: /collaborate/technology-transfer/
+    title: { es: Transferencia, en: Technology transfer }
+    desc: { es: Soluciones y propiedad intelectual, en: Solutions and intellectual property }
+  - id: opportunities
+    menu: collab
+    es: /colabora/convocatorias/
+    en: /collaborate/opportunities/
+    title: { es: Ofertas y convocatorias, en: Opportunities }
+    desc: { es: Contratos y becas abiertos, en: Open positions and grants }
+  - id: students
+    menu: collab
+    es: /colabora/tfg-tfm-doctorado/
+    en: /collaborate/student-projects-and-phd/
+    title: { es: "TFG, TFM y doctorado", en: Student projects and PhD }
+    desc: { es: Haz tu trabajo con nosotros, en: Do your project with us }
+  - id: teaching
+    menu: collab
+    es: /colabora/docencia/
+    en: /collaborate/teaching/
+    title: { es: Docencia, en: Teaching }
+    desc: { es: De la investigación al aula, en: From research to the classroom }
+
+  # ---- Actualidad ----
+  - id: news
+    menu: news
+    es: /actualidad/noticias/
+    en: /news/
+    title: { es: Noticias, en: News }
+  - id: events
+    menu: news
+    es: /actualidad/eventos/
+    en: /events/
+    title: { es: Eventos, en: Events }
+  - id: press
+    menu: news
+    es: /actualidad/prensa/
+    en: /press/
+    title: { es: Prensa, en: Press }
+
+  # ---- Pie (fuera de los menús) ----
+  - id: accessibility
+    menu: null
+    es: /accesibilidad/
+    en: /accessibility/
+    title: { es: Accesibilidad, en: Accessibility }
+  - id: privacy
+    menu: null
+    es: /privacidad/
+    en: /privacy/
+    title: { es: Privacidad, en: Privacy }
+
+# ---------------------------------------------------------------------
+#  Fichas de detalle generadas desde las colecciones (no salen en menús)
+#  :slug  → campo «slug_es»/«slug_en», o «slug», o el nombre del fichero
+#  :date  → fecha AAAA-MM-DD del elemento (noticias)
+# ---------------------------------------------------------------------
+details:
+  members:
+    parent: team
+    layout: detail
+    es: /grupo/equipo/:slug/
+    en: /group/team/:slug/
+  lines:
+    parent: lines
+    layout: detail
+    es: /investigacion/lineas/:slug/
+    en: /research/lines/:slug/
+  projects:
+    parent: projects
+    layout: detail
+    es: /investigacion/proyectos/:slug/
+    en: /research/projects/:slug/
+  news:
+    parent: news
+    layout: detail
+    es: /actualidad/noticias/:date-:slug/
+    en: /news/:date-:slug/

@@ -1,0 +1,56 @@
+# Interface strings in English. Same key structure as es.yml.
+lang_name: English
+inst: Universidad Politécnica de Madrid · School of Telecommunication Systems and Engineering
+group_name: Group of Next-Generation Networks and Services
+logo_alt: GRyS, Group of Next-Generation Networks and Services
+go_home: Go to home page
+skip: Skip to content
+menu: Menu
+main_nav: Main
+mobile_nav: Mobile menu
+breadcrumb: Breadcrumb
+home: Home
+contact: Contact
+search: Search
+close: Close
+lang_group: Idioma / Language
+to_light: Light mode
+to_dark: Dark mode
+to_light_a: Switch to light mode
+to_dark_a: Switch to dark mode
+tbc: to be completed
+date_tbc: date to be completed
+pending_content: Content pending migration
+status_on: Ongoing
+status_off: Completed
+status_unk: Status to be confirmed
+read_more: Read more
+footer:
+  group: The group
+  upm: UPM
+  open_science: Open science
+  office: office
+  upm_slot: "UPM institutional brand<br>(official file pending)"
+  edit: Edit this page on GitHub
+  cosign_label: Universidad Politécnica de Madrid · GRyS
+  footer_group_nav: "Footer: the group"
+  footer_open_nav: "Footer: open science"
+not_found:
+  title: Page not found
+  text: The page you are looking for does not exist or has moved.
+  back: Back to home
+redirect:
+  text: This page has moved to
+pubs:
+  bibtex: BibTeX
+  doi: DOI
+hero:
+  label: UPM research group · since 2009
+  title: Next-generation networks and services
+  sub: Intelligence at the core, nodes at the edge.
+  lead: >-
+    We research cyber-physical systems, IoT, cooperative robotics, semantic
+    middleware and cloud-edge computing, and take them to the field, the sea,
+    the city and the air.
+  cta_research: Our research
+  cta_collab: Work with us

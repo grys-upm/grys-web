@@ -1,0 +1,6 @@
+# Entorno de PRUEBAS (repositorio nuevo, antes de la migración).
+# GitHub Actions lo añade automáticamente cuando el repositorio NO es
+# grys-upm/grys-upm.github.io. El baseurl (/nombre-del-repo) lo pasa el
+# propio workflow, así que aquí no se pone.
+noindex: true
+repository: grys-upm/web-grys

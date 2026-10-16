@@ -1,0 +1,27 @@
+{%- comment -%}
+  Cabecera de página interior: migas, único <h1>, entradilla y trama.
+  Usa las variables de page-vars.html.
+{%- endcomment -%}
+{%- assign menu = site.data.routes.menus | where: "id", cur_menu | first -%}
+{%- assign parent = site.data.routes.pages | where: "id", page.parent | first -%}
+<div class="pagehead">
+  <div class="trama" aria-hidden="true"></div>
+  <div class="wrap">
+    <nav class="crumbs" aria-label="{{ t.breadcrumb }}">
+      <ol>
+        <li><a href="{{ 'home' | route_url: lang }}">{{ t.home }}</a></li>
+        {%- if menu %}
+        <li>{{ menu.title | l10n: lang }}</li>
+        {%- endif %}
+        {%- if parent %}
+        <li><a href="{{ parent.id | route_url: lang }}">{{ parent.title | l10n: lang }}</a></li>
+        {%- endif %}
+        <li aria-current="page">{{ page_title }}</li>
+      </ol>
+    </nav>
+    <h1>{{ page_title }}</h1>
+    {%- if page_desc %}
+    <p class="lead rule">{{ page_desc }}</p>
+    {%- endif %}
+  </div>
+</div>

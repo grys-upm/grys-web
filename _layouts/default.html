@@ -1,0 +1,16 @@
+{%- include page-vars.html -%}
+<!DOCTYPE html>
+<html lang="{{ lang }}" class="no-js" data-theme="dark">
+<head>
+{% include head.html %}
+</head>
+<body>
+<a class="skip" href="#main">{{ t.skip }}</a>
+{% include iconos.svg %}
+{% include header.html %}
+<main id="main" tabindex="-1">
+{{ content }}
+</main>
+{% include footer.html %}
+</body>
+</html>

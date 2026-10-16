@@ -1,0 +1,128 @@
+# =====================================================================
+#  Sitio web del GRyS · Configuración de Jekyll
+#  Lo que edita el equipo NO está aquí: está en _data/, en las colecciones
+#  (_members/, _projects/…) y en _bibliography/. Este fichero solo se toca
+#  para cambiar comportamiento técnico.
+# =====================================================================
+
+title: GRyS
+description: >-
+  Grupo de Redes y Servicios de Próxima Generación · Universidad Politécnica de Madrid
+
+# URL canónica (producción). En el repositorio de pruebas se sobrescribe
+# con _config.staging.yml y el baseurl lo pone GitHub Actions.
+url: "https://grys.etsist.upm.es"
+baseurl: ""
+
+# Repositorio, para el enlace «Editar esta página en GitHub»
+repository: grys-upm/grys-upm.github.io
+branch: main
+
+# Indexación: false en producción; el entorno de pruebas pone true
+noindex: false
+
+timezone: Europe/Madrid
+
+# ---------------------------------------------------------------------
+#  Idiomas (jekyll-polyglot): español en «/», inglés en «/en/»
+# ---------------------------------------------------------------------
+languages: ["es", "en"]
+default_lang: "es"
+# Lo que no se duplica en /en/
+exclude_from_localization: ["assets", "favicon.ico", "robots.txt", "CNAME", ".nojekyll"]
+# En serie: más predecible, funciona en Windows y evita choques con otros plugins
+parallel_localization: false
+
+# ---------------------------------------------------------------------
+#  Colecciones: un fichero por elemento. No generan páginas por sí mismas
+#  (output: false); las fichas ES/EN las crea _plugins/grys.rb siguiendo
+#  las rutas de _data/routes.yml.
+# ---------------------------------------------------------------------
+collections:
+  members:
+    output: false
+  projects:
+    output: false
+  lines:
+    output: false
+  domains:
+    output: false
+  news:
+    output: false
+  events:
+    output: false
+  opportunities:
+    output: false
+
+# Las páginas fijas viven en _pages/es y _pages/en
+include: ["_pages"]
+
+exclude:
+  - README.md
+  - CHANGES.md
+  - PENDIENTES.md
+  - CONTRIBUTING.md
+  - docs/
+  - scripts/
+  - reports/
+  - Gemfile
+  - Gemfile.lock
+  - vendor/
+  - .github/
+  - .ruby-version
+  - assets/fonts/LEEME.md
+
+keep_files: ["CNAME", ".nojekyll"]
+
+# ---------------------------------------------------------------------
+#  Markdown y Liquid
+# ---------------------------------------------------------------------
+markdown: kramdown
+kramdown:
+  input: GFM
+  auto_ids: true
+  syntax_highlighter: rouge
+
+liquid:
+  error_mode: strict      # error ante sintaxis Liquid incorrecta
+  strict_filters: true    # error ante filtros inexistentes
+  strict_variables: false # los campos opcionales pueden faltar
+
+# ---------------------------------------------------------------------
+#  Plugins
+# ---------------------------------------------------------------------
+plugins:
+  - jekyll-polyglot
+  - jekyll/scholar
+
+# ---------------------------------------------------------------------
+#  Publicaciones (jekyll-scholar)
+# ---------------------------------------------------------------------
+scholar:
+  source: ./_bibliography
+  bibliography: papers.bib
+  bibliography_template: bib
+  bibliography_list_tag: ul
+  bibliography_list_attributes:
+    class: pubs
+  sort_by: year,month
+  order: descending
+  group_by: year            # un <h2> por año: orden de encabezados correcto
+  group_order: descending
+  style: apa
+  # Campos que NO se muestran en el BibTeX publicado (<details>)
+  bibtex_skip_fields:
+    - abstract
+    - urldate
+    - copyright
+    - dimensions
+    - altmetric
+    - bibtex_show
+    - file
+    - keywords
+    - annotation
+    - google_scholar_id
+    - portal_upm
+    - archivo_upm
+    - project
+    - lines

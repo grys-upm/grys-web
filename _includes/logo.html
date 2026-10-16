@@ -1,0 +1,17 @@
+{%- comment -%}
+  Logotipo del grupo según idioma (_es/_en, §15.2) y tema (negativo en oscuro).
+  Parámetros: kind = logo | logo-compacto | isotipo-n2 | isotipo-n3
+              w, h = tamaño de presentación en px (logo completo ≥ 180 px, §3)
+              alt  = texto alternativo
+  Las dos imágenes llevan loading="lazy": la que está oculta por el tema no se
+  descarga. PENDIENTE: sustituir los PNG provisionales por los SVG oficiales.
+{%- endcomment -%}
+{%- assign lk = include.kind | default: "logo" -%}
+{%- if lk == "logo" -%}
+  {%- assign stem = "/assets/img/marca/grys-logo-" | append: lang -%}
+{%- else -%}
+  {%- assign stem = "/assets/img/marca/grys-" | append: lk -%}
+{%- endif -%}
+{%- assign pos = stem | append: ".png" | relative_url -%}
+{%- assign neg = stem | append: "-neg.png" | relative_url -%}
+<img class="logo-pos" src="{{ pos }}" alt="{{ include.alt | escape }}" width="{{ include.w }}" height="{{ include.h }}" loading="lazy" decoding="async"><img class="logo-neg" src="{{ neg }}" alt="{{ include.alt | escape }}" width="{{ include.w }}" height="{{ include.h }}" loading="lazy" decoding="async">

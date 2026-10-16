@@ -1,0 +1,43 @@
+# =====================================================================
+#  Redirecciones desde las URL de la web anterior (al-folio, solo inglés)
+#  · from: ruta antigua (tal cual estaba publicada)
+#  · to:   id de página de _data/routes.yml
+#  · lang: idioma de destino (la web antigua estaba en inglés → en)
+#  · anchor: (opcional) ancla dentro de la página destino
+#  Las fichas antiguas de personas, proyectos y noticias se redirigen desde
+#  el campo «old_urls» de cada elemento de la colección.
+# =====================================================================
+
+- { from: /about/, to: about, lang: en }
+- { from: /team/, to: team, lang: en }
+- { from: /SDGs/, to: sdgs, lang: en }
+- { from: /contact/, to: contact, lang: en }
+
+- { from: /research/, to: lines, lang: en }
+- { from: /research/areas/, to: lines, lang: en }
+- { from: /research/publications/grouped/, to: publications, lang: en }
+# /research/projects/ y /research/publications/ no necesitan redirección:
+# en la web nueva existen como /en/research/projects/ y /en/research/publications/,
+# pero la URL antigua (sin /en/) sí se redirige:
+- { from: /research/projects/, to: projects, lang: en }
+- { from: /research/publications/, to: publications, lang: en }
+
+- { from: /opentechlab/, to: lab, lang: en }
+- { from: /opentechlab/about/, to: lab, lang: en }
+- { from: /opentechlab/collaborations/, to: lab, lang: en }
+- { from: /opentechlab/components/, to: lab, lang: en }
+- { from: /opentechlab/resources/, to: lab, lang: en }
+- { from: /opentechlab/projects/, to: demonstrators, lang: en }
+- { from: /opentechlab-original/, to: lab, lang: en }
+- { from: /innovation/github/, to: software, lang: en }
+
+- { from: /education/, to: students, lang: en }
+- { from: /education/teaching/, to: teaching, lang: en }
+- { from: /education/theses/phd/, to: theses, lang: en, anchor: "#phd" }
+- { from: /education/theses/master/, to: theses, lang: en, anchor: "#master" }
+- { from: /education/theses/bachelor/, to: theses, lang: en, anchor: "#bachelor" }
+
+- { from: /news/, to: news, lang: en, note: "misma ruta en EN, pero sin /en/" }
+- { from: /events/, to: events, lang: en }
+- { from: /opportunities/, to: opportunities, lang: en }
+- { from: /offers/, to: opportunities, lang: en }

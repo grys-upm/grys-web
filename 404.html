@@ -1,0 +1,18 @@
+---
+layout: default
+lang: es
+lang-exclusive: [es]
+page_id: "404"
+permalink: /404.html
+title: Página no encontrada · Page not found
+sitemap: false
+---
+{%- comment -%} GitHub Pages solo sirve /404.html, así que es bilingüe. {%- endcomment -%}
+<section class="notice">
+  <div class="wrap prose">
+    <h1>{{ site.data.i18n.es.not_found.title }}</h1>
+    <p>{{ site.data.i18n.es.not_found.text }} <a href="{{ 'home' | route_url: 'es' }}">{{ site.data.i18n.es.not_found.back }}</a>.</p>
+    <h2 lang="en" style="margin-top:40px;font-size:28px">{{ site.data.i18n.en.not_found.title }}</h2>
+    <p lang="en">{{ site.data.i18n.en.not_found.text }} <a href="{{ 'home' | route_url: 'en' }}">{{ site.data.i18n.en.not_found.back }}</a>.</p>
+  </div>
+</section>

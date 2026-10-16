@@ -1,0 +1,56 @@
+# Textos de la interfaz en español. Misma estructura de claves en en.yml.
+lang_name: Español
+inst: Universidad Politécnica de Madrid · ETSI de Sistemas de Telecomunicación
+group_name: Grupo de Redes y Servicios de Próxima Generación
+logo_alt: GRyS, Grupo de Redes y Servicios de Próxima Generación
+go_home: Ir al inicio
+skip: Saltar al contenido
+menu: Menú
+main_nav: Principal
+mobile_nav: Menú móvil
+breadcrumb: Ruta de navegación
+home: Inicio
+contact: Contacto
+search: Buscar
+close: Cerrar
+lang_group: Idioma / Language
+to_light: Modo claro
+to_dark: Modo oscuro
+to_light_a: Cambiar a modo claro
+to_dark_a: Cambiar a modo oscuro
+tbc: por completar
+date_tbc: fecha por completar
+pending_content: Contenido pendiente de migración
+status_on: En curso
+status_off: Finalizado
+status_unk: Estado por confirmar
+read_more: Leer más
+footer:
+  group: El grupo
+  upm: UPM
+  open_science: Ciencia abierta
+  office: despacho
+  upm_slot: "Marca institucional UPM<br>(fichero oficial pendiente)"
+  edit: Editar esta página en GitHub
+  cosign_label: Universidad Politécnica de Madrid · GRyS
+  footer_group_nav: "Pie: el grupo"
+  footer_open_nav: "Pie: ciencia abierta"
+not_found:
+  title: Página no encontrada
+  text: La página que buscas no existe o ha cambiado de dirección.
+  back: Volver al inicio
+redirect:
+  text: Esta página se ha trasladado a
+pubs:
+  bibtex: Cita BibTeX
+  doi: DOI
+hero:
+  label: Grupo de investigación UPM · desde 2009
+  title: Redes y servicios de próxima generación
+  sub: Inteligencia en el centro, nodos en el borde.
+  lead: >-
+    Investigamos sistemas ciberfísicos, IoT, robótica cooperativa, middleware
+    semántico y computación cloud-edge, y los llevamos al campo, al mar, a la
+    ciudad y al aire.
+  cta_research: Qué investigamos
+  cta_collab: Colabora con nosotros
