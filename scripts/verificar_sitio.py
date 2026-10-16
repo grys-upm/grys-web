@@ -162,6 +162,14 @@ def main():
     if missing_media:
         print(f"AVISO  faltan {len(missing_media)} imágenes/PDF → python scripts/migrar_imagenes.py "
               "(con --estricto cuentan como error)")
+    # 4. Fotos del equipo: si existen en _site, la página Equipo debe mostrarlas
+    fotos = os.path.join(site, "assets", "img", "equipo")
+    if os.path.isdir(fotos) and any(f.endswith(".webp") for f in os.listdir(fotos)):
+        for team in (os.path.join(site, "grupo", "equipo", "index.html"),
+                     os.path.join(site, "en", "group", "team", "index.html")):
+            if os.path.exists(team) and "/assets/img/equipo/" not in open(team, encoding="utf-8").read():
+                errors.append(f"{os.path.relpath(team, site)}: hay fotos en assets/img/equipo/ "
+                              "pero la página no muestra ninguna (¿falla avatar.html?)")
     todo = sum(1 for w in warnings if "por completar" in w)
     for e in errors:
         print(f"ERROR  {e}")

@@ -1,5 +1,11 @@
 # Registro de cambios
 
+## Fase 2 · Corrección 4 (16-10-2026)
+
+- **Las fotos del equipo no se veían aunque estaban subidas.** `avatar.html` comprobaba si existía la foto recorriendo `site.static_files` y comparando `sf.relative_path`, pero ese dato no está disponible en Liquid (solo `sf.path`). La comprobación salía siempre negativa y se mostraban las iniciales. Ahora se usa el filtro nuevo `asset_exists` (`_plugins/grys.rb`), que mira directamente el fichero. El mismo fallo impedía en `figura.html` ofrecer la miniatura (`srcset`), aunque la imagen sí se veía.
+- **`comprobar_datos.py`:** da error si una plantilla recorre `site.static_files` para saber si existe un fichero.
+- **`verificar_sitio.py`:** da error si hay fotos en `assets/img/equipo/` y la página Equipo (ES o EN) no muestra ninguna. Esta comprobación habría detectado este fallo.
+
 ## Fase 2 · Corrección 3 (16-10-2026)
 
 La web ya compila. `verificar_sitio.py` encontró 16 enlaces rotos y, al revisarlos, apareció un fallo silencioso:

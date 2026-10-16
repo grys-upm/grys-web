@@ -237,6 +237,16 @@ module GRyS
            .gsub(/\s+/, " ").strip
     end
 
+    # true si el fichero existe en el repositorio. Ruta desde la raíz: "/assets/…".
+    # (En las plantillas, site.static_files NO expone relative_path; por eso
+    # este filtro en lugar de recorrer site.static_files.)
+    def asset_exists(path)
+      return false if path.nil? || path.to_s.strip.empty?
+
+      site = @context.registers[:site]
+      File.file?(site.in_source_dir(path.to_s.sub(%r{\A/+}, "")))
+    end
+
     # Texto visible de un enlace: sin «https://», «www.» ni barra final
     def url_label(value)
       return value if value.nil?
