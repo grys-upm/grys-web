@@ -1,22 +1,47 @@
 {%- comment -%}
-  Plantilla de jekyll-scholar para cada publicación (va dentro de un <li>).
-  Fase 1: mínima, para comprobar scholar + polyglot. En la fase 3 se
-  convierte en el componente pub-item con enlaces a DOI, Portal Científico,
-  Archivo Digital UPM, Altmetric, Dimensions y Google Scholar.
+  Plantilla de jekyll-scholar para cada entrada (va dentro de un <li>), para
+  publicaciones (papers.bib) y tesis (theses.bib).
+  Enlaces de impacto por publicación: DOI, Portal Científico UPM (portal_upm),
+  Archivo Digital UPM (archivo_upm), Google Scholar, Altmetric y Dimensions.
+  Fase 3: insignias oficiales de Altmetric y Dimensions (JS) y diseño pub-item.
   El BibTeX publicado omite los campos de scholar.bibtex_skip_fields.
 {%- endcomment -%}
 {%- assign lang = page.lang | default: site.active_lang | default: site.default_lang -%}
 {%- assign t = site.data.i18n[lang] -%}
-<div class="yr">{{ entry.year }}<small>{{ entry.journal | default: entry.booktitle | default: entry.publisher }}</small></div>
+{%- assign b_title = entry.title | remove: "{" | remove: "}" | remove: "\" -%}
+{%- assign b_venue = entry.journal | default: entry.booktitle | default: entry.school | default: entry.publisher | remove: "{" | remove: "}" | remove: "\" -%}
+{%- assign b_thesis = false -%}
+{%- comment -%} entry.type no sirve: el campo «type» de las tesis lo sobrescribe. Se usa «level». {%- endcomment -%}
+{%- if entry.level -%}{%- assign b_thesis = true -%}{%- endif -%}
+<div class="yr">{{ entry.year }}<small>{{ b_venue }}</small></div>
 <div>
-  <h3>{{ entry.title }}</h3>
+  <h3>{{ b_title }}</h3>
   <p class="au">{% for a in entry.author_array %}{{ a.first }} {{ a.last }}{% unless forloop.last %}, {% endunless %}{% endfor %}</p>
+  {%- if b_thesis %}
+  <dl class="spec">
+    {%- if entry.supervisor %}<dt>{{ t.theses.supervisor }}</dt><dd>{{ entry.supervisor | remove: "{" | remove: "}" | replace: " and ", "; " }}</dd>{% endif %}
+    {%- if entry.school %}<dt>{{ t.theses.school }}</dt><dd>{{ entry.school | remove: "{" | remove: "}" }}</dd>{% endif %}
+    {%- if entry.award %}<dt>{{ t.theses.award }}</dt><dd lang="en">{{ entry.award | remove: "{" | remove: "}" }}</dd>{% endif %}
+  </dl>
+  {%- endif %}
   <div class="acts2">
     {%- if entry.doi %}
-    <a href="https://doi.org/{{ entry.doi }}">{{ t.pubs.doi }}</a>
-    {%- else %}
-    <span class="datos">{{ t.pubs.doi }} <span class="todo">{{ t.tbc }}</span></span>
+    <a href="https://doi.org/{{ entry.doi }}">DOI<span class="sr">: {{ entry.doi }}</span></a>
+    {%- elsif b_thesis == false %}
+    <span class="datos">DOI <span class="todo">{{ t.tbc }}</span></span>
     {%- endif %}
-    <details class="bib"><summary>{{ t.pubs.bibtex }}</summary><pre>{{ entry.bibtex | escape }}</pre></details>
+    {%- if entry.portal_upm %}<a href="https://portalcientifico.upm.es/{{ lang }}/ipublic/item/{{ entry.portal_upm }}">{{ t.pubs_extra.portal }}</a>{% endif %}
+    {%- if entry.archivo_upm %}<a href="https://oa.upm.es/{{ entry.archivo_upm }}/">{{ t.pubs_extra.archivo }}</a>{% endif %}
+    {%- if entry.teseo %}<a href="{{ entry.teseo }}">TESEO</a>{% endif %}
+    {%- if entry.doi and b_thesis == false %}
+    <a href="https://www.altmetric.com/details/doi/{{ entry.doi }}">Altmetric</a>
+    <a href="https://badge.dimensions.ai/details/doi/{{ entry.doi }}">Dimensions</a>
+    {%- endif %}
+    {%- if entry.google_scholar_id %}
+    <a href="https://scholar.google.com/citations?view_op=view_citation&amp;citation_for_view={{ entry.google_scholar_id }}">{{ t.pubs_extra.scholar }}</a>
+    {%- elsif b_thesis == false %}
+    <a href="https://scholar.google.com/scholar?q={{ b_title | prepend: '"' | append: '"' | url_encode }}">{{ t.pubs_extra.scholar }}</a>
+    {%- endif %}
+    <details class="bib"><summary>{{ t.pubs.bibtex }}<span class="sr">: {{ b_title | truncatewords: 6 }}</span></summary><pre>{{ entry.bibtex | escape }}</pre></details>
   </div>
 </div>

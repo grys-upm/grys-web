@@ -1,0 +1,17 @@
+{%- comment -%} Cuerpo de la ficha de una línea: texto + personas + proyectos (campo «lines» de cada uno). {%- endcomment -%}
+{%- assign fl_id = page.id -%}
+{%- assign fl_ax = site.data.axes | where: "id", page.axis | first -%}
+<p class="datos">{{ t.lines.axis }} 0{{ page.axis }} · {{ fl_ax.title | l10n }}</p>
+{{ include.cuerpo }}
+{%- assign fl_people = "" | split: "" -%}
+{%- for m in site.members %}{% if m.lines contains fl_id and m.status == "current" %}{% assign fl_people = fl_people | push: m %}{% endif %}{% endfor -%}
+<h2 class="rule">{{ t.lines.people }}</h2>
+{%- if fl_people.size > 0 %}
+<div class="chips">{% for m in fl_people %}<a class="chip" href="{{ m | detail_url }}">{{ m.given }} {{ m.family }}</a>{% endfor %}</div>
+{%- else %}<p class="todo">{{ t.tbc }}</p>{% endif %}
+{%- assign fl_proj = "" | split: "" -%}
+{%- for p in site.projects %}{% if p.lines contains fl_id %}{% assign fl_proj = fl_proj | push: p %}{% endif %}{% endfor -%}
+<h2 class="rule">{{ t.lines.projects }}</h2>
+{%- if fl_proj.size > 0 %}
+<ul class="nodes">{% for p in fl_proj %}<li><a href="{{ p | detail_url }}">{{ p.acronym }}</a> · {{ p | tr: "title" }}</li>{% endfor %}</ul>
+{%- else %}<p class="todo">{{ t.tbc }}</p>{% endif %}

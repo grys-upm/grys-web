@@ -1,0 +1,10 @@
+{%- comment -%} Columna lateral de una noticia: últimas noticias. {%- endcomment -%}
+<nav class="box" aria-labelledby="otras-noticias">
+  <h2 id="otras-noticias">{{ site.data.routes.pages | where: "id", "news" | map: "title" | first | l10n }}</h2>
+  {%- assign nd_list = site.news | sort: "date" | reverse %}
+  <ul class="nodes">
+  {%- for n in nd_list limit: 5 %}{% assign nd_url = n | detail_url %}
+    <li>{% if nd_url %}<a href="{{ nd_url }}">{{ n | tr: "title" }}</a>{% else %}{{ n | tr: "title" }}{% endif %}</li>
+  {%- endfor %}
+  </ul>
+</nav>

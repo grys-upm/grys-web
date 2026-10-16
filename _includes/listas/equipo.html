@@ -1,0 +1,50 @@
+{%- comment -%}
+  Equipo desde _members/. Orden de los actuales: rol pi primero, después por
+  puesto (orden de _data/positions.yml) y, dentro del puesto, por fecha de
+  incorporación; las colaboraciones externas al final.
+  Fase 2: marcado básico. Fase 3: pestañas (role="tab") y member-card.
+{%- endcomment -%}
+{%- include page-vars.html -%}
+{%- assign e_current = site.members | where: "status", "current" -%}
+{%- assign e_sorted = e_current | where: "role", "pi" -%}
+{%- for e_pos in site.data.positions -%}
+  {%- assign e_group = e_current | where: "position", e_pos[0] | sort: "since", "last" -%}
+  {%- for e_m in e_group -%}{%- unless e_m.role == "pi" or e_m.role == "ext" -%}{%- assign e_sorted = e_sorted | push: e_m -%}{%- endunless -%}{%- endfor -%}
+{%- endfor -%}
+{%- assign e_ext = e_current | where: "role", "ext" -%}
+{%- assign e_sorted = e_sorted | concat: e_ext -%}
+
+<h2 class="rule">{{ t.members.current }} ({{ e_sorted.size }})</h2>
+<div class="grid4 equipo">
+{%- for m in e_sorted %}
+  {%- assign e_url = m | detail_url %}
+  <a class="member" href="{{ e_url }}">
+    {% include avatar.html m=m %}
+    <h3>{{ m.given }} {{ m.family }}</h3>
+    <p class="pos">{% include puesto.html m=m %}</p>
+    {%- capture e_rol %}{% include rol.html m=m %}{% endcapture %}
+    {%- if e_rol != "" %}<p class="role">{{ e_rol }}</p>{% endif %}
+  </a>
+{%- endfor %}
+</div>
+
+{%- assign e_former = site.members | where: "status", "former" | sort: "until", "first" | reverse %}
+<h2 class="rule">{{ t.members.former }} ({{ e_former.size }})</h2>
+<ul class="former">
+{%- for m in e_former %}
+  <li><a href="{{ m | detail_url }}">{{ m.given }} {{ m.family }}</a>
+    <small>{% include puesto.html m=m %} · {% if m.since %}{{ m.since | date: "%Y" }}{% else %}<span class="todo">{{ t.tbc }}</span>{% endif %}–{% if m.until %}{{ m.until | date: "%Y" }}{% else %}<span class="todo">{{ t.tbc }}</span>{% endif %}</small></li>
+{%- endfor %}
+</ul>
+
+{%- assign e_mem = site.members | where: "status", "memoriam" %}
+{%- if e_mem.size > 0 %}
+<h2 class="rule">{{ t.members.memoriam }}</h2>
+{%- for m in e_mem %}
+<div class="memoriam">
+  {% include avatar.html m=m %}
+  <h3><a href="{{ m | detail_url }}">{{ m.given }} {{ m.family }}</a></h3>
+  <p class="pos">{% include puesto.html m=m %} · {{ m.since | date: "%Y" }}–{{ m.until | date: "%Y" }}</p>
+</div>
+{%- endfor %}
+{%- endif %}

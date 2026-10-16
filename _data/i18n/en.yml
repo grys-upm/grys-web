@@ -54,3 +54,104 @@ hero:
     the city and the air.
   cta_research: Our research
   cta_collab: Work with us
+
+video: Video
+video_link: Watch on YouTube
+lang_notice: "This content is only available in English."
+title_notice: "(title in English)"
+period: Period
+since: since
+present: present
+more_info: More information
+none_yet: There are no items yet.
+proposal_note: "Proposal pending validation by the group."
+members:
+  current: Current members
+  former: Former members
+  memoriam: In memoriam
+  position: Position
+  role: Role in the group
+  email: Email
+  website: Personal website
+  portal: UPM Scientific Portal
+  profiles: Profiles
+  projects: Projects led
+  lines: Research lines
+projects:
+  type: Type
+  competitive: Competitive
+  private: Private contract
+  programme: Programme
+  call: Call
+  funder: Funding body
+  funding: Funding
+  grant_ids: References
+  role: GRyS role
+  role_coordinator: Coordinator
+  role_partner: Partner
+  role_subcontractor: Subcontractor
+  pi: Lead researcher at GRyS
+  coordinator: Coordination
+  partners: Partners
+  budget: Budget (GRyS)
+  website: Official website
+  links: Links
+  domains: Domains
+  repos: Code
+  status: Status
+  status_ongoing: Ongoing
+  status_completed: Completed
+  status_upcoming: Upcoming
+  status_unknown: Status to be confirmed
+  project: Project
+  count: projects
+  publications: Project publications
+lines:
+  axis: Axis
+  people: Who works on this line
+  projects: Related projects
+domains:
+  projects: Projects in this domain
+news:
+  categories:
+    award: Awards
+    event: Events
+    project: Projects
+    people: People
+    transfer: Technology transfer
+    lab: OpenTech Lab
+events:
+  upcoming: Upcoming events
+  past: Past events
+  none_upcoming: There are no upcoming events.
+  place: Venue
+  related_news: Related news
+  website: Event website
+opps:
+  open: Open opportunities
+  none_title: There are no open calls right now
+  none_text: "See our student project proposals or write to us."
+  deadline: Deadline
+  type: Type
+  job: Job
+  scholarship: Grant
+  pdf: Full offer (PDF)
+  details: See the offer
+  contact: Contact
+theses:
+  phd: PhD theses
+  master: Master's theses and DEA
+  bachelor: Bachelor's theses
+  supervisor: Supervisor
+  school: School
+  award: Award
+  in_site: "on this site"
+  in_portal: "according to the UPM Scientific Portal"
+pubs_extra:
+  portal: Scientific Portal
+  archivo: UPM Digital Archive
+  scholar: Google Scholar
+  count: publications on this site
+software:
+  repos: Repositories
+  more: See all on GitHub

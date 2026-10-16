@@ -1,0 +1,16 @@
+{%- comment -%} Líneas de investigación agrupadas por eje (_data/axes.yml, propuesta). {%- endcomment -%}
+{%- include page-vars.html -%}
+{%- for ax in site.data.axes %}
+<h2 class="rule"><span class="datos">{{ t.lines.axis | upcase }} 0{{ ax.id }}</span> {{ ax.title | l10n }}</h2>
+<div class="grid3">
+  {%- assign ln_list = site.lines | where: "axis", ax.id | sort: "order" %}
+  {%- for l in ln_list %}
+  <article class="card line-card">
+    <span class="hexi">{% include icono.html n=l.icon %}</span>
+    <h3><a href="{{ l | detail_url }}">{{ l | tr: "title" }}</a></h3>
+    <p>{{ l | tr: "desc" }}</p>
+  </article>
+  {%- endfor %}
+</div>
+{%- endfor %}
+<p class="datos">{{ t.proposal_note }} ({{ t.lines.axis }})</p>

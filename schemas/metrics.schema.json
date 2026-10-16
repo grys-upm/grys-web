@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "_data/metrics.yml",
+  "type": "object",
+  "required": [
+    "scopus_docs",
+    "scopus_citations",
+    "scopus_h",
+    "phd_theses",
+    "source",
+    "date"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "scopus_docs": {
+      "type": "integer"
+    },
+    "scopus_citations": {
+      "type": "integer"
+    },
+    "scopus_h": {
+      "type": "integer"
+    },
+    "phd_theses": {
+      "type": "integer"
+    },
+    "master_theses": {
+      "type": "integer"
+    },
+    "master_theses_detail": {
+      "type": "string",
+      "minLength": 1
+    },
+    "bachelor_theses": {
+      "type": "integer"
+    },
+    "source": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_url": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https?://"
+    },
+    "date": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}(-\\d{2})?$"
+    }
+  }
+}

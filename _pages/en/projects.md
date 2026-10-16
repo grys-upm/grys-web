@@ -5,4 +5,4 @@ page_id: projects
 permalink: /research/projects/
 ---
 
-<p class="todo">Content pending migration (phase 2).</p>
+{% include listas/proyectos.html %}

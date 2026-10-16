@@ -5,4 +5,4 @@ page_id: news
 permalink: /news/
 ---
 
-<p class="todo">Content pending migration (phase 2).</p>
+{% include listas/noticias.html %}

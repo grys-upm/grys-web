@@ -1,0 +1,598 @@
+# Imágenes y PDF de la web anterior que USA el sitio nuevo (el resto no se migra).
+# from: ruta en grys-upm.github.io · to: ruta en este repositorio · kind: foto|retrato|logo|pdf
+# Lo procesa scripts/migrar_imagenes.py (WebP, 1600 px máx. + miniatura de 480 px).
+- from: assets/img/news/2023-outstanding-doctoral-award/52662557715_e87fd303b7_o.jpg
+  to: assets/img/noticias/2023-01-27-outstanding-doctoral-award/52662557715-e87fd303b7-o.webp
+  kind: foto
+  used_in:
+  - _news/2023-01-27-outstanding-doctoral-award.md
+- from: assets/img/news/2024-ice-diploma-award-ceremony/53552334542_07e6d2535f_o.jpg
+  to: assets/img/noticias/2024-02-20-ice-diploma-award-ceremony/53552334542-07e6d2535f-o.webp
+  kind: foto
+  used_in:
+  - _news/2024-02-20-ice-diploma-award-ceremony.md
+- from: assets/img/news/2024-ice-diploma-award-ceremony/53552334642_34ea75464e_o.jpg
+  to: assets/img/noticias/2024-02-20-ice-diploma-award-ceremony/53552334642-34ea75464e-o.webp
+  kind: foto
+  used_in:
+  - _news/2024-02-20-ice-diploma-award-ceremony.md
+- from: assets/img/news/2024-ice-diploma-award-ceremony/53553190476_0539210215_o.jpg
+  to: assets/img/noticias/2024-02-20-ice-diploma-award-ceremony/53553190476-0539210215-o.webp
+  kind: foto
+  used_in:
+  - _news/2024-02-20-ice-diploma-award-ceremony.md
+- from: assets/img/news/2024-ice-diploma-award-ceremony/53553528999_66679aab06_o.jpg
+  to: assets/img/noticias/2024-02-20-ice-diploma-award-ceremony/53553528999-66679aab06-o.webp
+  kind: foto
+  used_in:
+  - _news/2024-02-20-ice-diploma-award-ceremony.md
+- from: assets/img/news/2024-ice-diploma-award-ceremony/53553638535_8dd45c0986_o.jpg
+  to: assets/img/noticias/2024-02-20-ice-diploma-award-ceremony/53553638535-8dd45c0986-o.webp
+  kind: foto
+  used_in:
+  - _news/2024-02-20-ice-diploma-award-ceremony.md
+- from: assets/img/news/2025-09-04-nextarc-kickoff/IMG_2305.jpg
+  to: assets/img/noticias/2025-09-04-nextarc-kickoff/img-2305.webp
+  kind: foto
+  used_in:
+  - _news/2025-09-04-nextarc-kickoff.md
+- from: assets/img/news/2025-09-04-nextarc-kickoff/IMG_2313.jpg
+  to: assets/img/noticias/2025-09-04-nextarc-kickoff/img-2313.webp
+  kind: foto
+  used_in:
+  - _news/2025-09-04-nextarc-kickoff.md
+- from: assets/img/news/2025-09-04-nextarc-kickoff/IMG_2315.jpg
+  to: assets/img/noticias/2025-09-04-nextarc-kickoff/img-2315.webp
+  kind: foto
+  used_in:
+  - _news/2025-09-04-nextarc-kickoff.md
+- from: assets/img/news/2025-09-04-nextarc-kickoff/IMG_2330.jpg
+  to: assets/img/noticias/2025-09-04-nextarc-kickoff/img-2330.webp
+  kind: foto
+  used_in:
+  - _news/2025-09-04-nextarc-kickoff.md
+- from: assets/img/news/2025-09-04-nextarc-kickoff/nextarc-kickoff-group.jpg
+  to: assets/img/noticias/2025-09-04-nextarc-kickoff/nextarc-kickoff-group.webp
+  kind: foto
+  used_in:
+  - _news/2025-09-04-nextarc-kickoff.md
+- from: assets/img/news/2025-11-27-industry-day/20251127_124804.jpg
+  to: assets/img/noticias/2025-11-27-car-csic-industry-day-2025/20251127-124804.webp
+  kind: foto
+  used_in:
+  - _news/2025-11-27-car-csic-industry-day-2025.md
+- from: assets/img/news/2025-11-27-industry-day/IMG-20251128-WA0005.jpg
+  to: assets/img/noticias/2025-11-27-car-csic-industry-day-2025/img-20251128-wa0005.webp
+  kind: foto
+  used_in:
+  - _news/2025-11-27-car-csic-industry-day-2025.md
+- from: assets/img/news/2025-11-27-industry-day/IMG-20251128-WA0006.jpg
+  to: assets/img/noticias/2025-11-27-car-csic-industry-day-2025/img-20251128-wa0006.webp
+  kind: foto
+  used_in:
+  - _news/2025-11-27-car-csic-industry-day-2025.md
+- from: assets/img/news/2025-11-27-industry-day/IMG-20251128-WA0008.jpg
+  to: assets/img/noticias/2025-11-27-car-csic-industry-day-2025/img-20251128-wa0008.webp
+  kind: foto
+  used_in:
+  - _news/2025-11-27-car-csic-industry-day-2025.md
+- from: assets/img/news/2026-01-27-nextarc-workshop-madrid/1769593179586.jpeg
+  to: assets/img/noticias/2026-01-27-nextarc-workshop/1769593179586.webp
+  kind: foto
+  used_in:
+  - _news/2026-01-27-nextarc-workshop.md
+- from: assets/img/news/2026-01-27-nextarc-workshop-madrid/1769593180026.jpeg
+  to: assets/img/noticias/2026-01-27-nextarc-workshop/1769593180026.webp
+  kind: foto
+  used_in:
+  - _news/2026-01-27-nextarc-workshop.md
+- from: assets/img/news/2026-01-27-nextarc-workshop-madrid/1769593180185.jpeg
+  to: assets/img/noticias/2026-01-27-nextarc-workshop/1769593180185.webp
+  kind: foto
+  used_in:
+  - _news/2026-01-27-nextarc-workshop.md
+- from: assets/img/news/2026-01-27-nextarc-workshop-madrid/1769593181967.jpeg
+  to: assets/img/noticias/2026-01-27-nextarc-workshop/1769593181967.webp
+  kind: foto
+  used_in:
+  - _news/2026-01-27-nextarc-workshop.md
+- from: assets/img/news/2026-02-27-outstanding-doctoral-award/55130577210_0c5453f01f_o.jpg
+  to: assets/img/noticias/2026-02-27-outstanding-doctoral-award/55130577210-0c5453f01f-o.webp
+  kind: foto
+  used_in:
+  - _news/2026-02-27-outstanding-doctoral-award.md
+- from: assets/img/news/2026-03-18-upm-investiga/102e9c3b-f119-4498-99ee-4ced8977d41e.jpeg
+  to: assets/img/noticias/2026-03-18-upm-investiga/102e9c3b-f119-4498-99ee-4ced8977d41e.webp
+  kind: foto
+  used_in:
+  - _news/2026-03-18-upm-investiga.md
+- from: assets/img/news/2026-03-18-upm-investiga/2026-03-18 at 15.13.03.jpeg
+  to: assets/img/noticias/2026-03-18-upm-investiga/2026-03-18-at-15-13-03.webp
+  kind: foto
+  used_in:
+  - _news/2026-03-18-upm-investiga.md
+- from: assets/img/news/2026-03-18-upm-investiga/55163586641_30ccb04e1d_o.jpg
+  to: assets/img/noticias/2026-03-18-upm-investiga/55163586641-30ccb04e1d-o.webp
+  kind: foto
+  used_in:
+  - _news/2026-03-18-upm-investiga.md
+- from: assets/img/news/2026-03-18-upm-investiga/6673071c-13f8-40c6-a34a-fce5e1f3ee2c.jpeg
+  to: assets/img/noticias/2026-03-18-upm-investiga/6673071c-13f8-40c6-a34a-fce5e1f3ee2c.webp
+  kind: foto
+  used_in:
+  - _news/2026-03-18-upm-investiga.md
+- from: assets/img/news/2026-04-24-coitt-awards/20260424JR_0411.jpg
+  to: assets/img/noticias/2026-04-24-estela-professional-association-awards/20260424jr-0411.webp
+  kind: foto
+  used_in:
+  - _news/2026-04-24-estela-professional-association-awards.md
+- from: assets/img/news/2026-04-24-coitt-awards/20260424JR_0483.jpg
+  to: assets/img/noticias/2026-04-24-estela-professional-association-awards/20260424jr-0483.webp
+  kind: foto
+  used_in:
+  - _news/2026-04-24-estela-professional-association-awards.md
+- from: assets/img/news/2026-04-24-coitt-awards/20260424JR_0771.jpg
+  to: assets/img/noticias/2026-04-24-estela-professional-association-awards/20260424jr-0771.webp
+  kind: foto
+  used_in:
+  - _news/2026-04-24-estela-professional-association-awards.md
+- from: assets/img/news/2026-04-24-coitt-awards/20260424JR_0784.jpg
+  to: assets/img/noticias/2026-04-24-estela-professional-association-awards/20260424jr-0784.webp
+  kind: foto
+  used_in:
+  - _news/2026-04-24-estela-professional-association-awards.md
+- from: assets/img/news/2026-04-24-coitt-awards/20260424JR_0789.jpg
+  to: assets/img/noticias/2026-04-24-estela-professional-association-awards/20260424jr-0789.webp
+  kind: foto
+  used_in:
+  - _news/2026-04-24-estela-professional-association-awards.md
+- from: assets/img/news/2026-04-24-coitt-awards/IMG_20260424_141001469_HDR~2.jpg
+  to: assets/img/noticias/2026-04-24-estela-professional-association-awards/img-20260424-141001469-hdr-2.webp
+  kind: foto
+  used_in:
+  - _news/2026-04-24-estela-professional-association-awards.md
+- from: assets/img/projects/accus/Squared-ACCUS-logo_2.png
+  to: assets/img/proyectos/accus/logo.webp
+  kind: logo
+  used_in:
+  - _projects/accus.md
+- from: assets/img/projects/afarcloud/Squared-afarcloud-logo.png
+  to: assets/img/proyectos/afarcloud/logo.webp
+  kind: logo
+  used_in:
+  - _projects/afarcloud.md
+- from: assets/img/projects/aware/squared-AWARE-logo.png
+  to: assets/img/proyectos/aware/logo.webp
+  kind: logo
+  used_in:
+  - _projects/aware.md
+- from: assets/img/projects/ci-cuvico/Inventia-logo.png
+  to: assets/img/proyectos/ci-cuvico/inventia-logo.webp
+  kind: foto
+  used_in:
+  - _projects/ci-cuvico.md
+- from: assets/img/projects/ci-cuvico/squared-ci-cuvico-logo.png
+  to: assets/img/proyectos/ci-cuvico/logo.webp
+  kind: logo
+  used_in:
+  - _projects/ci-cuvico.md
+- from: assets/img/projects/ci-rti/squared-CI-RTI-logo.png
+  to: assets/img/proyectos/ci-rti/logo.webp
+  kind: logo
+  used_in:
+  - _projects/ci-rti.md
+- from: assets/img/projects/computer-vulnerability-analysis-assistance-service/squared-computer-vulnerability-analysis-assistance-service-logo.png
+  to: assets/img/proyectos/computer-vulnerability-analysis-assistance-service/logo.webp
+  kind: logo
+  used_in:
+  - _projects/computer-vulnerability-analysis-assistance-service.md
+- from: assets/img/projects/computer-vulnerability-analysis/squared-computer-vulnerability-analysis-logo.png
+  to: assets/img/proyectos/computer-vulnerability-analysis/logo.webp
+  kind: logo
+  used_in:
+  - _projects/computer-vulnerability-analysis.md
+- from: assets/img/projects/demanes/DEMANESFunding.png
+  to: assets/img/proyectos/demanes/demanesfunding.webp
+  kind: foto
+  used_in:
+  - _projects/demanes.md
+- from: assets/img/projects/demanes/Squared-DEMANES-logo.png
+  to: assets/img/proyectos/demanes/logo.webp
+  kind: logo
+  used_in:
+  - _projects/demanes.md
+- from: assets/img/projects/demeter/European_Commission.png
+  to: assets/img/proyectos/demeter/european-commission.webp
+  kind: foto
+  used_in:
+  - _projects/demeter.md
+- from: assets/img/projects/demeter/squared-DEMETER-logo.png
+  to: assets/img/proyectos/demeter/logo.webp
+  kind: logo
+  used_in:
+  - _projects/demeter.md
+- from: assets/img/projects/disp-gw/squared-disp-gw-logo.png
+  to: assets/img/proyectos/disp-gw/logo.webp
+  kind: logo
+  used_in:
+  - _projects/disp-gw.md
+- from: assets/img/projects/disp-j/squared-disp-j-logo.png
+  to: assets/img/proyectos/disp-j/logo.webp
+  kind: logo
+  used_in:
+  - _projects/disp-j.md
+- from: assets/img/projects/diyse/European_Commission.png
+  to: assets/img/proyectos/diyse/european-commission.webp
+  kind: foto
+  used_in:
+  - _projects/diyse.md
+- from: assets/img/projects/diyse/ITEA2.png
+  to: assets/img/proyectos/diyse/itea2.webp
+  kind: foto
+  used_in:
+  - _projects/diyse.md
+- from: assets/img/projects/diyse/Logotipo_del_Ministerio_de_Industria,_Comercio_y_Turismo.png
+  to: assets/img/proyectos/diyse/logotipo-del-ministerio-de-industria-comercio-y-turismo.webp
+  kind: foto
+  used_in:
+  - _projects/diyse.md
+- from: assets/img/projects/diyse/squared-DiYSE-logo.png
+  to: assets/img/proyectos/diyse/logo.webp
+  kind: logo
+  used_in:
+  - _projects/diyse.md
+- from: assets/img/projects/e-gotham/Logotipo_del_Ministerio_de_Industria,_Energía_y_Turismo.png
+  to: assets/img/proyectos/e-gotham/logotipo-del-ministerio-de-industria-energia-y-turismo.webp
+  kind: foto
+  used_in:
+  - _projects/e-gotham.md
+- from: assets/img/projects/e-gotham/artemis-ia.png
+  to: assets/img/proyectos/e-gotham/artemis-ia.webp
+  kind: foto
+  used_in:
+  - _projects/e-gotham.md
+- from: assets/img/projects/e-gotham/eu-fp7-logo.jpeg
+  to: assets/img/proyectos/e-gotham/eu-fp7-logo.webp
+  kind: foto
+  used_in:
+  - _projects/e-gotham.md
+- from: assets/img/projects/e-gotham/squared-e-GOTHAM-logo.png
+  to: assets/img/proyectos/e-gotham/logo.webp
+  kind: logo
+  used_in:
+  - _projects/e-gotham.md
+- from: assets/img/projects/esna/European_Commission.png
+  to: assets/img/proyectos/esna/european-commission.webp
+  kind: foto
+  used_in:
+  - _projects/esna.md
+- from: assets/img/projects/esna/ITEA2.png
+  to: assets/img/proyectos/esna/itea2.webp
+  kind: foto
+  used_in:
+  - _projects/esna.md
+- from: assets/img/projects/esna/Logotipo_del_Ministerio_de_Industria,_Comercio_y_Turismo.png
+  to: assets/img/proyectos/esna/logotipo-del-ministerio-de-industria-comercio-y-turismo.webp
+  kind: foto
+  used_in:
+  - _projects/esna.md
+- from: assets/img/projects/esna/squared-ESNA-logo.png
+  to: assets/img/proyectos/esna/logo.webp
+  kind: logo
+  used_in:
+  - _projects/esna.md
+- from: assets/img/projects/exhaustif/squared-exhaustif-logo.png
+  to: assets/img/proyectos/exhaustif/logo.webp
+  kind: logo
+  used_in:
+  - _projects/exhaustif.md
+- from: assets/img/projects/i3res/squared-I3RES-logo.png
+  to: assets/img/proyectos/i3res/logo.webp
+  kind: logo
+  used_in:
+  - _projects/i3res.md
+- from: assets/img/projects/lifewear/squared-lifewear-logo.jpg
+  to: assets/img/proyectos/lifewear/logo.webp
+  kind: logo
+  used_in:
+  - _projects/lifewear.md
+- from: assets/img/projects/miracle/squared-MIRACLE-logo.png
+  to: assets/img/proyectos/miracle/logo.webp
+  kind: logo
+  used_in:
+  - _projects/miracle.md
+- from: assets/img/projects/nextarc/MICIU+Cofinanciado+AEI.png
+  to: assets/img/proyectos/nextarc/miciu-cofinanciado-aei.webp
+  kind: foto
+  used_in:
+  - _projects/nextarc.md
+- from: assets/img/projects/nextarc/nextarc-chipsju-horizon.png
+  to: assets/img/proyectos/nextarc/nextarc-chipsju-horizon.webp
+  kind: foto
+  used_in:
+  - _projects/nextarc.md
+- from: assets/img/projects/nextarc/nextarc-logo.png
+  to: assets/img/proyectos/nextarc/logo.webp
+  kind: logo
+  used_in:
+  - _projects/nextarc.md
+- from: assets/img/projects/perifericos/squared-perifericos-logo.png
+  to: assets/img/proyectos/perifericos/logo.webp
+  kind: logo
+  used_in:
+  - _projects/perifericos.md
+- from: assets/img/projects/psav-tic/squared-psav-tic-logo.png
+  to: assets/img/proyectos/psav-tic/logo.webp
+  kind: logo
+  used_in:
+  - _projects/psav-tic.md
+- from: assets/img/projects/rimsi/squared-rimsi-logo.png
+  to: assets/img/proyectos/rimsi/logo.webp
+  kind: logo
+  used_in:
+  - _projects/rimsi.md
+- from: assets/img/projects/scos/squared-scos-logo.png
+  to: assets/img/proyectos/scos/logo.webp
+  kind: logo
+  used_in:
+  - _projects/scos.md
+- from: assets/img/projects/secuarea/squared-secuarea-logo.png
+  to: assets/img/proyectos/secuarea/logo.webp
+  kind: logo
+  used_in:
+  - _projects/secuarea.md
+- from: assets/img/projects/simgeosev/simgeosev-cofinanciadoUE-aei.png
+  to: assets/img/proyectos/simgeosev/simgeosev-cofinanciadoue-aei.webp
+  kind: foto
+  used_in:
+  - _projects/simgeosev.md
+- from: assets/img/projects/simgeosev/squared-simgeosev-logo.png
+  to: assets/img/proyectos/simgeosev/logo.webp
+  kind: logo
+  used_in:
+  - _projects/simgeosev.md
+- from: assets/img/projects/soda/squared-SODA-logo.png
+  to: assets/img/proyectos/soda/logo.webp
+  kind: logo
+  used_in:
+  - _projects/soda.md
+- from: assets/img/projects/ssbjp/squared-ssbjp-logo.png
+  to: assets/img/proyectos/ssbjp/logo.webp
+  kind: logo
+  used_in:
+  - _projects/ssbjp.md
+- from: assets/img/projects/swarms/Squared-SWARMs-logo.jpg
+  to: assets/img/proyectos/swarms/logo.webp
+  kind: logo
+  used_in:
+  - _projects/swarms.md
+- from: assets/img/projects/taps/squared-taps-logo.png
+  to: assets/img/proyectos/taps/logo.webp
+  kind: logo
+  used_in:
+  - _projects/taps.md
+- from: assets/img/projects/tic-spaces/squared-tic-spaces-logo.png
+  to: assets/img/proyectos/tic-spaces/logo.webp
+  kind: logo
+  used_in:
+  - _projects/tic-spaces.md
+- from: assets/img/projects/woo/Squared-WoO-logo.png
+  to: assets/img/proyectos/woo/logo.webp
+  kind: logo
+  used_in:
+  - _projects/woo.md
+- from: assets/img/projects/woo/WoO_Funding.png
+  to: assets/img/proyectos/woo/woo-funding.webp
+  kind: foto
+  used_in:
+  - _projects/woo.md
+- from: assets/img/projects/µSWN/squared-µSWN-logo.png
+  to: assets/img/proyectos/uswn/logo.webp
+  kind: logo
+  used_in:
+  - _projects/uswn.md
+- from: assets/img/team/AlexandraCuervaGarcia.jpg
+  to: assets/img/equipo/alexandra-cuerva-garcia.webp
+  kind: retrato
+  used_in:
+  - _members/alexandra-cuerva-garcia.md
+- from: assets/img/team/AnaBelenGarciaHernando.jpg
+  to: assets/img/equipo/ana-belen-garcia-hernando.webp
+  kind: retrato
+  used_in:
+  - _members/ana-belen-garcia-hernando.md
+- from: assets/img/team/AnaMariaTorresCampano.jpg
+  to: assets/img/equipo/ana-maria-torres-campano.webp
+  kind: retrato
+  used_in:
+  - _members/ana-maria-torres-campano.md
+- from: assets/img/team/AntonioDaSilvaFariña.jpg
+  to: assets/img/equipo/antonio-da-silva-farina.webp
+  kind: retrato
+  used_in:
+  - _members/antonio-da-silva-farina.md
+- from: assets/img/team/CarlosEstevezNovo.jpg
+  to: assets/img/equipo/carlos-estevez-novo.webp
+  kind: retrato
+  used_in:
+  - _members/carlos-estevez-novo.md
+- from: assets/img/team/CesarGarciaMoreno.jpg
+  to: assets/img/equipo/cesar-garcia-moreno.webp
+  kind: retrato
+  used_in:
+  - _members/cesar-garcia-moreno.md
+- from: assets/img/team/DanielVilelaGarcia.jpg
+  to: assets/img/equipo/daniel-vilela-garcia.webp
+  kind: retrato
+  used_in:
+  - _members/daniel-vilela-garcia.md
+- from: assets/img/team/DavidGomezSanchezPascuala.jpg
+  to: assets/img/equipo/david-gomez-sanchez-pascuala.webp
+  kind: retrato
+  used_in:
+  - _members/david-gomez-sanchez-pascuala.md
+- from: assets/img/team/EstelaMoraBarba.jpg
+  to: assets/img/equipo/estela-mora-barba.webp
+  kind: retrato
+  used_in:
+  - _members/estela-mora-barba.md
+- from: assets/img/team/EstherMorenoSama.jpg
+  to: assets/img/equipo/esther-moreno-sama.webp
+  kind: retrato
+  used_in:
+  - _members/esther-moreno-sama.md
+- from: assets/img/team/GregorioRubioCifuentes.jpg
+  to: assets/img/equipo/gregorio-rubio-cifuentes.webp
+  kind: retrato
+  used_in:
+  - _members/gregorio-rubio-cifuentes.md
+- from: assets/img/team/IvanCorredorPerez.jpg
+  to: assets/img/equipo/ivan-corredor-perez.webp
+  kind: retrato
+  used_in:
+  - _members/ivan-corredor-perez.md
+- from: assets/img/team/JASF-RIP-profile.jpg
+  to: assets/img/equipo/jose-antonio-sanchez-fernandez.webp
+  kind: retrato
+  used_in:
+  - _members/jose-antonio-sanchez-fernandez.md
+- from: assets/img/team/JesusRodriguezMolina.jpg
+  to: assets/img/equipo/jesus-rodriguez-molina.webp
+  kind: retrato
+  used_in:
+  - _members/jesus-rodriguez-molina.md
+- from: assets/img/team/JoseAntonioSanchezAlcon.jpg
+  to: assets/img/equipo/jose-antonio-sanchez-alcon.webp
+  kind: retrato
+  used_in:
+  - _members/jose-antonio-sanchez-alcon.md
+- from: assets/img/team/JoseFernanMartinezOrtega.jpg
+  to: assets/img/equipo/jose-fernan-martinez-ortega.webp
+  kind: retrato
+  used_in:
+  - _members/jose-fernan-martinez-ortega.md
+- from: assets/img/team/LourdesLopezSantidrian.jpg
+  to: assets/img/equipo/lourdes-lopez-santidrian.webp
+  kind: retrato
+  used_in:
+  - _members/lourdes-lopez-santidrian.md
+- from: assets/img/team/MalenaJunguitoSoria.jpg
+  to: assets/img/equipo/malena-junguito-soria.webp
+  kind: retrato
+  used_in:
+  - _members/malena-junguito-soria.md
+- from: assets/img/team/MarioSanEmeterioDeLaParte.jpg
+  to: assets/img/equipo/mario-san-emeterio-de-la-parte.webp
+  kind: retrato
+  used_in:
+  - _members/mario-san-emeterio-de-la-parte.md
+- from: assets/img/team/MartaMurielElduayen.jpg
+  to: assets/img/equipo/marta-muriel-elduayen.webp
+  kind: retrato
+  used_in:
+  - _members/marta-muriel-elduayen.md
+- from: assets/img/team/MiguelSantosFamiliarCabero.jpg
+  to: assets/img/equipo/miguel-santos-familiar-cabero.webp
+  kind: retrato
+  used_in:
+  - _members/miguel-santos-familiar-cabero.md
+- from: assets/img/team/NestorLucasMartinez.jpg
+  to: assets/img/equipo/nestor-lucas-martinez.webp
+  kind: retrato
+  used_in:
+  - _members/nestor-lucas-martinez.md
+- from: assets/img/team/NievesPlazaMartin.jpg
+  to: assets/img/equipo/nieves-plaza-martin.webp
+  kind: retrato
+  used_in:
+  - _members/nieves-plaza-martin.md
+- from: assets/img/team/NingLi.jpg
+  to: assets/img/equipo/ning-li.webp
+  kind: retrato
+  used_in:
+  - _members/ning-li.md
+- from: assets/img/team/PedroCastillejoParrilla.jpg
+  to: assets/img/equipo/pedro-castillejo-parrilla.webp
+  kind: retrato
+  used_in:
+  - _members/pedro-castillejo-parrilla.md
+- from: assets/img/team/RaulMDelToroMatamoros.jpg
+  to: assets/img/equipo/raul-del-toro-matamoros.webp
+  kind: retrato
+  used_in:
+  - _members/raul-del-toro-matamoros.md
+- from: assets/img/team/RubenDeDiegoMartinez.jpg
+  to: assets/img/equipo/ruben-de-diego-martinez.webp
+  kind: retrato
+  used_in:
+  - _members/ruben-de-diego-martinez.md
+- from: assets/img/team/SaloumJimbara.jpg
+  to: assets/img/equipo/saloum-jimbara.webp
+  kind: retrato
+  used_in:
+  - _members/saloum-jimbara.md
+- from: assets/img/team/SantiagoHiguera.jpg
+  to: assets/img/equipo/santiago-higuera-de-frutos.webp
+  kind: retrato
+  used_in:
+  - _members/santiago-higuera-de-frutos.md
+- from: assets/img/team/SaraLanaSerrano.jpg
+  to: assets/img/equipo/sara-lana-serrano.webp
+  kind: retrato
+  used_in:
+  - _members/sara-lana-serrano.md
+- from: assets/img/team/VicenteHernandezDiaz.jpg
+  to: assets/img/equipo/vicente-hernandez-diaz.webp
+  kind: retrato
+  used_in:
+  - _members/vicente-hernandez-diaz.md
+- from: assets/img/team/VictoriaBeltranMartinez.jpg
+  to: assets/img/equipo/victoria-beltran-martinez.webp
+  kind: retrato
+  used_in:
+  - _members/victoria-beltran-martinez.md
+- from: assets/img/team/XiTao.jpg
+  to: assets/img/equipo/xi-tao.webp
+  kind: retrato
+  used_in:
+  - _members/xi-tao.md
+- from: assets/img/team/XinLi.jpg
+  to: assets/img/equipo/xin-li.webp
+  kind: retrato
+  used_in:
+  - _members/xin-li.md
+- from: assets/img/team/XinYuan.jpg
+  to: assets/img/equipo/xin-yuan.webp
+  kind: retrato
+  used_in:
+  - _members/xin-yuan.md
+- from: assets/img/team/YitingWang.jpg
+  to: assets/img/equipo/yiting-wang.webp
+  kind: retrato
+  used_in:
+  - _members/yiting-wang.md
+- from: assets/img/team/YuanjiangHuang.jpg
+  to: assets/img/equipo/yuanjiang-huang.webp
+  kind: retrato
+  used_in:
+  - _members/yuanjiang-huang.md
+- from: assets/img/team/YuwenChen.jpg
+  to: assets/img/equipo/yuwen-chen.webp
+  kind: retrato
+  used_in:
+  - _members/yuwen-chen.md
+- from: assets/img/team/ZhaoyuZhai.jpg
+  to: assets/img/equipo/zhaoyu-zhai.webp
+  kind: retrato
+  used_in:
+  - _members/zhaoyu-zhai.md
+- from: assets/opportunities/2026-07-22-afaredge-job.pdf
+  to: assets/convocatorias/2026-07-22-afaredge-job.pdf
+  kind: pdf
+  used_in:
+  - _opportunities/2026-07-22-afaredge-job.md
+- from: assets/opportunities/2026-07-22-humami-job.pdf
+  to: assets/convocatorias/2026-07-22-humami-job.pdf
+  kind: pdf
+  used_in:
+  - _opportunities/2026-07-22-humami-job.md

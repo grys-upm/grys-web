@@ -88,6 +88,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("site", nargs="?", default="_site")
     ap.add_argument("--baseurl", default="")
+    ap.add_argument("--estricto", action="store_true", help="las imágenes que faltan son error")
     args = ap.parse_args()
     site, base = os.path.abspath(args.site), args.baseurl.rstrip("/")
     if not os.path.isdir(site):
@@ -113,6 +114,7 @@ def main():
     # 3. Cada HTML
     n = 0
     missing_fonts = set()
+    missing_media = set()
     for dirpath, _, files in os.walk(site):
         for fn in files:
             if not fn.endswith(".html"):
@@ -150,11 +152,16 @@ def main():
                 if tf and not os.path.exists(tf):
                     if "/assets/fonts/" in url:
                         missing_fonts.add(url)  # no bloquea: hay fuentes de respaldo
+                    elif ("/assets/img/" in url or "/assets/convocatorias/" in url) and not args.estricto:
+                        missing_media.add(url)  # pendiente de scripts/migrar_imagenes.py
                     else:
                         errors.append(f"{relf}: enlace roto {url}")
 
     for u in sorted(missing_fonts):
         print(f"AVISO  falta la fuente {u} (se usa la de respaldo) → python scripts/descargar_fuentes.py")
+    if missing_media:
+        print(f"AVISO  faltan {len(missing_media)} imágenes/PDF → python scripts/migrar_imagenes.py "
+              "(con --estricto cuentan como error)")
     todo = sum(1 for w in warnings if "por completar" in w)
     for e in errors:
         print(f"ERROR  {e}")

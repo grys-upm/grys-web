@@ -1,0 +1,21 @@
+{%- comment -%} Cuerpo de la ficha de un proyecto: ámbitos/líneas, texto, código y publicaciones etiquetadas. {%- endcomment -%}
+{%- assign fp_slug = page.page_id | remove_first: "projects/" -%}
+<div class="chips">
+  {% include estado.html st=page.state %}
+  {%- for d_id in page.domains %}{% assign fp_d = site.domains | where: "id", d_id | first %}{% if fp_d %}<span class="chip">{% include icono.html n=fp_d.icon %}{{ fp_d | tr: "title" }}</span>{% endif %}{% endfor %}
+  {%- for lid in page.lines %}{% assign fp_l = site.lines | where: "id", lid | first %}{% if fp_l %}<a class="chip" href="{{ fp_l | detail_url }}">{{ fp_l | tr: "title" }}</a>{% endif %}{% endfor %}
+</div>
+{%- if page.image %}
+{%- capture fp_alt %}{{ t.projects.project }} {{ page.acronym }} (logo){% endcapture %}
+{% include figura.html src=page.image alt=fp_alt %}
+{%- endif %}
+{%- if include.cuerpo contains "<p" or include.cuerpo contains "<h" or include.cuerpo contains "<ul" %}
+{{ include.cuerpo }}
+{%- else %}
+<p class="todo">{{ t.tbc }}</p>
+{%- endif %}
+{%- if page.repos and page.repos.size > 0 %}
+<h2 class="rule">{{ t.projects.repos }}</h2>
+<ul class="nodes">{% for r in page.repos %}<li><a href="https://github.com/grys-upm/{{ r }}">grys-upm/{{ r }}</a></li>{% endfor %}</ul>
+{%- endif %}
+{%- comment -%} Fase 3: publicaciones con project = {slug} en papers.bib (pub-item). {%- endcomment -%}

@@ -1,0 +1,224 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Proyecto (_projects/*.md)",
+  "description": "Proyecto competitivo o contrato. El estado se calcula con las fechas.",
+  "type": "object",
+  "properties": {
+    "acronym": {
+      "type": "string",
+      "minLength": 1
+    },
+    "title_es": {
+      "type": "string",
+      "minLength": 1
+    },
+    "title_en": {
+      "type": "string",
+      "minLength": 1
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "competitive",
+        "private"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "ongoing",
+        "completed",
+        "upcoming",
+        "unknown"
+      ],
+      "description": "Solo para forzar el estado calculado"
+    },
+    "programme": {
+      "type": "string",
+      "minLength": 1
+    },
+    "programme_url": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https?://"
+    },
+    "call": {
+      "type": "string",
+      "minLength": 1
+    },
+    "funder": {
+      "type": "string",
+      "minLength": 1
+    },
+    "funding": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "grant_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "start": {
+      "type": "string",
+      "format": "date"
+    },
+    "end": {
+      "type": "string",
+      "format": "date"
+    },
+    "role": {
+      "type": "string",
+      "enum": [
+        "coordinator",
+        "partner",
+        "subcontractor"
+      ]
+    },
+    "pi": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+      },
+      "description": "Slugs de _members"
+    },
+    "pi_name": {
+      "type": "string",
+      "description": "Responsable que no es del grupo"
+    },
+    "coordinator": {
+      "type": "string",
+      "minLength": 1
+    },
+    "coordinator_pi": {
+      "type": "string",
+      "minLength": 1
+    },
+    "partners": {
+      "type": [
+        "integer",
+        "string"
+      ]
+    },
+    "budget": {
+      "type": [
+        "number",
+        "string"
+      ]
+    },
+    "domains": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "campo",
+          "mar",
+          "ciudad",
+          "aire",
+          "personas"
+        ]
+      }
+    },
+    "lines": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "cps",
+          "wsan",
+          "iot",
+          "sec",
+          "nca",
+          "rob",
+          "dss",
+          "mw",
+          "sw",
+          "edge",
+          "smart"
+        ]
+      }
+    },
+    "repos": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "doi": {
+      "type": "string",
+      "pattern": "^10\\."
+    },
+    "website": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https?://"
+    },
+    "links": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "pattern": "^https?://"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "url",
+          "title"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "image": {
+      "type": "string",
+      "pattern": "^/assets/"
+    },
+    "lang": {
+      "type": "string",
+      "enum": [
+        "es",
+        "en"
+      ],
+      "description": "Idioma en el que está escrito el texto"
+    },
+    "only_lang": {
+      "type": "string",
+      "enum": [
+        "es",
+        "en"
+      ],
+      "description": "Idioma en el que está escrito el texto"
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "old_urls": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^/"
+      },
+      "description": "URL de la web anterior que redirigen aquí"
+    },
+    "published": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "acronym",
+    "type",
+    "lang"
+  ],
+  "additionalProperties": false
+}

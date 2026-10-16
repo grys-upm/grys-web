@@ -1,0 +1,43 @@
+# Puestos: clave → es_m (masculino), es_f (femenino), en.
+# El puesto en español se elige con el campo «gender» (m/f) de cada miembro.
+# Traducción al español: PROPUESTA del mockup v4 · pendiente de validar.
+full:
+  es_m: Catedrático de Universidad
+  es_f: Catedrática de Universidad
+  en: Full Professor
+assoc:
+  es_m: Profesor Titular de Universidad
+  es_f: Profesora Titular de Universidad
+  en: Associate Professor
+assist:
+  es_m: Profesor Ayudante Doctor
+  es_f: Profesora Ayudante Doctora
+  en: Assistant Professor
+gta:
+  es_m: Ayudante
+  es_f: Ayudante
+  en: Graduate Teaching Assistant
+predoc:
+  es_m: Personal investigador predoctoral
+  es_f: Personal investigador predoctoral
+  en: Predoctoral Fellow
+postdoc:
+  es_m: Investigador posdoctoral
+  es_f: Investigadora posdoctoral
+  en: Postdoctoral Fellow
+r1:
+  es_m: Investigador R1
+  es_f: Investigadora R1
+  en: First Stage Researcher (R1)
+tech:
+  es_m: Técnico de apoyo a la investigación
+  es_f: Técnica de apoyo a la investigación
+  en: Research Support Technician
+intern:
+  es_m: Estudiante en prácticas
+  es_f: Estudiante en prácticas
+  en: Student Intern
+admin:
+  es_m: Personal de administración
+  es_f: Personal de administración
+  en: Administrative Staff

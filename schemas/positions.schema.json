@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "_data/positions.yml",
+  "type": "object",
+  "additionalProperties": {
+    "type": "object",
+    "required": [
+      "es_m",
+      "es_f",
+      "en"
+    ],
+    "properties": {
+      "es_m": {
+        "type": "string",
+        "minLength": 1
+      },
+      "es_f": {
+        "type": "string",
+        "minLength": 1
+      },
+      "en": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "additionalProperties": false
+  }
+}

@@ -1,0 +1,17 @@
+{%- comment -%}
+  Imagen con pie opcional. Uso en el texto de cualquier ficha:
+    include figura.html src="/assets/img/…/foto.webp" alt="Descripción" pie="Texto del pie"
+  · src: ruta desde la raíz del sitio (se le añade el baseurl).
+  · Si existe la miniatura «-480.webp» (la crea migrar_imagenes.py) se ofrece con srcset.
+  · alt es OBLIGATORIO salvo imágenes decorativas (alt="").
+{%- endcomment -%}
+{%- assign f_src = include.src | relative_url -%}
+{%- assign f_small = include.src | replace: ".webp", "-480.webp" -%}
+{%- assign f_has_small = false -%}
+{%- for sf in site.static_files -%}{%- if sf.relative_path == f_small -%}{%- assign f_has_small = true -%}{%- break -%}{%- endif -%}{%- endfor -%}
+<figure class="fig">
+  <img src="{{ f_src }}"{% if f_has_small %} srcset="{{ f_small | relative_url }} 480w, {{ f_src }} 1600w" sizes="(max-width: 760px) 100vw, 760px"{% endif %} alt="{{ include.alt | escape }}" loading="lazy" decoding="async">
+  {%- if include.pie %}
+  <figcaption>{{ include.pie }}</figcaption>
+  {%- endif %}
+</figure>

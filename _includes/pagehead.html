@@ -16,10 +16,10 @@
         {%- if parent %}
         <li><a href="{{ parent.id | route_url: lang }}">{{ parent.title | l10n: lang }}</a></li>
         {%- endif %}
-        <li aria-current="page">{{ page_title }}</li>
+        <li aria-current="page"{% if page.title_fallback %} lang="{{ page.content_lang }}"{% endif %}>{{ page_title }}</li>
       </ol>
     </nav>
-    <h1>{{ page_title }}</h1>
+    <h1{% if page.title_fallback %} lang="{{ page.content_lang }}"{% endif %}>{{ page_title }}</h1>
     {%- if page_desc %}
     <p class="lead rule">{{ page_desc }}</p>
     {%- endif %}

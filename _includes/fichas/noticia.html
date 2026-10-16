@@ -1,0 +1,3 @@
+{%- comment -%} Cuerpo de una noticia. {%- endcomment -%}
+<p class="datos"><time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: "%d/%m/%Y" }}</time>{% if page.category %} · {{ t.news.categories[page.category] }}{% endif %}</p>
+{{ include.cuerpo }}

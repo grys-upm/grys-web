@@ -3,4 +3,4 @@
 # grys-upm/grys-upm.github.io. El baseurl (/nombre-del-repo) lo pasa el
 # propio workflow, así que aquí no se pone.
 noindex: true
-repository: grys-upm/web-grys
+repository: grys-upm/grys-web

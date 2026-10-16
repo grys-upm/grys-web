@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Noticia (_news/AAAA-MM-DD-slug.md)",
+  "description": "",
+  "type": "object",
+  "properties": {
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "title_es": {
+      "type": "string",
+      "minLength": 1
+    },
+    "title_en": {
+      "type": "string",
+      "minLength": 1
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "award",
+        "event",
+        "project",
+        "people",
+        "transfer",
+        "lab"
+      ]
+    },
+    "image": {
+      "type": "string",
+      "pattern": "^/assets/"
+    },
+    "lang": {
+      "type": "string",
+      "enum": [
+        "es",
+        "en"
+      ],
+      "description": "Idioma en el que está escrito el texto"
+    },
+    "only_lang": {
+      "type": "string",
+      "enum": [
+        "es",
+        "en"
+      ],
+      "description": "Idioma en el que está escrito el texto"
+    },
+    "detail": {
+      "type": "boolean"
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "slug_es": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "slug_en": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "old_urls": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^/"
+      },
+      "description": "URL de la web anterior que redirigen aquí"
+    },
+    "published": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "date",
+    "lang"
+  ],
+  "additionalProperties": false,
+  "anyOf": [
+    {
+      "required": [
+        "title_es"
+      ]
+    },
+    {
+      "required": [
+        "title_en"
+      ]
+    }
+  ]
+}

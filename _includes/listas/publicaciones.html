@@ -1,0 +1,12 @@
+{%- comment -%}
+  Publicaciones desde _bibliography/papers.bib (jekyll-scholar, agrupadas por año).
+  Los recuentos salen del propio BibTeX (_plugins/bib_stats.rb); las métricas de
+  Scopus, de _data/metrics.yml con su fuente y fecha.
+  Fase 3: filtros por tipo/año y buscador.
+{%- endcomment -%}
+{%- include page-vars.html -%}
+{%- assign pb_s = site.data.bib_stats.papers -%}
+{%- assign mx = site.data.metrics -%}
+<p class="count">{{ pb_s.total }} {{ t.pubs_extra.count }} · {{ pb_s.journal }} {% if lang == "es" %}en revistas{% else %}journal articles{% endif %} · {{ pb_s.conference }} {% if lang == "es" %}en congresos{% else %}conference papers{% endif %} · {{ pb_s.chapter }} {% if lang == "es" %}capítulos{% else %}chapters{% endif %}</p>
+<p class="datos">Scopus: {{ mx.scopus_docs }} {% if lang == "es" %}documentos{% else %}documents{% endif %} · {{ mx.scopus_citations }} {% if lang == "es" %}citas{% else %}citations{% endif %} · h = {{ mx.scopus_h }} ({{ mx.source }}, {{ mx.date }})</p>
+{% bibliography --file papers %}

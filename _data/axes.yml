@@ -1,0 +1,18 @@
+# Ejes que agrupan las 11 líneas de investigación (_lines/*.md, campo «axis»).
+# PROPUESTA del mockup v4 · pendiente de validar por el grupo.
+- id: 1
+  title:
+    es: Redes y conectividad
+    en: Networks and connectivity
+- id: 2
+  title:
+    es: Sistemas autónomos e inteligentes
+    en: Autonomous and intelligent systems
+- id: 3
+  title:
+    es: Software y plataformas
+    en: Software and platforms
+- id: 4
+  title:
+    es: Sistemas ciberfísicos
+    en: Cyber-physical systems

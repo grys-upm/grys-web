@@ -12,7 +12,9 @@ Es un sitio Jekyll propio, sin tema externo. Todo el contenido se guarda como da
 | Redirecciones desde la web anterior | `_data/redirects.yml` y el campo `old_urls` de cada elemento |
 | Texto de las páginas fijas | `_pages/es/*.md`, `_pages/en/*.md` |
 | Personas, proyectos, líneas, ámbitos, noticias, eventos y convocatorias | `_members/`, `_projects/`, `_lines/`, `_domains/`, `_news/`, `_events/`, `_opportunities/` (un fichero por elemento) |
-| Publicaciones y tesis | `_bibliography/*.bib` |
+| Publicaciones y tesis | `_bibliography/papers.bib`, `theses.bib` (desde Zotero) + `etiquetas.yml` (enlaces al Portal Científico y al Archivo Digital, proyecto, línea) |
+| Puestos, roles, ejes, repositorios, métricas externas | `_data/positions.yml`, `roles.yml`, `axes.yml`, `repos.yml`, `metrics.yml` |
+| Qué campos tiene cada tipo de contenido | `docs/DATOS.md` (generado desde `schemas/`) |
 | Diseño | `assets/css/grys.css` (tokens de color al principio), `_layouts/`, `_includes/` |
 | Lógica de rutas bilingües | `_plugins/grys.rb` |
 
@@ -29,7 +31,10 @@ python3 scripts/comprobar_datos.py      # datos, rutas y Liquid (sin Ruby)
 python3 scripts/contraste.py            # contraste AA de los tokens, ambos temas
 bundle exec jekyll build
 python3 scripts/verificar_sitio.py _site
+python3 scripts/informe_pendientes.py   # qué datos faltan → reports/pendientes-datos.md
 ```
+
+Otras herramientas: `scripts/cruce_portal.py` (BibTeX ↔ Portal Científico o Archivo Digital), `scripts/aplicar_etiquetas.py`, `scripts/migrar_imagenes.py` (una sola vez) y `scripts/doc_esquemas.py`.
 
 ## Estado
 

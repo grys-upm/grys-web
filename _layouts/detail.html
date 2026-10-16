@@ -2,13 +2,36 @@
 layout: default
 ---
 {%- comment -%}
-  Ficha de detalle provisional (fase 1) para miembros, líneas, proyectos y
-  noticias. En la fase 3 se sustituye por layouts específicos con factsheet.
+  Ficha de detalle generada por _plugins/grys.rb para miembros, líneas,
+  proyectos y noticias. El bloque de datos (factsheet) depende del tipo
+  (page.kind). Si el texto no está en el idioma de la página, se marca con
+  lang="…" y un aviso (WCAG 3.1.2).
 {%- endcomment -%}
 {%- include page-vars.html -%}
 {% include pagehead.html %}
-<section class="page-body">
-  <div class="wrap prose">
+{%- capture ficha_cuerpo -%}
+  {%- if page.content_lang != lang and content != "" -%}
+  <p class="aviso-idioma datos">{{ t.lang_notice }}</p>
+  {%- endif -%}
+  <div class="prose"{% if page.content_lang != lang %} lang="{{ page.content_lang }}"{% endif %}>
 {{ content }}
   </div>
-</section>
+{%- endcapture -%}
+<div class="wrap detail">
+  <div>
+    {%- case page.kind -%}
+      {%- when "members" -%}{% include fichas/miembro.html cuerpo=ficha_cuerpo %}
+      {%- when "projects" -%}{% include fichas/proyecto.html cuerpo=ficha_cuerpo %}
+      {%- when "lines" -%}{% include fichas/linea.html cuerpo=ficha_cuerpo %}
+      {%- when "news" -%}{% include fichas/noticia.html cuerpo=ficha_cuerpo %}
+      {%- else -%}{{ ficha_cuerpo }}
+    {%- endcase -%}
+  </div>
+  <aside>
+    {%- case page.kind -%}
+      {%- when "members" -%}{% include fichas/miembro-datos.html %}
+      {%- when "projects" -%}{% include fichas/proyecto-datos.html %}
+      {%- when "news" -%}{% include fichas/noticia-datos.html %}
+    {%- endcase -%}
+  </aside>
+</div>

@@ -1,0 +1,12 @@
+{%- comment -%}
+  Vídeo de YouTube sin cookies hasta que se reproduce (youtube-nocookie.com).
+  Uso:  include video.html youtube="ID" titulo="Descripción del vídeo"
+  Sin JavaScript también funciona: el iframe se carga de forma diferida.
+{%- endcomment -%}
+{%- assign v_t = include.titulo | default: site.data.i18n[lang].video | default: "YouTube" -%}
+<figure class="video">
+  <div class="video-marco">
+    <iframe src="https://www.youtube-nocookie.com/embed/{{ include.youtube }}" title="{{ v_t | escape }}" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  </div>
+  <figcaption><a href="https://www.youtube.com/watch?v={{ include.youtube }}">{{ site.data.i18n[lang].video_link }}</a></figcaption>
+</figure>

@@ -1,0 +1,26 @@
+{%- comment -%}
+  Noticias (más recientes primero). Las breves («detail: false») no tienen ficha.
+  Parámetro opcional: limite (número de noticias).
+{%- endcomment -%}
+{%- include page-vars.html -%}
+{%- assign nw_list = site.news | sort: "date", "first" | reverse -%}
+{%- assign nw_lim = include.limite | default: nw_list.size -%}
+<ul class="news">
+{%- for n in nw_list limit: nw_lim %}
+  {%- assign nw_title = n | tr: "title" %}
+  {%- assign nw_url = n | detail_url %}
+  <li>
+    {%- if n.image %}
+    <img class="thumb" src="{{ n.image | replace: '.webp', '-480.webp' | relative_url }}" alt="" loading="lazy" decoding="async" width="136" height="88">
+    {%- else %}
+    <div class="ph" aria-hidden="true"></div>
+    {%- endif %}
+    <div>
+      <time class="datos" datetime="{{ n.date | date: '%Y-%m-%d' }}">{{ n.date | date: "%d/%m/%Y" }}</time>
+      {%- if n.category %} · <span class="datos">{{ t.news.categories[n.category] }}</span>{% endif %}
+      {%- assign nw_key = "title_" | append: lang %}
+      <h3{% unless n[nw_key] %} lang="{{ n.lang }}"{% endunless %}>{% if nw_url %}<a href="{{ nw_url }}">{{ nw_title }}</a>{% else %}{{ nw_title }}{% endif %}</h3>
+    </div>
+  </li>
+{%- endfor %}
+</ul>

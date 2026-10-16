@@ -1,0 +1,33 @@
+{%- comment -%}
+  Ficha técnica de un proyecto. Los campos mínimos que faltan se muestran con el
+  marcador «por completar» (.todo); los opcionales vacíos no se muestran.
+{%- endcomment -%}
+{%- assign pd_tbc = '<span class="todo">' | append: t.tbc | append: '</span>' -%}
+<dl class="factsheet">
+  <dt>{{ t.projects.type }}</dt>
+  <dd>{% if page.type == "private" %}{{ t.projects.private }}{% elsif page.type == "competitive" %}{{ t.projects.competitive }}{% else %}{{ pd_tbc }}{% endif %}</dd>
+  <dt>{{ t.projects.programme }}</dt>
+  <dd>{% if page.programme %}{% if page.programme_url %}<a href="{{ page.programme_url }}">{{ page.programme }}</a>{% else %}{{ page.programme }}{% endif %}{% if page.call %} · {{ page.call }}{% endif %}{% elsif page.type == "private" and page.funder %}—{% else %}{{ pd_tbc }}{% endif %}</dd>
+  {%- if page.funder %}<dt>{{ t.projects.funder }}</dt><dd>{{ page.funder }}</dd>{% endif %}
+  {%- if page.funding %}<dt>{{ t.projects.funding }}</dt><dd>{{ page.funding | join: " · " }}</dd>{% endif %}
+  {%- if page.grant_ids %}<dt>{{ t.projects.grant_ids }}</dt><dd>{{ page.grant_ids | join: " · " }}</dd>{% endif %}
+  <dt>{{ t.period }}</dt>
+  <dd>{% if page.start %}<time datetime="{{ page.start | date: '%Y-%m-%d' }}">{{ page.start | date: "%m/%Y" }}</time> – <time datetime="{{ page.end | date: '%Y-%m-%d' }}">{{ page.end | date: "%m/%Y" }}</time>{% else %}{{ pd_tbc }}{% endif %}</dd>
+  <dt>{{ t.projects.role }}</dt>
+  <dd>{% if page.role %}{% assign pd_rk = "role_" | append: page.role %}{{ t.projects[pd_rk] | default: page.role }}{% else %}{{ pd_tbc }}{% endif %}</dd>
+  <dt>{{ t.projects.pi }}</dt>
+  <dd>
+    {%- if page.pi and page.pi.size > 0 %}{% for s in page.pi %}{% assign pd_m = s | member %}{% if pd_m %}<a href="{{ pd_m | detail_url }}">{{ pd_m.given }} {{ pd_m.family }}</a>{% else %}{{ s }}{% endif %}{% unless forloop.last %}, {% endunless %}{% endfor %}
+    {%- elsif page.pi_name %}{{ page.pi_name }}
+    {%- else %}{{ pd_tbc }}{% endif -%}
+  </dd>
+  {%- if page.coordinator %}<dt>{{ t.projects.coordinator }}</dt><dd>{{ page.coordinator }}{% if page.coordinator_pi %} ({{ page.coordinator_pi }}){% endif %}</dd>{% endif %}
+  <dt>{{ t.projects.partners }}</dt><dd>{{ page.partners | default: pd_tbc }}</dd>
+  <dt>{{ t.projects.budget }}</dt><dd>{{ page.budget | default: pd_tbc }}</dd>
+  {%- if page.doi %}<dt>DOI</dt><dd><a href="https://doi.org/{{ page.doi }}">{{ page.doi }}</a></dd>{% endif %}
+  {%- if page.website %}<dt>{{ t.projects.website }}</dt><dd><a href="{{ page.website }}">{{ page.website | remove: "https://" | remove: "http://" | remove_last: "/" }}</a></dd>{% endif %}
+  {%- if page.links %}
+  {%- assign pd_links = page.links | where_exp: "l", "l.url != page.website" %}
+  {%- if pd_links.size > 0 %}<dt>{{ t.projects.links }}</dt><dd><ul class="perfiles">{% for l in pd_links %}<li><a href="{{ l.url }}">{{ l.title }}</a></li>{% endfor %}</ul></dd>{% endif %}
+  {%- endif %}
+</dl>

@@ -1,0 +1,23 @@
+{%- comment -%}
+  Eventos: próximos y pasados según la FECHA DE COMPILACIÓN (el sitio se
+  recompila cada día). Un evento sigue siendo «próximo» hasta su último día.
+{%- endcomment -%}
+{%- include page-vars.html -%}
+{%- assign ev_today = site.time | date: "%Y-%m-%d" -%}
+{%- assign ev_up = "" | split: "" -%}
+{%- assign ev_past = "" | split: "" -%}
+{%- assign ev_all = site.events | sort: "date" -%}
+{%- for ev in ev_all -%}
+  {%- assign ev_last = ev.end | default: ev.date | date: "%Y-%m-%d" -%}
+  {%- if ev_last >= ev_today -%}{%- assign ev_up = ev_up | push: ev -%}{%- else -%}{%- assign ev_past = ev_past | unshift: ev -%}{%- endif -%}
+{%- endfor -%}
+
+<h2 class="rule">{{ t.events.upcoming }}</h2>
+{%- if ev_up.size > 0 %}
+<div class="events">{% for ev in ev_up %}{% include listas/evento.html ev=ev %}{% endfor %}</div>
+{%- else %}
+<div class="empty"><span class="bub">{% include icono.html n="cal" %}</span><div><h3>{{ t.events.none_upcoming }}</h3></div></div>
+{%- endif %}
+
+<h2 class="rule">{{ t.events.past }}</h2>
+<div class="events">{% for ev in ev_past %}{% include listas/evento.html ev=ev %}{% endfor %}</div>

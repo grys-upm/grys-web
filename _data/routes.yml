@@ -188,3 +188,17 @@ details:
     layout: detail
     es: /actualidad/noticias/:date-:slug/
     en: /news/:date-:slug/
+
+# ---------------------------------------------------------------------
+#  Página de lista de cada colección. Se usa para redirigir las URL antiguas
+#  (old_urls) de los elementos sin ficha propia (eventos, convocatorias,
+#  noticias breves con «detail: false»).
+# ---------------------------------------------------------------------
+lists:
+  members: team
+  projects: projects
+  lines: lines
+  domains: domains
+  news: news
+  events: events
+  opportunities: opportunities

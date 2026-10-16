@@ -2,7 +2,7 @@
 
 ## 1. Crear el repositorio de pruebas (una sola vez)
 
-1. **Crear el repositorio.** En la organización `grys-upm`, crea un repositorio **público** y vacío. Este documento supone que se llama `web-grys`. Si eliges otro nombre, cámbialo también en `repository:` de `_config.staging.yml`.
+1. **Crear el repositorio.** En la organización `grys-upm`, crea un repositorio **público** y vacío. Este documento supone que se llama `grys-web`. Si eliges otro nombre, cámbialo también en `repository:` de `_config.staging.yml`.
 2. **Subir los ficheros.** Sube el contenido del zip de la fase, con la carpeta `.github` incluida.
    - Sin Git: *Add file → Upload files*, arrastrando las carpetas.
    - Con Git: `git init`, `git add .`, `git commit -m "Fase 1"` y `git push`.
@@ -10,10 +10,16 @@
 4. **Fuentes: no hay que hacer nada.** Si `assets/fonts/` no tiene los `.woff2`, GitHub Actions los descarga en cada compilación con `scripts/descargar_fuentes.py`. Se sirven desde el propio sitio, no desde Google Fonts.
    *Opcional, para no depender de la descarga:* ejecuta en tu ordenador, dentro de la carpeta del proyecto, `python3 scripts/descargar_fuentes.py`. Después sube los 8 ficheros que aparecen en `assets/fonts/` a esa misma carpeta del repositorio: entra en ella en GitHub y usa *Add file → Upload files*.
 5. **Ver la compilación.** Cada *push* lanza *Actions → Compilar y publicar*.
-   - **Dónde se publica.** Como la organización ya tiene dominio propio, el sitio de pruebas debería quedar en `https://grys.etsist.upm.es/web-grys/`. Si no fuera así, estará en `https://grys-upm.github.io/web-grys/`.
+   - **Dónde se publica.** Como la organización ya tiene dominio propio, el sitio de pruebas debería quedar en `https://grys.etsist.upm.es/grys-web/`. Si no fuera así, estará en `https://grys-upm.github.io/grys-web/`.
    - **Fuera de buscadores.** Lleva `noindex`.
    - **No toca la web actual.** La web publicada no cambia.
 6. **Fijar las versiones de las gemas.** Descarga el artefacto **Gemfile.lock** de la primera ejecución correcta y súbelo a la raíz del repositorio. Así las versiones quedan fijadas.
+7. **Imágenes y PDF (una sola vez, fase 2).** El repositorio nuevo solo lleva las imágenes que usa la web, en WebP. La lista está en `scripts/migracion/mapa_imagenes.yml`. En un ordenador con Python y con una copia del repositorio antiguo:
+   ```
+   python -m pip install pillow pyyaml
+   python scripts/migrar_imagenes.py RUTA/A/grys-upm.github.io
+   ```
+   Se crean `assets/img/{equipo,noticias,proyectos}/…` y `assets/convocatorias/…`. Súbelas: en GitHub, entra en `assets/` y usa *Add file → Upload files*, arrastrando las carpetas `img` y `convocatorias`. Mientras no estén, la web se ve igual pero sin fotos (avatares con iniciales), y las comprobaciones lo indican con un aviso, no con un error.
 
 ## 2. Compilar en local (opcional)
 

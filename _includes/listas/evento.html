@@ -1,0 +1,17 @@
+{%- comment -%} Un evento con caja de fecha. Parámetro: ev {%- endcomment -%}
+{%- assign evi = include.ev -%}
+{%- assign evi_title = evi | tr: "title" -%}
+<article class="event">
+  <time class="date" datetime="{{ evi.date | date: '%Y-%m-%d' }}"><b>{{ evi.date | date: "%-d" }}</b><span>{{ evi.date | date: "%m/%y" }}</span></time>
+  <div>
+    <h3>{% if evi.url %}<a href="{{ evi.url }}">{{ evi_title }}</a>{% else %}{{ evi_title }}{% endif %}</h3>
+    <p class="datos">
+      {%- if evi.end %}{{ evi.date | date: "%d/%m/%Y" }}–{{ evi.end | date: "%d/%m/%Y" }} · {% endif -%}
+      {%- if evi.place %}{{ evi.place }}{% else %}<span class="todo">{{ t.tbc }}</span>{% endif -%}
+    </p>
+    {%- if evi.news %}
+      {%- assign evi_news = site.news | where_exp: "n", "n.path contains evi.news" | first %}
+      {%- if evi_news %}{% assign evi_nurl = evi_news | detail_url %}{% if evi_nurl %}<p><a href="{{ evi_nurl }}">{{ t.events.related_news }}</a></p>{% endif %}{% endif %}
+    {%- endif %}
+  </div>
+</article>
