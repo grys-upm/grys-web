@@ -1,0 +1,15 @@
+// Entorno listo para usar en GitHub Codespaces (navegador) o en VS Code con
+// Dev Containers. Instala Ruby, las gemas y PyYAML al crearse.
+// Para ver la web:  bundle exec jekyll serve --config _config.yml,_config.staging.yml
+{
+  "name": "Web GRyS",
+  "image": "mcr.microsoft.com/devcontainers/ruby:3.3",
+  "features": {
+    "ghcr.io/devcontainers/features/python:1": {}
+  },
+  "postCreateCommand": "bundle install && python3 -m pip install --user pyyaml",
+  "forwardPorts": [4000],
+  "portsAttributes": {
+    "4000": { "label": "Web GRyS", "onAutoForward": "openBrowser" }
+  }
+}

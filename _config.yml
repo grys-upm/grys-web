@@ -70,6 +70,8 @@ exclude:
   - vendor/
   - .github/
   - .ruby-version
+  - .devcontainer/
+  - docker-compose.yml
   - assets/fonts/LEEME.md
 
 keep_files: ["CNAME", ".nojekyll"]

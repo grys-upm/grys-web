@@ -112,6 +112,7 @@ def main():
 
     # 3. Cada HTML
     n = 0
+    missing_fonts = set()
     for dirpath, _, files in os.walk(site):
         for fn in files:
             if not fn.endswith(".html"):
@@ -147,9 +148,13 @@ def main():
                     continue
                 tf = target_file(site, base, url)
                 if tf and not os.path.exists(tf):
-                    hint = " → ejecuta scripts/descargar_fuentes.py" if "/assets/fonts/" in url else ""
-                    errors.append(f"{relf}: enlace roto {url}{hint}")
+                    if "/assets/fonts/" in url:
+                        missing_fonts.add(url)  # no bloquea: hay fuentes de respaldo
+                    else:
+                        errors.append(f"{relf}: enlace roto {url}")
 
+    for u in sorted(missing_fonts):
+        print(f"AVISO  falta la fuente {u} (se usa la de respaldo) → python scripts/descargar_fuentes.py")
     todo = sum(1 for w in warnings if "por completar" in w)
     for e in errors:
         print(f"ERROR  {e}")

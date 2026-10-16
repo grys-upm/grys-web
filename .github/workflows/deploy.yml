@@ -24,16 +24,17 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04   # fijo: ubuntu-latest pasa a Ubuntu 26 desde el 19-10-2026
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Python (para los scripts de comprobación)
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.12"
       - run: python -m pip install --quiet pyyaml
       - name: Fuentes (se descargan si no están en el repositorio)
+        continue-on-error: true   # si falla, la web usa las fuentes de respaldo
         run: ls assets/fonts/*.woff2 >/dev/null 2>&1 || python scripts/descargar_fuentes.py
 
       - name: Ruby y gemas
@@ -71,18 +72,18 @@ jobs:
 
       - name: Guardar Gemfile.lock (para añadirlo al repositorio si no existe)
         if: hashFiles('Gemfile.lock') != ''
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: Gemfile.lock
           path: Gemfile.lock
 
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v4
         with:
           path: _site
 
   deploy:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04   # fijo: ubuntu-latest pasa a Ubuntu 26 desde el 19-10-2026
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

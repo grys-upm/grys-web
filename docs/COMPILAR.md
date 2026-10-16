@@ -17,6 +17,8 @@
 
 ## 2. Compilar en local (opcional)
 
+Las cuatro formas de ver la web antes de publicar (artefacto de la PR, Codespaces, Docker o Ruby) están explicadas paso a paso en [PROBAR_EN_LOCAL.md](PROBAR_EN_LOCAL.md). Resumen con Ruby:
+
 Necesitas Ruby 3.3 y Python 3.
 
 ```bash

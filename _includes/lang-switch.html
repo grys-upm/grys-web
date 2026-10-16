@@ -1,6 +1,7 @@
 {%- comment -%}
   Selector de idioma: enlaces reales a la página equivalente en el otro idioma.
-  {% static_href %} impide que polyglot reescriba el enlace al idioma activo.
+  La etiqueta static_href impide que polyglot reescriba el enlace al idioma activo.
+  (Nunca escribas etiquetas Liquid dentro de un comentario: Liquid las procesa.)
   Si la página no tiene equivalente, lleva a la portada de ese idioma.
 {%- endcomment -%}
 <span class="lang" role="group" aria-label="{{ t.lang_group }}">

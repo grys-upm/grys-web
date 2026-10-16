@@ -212,6 +212,11 @@ for pat in ("_layouts/*.html", "_includes/*.html", "_includes/*.svg", "_pages/*/
 
 for f in sorted(set(LIQ_FILES)):
     text = open(f, encoding="utf-8").read()
+    # Liquid 4 SÍ analiza las etiquetas dentro de {% comment %}: prohibidas ahí
+    for c in re.finditer(r"{%-?\s*comment\s*-?%}(.*?){%-?\s*endcomment\s*-?%}", text, re.S):
+        if re.search(r"{%|{{", c.group(1)):
+            line = text.count("\n", 0, c.start()) + 1
+            err(f"{rel(f)}:{line}: hay una etiqueta Liquid dentro de un comentario (Liquid la procesa); escríbela sin llaves")
     text = re.sub(r"{%-?\s*comment\s*-?%}.*?{%-?\s*endcomment\s*-?%}", "", text, flags=re.S)
     text = re.sub(r"{%-?\s*raw\s*-?%}.*?{%-?\s*endraw\s*-?%}", "", text, flags=re.S)
     stack = []

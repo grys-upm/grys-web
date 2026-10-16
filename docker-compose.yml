@@ -1,0 +1,21 @@
+# Vista previa local SIN instalar Ruby (solo hace falta Docker Desktop).
+#
+#   docker compose up          → abre http://localhost:4000/  (y /en/)
+#   Ctrl+C para parar.
+#
+# La primera vez tarda unos minutos (instala las gemas en vendor/bundle,
+# que está en .gitignore). Los cambios en los ficheros se ven al recargar.
+services:
+  web:
+    image: ruby:3.3
+    working_dir: /srv/web
+    command: >
+      bash -c "bundle config set --local path vendor/bundle &&
+               bundle install &&
+               bundle exec jekyll serve --host 0.0.0.0 --livereload --force_polling
+               --config _config.yml,_config.staging.yml"
+    ports:
+      - "4000:4000"     # web
+      - "35729:35729"   # recarga automática
+    volumes:
+      - .:/srv/web

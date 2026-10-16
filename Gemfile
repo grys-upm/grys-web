@@ -13,3 +13,4 @@ end
 # Necesarias con Ruby >= 3.3 (ya no vienen por defecto)
 gem "observer", "~> 0.1"   # la usa jekyll-scholar
 gem "webrick", "~> 1.9"    # solo para "jekyll serve" en local
+gem "tzinfo-data"          # zonas horarias en Windows (timezone: Europe/Madrid); inocua en Linux/macOS
