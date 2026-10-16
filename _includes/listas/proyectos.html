@@ -22,7 +22,7 @@
       <td>{% if p.type == "private" %}{{ t.projects.private }}{% elsif p.type == "competitive" %}{{ t.projects.competitive }}{% else %}<span class="todo">{{ t.tbc }}</span>{% endif %}</td>
       <td class="datos">{% if p.start %}{{ p.start | date: "%Y" }}–{{ p.end | date: "%Y" }}{% else %}<span class="todo">{{ t.tbc }}</span>{% endif %}</td>
       <td><div class="chips">
-        {%- for d_id in p.domains %}{% assign pr_dom = site.domains | where: "id", d_id | first %}{% if pr_dom %}<span class="chip">{% include icono.html n=pr_dom.icon %}{{ pr_dom | tr: "title" }}</span>{% endif %}{% endfor -%}
+        {%- for d_id in p.domains %}{% assign pr_dom = site.domains | where: "key", d_id | first %}{% if pr_dom %}<span class="chip">{% include icono.html n=pr_dom.icon %}{{ pr_dom | tr: "title" }}</span>{% endif %}{% endfor -%}
         {%- if p.domains.size == 0 %}—{% endif -%}
       </div></td>
       <td>{% include estado.html st=p.state %}</td>

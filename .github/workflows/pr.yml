@@ -43,7 +43,7 @@ jobs:
         run: |
           set -o pipefail
           bundle exec jekyll build --config _config.yml,_config.staging.yml --trace 2>&1 | tee build.log
-          if grep -E "Liquid (Warning|Exception|syntax)|Build Warning|Conflict:|GRyS:" build.log; then
+          if grep -E "Liquid (Warning|Exception|syntax)|Build Warning|Conflict:|GRyS:|WARN -- " build.log; then
             echo "::error::La compilación ha producido avisos (ver arriba)"; exit 1
           fi
       - name: Verificar el resultado

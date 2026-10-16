@@ -110,7 +110,7 @@ Se clasifica en próximo/pasado según la fecha de compilación.
 | `involvement` | string |  | Papel del grupo: `organizer`, `presenter`, `participant`, `exhibitor`, `awardee`, `guest`, `attendee` |
 | `place` | string |  | Lugar |
 | `format` | string |  | Presencial, en línea o híbrido: `in_person`, `online`, `hybrid` |
-| `url` | string |  | Web del evento |
+| `website` | string |  | Web oficial |
 | `projects` | lista de string |  |  |
 | `news` | string |  | Noticia relacionada (nombre del fichero sin .md) |
 | `summary_es` | string |  |  |
@@ -148,7 +148,7 @@ Hace falta al menos uno de: `title_es` o `title_en`.
 
 | Campo | Tipo | Obligatorio | Valores / descripción |
 |---|---|---|---|
-| `id` | string | sí | `cps`, `wsan`, `iot`, `sec`, `nca`, `rob`, `dss`, `mw`, `sw`, `edge`, `smart` |
+| `key` | string | sí | Identificador (igual que el nombre del fichero): `cps`, `wsan`, `iot`, `sec`, `nca`, `rob`, `dss`, `mw`, `sw`, `edge`, `smart` |
 | `axis` | integer | sí |  |
 | `icon` | string | sí | `campo`, `mar`, `ciudad`, `aire`, `personas`, `check`, `search`, `menu`, `net`, `doc`, `cal`, `sun`, `moon`, `mail`, `pin`, `phone`, `code`, `award`, `cap`, `lab`, `play`, `handshake`, `globe`, `news`, `mega`, `ext` |
 | `order` | integer |  |  |
@@ -168,7 +168,7 @@ Hace falta al menos uno de: `title_es` o `title_en`.
 
 | Campo | Tipo | Obligatorio | Valores / descripción |
 |---|---|---|---|
-| `id` | string | sí | `campo`, `mar`, `ciudad`, `aire`, `personas` |
+| `key` | string | sí | Identificador (igual que el nombre del fichero): `campo`, `mar`, `ciudad`, `aire`, `personas` |
 | `icon` | string | sí | `campo`, `mar`, `ciudad`, `aire`, `personas`, `check`, `search`, `menu`, `net`, `doc`, `cal`, `sun`, `moon`, `mail`, `pin`, `phone`, `code`, `award`, `cap`, `lab`, `play`, `handshake`, `globe`, `news`, `mega`, `ext` |
 | `order` | integer |  |  |
 | `title_es` | string | sí | Título en español |

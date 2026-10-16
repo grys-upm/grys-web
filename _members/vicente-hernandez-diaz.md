@@ -23,4 +23,4 @@ He obtained his **M.Sc. in Electronic Engineering** from the *Universidad de Alc
 
 His research interests include **ubiquitous computing**, the **Internet of Things (IoT)**, and **network resilience**.
 
-He has participated in several European research projects, including [DEMETER](/projects/demeter/), [AFarCloud](/projects/afarcloud/) (*Precision Agriculture*), and [SWARMs](/projects/swarms/) (*Underwater Collaborative Robots*).
+He has participated in several European research projects, including [DEMETER]({{ 'projects/demeter' | ref }}), [AFarCloud]({{ 'projects/afarcloud' | ref }}) (*Precision Agriculture*), and [SWARMs]({{ 'projects/swarms' | ref }}) (*Underwater Collaborative Robots*).

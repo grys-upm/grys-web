@@ -1,7 +1,7 @@
 ---
 # Ámbito de aplicación · PROPUESTA del mockup v4 (textos ES/EN)
 # Los proyectos se asignan con su campo «domains».
-id: mar
+key: mar
 icon: mar
 order: 2
 title_es: Mar

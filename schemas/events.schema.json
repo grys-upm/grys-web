@@ -57,7 +57,7 @@
         "hybrid"
       ]
     },
-    "url": {
+    "website": {
       "type": "string",
       "format": "uri",
       "pattern": "^https?://"

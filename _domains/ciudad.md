@@ -1,7 +1,7 @@
 ---
 # Ámbito de aplicación · PROPUESTA del mockup v4 (textos ES/EN)
 # Los proyectos se asignan con su campo «domains».
-id: ciudad
+key: ciudad
 icon: ciudad
 order: 3
 title_es: Ciudad y energía

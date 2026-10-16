@@ -1,7 +1,7 @@
 ---
 # Ámbito de aplicación · PROPUESTA del mockup v4 (textos ES/EN)
 # Los proyectos se asignan con su campo «domains».
-id: aire
+key: aire
 icon: aire
 order: 4
 title_es: Aire

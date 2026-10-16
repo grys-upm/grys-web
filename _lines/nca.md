@@ -1,7 +1,7 @@
 ---
 # Eje (axis): agrupación propuesta en el mockup · REVISAR
 # desc_es/desc_en: texto corto (tarjetas). Cuerpo: texto completo de la web anterior (inglés).
-id: nca
+key: nca
 axis: 2
 icon: net
 order: 5

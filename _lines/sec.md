@@ -1,7 +1,7 @@
 ---
 # Eje (axis): agrupación propuesta en el mockup · REVISAR
 # desc_es/desc_en: texto corto (tarjetas). Cuerpo: texto completo de la web anterior (inglés).
-id: sec
+key: sec
 axis: 1
 icon: check
 order: 4

@@ -71,7 +71,7 @@ jobs:
           fi
           bundle exec jekyll build --config "$CONFIG" --baseurl "${{ steps.pages.outputs.base_path }}" --trace 2>&1 | tee build.log
           # Criterio de aceptación: ni errores ni avisos
-          if grep -E "Liquid (Warning|Exception|syntax)|Build Warning|Conflict:|GRyS:" build.log; then
+          if grep -E "Liquid (Warning|Exception|syntax)|Build Warning|Conflict:|GRyS:|WARN -- " build.log; then
             echo "::error::La compilación ha producido avisos (ver arriba)"; exit 1
           fi
 

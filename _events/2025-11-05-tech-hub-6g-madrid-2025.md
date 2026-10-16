@@ -6,7 +6,7 @@ type: fair
 involvement: participant
 place: ETSI Sistemas de Telecomunicación, Universidad Politécnica de Madrid – Campus Sur, Madrid
 format: in_person
-url: https://techhub6gmadrid.es/
+website: https://techhub6gmadrid.es/
 summary_en: Tech-Hub 6G Madrid was a professional, in-person event showcasing and connecting the technological capabilities of companies, SMEs, and research groups in the Madrid region, focused on the development of 6G mobile communication systems and services.
 lang: en
 old_urls:

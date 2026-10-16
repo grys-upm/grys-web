@@ -82,8 +82,10 @@ module GRyS
       doc.basename_without_ext.sub(/\A\d{4}-\d{2}-\d{2}-/, "")
     end
 
+    # Jekyll rellena data["slug"] con el nombre del fichero (en noticias puede
+    # incluir la fecha), así que siempre se quita un prefijo AAAA-MM-DD-.
     def detail_slug(doc, lang)
-      (doc.data["slug_#{lang}"] || doc.data["slug"] || base_slug(doc)).to_s
+      (doc.data["slug_#{lang}"] || doc.data["slug"] || base_slug(doc)).to_s.sub(/\A\d{4}-\d{2}-\d{2}-/, "")
     end
 
     def has_detail?(doc)
@@ -219,6 +221,43 @@ module GRyS
       site = @context.registers[:site]
       lang = (lang || Util.active_lang(site)).to_s
       Util.tr(item, field.to_s, lang, Util.languages(site))
+    end
+
+    # Texto de un campo BibTeX para mostrar: sin llaves de protección ni
+    # órdenes LaTeX básicas. (En Liquid no se puede escribir "}" dentro de
+    # {{ … }}: el analizador lo toma como cierre. Por eso existe este filtro.)
+    def bib_text(value)
+      return value if value.nil?
+
+      value.to_s
+           .gsub(/\\&/, "&").gsub(/\\%/, "%").gsub(/\\_/, "_")
+           .gsub(/\\textendash\s*|--/, "–").gsub(/\\textemdash\s*|---/, "—")
+           .gsub(/\\[a-zA-Z]+\s*/, "")
+           .delete("{}\\")
+           .gsub(/\s+/, " ").strip
+    end
+
+    # Texto visible de un enlace: sin «https://», «www.» ni barra final
+    def url_label(value)
+      return value if value.nil?
+
+      value.to_s.sub(%r{\Ahttps?://}i, "").sub(/\Awww\./i, "").chomp("/")
+    end
+
+    # Enlace interno a una ficha desde el TEXTO de cualquier elemento, válido en
+    # los dos idiomas:  [AFarCloud]({{ 'projects/afarcloud' | ref }})
+    # Formato: «colección/slug» (members, projects, lines, news).
+    def ref(target)
+      site = @context.registers[:site]
+      coll, slug = target.to_s.split("/", 2)
+      collection = site.collections[coll.to_s]
+      doc = collection&.docs&.find { |d| Util.detail_slug(d, Util.default_lang(site)) == slug.to_s }
+      if doc.nil?
+        Jekyll.logger.warn("GRyS:", "ref: «#{target}» no existe (formato: colección/slug)")
+        return "#"
+      end
+      lang = Util.active_lang(site)
+      Util.full_path(site, lang, Util.detail_path(site, coll, doc, lang))
     end
 
     def member(slug)

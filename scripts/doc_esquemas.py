@@ -30,7 +30,7 @@ DESC = {
     "date": "Fecha (AAAA-MM-DD)", "category": "Categoría", "detail": "false = noticia breve sin página propia",
     "deadline": "Plazo: «AAAA-MM-DD HH:MM:SS +0200»; después no se publica",
     "pdf": "Oferta completa en PDF", "project": "Proyecto (slug de _projects)", "line": "Línea de investigación",
-    "place": "Lugar", "url": "Web del evento", "news": "Noticia relacionada (nombre del fichero sin .md)",
+    "place": "Lugar", "key": "Identificador (igual que el nombre del fichero)", "news": "Noticia relacionada (nombre del fichero sin .md)",
     "end ": "", "involvement": "Papel del grupo", "format": "Presencial, en línea o híbrido",
 }
 NAMES = {"members": "Miembros · `_members/<slug>.md`", "projects": "Proyectos · `_projects/<slug>.md`",
