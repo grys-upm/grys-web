@@ -19,7 +19,7 @@ old_urls:
 ---
 **Mario San Emeterio de la Parte** began his research career with the [Next-Generation Networks and Services (GRyS)](https://grys.etsist.upm.es/) group while completing his **M.Sc. in the Internet of Things (IoT)** at the [Universidad Politécnica de Madrid (UPM)](https://www.upm.es).
 
-He has participated in several European research projects, including [AFarCloud](/projects/afarcloud/) (*Aggregate Farming in the Cloud*, ECSEL JU) and [H2020 DEMETER](/projects/demeter/) (*Building an Interoperable, Data-Driven, Innovative, and Sustainable European Agri-Food Sector*).
+He has participated in several European research projects, including [AFarCloud]({{ 'projects/afarcloud' | ref }}) (*Aggregate Farming in the Cloud*, ECSEL JU) and [H2020 DEMETER]({{ 'projects/demeter' | ref }}) (*Building an Interoperable, Data-Driven, Innovative, and Sustainable European Agri-Food Sector*).
 
 Mario got his **Ph.D.** in 2024, and currently is serving as an **Assistant Professor** in the [Department of Telematic Engineering and Electronics (DTE)](https://www.etsist.upm.es/escuela/departamentos/DTE).  
 He teaches courses on **networks**, **signaling and switching**, and **advanced programming**.

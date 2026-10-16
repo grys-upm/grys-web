@@ -236,6 +236,15 @@ def convert_body(body, imgs, img_dir, where):
     # Contenedores de maquetación de Bootstrap
     b = re.sub(r"</?div\b[^>]*>", "", b)
 
+    # Enlaces internos a fichas → filtro ref (la URL depende del idioma)
+    def internal(m):
+        coll = {"projects": "projects", "research/projects": "projects", "team": "members"}[m.group(2)]
+        slug = SLUG_FIX.get(m.group(3), ascii_slug(m.group(3).replace("µ", "u")))
+        log("revisar", where, f"enlace interno {m.group(1)} → ficha {coll}/{slug}")
+        return "](" + "{{ '" + coll + "/" + slug + "' | ref }}" + ")"
+    b = re.sub(r"\]\((/(research/projects|projects|team)/([^/)#]+)/?)\)", internal, b)
+    for other in re.findall(r"\]\((/(?!assets/)[^)]*)\)", b):
+        log("enlace", where, f"enlace interno sin convertir: {other}")
     # Enlaces vacíos [texto](#)
     b = re.sub(r"\[([^\]]+)\]\(#\)", r"\1", b)
 
@@ -630,7 +639,7 @@ def migrate_lines(origen, mock):
     for n, ln in enumerate(mock["lines"]):
         es_slug, en_slug = LINE_SLUGS[ln["id"]]
         data = {
-            "id": ln["id"], "axis": ln["axis"], "icon": ln["icon"], "order": n + 1,
+            "key": ln["id"], "axis": ln["axis"], "icon": ln["icon"], "order": n + 1,
             "title_es": ln["t"][0], "title_en": ln["t"][1],
             "desc_es": ln["d"][0], "desc_en": ln["d"][1],
             "slug_es": es_slug, "slug_en": en_slug,
@@ -649,7 +658,7 @@ def migrate_lines(origen, mock):
 
 def migrate_domains(mock):
     for n, dm in enumerate(mock["domains"]):
-        data = {"id": dm["id"], "icon": dm["id"], "order": n + 1,
+        data = {"key": dm["id"], "icon": dm["id"], "order": n + 1,
                 "title_es": dm["t"][0], "title_en": dm["t"][1],
                 "subtitle_es": dm["s"][0], "subtitle_en": dm["s"][1],
                 "desc_es": dm["d"][0], "desc_en": dm["d"][1]}
@@ -778,7 +787,7 @@ def migrate_events(origen, mock, news):
             "involvement": inv,
             "place": place,
             "format": loc.get("format") or None,
-            "url": fm.get("website") or None,
+            "website": fm.get("website") or None,
             "projects": fm.get("related_projects") or None,
             "news": (rel_news["old_urls"][0].split("/")[2]) if rel_news else None,
             "summary_en": re.sub(r"\s+", " ", str(fm.get("description") or "")).strip() or None,
@@ -787,9 +796,9 @@ def migrate_events(origen, mock, news):
         }
         if not title_es:
             log("traducción", where, "sin título en español")
-        if data["url"] and "grys.etsist.upm.es/events/" in data["url"]:
-            log("revisar", where, f"el enlace del evento apunta a una página de la web anterior que no existe: {data['url']}; se quita")
-            data["url"] = None
+        if data["website"] and "grys.etsist.upm.es/events/" in data["website"]:
+            log("revisar", where, f"el enlace del evento apunta a una página de la web anterior que no existe: {data['website']}; se quita")
+            data["website"] = None
         if rel_news:
             log("revisar", where, f"enlazado con la noticia del mismo día ({data['news']})")
         data = {k: v for k, v in data.items() if v not in (None, "")}

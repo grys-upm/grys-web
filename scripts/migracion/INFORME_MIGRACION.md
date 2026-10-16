@@ -16,8 +16,13 @@ Generado por `migrar_desde_alfolio.py` el 2026-10-16.
 - `_projects/afaredge.md`: referencia europea 101252360-2 → 101252360 (CORDIS)
 - `_opportunities/2026-07-22-humami-job.md`: plazo 2026-08-05 23:00:00 +0200 → 2026-08-06 23:00:00 +0200 (confirmado: 6 de agosto de 2026)
 
-## Decisiones que conviene revisar (17)
+## Decisiones que conviene revisar (22)
 
+- `_members/mario-san-emeterio-de-la-parte.md`: enlace interno /projects/afarcloud/ → ficha projects/afarcloud
+- `_members/mario-san-emeterio-de-la-parte.md`: enlace interno /projects/demeter/ → ficha projects/demeter
+- `_members/vicente-hernandez-diaz.md`: enlace interno /projects/demeter/ → ficha projects/demeter
+- `_members/vicente-hernandez-diaz.md`: enlace interno /projects/afarcloud/ → ficha projects/afarcloud
+- `_members/vicente-hernandez-diaz.md`: enlace interno /projects/swarms/ → ficha projects/swarms
 - `_projects/afarcloud.md`: se han corregido erratas del texto original («recived», «th European»)
 - `_projects/nextarc.md`: rol «partner» deducido de «Coordinated by: Mälardalen University»
 - `_projects/nextarc.md`: web oficial https://nextarc.eu tomada de la noticia del 24-04-2026

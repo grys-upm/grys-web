@@ -1,10 +1,10 @@
-{%- comment -%} Un evento con caja de fecha. Parámetro: ev {%- endcomment -%}
+{%- comment -%} Un evento con caja de fecha. Parámetro: ev. (No usar ev.url: es la URL interna de Jekyll.) {%- endcomment -%}
 {%- assign evi = include.ev -%}
 {%- assign evi_title = evi | tr: "title" -%}
 <article class="event">
   <time class="date" datetime="{{ evi.date | date: '%Y-%m-%d' }}"><b>{{ evi.date | date: "%-d" }}</b><span>{{ evi.date | date: "%m/%y" }}</span></time>
   <div>
-    <h3>{% if evi.url %}<a href="{{ evi.url }}">{{ evi_title }}</a>{% else %}{{ evi_title }}{% endif %}</h3>
+    <h3>{% if evi.website %}<a href="{{ evi.website }}">{{ evi_title }}</a>{% else %}{{ evi_title }}{% endif %}</h3>
     <p class="datos">
       {%- if evi.end %}{{ evi.date | date: "%d/%m/%Y" }}–{{ evi.end | date: "%d/%m/%Y" }} · {% endif -%}
       {%- if evi.place %}{{ evi.place }}{% else %}<span class="todo">{{ t.tbc }}</span>{% endif -%}

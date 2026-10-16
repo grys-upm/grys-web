@@ -244,6 +244,22 @@ module GRyS
       value.to_s.sub(%r{\Ahttps?://}i, "").sub(/\Awww\./i, "").chomp("/")
     end
 
+    # Enlace interno a una ficha desde el TEXTO de cualquier elemento, válido en
+    # los dos idiomas:  [AFarCloud]({{ 'projects/afarcloud' | ref }})
+    # Formato: «colección/slug» (members, projects, lines, news).
+    def ref(target)
+      site = @context.registers[:site]
+      coll, slug = target.to_s.split("/", 2)
+      collection = site.collections[coll.to_s]
+      doc = collection&.docs&.find { |d| Util.detail_slug(d, Util.default_lang(site)) == slug.to_s }
+      if doc.nil?
+        Jekyll.logger.warn("GRyS:", "ref: «#{target}» no existe (formato: colección/slug)")
+        return "#"
+      end
+      lang = Util.active_lang(site)
+      Util.full_path(site, lang, Util.detail_path(site, coll, doc, lang))
+    end
+
     def member(slug)
       site = @context.registers[:site]
       coll = site.collections["members"]

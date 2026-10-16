@@ -11,5 +11,5 @@
 {%- endif %}
 {%- if page.lines and page.lines.size > 0 %}
 <h2 class="rule">{{ t.members.lines }}</h2>
-<div class="chips">{% for lid in page.lines %}{% assign fm_l = site.lines | where: "id", lid | first %}{% if fm_l %}<a class="chip" href="{{ fm_l | detail_url }}">{{ fm_l | tr: "title" }}</a>{% endif %}{% endfor %}</div>
+<div class="chips">{% for lid in page.lines %}{% assign fm_l = site.lines | where: "key", lid | first %}{% if fm_l %}<a class="chip" href="{{ fm_l | detail_url }}">{{ fm_l | tr: "title" }}</a>{% endif %}{% endfor %}</div>
 {%- endif %}

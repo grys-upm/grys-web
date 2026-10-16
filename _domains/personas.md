@@ -1,7 +1,7 @@
 ---
 # Ámbito de aplicación · PROPUESTA del mockup v4 (textos ES/EN)
 # Los proyectos se asignan con su campo «domains».
-id: personas
+key: personas
 icon: personas
 order: 5
 title_es: Personas

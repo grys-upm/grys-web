@@ -175,6 +175,9 @@ def schema(name):
 
 
 COLLECTIONS = ["members", "projects", "lines", "domains", "news", "events", "opportunities"]
+RESERVED = {"id", "url", "path", "relative_path", "collection", "content", "output", "excerpt",
+            "next", "previous"}
+refs = []
 items = {c: {} for c in COLLECTIONS}
 includes = {os.path.relpath(p, os.path.join(ROOT, "_includes")).replace(os.sep, "/")
             for p in glob.glob(os.path.join(ROOT, "_includes", "**", "*"), recursive=True)}
@@ -190,6 +193,18 @@ for coll in COLLECTIONS:
         if fm is None:
             continue
         items[coll][name[:-3]] = fm
+        # Campos que Jekyll reserva en los elementos de una colección: en las plantillas
+        # devuelven el dato interno de Jekyll y no el escrito aquí (fallo silencioso)
+        for rk in sorted(RESERVED & set(map(str, fm))):
+            err(f"{rel(f)}: el campo «{rk}» está reservado por Jekyll; usa otro nombre "
+                f"({'key' if rk == 'id' else 'website' if rk == 'url' else 'otro'})")
+        # Enlaces internos escritos a mano: fallan en una de las dos lenguas
+        for lk in re.findall(r"\]\((/(?!assets/)[^)\s]*)\)|href=\"(/(?!assets/)[^\"]*)\"", body):
+            target = lk[0] or lk[1]
+            err(f"{rel(f)}: enlace interno «{target}»; usa {{{{ 'colección/slug' | ref }}}} "
+                "(p. ej. [AFarCloud]({{ 'projects/afarcloud' | ref }}))")
+        for rf in re.findall(r"\{\{\s*'([^']+)'\s*\|\s*ref\s*\}\}", body):
+            refs.append((rel(f), rf))
         for e in validate(normalize(fm), sch):
             err(f"{rel(f)}: {e}")
         for k, v in fm.items():
@@ -257,6 +272,13 @@ for bib in sorted(glob.glob(os.path.join(ROOT, "_bibliography", "*.bib"))):
         line = btext.count("\n", 0, pos) + 1
         err(f"{rel(bib)}:{line}: «@» fuera de una entrada (BibTeX-Ruby avisaría «Lexer: unexpected token»)")
 
+# Destinos del filtro ref
+for where_, rf in refs:
+    coll_, _, slug_ = rf.partition("/")
+    if coll_ not in ("members", "projects", "lines", "news") or slug_ not in items.get(coll_, {}) and \
+            not any(k.endswith("-" + slug_) for k in items.get(coll_, {})):
+        err(f"{where_}: ref «{rf}» no existe (formato colección/slug, p. ej. projects/afarcloud)")
+
 # Etiquetas propias del BibTeX (_bibliography/etiquetas.yml)
 import aplicar_etiquetas  # noqa: E402
 pend, unknown_keys = aplicar_etiquetas.apply(check_only=True)
@@ -277,8 +299,11 @@ for k, v in (aplicar_etiquetas.load_tags() or {}).items():
 
 seen_ids = {}
 for slug, ln in items["lines"].items():
-    if ln.get("id") != slug:
-        err(f"_lines/{slug}.md: el id «{ln.get('id')}» debe coincidir con el nombre del fichero")
+    if ln.get("key") != slug:
+        err(f"_lines/{slug}.md: key «{ln.get('key')}» debe coincidir con el nombre del fichero")
+for slug, dm in items["domains"].items():
+    if dm.get("key") != slug:
+        err(f"_domains/{slug}.md: key «{dm.get('key')}» debe coincidir con el nombre del fichero")
 for coll in ("members", "projects", "news"):
     for slug, it in items[coll].items():
         for u in it.get("old_urls") or []:
@@ -299,7 +324,7 @@ SIMPLE = {"else", "elsif", "when", "assign", "include", "include_relative", "bre
 # remove_last o replace_last NO existen aquí.
 LIQUID4_FILTERS = set("""size downcase upcase capitalize escape h escape_once url_encode url_decode slice truncate truncatewords split strip lstrip rstrip strip_html strip_newlines join sort sort_natural where uniq reverse map compact replace replace_first remove remove_first append concat prepend newline_to_br date first last abs plus minus times divided_by modulo round ceil floor at_least at_most default""".split())
 JEKYLL_FILTERS = set("""markdownify smartify sassify scssify slugify xml_escape cgi_escape uri_escape normalize_whitespace number_of_words array_to_sentence_string jsonify where where_exp find find_exp to_integer sort pop push shift unshift sample inspect group_by group_by_exp date_to_xmlschema date_to_rfc822 date_to_string date_to_long_string relative_url absolute_url strip_index""".split())
-OWN_FILTERS = set("""route_url url_lang detail_url alt_url l10n tr bib_text url_label member""".split())
+OWN_FILTERS = set("""route_url url_lang detail_url alt_url l10n tr bib_text url_label member ref""".split())
 FILTERS = LIQUID4_FILTERS | JEKYLL_FILTERS | OWN_FILTERS
 
 LIQ_FILES = []

@@ -2,13 +2,13 @@
 {%- include page-vars.html -%}
 {%- assign am_list = site.domains | sort: "order" %}
 {%- for dm in am_list %}
-<article class="ambito" id="{{ dm.id }}">
+<article class="ambito" id="{{ dm.key }}">
   <div class="label"><span class="hexi">{% include icono.html n=dm.icon %}</span>{{ dm | tr: "title" }}</div>
   <h2>{{ dm | tr: "subtitle" }}</h2>
   <p>{{ dm | tr: "desc" }}</p>
   <h3 class="sr">{{ t.domains.projects }}</h3>
   <div class="chips">
-  {%- for p in site.projects %}{% if p.domains contains dm.id %}
+  {%- for p in site.projects %}{% if p.domains contains dm.key %}
     <a class="chip" href="{{ p | detail_url }}">{{ p.acronym }}</a>
   {%- endif %}{% endfor %}
   </div>

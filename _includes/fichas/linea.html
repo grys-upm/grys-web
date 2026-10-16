@@ -1,5 +1,6 @@
-{%- comment -%} Cuerpo de la ficha de una línea: texto + personas + proyectos (campo «lines» de cada uno). {%- endcomment -%}
-{%- assign fl_id = page.id -%}
+{%- comment -%} OJO: en colecciones no se usan los campos «id» ni «url» (Jekyll los reserva); se usa «key».
+ Cuerpo de la ficha de una línea: texto + personas + proyectos (campo «lines» de cada uno). {%- endcomment -%}
+{%- assign fl_id = page.key -%}
 {%- assign fl_ax = site.data.axes | where: "id", page.axis | first -%}
 <p class="datos">{{ t.lines.axis }} 0{{ page.axis }} · {{ fl_ax.title | l10n }}</p>
 {{ include.cuerpo }}

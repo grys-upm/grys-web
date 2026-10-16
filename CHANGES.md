@@ -1,5 +1,15 @@
 # Registro de cambios
 
+## Fase 2 · Corrección 3 (16-10-2026)
+
+La web ya compila. `verificar_sitio.py` encontró 16 enlaces rotos y, al revisarlos, apareció un fallo silencioso:
+- **Campos reservados por Jekyll:** en los elementos de una colección, `url` e `id` devuelven el dato interno de Jekyll y no el escrito en el fichero.
+  - Los eventos guardaban su web en `url` y enlazaban a páginas inexistentes (6 enlaces rotos). El campo pasa a llamarse **`website`**.
+  - **Fallo silencioso:** las líneas y los ámbitos usaban `id`, así que no se veía ningún ámbito en Proyectos ni en las fichas, y la página Ámbitos salía sin proyectos. El campo pasa a llamarse **`key`**.
+- **Enlaces internos en los textos:** las biografías de Mario San Emeterio y Vicente Hernández enlazaban a `/projects/…`, una dirección que ya estaba rota en la web anterior (10 enlaces rotos). Un enlace fijo, además, no puede valer para los dos idiomas. Se usa el filtro nuevo **`ref`**: `[AFarCloud]({{ 'projects/afarcloud' | ref }})` lleva a la ficha en el idioma de la página.
+- **`comprobar_datos.py`:** da error si se usa un campo reservado (`id`, `url`, `path`, `content`…), si hay un enlace interno escrito a mano en el texto de un elemento y si un `ref` apunta a una ficha que no existe. He comprobado que detecta los tres casos con los datos anteriores: 38 errores.
+- **Regeneración:** esquemas, `docs/DATOS.md` y los datos afectados (11 líneas, 5 ámbitos, 1 evento y 2 miembros), con el script de migración corregido.
+
 ## Fase 2 · Corrección 2 (16-10-2026)
 
 - **Error `undefined filter remove_last`:** ese filtro es de Liquid 5 y Jekyll 4.4 usa Liquid 4.0.4. He creado el filtro propio `url_label`, que quita «https://», «www.» y la barra final, y lo uso en las fichas de miembro y de proyecto.
