@@ -25,7 +25,7 @@
   <dt>{{ t.projects.partners }}</dt><dd>{{ page.partners | default: pd_tbc }}</dd>
   <dt>{{ t.projects.budget }}</dt><dd>{{ page.budget | default: pd_tbc }}</dd>
   {%- if page.doi %}<dt>DOI</dt><dd><a href="https://doi.org/{{ page.doi }}">{{ page.doi }}</a></dd>{% endif %}
-  {%- if page.website %}<dt>{{ t.projects.website }}</dt><dd><a href="{{ page.website }}">{{ page.website | remove: "https://" | remove: "http://" | remove_last: "/" }}</a></dd>{% endif %}
+  {%- if page.website %}<dt>{{ t.projects.website }}</dt><dd><a href="{{ page.website }}">{{ page.website | url_label }}</a></dd>{% endif %}
   {%- if page.links %}
   {%- assign pd_links = page.links | where_exp: "l", "l.url != page.website" %}
   {%- if pd_links.size > 0 %}<dt>{{ t.projects.links }}</dt><dd><ul class="perfiles">{% for l in pd_links %}<li><a href="{{ l.url }}">{{ l.title }}</a></li>{% endfor %}</ul></dd>{% endif %}

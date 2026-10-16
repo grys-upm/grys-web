@@ -294,14 +294,13 @@ BLOCKS = {"if": "endif", "unless": "endunless", "for": "endfor", "case": "endcas
 SIMPLE = {"else", "elsif", "when", "assign", "include", "include_relative", "break", "continue",
           "bibliography", "cite", "reference", "increment", "decrement", "cycle", "echo", "liquid",
           "I18n_Headers", "highlight", "endhighlight", "post_url", "link"}
-FILTERS = set("""default l10n route_url url_lang detail_url alt_url tr member bib_text relative_url absolute_url append prepend
-escape escape_once xml_escape cgi_escape uri_escape url_encode strip_html strip_newlines newline_to_br
-upcase downcase capitalize strip lstrip rstrip date date_to_xmlschema date_to_string date_to_long_string
-split where where_exp group_by group_by_exp find first last map size join sort sort_natural reverse uniq
-compact concat push pop shift unshift sample replace replace_first remove remove_first truncate
-truncatewords slice plus minus times divided_by modulo abs ceil floor round at_least at_most
-jsonify markdownify smartify slugify number_of_words inspect normalize_whitespace array_to_sentence_string
-remove_last replace_last""".split())
+# Lista EXACTA de filtros disponibles: Liquid 4.0.4 (la versión que usa Jekyll 4.4),
+# Jekyll 4.4 y los propios de _plugins/grys.rb. OJO: filtros de Liquid 5 como
+# remove_last o replace_last NO existen aquí.
+LIQUID4_FILTERS = set("""size downcase upcase capitalize escape h escape_once url_encode url_decode slice truncate truncatewords split strip lstrip rstrip strip_html strip_newlines join sort sort_natural where uniq reverse map compact replace replace_first remove remove_first append concat prepend newline_to_br date first last abs plus minus times divided_by modulo round ceil floor at_least at_most default""".split())
+JEKYLL_FILTERS = set("""markdownify smartify sassify scssify slugify xml_escape cgi_escape uri_escape normalize_whitespace number_of_words array_to_sentence_string jsonify where where_exp find find_exp to_integer sort pop push shift unshift sample inspect group_by group_by_exp date_to_xmlschema date_to_rfc822 date_to_string date_to_long_string relative_url absolute_url strip_index""".split())
+OWN_FILTERS = set("""route_url url_lang detail_url alt_url l10n tr bib_text url_label member""".split())
+FILTERS = LIQUID4_FILTERS | JEKYLL_FILTERS | OWN_FILTERS
 
 LIQ_FILES = []
 for pat in ("_layouts/*.html", "_includes/*.html", "_includes/*/*.html", "_includes/*.svg", "_pages/*/*.md",

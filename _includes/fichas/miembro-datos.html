@@ -6,7 +6,7 @@
   <dt>{{ t.period }}</dt>
   <dd>{% if page.since %}{{ page.since | date: "%m/%Y" }}{% else %}<span class="todo">{{ t.tbc }}</span>{% endif %} – {% if page.until %}{{ page.until | date: "%m/%Y" }}{% elsif page.status == "current" %}{{ t.present }}{% else %}<span class="todo">{{ t.tbc }}</span>{% endif %}</dd>
   {%- if page.email and page.status == "current" %}<dt>{{ t.members.email }}</dt><dd><a href="mailto:{{ page.email }}">{{ page.email }}</a></dd>{% endif %}
-  {%- if page.website %}<dt>{{ t.members.website }}</dt><dd><a href="{{ page.website }}">{{ page.website | remove: "https://" | remove: "http://" | remove_last: "/" }}</a></dd>{% endif %}
+  {%- if page.website %}<dt>{{ t.members.website }}</dt><dd><a href="{{ page.website }}">{{ page.website | url_label }}</a></dd>{% endif %}
   <dt>{{ t.members.profiles }}</dt>
   <dd><ul class="perfiles">
     {%- if page.orcid %}<li><a href="https://orcid.org/{{ page.orcid }}">ORCID</a></li>{% endif %}

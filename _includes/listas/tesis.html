@@ -8,12 +8,12 @@
 {%- assign mx = site.data.metrics -%}
 <h2 class="rule" id="phd">{{ t.theses.phd }}</h2>
 <p class="count">{{ th_s.phd }} {{ t.theses.in_site }} · {{ mx.phd_theses }} {{ t.theses.in_portal }} ({{ mx.date }})</p>
-{% bibliography --file theses --query @phdthesis --group_by none %}
+{% bibliography --file theses --query @*[level=phd] --group_by none %}
 
 <h2 class="rule" id="master">{{ t.theses.master }}</h2>
 <p class="count">{{ th_s.master }} {{ t.theses.in_site }} · {{ mx.master_theses }} {{ t.theses.in_portal }} ({{ mx.date }})</p>
-{% bibliography --file theses --query @mastersthesis --group_by none %}
+{% bibliography --file theses --query @*[level=master] --group_by none %}
 
 <h2 class="rule" id="bachelor">{{ t.theses.bachelor }}</h2>
 <p class="count">{{ th_s.bachelor }} {{ t.theses.in_site }} · {{ mx.bachelor_theses }} {{ t.theses.in_portal }} ({{ mx.date }})</p>
-{% bibliography --file theses --query @thesis --group_by none %}
+{% bibliography --file theses --query @*[level=bachelor] --group_by none %}

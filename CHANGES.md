@@ -1,5 +1,12 @@
 # Registro de cambios
 
+## Fase 2 · Corrección 2 (16-10-2026)
+
+- **Error `undefined filter remove_last`:** ese filtro es de Liquid 5 y Jekyll 4.4 usa Liquid 4.0.4. He creado el filtro propio `url_label`, que quita «https://», «www.» y la barra final, y lo uso en las fichas de miembro y de proyecto.
+- **`comprobar_datos.py`:** la lista de filtros permitidos es ahora la **exacta** de Liquid 4.0.4, Jekyll 4.4 y el plugin. La anterior estaba escrita a mano e incluía `remove_last` por error. Las 38 funciones que usan las plantillas están en la lista.
+- **Tesis:** se consultan por el campo `level` (`@*[level=phd]`…) y no por el tipo de entrada, porque jekyll-scholar trata `phdthesis` y `mastersthesis` como alias de `thesis`.
+- **URL de noticias (preventivo):** el plugin quita siempre el prefijo `AAAA-MM-DD-` del *slug*, porque Jekyll puede rellenarlo con el nombre de fichero completo y la fecha saldría repetida en la URL.
+
 ## Fase 2 · Corrección 1 (16-10-2026)
 
 Errores de la primera compilación de la fase 2 en Actions:
