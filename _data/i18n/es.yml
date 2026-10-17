@@ -44,6 +44,23 @@ redirect:
 pubs:
   bibtex: Cita BibTeX
   doi: DOI
+  type: Tipo
+  year: Año
+  all_years: Todos los años
+  journals: Revistas
+  conferences: Congresos
+  books: Libros y capítulos
+  n_journal: en revistas
+  n_conference: en congresos
+  n_book: libros y capítulos
+  documents: documentos
+  citations: citas
+  search_ph: Título, autoría, revista o DOI…
+  count_one: publicación
+  count_many: publicaciones
+  metrics_show: Mostrar métricas de impacto
+  metrics_hide: Ocultar métricas de impacto
+  metrics_note: Insignias de Altmetric y Dimensions. Al mostrarlas, tu navegador se conecta con esos servicios.
 hero:
   label: Grupo de investigación UPM · desde 2009
   title: Redes y servicios de próxima generación
@@ -82,6 +99,8 @@ filters:
   label: Filtros
   search: Buscar
   all: Todos
+  all_f: Todas
+  all_projects: Todos los proyectos
   all_domains: Todos los ámbitos
   all_lines: Todas las líneas
   line: Línea de investigación

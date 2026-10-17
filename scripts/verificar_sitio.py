@@ -14,7 +14,9 @@ Comprueba:
   · las pestañas (Equipo, Tesis) están bien enlazadas: cada tab con su panel,
     una sola seleccionada y solo su panel visible; anclas antiguas (#phd…) vivas;
   · la tabla de Proyectos tiene sus filtros (ocultos sin JS) y una fila con
-    datos de filtrado por cada proyecto de _projects/.
+    datos de filtrado por cada proyecto de _projects/;
+  · Publicaciones tiene sus filtros y un .pubdata por entrada de papers.bib, y
+    ninguna página carga scripts de Altmetric/Dimensions sin pedirlo el visitante.
 Sale con código 1 si hay errores. Solo usa la biblioteca estándar + PyYAML.
 """
 import argparse
@@ -226,6 +228,32 @@ def main():
         filas = len(re.findall(r"<tr data-tipo=", html))
         if filas != n_proj:
             errors.append(f"{rel}/index.html: {filas} filas filtrables y hay {n_proj} proyectos")
+    # 7. Publicaciones: filtros, datos por entrada e insignias bajo demanda
+    bib = os.path.join(ROOT, "_bibliography", "papers.bib")
+    n_bib = len(re.findall(r"^@(?!comment|string|preamble)\w+\s*\{", open(bib, encoding="utf-8").read(), re.M | re.I)) if os.path.exists(bib) else 0
+    for rel in ("investigacion/publicaciones", "en/research/publications"):
+        f = os.path.join(site, rel, "index.html")
+        if not os.path.exists(f):
+            continue
+        html = open(f, encoding="utf-8").read()
+        if not re.search(r'<form[^>]*data-filter="pb"[^>]*hidden', html):
+            errors.append(f"{rel}/index.html: faltan los filtros (form data-filter=pb hidden)")
+        for i in ("pb-list", "pb-count", "pb-empty"):
+            if f'id="{i}"' not in html:
+                errors.append(f"{rel}/index.html: falta el elemento #{i}")
+        n_pd = html.count('class="pubdata"')
+        if n_pd != n_bib:
+            errors.append(f"{rel}/index.html: {n_pd} publicaciones filtrables y papers.bib tiene {n_bib}")
+        n_doi = html.count('class="badges" hidden')
+        if n_doi == 0:
+            print(f"AVISO  {rel}/index.html: ninguna insignia de Altmetric/Dimensions")
+    for dirpath, _, files in os.walk(site):
+        for fn in files:
+            if fn.endswith(".html"):
+                h = open(os.path.join(dirpath, fn), encoding="utf-8").read()
+                if re.search(r'<script[^>]+src="[^"]*(altmetric|dimensions)', h, re.I):
+                    errors.append(f"{os.path.relpath(os.path.join(dirpath, fn), site)}: carga un script de "
+                                  "Altmetric/Dimensions sin consentimiento (debe hacerlo grys.js bajo demanda)")
     todo = sum(1 for w in warnings if "por completar" in w)
     for e in errors:
         print(f"ERROR  {e}")

@@ -1,12 +1,66 @@
 {%- comment -%}
   Publicaciones desde _bibliography/papers.bib (jekyll-scholar, agrupadas por año).
-  Los recuentos salen del propio BibTeX (_plugins/bib_stats.rb); las métricas de
-  Scopus, de _data/metrics.yml con su fuente y fecha.
-  Fase 3: filtros por tipo/año y buscador.
+  · Los recuentos salen del propio BibTeX (_plugins/bib_stats.rb); las métricas de
+    Scopus, de _data/metrics.yml con su fuente y fecha.
+  · Filtros (assets/js/grys.js, «Filtros»): texto, tipo, año, proyecto y línea.
+    Cada entrada lleva sus valores en un <span class="pubdata" hidden data-*>
+    (_layouts/bib.html). Los años sin resultados se ocultan. Las opciones sin
+    publicaciones se eliminan (data-prune), y si un desplegable se queda vacío
+    no se muestra (por ejemplo, proyecto o línea mientras no haya etiquetas en
+    etiquetas.yml).
+  · Insignias de Altmetric y Dimensions: no se cargan hasta que el visitante
+    pulsa «Mostrar métricas de impacto» (privacidad y rendimiento). La elección
+    se recuerda en el navegador.
 {%- endcomment -%}
 {%- include page-vars.html -%}
 {%- assign pb_s = site.data.bib_stats.papers -%}
 {%- assign mx = site.data.metrics -%}
-<p class="count">{{ pb_s.total }} {{ t.pubs_extra.count }} · {{ pb_s.journal }} {% if lang == "es" %}en revistas{% else %}journal articles{% endif %} · {{ pb_s.conference }} {% if lang == "es" %}en congresos{% else %}conference papers{% endif %} · {{ pb_s.chapter }} {% if lang == "es" %}capítulos{% else %}chapters{% endif %}</p>
-<p class="datos">Scopus: {{ mx.scopus_docs }} {% if lang == "es" %}documentos{% else %}documents{% endif %} · {{ mx.scopus_citations }} {% if lang == "es" %}citas{% else %}citations{% endif %} · h = {{ mx.scopus_h }} ({{ mx.source }}, {{ mx.date }})</p>
+<p class="count">{{ pb_s.total }} {{ t.pubs_extra.count }} · {{ pb_s.journal }} {{ t.pubs.n_journal }} · {{ pb_s.conference }} {{ t.pubs.n_conference }} · {{ pb_s.chapter | plus: pb_s.book | plus: pb_s.other }} {{ t.pubs.n_book }}</p>
+<p class="datos">Scopus: {{ mx.scopus_docs }} {{ t.pubs.documents }} · {{ mx.scopus_citations }} {{ t.pubs.citations }} · h = {{ mx.scopus_h }} ({{ mx.source }}, {{ mx.date }})</p>
+
+<form class="filters" role="search" aria-label="{{ t.filters.label }}" data-filter="pb" hidden>
+  <label class="sr" for="pb-q">{{ t.filters.search }}</label>
+  <input type="search" id="pb-q" name="q" placeholder="{{ t.pubs.search_ph }}" autocomplete="off">
+  <div class="seg" role="group" aria-label="{{ t.pubs.type }}" data-name="tipo">
+    <button type="button" data-value="" aria-pressed="true">{{ t.filters.all_f }}</button>
+    <button type="button" data-value="journal" aria-pressed="false">{{ t.pubs.journals }}</button>
+    <button type="button" data-value="conference" aria-pressed="false">{{ t.pubs.conferences }}</button>
+    <button type="button" data-value="book" aria-pressed="false">{{ t.pubs.books }}</button>
+  </div>
+  <label class="sr" for="pb-anio">{{ t.pubs.year }}</label>
+  <select id="pb-anio" name="anio" data-prune>
+    <option value="">{{ t.pubs.all_years }}</option>
+    {%- if pb_s.first_year and pb_s.last_year %}{% for y in (pb_s.first_year..pb_s.last_year) reversed %}
+    <option value="{{ y }}">{{ y }}</option>
+    {%- endfor %}{% endif %}
+  </select>
+  <label class="sr" for="pb-proyecto">{{ t.projects.project }}</label>
+  <select id="pb-proyecto" name="proyecto" data-prune>
+    <option value="">{{ t.filters.all_projects }}</option>
+    {%- assign pb_projs = site.projects | sort: "acronym" %}{% for p in pb_projs %}
+    <option value="{{ p.slug }}">{{ p.acronym }}</option>
+    {%- endfor %}
+  </select>
+  <label class="sr" for="pb-linea">{{ t.filters.line }}</label>
+  <select id="pb-linea" name="linea" data-prune>
+    <option value="">{{ t.filters.all_lines }}</option>
+    {%- for l in site.lines %}
+    <option value="{{ l.key }}">{{ l | tr: "title" }}</option>
+    {%- endfor %}
+  </select>
+  <button type="reset" class="linkbtn">{{ t.filters.reset }}</button>
+</form>
+
+<div class="metricsbar" data-metrics hidden>
+  <button type="button" class="btn secondary small" aria-pressed="false" data-on="{{ t.pubs.metrics_hide }}" data-off="{{ t.pubs.metrics_show }}">{{ t.pubs.metrics_show }}</button>
+  <span class="datos">{{ t.pubs.metrics_note }}</span>
+</div>
+
+<p class="count" id="pb-count" aria-live="polite" data-one="{{ t.pubs.count_one }}" data-many="{{ t.pubs.count_many }}">{{ pb_s.total }} {{ t.pubs.count_many }}</p>
+<div id="pb-list">
 {% bibliography --file papers %}
+</div>
+<div class="empty" id="pb-empty" hidden><span class="bub">{% include icono.html n="search" %}</span><div>
+  <h3>{{ t.filters.no_results }}</h3>
+  <p>{{ t.filters.no_results_hint }}</p>
+</div></div>

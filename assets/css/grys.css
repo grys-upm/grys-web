@@ -225,6 +225,10 @@ section{padding:72px 0}
 /* Filtros: el atributo hidden debe ganar a display:flex/block (también en móvil) */
 .filters[hidden],.empty[hidden],.ptable[hidden],.ptable tr[hidden]{display:none}
 .filters select{max-width:100%}
+.filters [hidden],.pubs [hidden],#pb-list [hidden],.metricsbar[hidden],.badges[hidden]{display:none}
+.metricsbar{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:-8px 0 18px}
+.btn.small{padding:7px 14px;font-size:14px}
+.badges{display:inline-flex;gap:10px;align-items:center;font-weight:400}
 .linkbtn{background:none;border:0;padding:9px 4px;font:600 14.5px var(--f-texto);color:var(--link);text-decoration:underline;text-underline-offset:3px;cursor:pointer;margin-left:auto}
 .ptable{width:100%;border-collapse:collapse;font-size:15.5px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
 .ptable th{text-align:left;padding:12px 14px;background:var(--alt);color:var(--muted);font:700 13px var(--f-titulo);letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid var(--line)}

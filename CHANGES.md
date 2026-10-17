@@ -1,5 +1,27 @@
 # Registro de cambios
 
+## Fase 3 · Paso 3.3: filtros e insignias en Publicaciones (17-10-2026)
+
+- **Filtros en Publicaciones**, como en el mockup:
+  - búsqueda por título, autoría, revista o DOI; no distingue mayúsculas ni tildes;
+  - tipo: Todas / Revistas / Congresos / Libros y capítulos;
+  - año;
+  - proyecto y línea.
+  
+  Se ocultan los años que se quedan sin publicaciones. Recuento en vivo, bloque «sin resultados» y estado en la URL (`?tipo=journal&anio=2024`).
+- **Proyecto y línea** salen de `project` y `lines` en `_bibliography/etiquetas.yml`. Solo se ofrecen las opciones que tienen publicaciones (`data-prune`); como aún no hay etiquetas, esos dos desplegables no aparecen.
+- **Insignias oficiales de Altmetric y Dimensions:**
+  - Altmetric se muestra si hay menciones y Dimensions si hay citas.
+  - **No se cargan hasta que el visitante pulsa «Mostrar métricas de impacto».** Así no se conecta con terceros sin permiso y el rendimiento no se resiente (169 insignias). El navegador recuerda la elección.
+  - Se mantienen los enlaces de texto a Altmetric y Dimensions, que funcionan sin JavaScript.
+- **Recuentos en la cabecera:** los textos fijos en ES/EN de la plantilla pasan a `_data/i18n`, y «capítulos» incluye ahora libros y otros tipos.
+- **`grys.js`:** el filtro de Proyectos se generaliza para listas (`P-list`). Se ha probado con un DOM simulado (9 casos).
+- **`verificar_sitio.py`** comprueba ahora:
+  - que están los filtros;
+  - que hay un elemento filtrable por cada entrada de `papers.bib`;
+  - que **ninguna página carga scripts de Altmetric o Dimensions por su cuenta**.
+- **PENDIENTES.md:** mencionar las insignias en la política de privacidad (paso 3.6), la descarga del BibTeX completo y la revisión final de estilo.
+
 ## Fase 3 · Paso 3.2: filtros en Proyectos (17-10-2026)
 
 - **Filtros de la tabla de Proyectos**, como en el mockup:
