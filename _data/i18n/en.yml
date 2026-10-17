@@ -61,7 +61,7 @@ pubs:
   metrics_show: Show impact metrics
   metrics_hide: Hide impact metrics
   metrics_note: Altmetric and Dimensions badges. Showing them connects your browser to those services.
-home:
+portada:
   facts_label: The group in figures
   f_projects: projects
   f_scopus: Scopus docs.

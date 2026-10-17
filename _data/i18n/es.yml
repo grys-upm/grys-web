@@ -61,7 +61,7 @@ pubs:
   metrics_show: Mostrar métricas de impacto
   metrics_hide: Ocultar métricas de impacto
   metrics_note: Insignias de Altmetric y Dimensions. Al mostrarlas, tu navegador se conecta con esos servicios.
-home:
+portada:
   facts_label: El grupo en cifras
   f_projects: proyectos
   f_scopus: docs. en Scopus
