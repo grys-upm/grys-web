@@ -61,6 +61,39 @@ pubs:
   metrics_show: Mostrar métricas de impacto
   metrics_hide: Ocultar métricas de impacto
   metrics_note: Insignias de Altmetric y Dimensions. Al mostrarlas, tu navegador se conecta con esos servicios.
+about:
+  values: Valores
+  story_label: Historia
+  story_title: De las redes de sensores a los sistemas autónomos
+sdgs:
+  sdg: ODS
+  target: Meta
+  main_label: Declarados en el HUB de Innovación UPM
+  main_title: ODS principales
+  other_label: Propuesta
+  other_title: Otros ODS a los que contribuyen nuestros proyectos
+  colours_note: "Los colores de los ODS son los oficiales de Naciones Unidas: es contenido de terceros, no la paleta del grupo."
+  more: Más información
+contact_page:
+  address: Dirección
+  email: Correo
+  phone: Teléfono
+  leader: Responsable del grupo
+  need: ¿Qué necesitas?
+  need_company: Colaborar con una empresa o institución
+  need_student: Hacer tu TFG, TFM o doctorado
+  need_press: Prensa y comunicación
+  visits: "Para visitas de grupo o al laboratorio, escríbenos antes. Si lo necesitas, te enviamos planos del edificio e indicaciones de acceso y aparcamiento."
+  map_title: Mapa de situación de la ETSIST (OpenStreetMap)
+  how: Cómo llegar
+  metro: Metro
+  train: Cercanías
+  bus_campus: Autobús con parada en el campus
+  bus_city: Otros autobuses urbanos
+  bus_inter: Autobuses interurbanos
+  car: En coche
+  source: Fuente
+  access: Accesibilidad del edificio
 portada:
   facts_label: El grupo en cifras
   f_projects: proyectos

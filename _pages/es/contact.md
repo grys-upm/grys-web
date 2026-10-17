@@ -3,6 +3,8 @@ layout: page
 lang: es
 page_id: contact
 permalink: /grupo/contacto/
+wide: true
+lead: Escríbenos para colaborar, hacer un TFG, TFM o doctorado, o conocer el OpenTech Lab.
 ---
-
-<p class="todo">Contenido pendiente de migración (fase 2).</p>
+{%- comment -%} Todos los datos están en _data/grupo.yml. {%- endcomment -%}
+{% include paginas/contacto.html %}

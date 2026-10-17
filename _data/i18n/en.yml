@@ -61,6 +61,39 @@ pubs:
   metrics_show: Show impact metrics
   metrics_hide: Hide impact metrics
   metrics_note: Altmetric and Dimensions badges. Showing them connects your browser to those services.
+about:
+  values: Values
+  story_label: Our story
+  story_title: From sensor networks to autonomous systems
+sdgs:
+  sdg: SDG
+  target: Target
+  main_label: Declared in the UPM Innovation Hub
+  main_title: Main SDGs
+  other_label: Proposal
+  other_title: Other SDGs our projects contribute to
+  colours_note: "SDG colours are the official United Nations ones: third-party content, not the group palette."
+  more: More information
+contact_page:
+  address: Address
+  email: Email
+  phone: Phone
+  leader: Group leader
+  need: What do you need?
+  need_company: Collaborate as a company or institution
+  need_student: Do your student project or PhD
+  need_press: Press and media
+  visits: "Please email us in advance for group visits or lab tours. If needed, we can send you building maps and directions for access and parking."
+  map_title: ETSIST location map (OpenStreetMap)
+  how: Getting here
+  metro: Metro
+  train: Commuter rail
+  bus_campus: Buses stopping on campus
+  bus_city: Other city buses
+  bus_inter: Intercity buses
+  car: By car
+  source: Source
+  access: Building accessibility
 portada:
   facts_label: The group in figures
   f_projects: projects

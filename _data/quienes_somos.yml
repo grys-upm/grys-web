@@ -1,0 +1,38 @@
+# =====================================================================
+#  QUIÉNES SOMOS · partes estructuradas de la página (el texto corrido está
+#  en _pages/es/about.md y _pages/en/about.md)
+#  Fuente: página «About GRyS» de la web anterior + mockup v4.
+#  Validado con schemas/quienes_somos.schema.json.
+# =====================================================================
+
+# Fotos (se migran con scripts/migrar_imagenes.py; si aún no están, no se muestran)
+fotos:
+  - src: /assets/img/grupo/grys-2023.webp
+    alt: { es: "Foto de grupo de los miembros de GRyS en 2023", en: "Group photo of the GRyS members in 2023" }
+    pie: { es: "El equipo GRyS (2023)", en: "The GRyS team (2023)" }
+  - src: /assets/img/grupo/grys-20230710-01.webp
+    alt: { es: "Parte del equipo GRyS trabajando en el laboratorio", en: "Part of the GRyS team working in the lab" }
+    pie: { es: "Parte del equipo en el laboratorio", en: "Part of the team in the lab" }
+
+valores:
+  - nombre: { es: Colaboración, en: Collaboration }
+    texto: { es: "Creemos en el conocimiento compartido y el trabajo interdisciplinar.", en: "We believe in the power of shared knowledge and interdisciplinary work." }
+  - nombre: { es: Apertura, en: Openness }
+    texto: { es: "Ciencia abierta, tecnología abierta y diálogo abierto.", en: "We embrace open science, open technology and open dialogue." }
+  - nombre: { es: Integridad, en: Integrity }
+    texto: { es: "Rigor científico, transparencia y compromiso ético.", en: "Our research is grounded in scientific rigour, transparency and ethical commitment." }
+  - nombre: { es: Innovación, en: Innovation }
+    texto: { es: "Buscamos formas creativas de responder a retos emergentes y necesidades sociales.", en: "We look for creative ways to address emerging challenges and societal needs." }
+  - nombre: { es: Responsabilidad, en: Responsibility }
+    texto: { es: "Alineamos la investigación con los ODS: tecnología al servicio de las personas y del planeta.", en: "We align our research with the UN SDGs and aim for technology that serves people and the planet." }
+
+# Hitos de la historia (en orden)
+historia:
+  - hito: "2009"
+    texto: { es: "Nace GRyS en la ETSI de Sistemas de Telecomunicación de la UPM.", en: "GRyS is founded at UPM's School of Telecommunication Systems and Engineering." }
+  - hito: "2011"
+    texto: { es: "Reconocido como grupo de investigación consolidado.", en: "Recognised as a consolidated research group." }
+  - hito: "H2020"
+    texto: { es: "Participación y liderazgo en SWARMs y AFarCloud.", en: "Participation in, and leadership of, SWARMs and AFarCloud." }
+  - hito: "2025"
+    texto: { es: "El OpenTech Lab se presenta en el Industry Day 2025.", en: "The OpenTech Lab is presented at Industry Day 2025." }

@@ -20,7 +20,9 @@ Comprueba:
   · cada enlace «?autor=slug» de las fichas de miembro tiene su opción en el
     filtro de autoría de Publicaciones (si no, el enlace mostraría todo);
   · la portada (ES y EN) tiene todas sus secciones, las 4 cifras, una tarjeta por
-    proyecto destacado de _data/portada.yml y el nº de publicaciones configurado.
+    proyecto destacado de _data/portada.yml y el nº de publicaciones configurado;
+  · las páginas de texto ya migradas no dicen «pendiente de migración» y tienen
+    su contenido (ODS: una tarjeta por elemento de _data/ods.yml; Contacto: mapa).
 Sale con código 1 si hay errores. Solo usa la biblioteca estándar + PyYAML.
 """
 import argparse
@@ -300,6 +302,29 @@ def main():
         n_pub = sec.count('<div class="yr">')
         if n_pub != min(po.get("publicaciones", 0), 169) and n_pub == 0:
             errors.append(f"{rel}: la portada no muestra publicaciones recientes")
+    # 10. Páginas de texto migradas (fase 3.6)
+    n_ods = len(yaml.safe_load(open(os.path.join(ROOT, "_data", "ods.yml"), encoding="utf-8")) or [])
+    migradas = {
+        "grupo/quienes-somos": ['class="historia"', 'class="card valores"'],
+        "en/group/about": ['class="historia"', 'class="card valores"'],
+        "grupo/ods": ['class="ods"'], "en/group/sdgs": ['class="ods"'],
+        "grupo/contacto": ['openstreetmap.org/export/embed', 'class="contact-list"'],
+        "en/group/contact": ['openstreetmap.org/export/embed', 'class="contact-list"'],
+    }
+    for rel, marcas in migradas.items():
+        f = os.path.join(site, rel, "index.html")
+        if not os.path.exists(f):
+            continue
+        html = open(f, encoding="utf-8").read()
+        if re.search(r"pendiente de migración|pending migration", html, re.I):
+            errors.append(f"{rel}/index.html: sigue diciendo «pendiente de migración»")
+        for m in marcas:
+            if m not in html:
+                errors.append(f"{rel}/index.html: falta {m}")
+        if "/ods" in rel or "/sdgs" in rel:
+            n = html.count('<article class="card sdg">')
+            if n != n_ods:
+                errors.append(f"{rel}/index.html: {n} tarjetas de ODS y _data/ods.yml tiene {n_ods}")
     todo = sum(1 for w in warnings if "por completar" in w)
     for e in errors:
         print(f"ERROR  {e}")

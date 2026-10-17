@@ -1,10 +1,11 @@
 ---
 layout: default
 ---
+{%- comment -%} wide: true en la página → sin el ancho máximo de texto (.prose), para maquetas a dos columnas. {%- endcomment -%}
 {%- include page-vars.html -%}
 {% include pagehead.html %}
 <section class="page-body">
-  <div class="wrap prose">
+  <div class="wrap{% unless page.wide %} prose{% endunless %}">
 {{ content }}
   </div>
 </section>

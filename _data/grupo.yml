@@ -33,3 +33,30 @@ links:
       url: https://www.linkedin.com/in/grys-upm   # PENDIENTE: confirmar (¿/in/ o /company/?)
     - title: { es: Bluesky, en: Bluesky }
       url: https://bsky.app/profile/grys-upm.bsky.social
+
+# Situación y cómo llegar (página Contacto).
+# Fuente: https://etsist.upm.es/escuela/como-llegar (consultada en octubre de 2026)
+coords: { lat: 40.388895, lon: -3.628677 }
+como_llegar:
+  fuente: https://etsist.upm.es/escuela/como-llegar
+  coche:
+    es: "Autovía de Valencia A-3 (salida 6) y M-40 (salida 15)"
+    en: "Valencia motorway A-3 (exit 6) and M-40 (exit 15)"
+  bus_campus: "E, 63, 145"
+  bus_urbano: "130, 54, 58, 103, 142, 143, T31"
+  bus_interurbano: "312, 312A, 313, 331, 332, 333, 334, 336, 337, 339, 341"
+  metro:
+    es: "Línea 1, estación Sierra de Guadalupe"
+    en: "Line 1, Sierra de Guadalupe station"
+  cercanias:
+    es: "C-2 y C-7 (Atocha–Alcalá de Henares), estación de Vallecas"
+    en: "C-2 and C-7 (Atocha–Alcalá de Henares), Vallecas station"
+
+# Accesibilidad del edificio (de la página de contacto anterior)
+accesibilidad:
+  - { es: "Entrada sin escalones", en: "Step-free entrance" }
+  - { es: "Aseos accesibles", en: "Accessible restrooms" }
+  - { es: "Ascensor a todas las plantas", en: "Lift to all floors" }
+  - { es: "Aparcamiento reservado para personas con discapacidad", en: "Reserved parking for people with disabilities" }
+  - { es: "Se admiten perros guía", en: "Guide dogs welcome" }
+  - { es: "Si lo necesitas, podemos ayudarte a tu llegada", en: "If needed, we can arrange assistance on arrival" }

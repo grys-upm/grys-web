@@ -1,0 +1,53 @@
+{%- comment -%}
+  Página «Contacto»: todo sale de _data/grupo.yml (dirección, correo,
+  teléfono, coordenadas, cómo llegar, accesibilidad) y del miembro con
+  role: pi y status: current (responsable del grupo).
+  Mapa: OpenStreetMap incrustado (sin cookies de terceros), con enlaces a
+  OpenStreetMap y Google Maps.
+{%- endcomment -%}
+{%- include page-vars.html -%}
+{%- assign g = site.data.grupo -%}
+{%- assign ct_pi = site.members | where: "role", "pi" | where: "status", "current" | first -%}
+{%- assign ct_d = 0.006 -%}
+{%- assign ct_w = g.coords.lon | minus: ct_d | round: 6 -%}{%- assign ct_e = g.coords.lon | plus: ct_d | round: 6 -%}
+{%- assign ct_s = g.coords.lat | minus: 0.0035 | round: 6 -%}{%- assign ct_n = g.coords.lat | plus: 0.0035 | round: 6 -%}
+<div class="grid2 contacto">
+<div>
+<ul class="contact-list">
+<li><span class="bub">{% include icono.html n="pin" %}</span><div><h2>{{ t.contact_page.address }}</h2>
+<address>{{ t.group_name }} (GRyS)<br>{{ g.address.school }}<br>{{ g.address.campus }} · {{ g.address.street }} · {{ t.footer.office }} {{ g.address.office }}<br>{{ g.address.postcode }} {{ g.address.city }} · {{ g.address.country | l10n }}</address></div></li>
+<li><span class="bub">{% include icono.html n="mail" %}</span><div><h2>{{ t.contact_page.email }}</h2><a class="datos" href="mailto:{{ g.email }}">{{ g.email }}</a></div></li>
+<li><span class="bub">{% include icono.html n="phone" %}</span><div><h2>{{ t.contact_page.phone }}</h2><a class="datos" href="tel:{{ g.phone | remove: ' ' }}">{{ g.phone }}</a></div></li>
+{%- if ct_pi %}
+<li><span class="bub">{% include icono.html n="personas" %}</span><div><h2>{{ t.contact_page.leader }}</h2><a href="{{ ct_pi | detail_url }}">{{ ct_pi.given }} {{ ct_pi.family }}</a></div></li>
+{%- endif %}
+</ul>
+<div class="box">
+<h2>{{ t.contact_page.need }}</h2>
+<ul class="nodes">
+<li><a href="{{ 'transfer' | route_url }}">{{ t.contact_page.need_company }}</a></li>
+<li><a href="{{ 'students' | route_url }}">{{ t.contact_page.need_student }}</a></li>
+<li><a href="{{ 'press' | route_url }}">{{ t.contact_page.need_press }}</a></li>
+</ul>
+<p>{{ t.contact_page.visits }}</p>
+</div>
+</div>
+<div>
+<div class="map-frame">
+<iframe title="{{ t.contact_page.map_title }}" src="https://www.openstreetmap.org/export/embed.html?bbox={{ ct_w }}%2C{{ ct_s }}%2C{{ ct_e }}%2C{{ ct_n }}&amp;layer=mapnik&amp;marker={{ g.coords.lat }}%2C{{ g.coords.lon }}" loading="lazy" referrerpolicy="no-referrer"></iframe>
+</div>
+<p class="datos map-links"><a href="https://www.openstreetmap.org/?mlat={{ g.coords.lat }}&amp;mlon={{ g.coords.lon }}#map=17/{{ g.coords.lat }}/{{ g.coords.lon }}">OpenStreetMap</a> · <a href="https://www.google.com/maps/search/?api=1&amp;query={{ g.coords.lat }}%2C{{ g.coords.lon }}">Google Maps</a></p>
+<h2>{{ t.contact_page.how }}</h2>
+<dl class="spec">
+<dt>{{ t.contact_page.metro }}</dt><dd>{{ g.como_llegar.metro | l10n }}</dd>
+<dt>{{ t.contact_page.train }}</dt><dd>{{ g.como_llegar.cercanias | l10n }}</dd>
+<dt>{{ t.contact_page.bus_campus }}</dt><dd>{{ g.como_llegar.bus_campus }}</dd>
+<dt>{{ t.contact_page.bus_city }}</dt><dd>{{ g.como_llegar.bus_urbano }}</dd>
+<dt>{{ t.contact_page.bus_inter }}</dt><dd>{{ g.como_llegar.bus_interurbano }}</dd>
+<dt>{{ t.contact_page.car }}</dt><dd>{{ g.como_llegar.coche | l10n }}</dd>
+</dl>
+<p class="datos">{{ t.contact_page.source }}: <a href="{{ g.como_llegar.fuente }}">ETSIST</a></p>
+<h2>{{ t.contact_page.access }}</h2>
+<ul class="nodes">{% for a in g.accesibilidad %}<li>{{ a | l10n }}</li>{% endfor %}</ul>
+</div>
+</div>

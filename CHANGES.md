@@ -1,5 +1,30 @@
 # Registro de cambios
 
+## Fase 3 · Paso 3.6a: páginas del menú Grupo y ámbitos/líneas sin listas fijas (17-10-2026)
+
+- **Quiénes somos:**
+  - el texto corrido en Markdown (ES y EN) dentro de la propia página, entre `capture texto` y `endcapture`;
+  - foto, valores e historia en `_data/quienes_somos.yml`, nuevo y validado con su esquema.
+  
+  La foto de grupo de 2023 se migra con `scripts/migrar_imagenes.py`, que tiene 2 entradas nuevas en `mapa_imagenes.yml`. Mientras no esté, no se muestra.
+- **ODS:**
+  - texto de entrada en la página;
+  - las 9 tarjetas, en «principales» y «otros», en `_data/ods.yml` (nuevo, con esquema), con metas de la Agenda 2030 y enlaces a los proyectos.
+  
+  Los colores oficiales de la ONU llevan el número en blanco o negro, según cuál dé contraste ≥ 3:1.
+- **Contacto:** todo desde `_data/grupo.yml`:
+  - dirección, correo y teléfono;
+  - responsable del grupo, el miembro con `role: pi`;
+  - mapa de OpenStreetMap sin cookies de terceros, con enlaces a OSM y Google Maps;
+  - **cómo llegar** (metro, Cercanías, autobuses y coche) con la información oficial de la ETSIST, con fuente;
+  - accesibilidad del edificio.
+- **`_layouts/page.html`:** `wide: true` quita el ancho máximo de texto en páginas a dos columnas.
+- **Ámbitos y líneas sin listas fijas en los esquemas:** `comprobar_datos.py` toma las claves válidas de `domains`, `lines` e `icon` de lo que existe (`_domains/*.md`, `_lines/*.md`, `_includes/iconos.svg`). Para añadir un ámbito o una línea basta con crear su fichero.
+  - Se ha probado con un ámbito nuevo: pasa sin errores.
+  - Un icono, un ámbito o un proyecto de ODS inexistentes dan error, con la lista de opciones válidas.
+- **`docs/RECETAS.md`** (nuevo): cómo añadir un ámbito o una línea y cómo cambiar los destacados de la portada, los ODS y los datos de contacto.
+- **`verificar_sitio.py`** comprueba ahora que estas 6 páginas ya no dicen «pendiente de migración», que tienen su contenido y que hay tantas tarjetas de ODS como elementos en `ods.yml`.
+
 ## Corrección 6 · Código visible en la cabecera de todas las páginas y logos desbordados (17-10-2026)
 
 - **Síntoma 1:** en todas las páginas interiores, encima de las migas de pan, aparecía en texto plano el bloque completo de textos de la portada: `{"facts_label"=>"El grupo en cifras", …}`.
