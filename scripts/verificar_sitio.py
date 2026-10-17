@@ -81,6 +81,50 @@ class Page(HTMLParser):
             self.in_head = False
 
 
+def destacados_esperados(po, site):
+    """Misma regla que _plugins/destacados.rb: fijos primero; después, en curso
+    (por inicio, más reciente primero) y el resto por fin, más reciente primero.
+    La fecha de referencia es la de compilación (se toma de _site/index.html o hoy)."""
+    import datetime
+    cfg = po.get("destacados") or {}
+    hoy = datetime.date.today()
+    projs = {}
+    for f in glob.glob(os.path.join(ROOT, "_projects", "*.md")):
+        txt = open(f, encoding="utf-8").read().split("---")
+        d = yaml.safe_load(txt[1]) or {}
+        projs[os.path.basename(f)[:-3]] = d
+    def fecha(x):
+        if isinstance(x, datetime.date):
+            return x
+        try:
+            return datetime.date.fromisoformat(str(x))
+        except ValueError:
+            return None
+    lejos = datetime.date(1900, 1, 1)
+    rank = {"ongoing": 0, "upcoming": 1, "completed": 2, "unknown": 3}
+    def estado(d):
+        if d.get("status"):
+            return d["status"]
+        ini, fin = fecha(d.get("start")), fecha(d.get("end"))
+        if fin is None:
+            return "unknown"
+        if ini and ini > hoy:
+            return "upcoming"
+        return "ongoing" if fin >= hoy else "completed"
+    fijos = [s for s in cfg.get("fijos") or [] if s in projs]
+    excl = set(cfg.get("excluir") or [])
+    auto = []
+    for s, d in projs.items():
+        if s in fijos or s in excl:
+            continue
+        st = estado(d)
+        ref = fecha(d.get("start" if st == "ongoing" else "end")) or lejos
+        auto.append((rank.get(st, 3), -ref.toordinal(), str(d.get("acronym", "")).lower(), s))
+    auto.sort()
+    orden = (fijos + [a[3] for a in auto])[:max(int(cfg.get("numero", 3)), 0)]
+    return [(s, str(projs[s].get("acronym", s))) for s in orden]
+
+
 def target_file(site, base, url):
     """Convierte una URL interna en la ruta del fichero dentro de _site."""
     parts = urlsplit(url)
@@ -295,9 +339,12 @@ def main():
         facts = re.search(r'<div class="facts".*?</div>\s*</div>', html, re.S)
         if not facts or facts.group(0).count("<b>") != 4:
             errors.append(f"{rel}: la portada debe mostrar 4 cifras (.facts)")
-        n_card = html.count('<article class="project">')
-        if n_card != len(po.get("destacados") or []):
-            errors.append(f"{rel}: {n_card} proyectos destacados y _data/portada.yml pide {len(po.get('destacados') or [])}")
+        esperados = destacados_esperados(po, site)
+        sec_p = html.split('id="h-proyectos"', 1)[-1].split('id="h-noticias"', 1)[0]
+        vistos = re.findall(r'<article class="project">.*?<span class="acr">([^<]+)</span>', sec_p, re.S)
+        acr = [a.upper() for _, a in esperados]
+        if vistos != acr:
+            errors.append(f"{rel}: proyectos destacados {vistos}; según la regla deberían ser {acr}")
         sec = html.split('id="h-pubs"', 1)[-1].split('id="h-lab"', 1)[0]
         n_pub = sec.count('<div class="yr">')
         if n_pub != min(po.get("publicaciones", 0), 169) and n_pub == 0:

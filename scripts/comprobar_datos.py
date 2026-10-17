@@ -295,9 +295,13 @@ for o in load_yaml(os.path.join(ROOT, "_data", "ods.yml")) or []:
     for s in o.get("proyectos") or []:
         if s not in items["projects"]:
             err(f"_data/ods.yml (ODS {o.get('num')}): proyecto «{s}» no existe en _projects/")
-for s in portada.get("destacados") or []:
-    if s not in items["projects"]:
-        err(f"_data/portada.yml: proyecto destacado «{s}» no existe en _projects/")
+_dest = portada.get("destacados") or {}
+for campo in ("fijos", "excluir"):
+    for s in _dest.get(campo) or []:
+        if s not in items["projects"]:
+            err(f"_data/portada.yml: destacados.{campo}: el proyecto «{s}» no existe en _projects/")
+for s in set(_dest.get("fijos") or []) & set(_dest.get("excluir") or []):
+    err(f"_data/portada.yml: «{s}» está a la vez en destacados.fijos y destacados.excluir")
 for slug, p in items["projects"].items():
     for m in p.get("pi") or []:
         if m not in items["members"]:

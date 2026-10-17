@@ -5,8 +5,9 @@ layout: default
   Portada (mockup v4). Todo sale de los datos:
     · cifras: nº de proyectos (_projects/) y métricas (_data/metrics.yml);
     · ejes y líneas (_data/axes.yml, _lines/), ámbitos (_domains/);
-    · proyectos destacados, nº de noticias/eventos/publicaciones y banda del
-      laboratorio: _data/portada.yml;
+    · proyectos destacados: automáticos (_plugins/destacados.rb → site.data.destacados),
+      con fijos/excluidos opcionales en _data/portada.yml;
+    · nº de noticias/eventos/publicaciones y banda del laboratorio: _data/portada.yml;
     · noticias (_news/), agenda (_events/, próximos según la fecha de
       compilación), convocatorias abiertas (_opportunities/), publicaciones
       (site.data.pubs, _plugins/bib_index.rb).
@@ -77,7 +78,7 @@ layout: default
 <section aria-labelledby="h-proyectos"><div class="wrap">
   {% include portada/cabecera-seccion.html id="h-proyectos" icono="doc" etiqueta=h.projects_label titulo=h.projects_title mas=hm_pmore ruta="projects" %}
   <div class="grid3">
-  {%- for slug in po.destacados %}
+  {%- for slug in site.data.destacados %}
     {%- for p in site.projects %}{% assign hm_s = p | slug_of %}{% if hm_s == slug %}{% include tarjeta-proyecto.html p=p %}{% endif %}{% endfor %}
   {%- endfor %}
   </div>

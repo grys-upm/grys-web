@@ -1,6 +1,6 @@
 # Pendientes
 
-*Actualizado: fase 3, paso 3.6a (17-10-2026).* Marcas: 🔴 bloquea la publicación definitiva · 🟠 hay que revisarlo o decidirlo · 🔵 planificado para una fase posterior.
+*Actualizado: fase 3, paso 3.6a + destacados automáticos (17-10-2026).* Marcas: 🔴 bloquea la publicación definitiva · 🟠 hay que revisarlo o decidirlo · 🔵 planificado para una fase posterior.
 
 El detalle de los datos que faltan, elemento a elemento, lo genera `scripts/informe_pendientes.py` (`reports/pendientes-datos.md`). Ese informe también aparece en el resumen de cada ejecución de Actions. Lo que se decidió durante la migración está en `scripts/migracion/INFORME_MIGRACION.md`.
 
@@ -44,7 +44,7 @@ El detalle de los datos que faltan, elemento a elemento, lo genera `scripts/info
 - **ODS** (`_data/ods.yml`): hay que confirmar que los ODS 9 y 2 son los declarados en el HUB de Innovación UPM (dato del mockup) y revisar la asignación de proyectos a cada ODS (propuesta). Los textos en español son traducción de la web anterior.
 - **Quiénes somos:** la traducción al español de la misión, la visión y la historia; los hitos de `_data/quienes_somos.yml` salen del mockup.
 - **Contacto:** marcador del mapa en las coordenadas oficiales de la ETSIST (40.388895, -3.628677). ¿Conviene situarlo en el edificio exacto del despacho A9401?
-- **Criterio de los proyectos destacados:** ahora se eligen a mano en `_data/portada.yml`, con los del mockup. Alternativa automática: los proyectos en curso primero y, después, los más recientes.
+- **Proyectos destacados:** son automáticos desde el 17-10-2026. Con los datos actuales salen AFarEdge, HumAMI y NexTArc, los tres en curso; los dos primeros **no tienen imagen ni descripción** (ver E), así que en la portada aparecen con el hueco gris. Mientras tanto se pueden fijar o excluir en `_data/portada.yml`.
 - Portada (`_data/portada.yml`): los proyectos destacados (NexTArc, AFarCloud y SWARMs, como en el mockup), el texto y los puntos de la banda del OpenTech Lab y el vídeo (Industry Day 2025). El título «Cuatro ejes, once líneas» (`_data/i18n`, `home.research_title`) hay que cambiarlo a mano si cambian los ejes o las líneas.
 - Ámbitos: textos (`_domains/`) y asignación a 12 proyectos (`domains`).
 - Traducciones del mockup: puestos y roles (`_data/positions.yml`, `roles.yml`), 32 títulos de proyecto y 10 de noticia.

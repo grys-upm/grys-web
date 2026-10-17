@@ -6,12 +6,17 @@
 #  Validado con schemas/portada.schema.json.
 # =====================================================================
 
-# Proyectos destacados (slug = nombre del fichero en _projects/, sin .md).
-# Se muestran en este orden; lo recomendable son 3.
+# Proyectos destacados. Se eligen SOLOS al compilar (_plugins/destacados.rb):
+#   1.º los proyectos en curso, del más reciente al más antiguo;
+#   2.º después, el resto en orden cronológico inverso (los terminados más
+#       recientemente primero).
+# Decisión manual (opcional), con slugs = nombre del fichero en _projects/ sin .md:
+#   fijos:   van siempre, los primeros y en este orden; el resto se rellena solo.
+#   excluir: no se eligen nunca automáticamente.
 destacados:
-  - nextarc
-  - afarcloud
-  - swarms
+  numero: 3
+  fijos: []
+  excluir: []
 
 # Número de elementos en cada bloque
 noticias: 4
