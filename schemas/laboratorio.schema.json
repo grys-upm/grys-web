@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "_data/laboratorio.yml",
+  "description": "Capacidades del OpenTech Lab.",
+  "type": "object",
+  "required": [
+    "capacidades"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "capacidades": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "icon",
+          "title",
+          "desc"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "icon": {
+            "type": "string",
+            "enum": [
+              "net"
+            ]
+          },
+          "title": {
+            "type": "object",
+            "required": [
+              "es",
+              "en"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "es": {
+                "type": "string",
+                "minLength": 1
+              },
+              "en": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "desc": {
+            "type": "object",
+            "required": [
+              "es",
+              "en"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "es": {
+                "type": "string",
+                "minLength": 1
+              },
+              "en": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

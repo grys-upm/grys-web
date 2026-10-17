@@ -1,6 +1,6 @@
 # Pendientes
 
-*Actualizado: fase 3, paso 3.6a + destacados automáticos (17-10-2026).* Marcas: 🔴 bloquea la publicación definitiva · 🟠 hay que revisarlo o decidirlo · 🔵 planificado para una fase posterior.
+*Actualizado: fase 3, paso 3.6b (17-10-2026).* Marcas: 🔴 bloquea la publicación definitiva · 🟠 hay que revisarlo o decidirlo · 🔵 planificado para una fase posterior.
 
 El detalle de los datos que faltan, elemento a elemento, lo genera `scripts/informe_pendientes.py` (`reports/pendientes-datos.md`). Ese informe también aparece en el resumen de cada ejecución de Actions. Lo que se decidió durante la migración está en `scripts/migracion/INFORME_MIGRACION.md`.
 
@@ -41,6 +41,11 @@ El detalle de los datos que faltan, elemento a elemento, lo genera `scripts/info
 ## D. Propuestas que hay que revisar (marcadas en los ficheros)
 
 - Ejes de las líneas (`_data/axes.yml`) y la asignación de cada línea a un eje.
+- **OpenTech Lab:** revisar la traducción del texto y las capacidades (`_data/laboratorio.yml`). Hace falta una **foto del laboratorio**: ahora la página usa el vídeo del Industry Day.
+- **Demostradores** (`_data/demostradores.yml`): son los dos del Industry Day 2025. Para el de lenguaje natural falta imagen o vídeo; el de Smart Fleet Manager usa una foto de la noticia.
+- **Transferencia** (`_data/transferencia.yml`): confirmar las dos ofertas del mockup y, si se puede, añadir el **enlace directo** a la ficha del controlador de potencia en el HUB de Innovación (ahora enlaza al catálogo del grupo).
+- **TFG, TFM y doctorado:** no hay temas publicados (`_data/estudiantes.yml` → `propuestas`); la página invita a proponer uno.
+- **Docencia:** faltan las asignaturas (`_data/docencia.yml` → `asignaturas`). Mientras la lista esté vacía, esa sección no aparece.
 - **ODS** (`_data/ods.yml`): hay que confirmar que los ODS 9 y 2 son los declarados en el HUB de Innovación UPM (dato del mockup) y revisar la asignación de proyectos a cada ODS (propuesta). Los textos en español son traducción de la web anterior.
 - **Quiénes somos:** la traducción al español de la misión, la visión y la historia; los hitos de `_data/quienes_somos.yml` salen del mockup.
 - **Contacto:** marcador del mapa en las coordenadas oficiales de la ETSIST (40.388895, -3.628677). ¿Conviene situarlo en el edificio exacto del despacho A9401?
@@ -68,7 +73,7 @@ SVG oficiales del logotipo y del favicon · marca de la UPM para el pie · marca
 
 | Fase | Pendiente |
 |---|---|
-| 3 | Diseño de componentes, en pasos con una PR cada uno:<br>3.1 ✅ pestañas en Equipo y Tesis<br>3.2 ✅ tabla de Proyectos con filtros<br>3.3 ✅ Publicaciones: filtros e insignias oficiales de Altmetric y Dimensions<br>3.4 ✅ publicaciones en las fichas de proyecto, línea y miembro<br>3.5 ✅ portada completa<br>3.6a ✅ páginas de texto del menú Grupo (Quiénes somos, ODS, Contacto)<br>3.6b páginas de OpenTech Lab y Colabora (Laboratorio, Demostradores, Transferencia, Estudiantes, Docencia)<br>3.6c Prensa, Accesibilidad y Privacidad<br>3.7 buscador |
+| 3 | Diseño de componentes, en pasos con una PR cada uno:<br>3.1 ✅ pestañas en Equipo y Tesis<br>3.2 ✅ tabla de Proyectos con filtros<br>3.3 ✅ Publicaciones: filtros e insignias oficiales de Altmetric y Dimensions<br>3.4 ✅ publicaciones en las fichas de proyecto, línea y miembro<br>3.5 ✅ portada completa<br>3.6a ✅ páginas de texto del menú Grupo (Quiénes somos, ODS, Contacto)<br>3.6b ✅ páginas de OpenTech Lab y Colabora (Laboratorio, Demostradores, Transferencia, Estudiantes, Docencia)<br>3.6c Prensa, Accesibilidad y Privacidad<br>3.7 buscador |
 | 4 | Revisión del bilingüe y de la accesibilidad (WCAG 2.2 AA) |
 | Más adelante | **Completar `portal_upm` consultando el Portal publicación a publicación por DOI**. Las exportaciones CSV solo traen el ID de la ficha en 25 de las 157 coincidencias. Un script consultaría el buscador del Portal por cada DOI del BibTeX y propondría el ID, con prueba en seco y `--aplicar` como `cruce_portal.py`. Antes hay que comprobar si el Portal tiene una API o permite búsquedas automatizadas (condiciones de uso) |
 | 3.6 | **Política de privacidad** (`/privacidad/`): mencionar las insignias de Altmetric y Dimensions. Solo se cargan si el visitante pulsa «Mostrar métricas de impacto», y entonces su navegador se conecta con esos servicios; la preferencia se guarda en `localStorage` (`grys-metrics`), igual que el tema (`grys-theme`). No hay cookies propias |

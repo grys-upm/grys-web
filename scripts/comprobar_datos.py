@@ -286,11 +286,32 @@ repos_data = load_yaml(os.path.join(ROOT, "_data", "repos.yml")) or []
 repo_names = {r.get("name") for r in repos_data}
 for e in validate(normalize(repos_data), schema("repos")):
     err(f"_data/repos.yml: {e}")
-for dname in ("positions", "roles", "metrics", "axes", "portada", "ods", "quienes_somos"):
+for dname in ("positions", "roles", "metrics", "axes", "portada", "ods", "quienes_somos",
+              "laboratorio", "demostradores", "transferencia", "estudiantes", "docencia"):
     data = load_yaml(os.path.join(ROOT, "_data", f"{dname}.yml"))
     for e in validate(normalize(data), schema(dname)):
         err(f"_data/{dname}.yml: {e}")
 portada = load_yaml(os.path.join(ROOT, "_data", "portada.yml")) or {}
+def _ref(origen, tipo, valor, validos):
+    if valor not in validos:
+        err(f"{origen}: {tipo} «{valor}» no existe")
+
+
+for d in load_yaml(os.path.join(ROOT, "_data", "demostradores.yml")) or []:
+    o = f"_data/demostradores.yml ({d.get('key')})"
+    for s in d.get("personas") or []:
+        _ref(o, "miembro", s, items["members"])
+    if d.get("repo"):
+        _ref(o, "repositorio (en _data/repos.yml)", d["repo"], repo_names)
+for of in (load_yaml(os.path.join(ROOT, "_data", "transferencia.yml")) or {}).get("ofertas") or []:
+    if of.get("repo"):
+        _ref("_data/transferencia.yml", "repositorio (en _data/repos.yml)", of["repo"], repo_names)
+for p in (load_yaml(os.path.join(ROOT, "_data", "estudiantes.yml")) or {}).get("propuestas") or []:
+    for s in p.get("tutores") or []:
+        _ref("_data/estudiantes.yml", "miembro (tutores)", s, items["members"])
+for a in (load_yaml(os.path.join(ROOT, "_data", "docencia.yml")) or {}).get("asignaturas") or []:
+    for s in a.get("profesorado") or []:
+        _ref("_data/docencia.yml", "miembro (profesorado)", s, items["members"])
 for o in load_yaml(os.path.join(ROOT, "_data", "ods.yml")) or []:
     for s in o.get("proyectos") or []:
         if s not in items["projects"]:

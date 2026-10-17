@@ -1,0 +1,31 @@
+# =====================================================================
+#  ESTUDIANTES (página Colabora › TFG, TFM y doctorado)
+# ---------------------------------------------------------------------
+#  Las cifras (TFG, máster/DEA, tesis) salen de _data/metrics.yml.
+#
+#  propuestas: temas ofertados. Si la lista está vacía se muestra un bloque
+#  que invita a escribir al grupo. Campos de cada propuesta:
+#    nivel:    tfg | tfm | phd
+#    title:    { es: …, en: … }
+#    desc:     { es: …, en: … }      (opcional)
+#    lines:    [claves de _lines/]   (opcional)
+#    tutores:  [slugs de _members/]
+#    estado:   abierta | asignada    (las asignadas no se muestran)
+#  Ejemplo:
+#    - nivel: tfm
+#      title: { es: "Gemelo digital de una flota de drones", en: "Digital twin of a drone fleet" }
+#      lines: [rob, edge]
+#      tutores: [nestor-lucas-martinez]
+#      estado: abierta
+#  Validado con schemas/estudiantes.schema.json.
+# =====================================================================
+
+propuestas: []
+
+pasos:
+  - title: { es: Elige una línea, en: Choose a line }
+    desc: { es: "Revisa las líneas de investigación y los proyectos en curso.", en: "Browse our research lines and ongoing projects." }
+  - title: { es: Escríbenos, en: Write to us }
+    desc: { es: "Cuéntanos qué te interesa y qué estudias.", en: "Tell us what interests you and what you are studying." }
+  - title: { es: Define el trabajo, en: Define the project }
+    desc: { es: "Acordamos el tema, la dirección y los recursos del OpenTech Lab.", en: "We agree on the topic, supervision and OpenTech Lab resources." }

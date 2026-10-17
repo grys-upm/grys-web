@@ -94,6 +94,51 @@ contact_page:
   car: En coche
   source: Fuente
   access: Accesibilidad del edificio
+lab_page:
+  cta_collab: Proponer una colaboración
+  cta_demos: Ver demostradores
+  caps_label: Capacidades
+  caps_title: Qué permite la plataforma
+demos:
+  by: Desarrollo
+  code: Código
+  shown: Presentado en
+transfer_page:
+  offer_label: Oferta tecnológica
+  offer_title: Soluciones disponibles
+  catalogue: Ver todas nuestras soluciones en el HUB de Innovación UPM
+  how_label: Cómo colaborar
+  how_title: Formas de trabajar con nosotros
+  cta: Hablemos
+students_page:
+  n_bachelor: TFG dirigidos
+  n_master: trabajos de máster y DEA
+  n_phd: tesis doctorales
+  see_theses: Ver trabajos anteriores
+  topics_label: Propuestas
+  topics_title: Temas disponibles
+  no_topics: Ahora no hay temas publicados
+  no_topics_text: "Puedes proponernos el tuyo: cuéntanos qué te interesa y lo concretamos juntos."
+  level_tfg: TFG
+  level_tfm: TFM
+  level_phd: Doctorado
+  supervisors: Dirección
+  steps_label: Cómo empezar
+  steps_title: Tres pasos
+  cta: Contactar
+  see_lines: Ver las líneas de investigación
+teaching_page:
+  aims: Objetivos
+  courses: Asignaturas
+  course: Asignatura
+  degree: Titulación
+  when: Curso
+  lecturers: Profesorado del grupo
+  contribute: ¿Quieres colaborar en docencia?
+  contribute_text: "Si eres investigador, docente o empresa y te interesa colaborar en módulos, proyectos de estudiantes o talleres, escríbenos."
+  link_students: TFG, TFM y doctorado
+  link_opps: Ofertas y convocatorias
+  link_contact: Contacto
 portada:
   facts_label: El grupo en cifras
   f_projects: proyectos

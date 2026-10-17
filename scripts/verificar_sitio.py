@@ -21,7 +21,8 @@ Comprueba:
     filtro de autoría de Publicaciones (si no, el enlace mostraría todo);
   · la portada (ES y EN) tiene todas sus secciones, las 4 cifras, una tarjeta por
     proyecto destacado de _data/portada.yml y el nº de publicaciones configurado;
-  · las páginas de texto ya migradas no dicen «pendiente de migración» y tienen
+  · las páginas de texto ya migradas no dicen «pendiente de migración» ni
+    «próximamente» y tienen
     su contenido (ODS: una tarjeta por elemento de _data/ods.yml; Contacto: mapa).
 Sale con código 1 si hay errores. Solo usa la biblioteca estándar + PyYAML.
 """
@@ -357,6 +358,20 @@ def main():
         "grupo/ods": ['class="ods"'], "en/group/sdgs": ['class="ods"'],
         "grupo/contacto": ['openstreetmap.org/export/embed', 'class="contact-list"'],
         "en/group/contact": ['openstreetmap.org/export/embed', 'class="contact-list"'],
+        # fase 3.6b
+        "opentech-lab": ['class="capacidades"'], "en/opentech-lab": ['class="capacidades"'],
+        "opentech-lab/demostradores": ['class="grid2 demos"'], "en/opentech-lab/demonstrators": ['class="grid2 demos"'],
+        "colabora/transferencia": ['class="transfer"'], "en/collaborate/technology-transfer": ['class="transfer"'],
+        "colabora/tfg-tfm-doctorado": ['class="estudiantes"'], "en/collaborate/student-projects-and-phd": ['class="estudiantes"'],
+        "colabora/docencia": ['class="docencia"'], "en/collaborate/teaching": ['class="docencia"'],
+    }
+    def _n(nombre, clave=None):
+        d = yaml.safe_load(open(os.path.join(ROOT, "_data", nombre), encoding="utf-8")) or {}
+        return len(d.get(clave) or []) if clave else len(d)
+    cuentas = {
+        "opentech-lab": ('<article class="card line-card">', _n("laboratorio.yml", "capacidades"), "capacidades"),
+        "demostradores": ('<article class="project" id=', _n("demostradores.yml"), "demostradores"),
+        "demonstrators": ('<article class="project" id=', _n("demostradores.yml"), "demostradores"),
     }
     for rel, marcas in migradas.items():
         f = os.path.join(site, rel, "index.html")
@@ -368,6 +383,13 @@ def main():
         for m in marcas:
             if m not in html:
                 errors.append(f"{rel}/index.html: falta {m}")
+        for clave, (marca, n_esp, que) in cuentas.items():
+            if rel.endswith(clave):
+                n = html.count(marca)
+                if n != n_esp:
+                    errors.append(f"{rel}/index.html: {n} {que} y los datos tienen {n_esp}")
+        if re.search(r"(pr[oó]ximamente|coming soon)", html, re.I):
+            errors.append(f"{rel}/index.html: dice «próximamente/coming soon»")
         if "/ods" in rel or "/sdgs" in rel:
             n = html.count('<article class="card sdg">')
             if n != n_ods:
