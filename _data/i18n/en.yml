@@ -78,6 +78,17 @@ members:
   profiles: Profiles
   projects: Projects led
   lines: Research lines
+filters:
+  label: Filters
+  search: Search
+  all: All
+  all_domains: All domains
+  all_lines: All lines
+  line: Research line
+  any_status: Any status
+  reset: Clear filters
+  no_results: No results with these filters
+  no_results_hint: Try other terms or press “Clear filters”.
 projects:
   type: Type
   competitive: Competitive
@@ -106,6 +117,10 @@ projects:
   status_unknown: Status to be confirmed
   project: Project
   count: projects
+  count_one: project
+  competitive_pl: Competitive
+  private_pl: Private
+  search_ph: Search by acronym, title or programme…
   publications: Project publications
 lines:
   axis: Axis
