@@ -1,5 +1,25 @@
 # Registro de cambios
 
+## Fase 3 · Paso 3.5: portada completa (17-10-2026)
+
+- **Portada como en el mockup**, toda generada a partir de los datos:
+  - **Cifras del grupo:** nº de proyectos (`_projects/`), documentos e índice h en Scopus y tesis doctorales (`_data/metrics.yml`), con la fuente y la fecha.
+  - **Cuatro ejes con sus líneas** (`_data/axes.yml`, `_lines/`), enlazadas a cada ficha.
+  - **Ámbitos de aplicación** (`_domains/`) con los acrónimos de sus proyectos; cada ámbito enlaza a su ancla en la página Ámbitos.
+  - **Proyectos destacados** en tarjetas (`_includes/tarjeta-proyecto.html`), con logo, estado, ámbitos, tipo, programa y periodo.
+  - **Noticias recientes** y, al lado:
+    - la **agenda**, con los próximos eventos según la fecha de compilación; si no hay ninguno, el bloque vacío con «El último fue…»;
+    - **«Únete al grupo»**, con el número de convocatorias abiertas o, si no hay, el texto del mockup.
+  - **Publicaciones recientes** (`site.data.pubs`).
+  - **Banda del OpenTech Lab**, con su vídeo de YouTube sin cookies.
+- **`_data/portada.yml`** (nuevo) es el único sitio que se edita a mano: proyectos destacados, cuántas noticias, eventos y publicaciones se muestran y la banda del laboratorio en ES/EN. Lo valida `schemas/portada.schema.json` (nuevo), y `comprobar_datos.py` comprueba que los destacados existen.
+- **Textos de interfaz:** bloque `home` en `_data/i18n/{es,en}.yml`.
+- **`verificar_sitio.py`** comprueba ahora, en ES y en EN:
+  - las 7 secciones;
+  - las 4 cifras;
+  - una tarjeta por cada proyecto destacado;
+  - que hay publicaciones recientes.
+
 ## Corrección 5 · Filtro «Autoría» vacío (17-10-2026)
 
 - **Síntoma:** `verificar_sitio` daba 56 errores del tipo «enlace ?autor=… sin opción en el filtro de autoría». Los enlaces de las fichas eran correctos, pero el desplegable de Publicaciones tenía todas las opciones vacías.

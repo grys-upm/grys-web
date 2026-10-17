@@ -1,0 +1,28 @@
+{%- comment -%}
+  Tarjeta de proyecto (portada; reutilizable en otras páginas).
+  Parámetro: p = documento de _projects/. Va dentro de una rejilla (.grid3).
+{%- endcomment -%}
+{%- assign tp = include.p -%}
+{%- assign tp_title = tp | tr: "title" -%}
+{%- assign tp_ok = tp.image | asset_exists -%}
+<article class="project">
+  {%- if tp_ok %}
+  <div class="img img-logo"><img src="{{ tp.image | relative_url }}" alt="" loading="lazy" decoding="async"></div>
+  {%- else %}
+  <div class="img ph" aria-hidden="true"></div>
+  {%- endif %}
+  <div class="body">
+    <div class="top"><span class="acr">{{ tp.acronym | upcase }}</span>{% include estado.html st=tp.state %}</div>
+    <h3><a href="{{ tp | detail_url }}">{% if tp_title %}{{ tp_title }}{% else %}{{ tp.acronym }}{% endif %}</a></h3>
+    {%- if tp.domains and tp.domains.size > 0 %}
+    <div class="chips">
+      {%- for d_id in tp.domains %}{% assign tp_d = site.domains | where: "key", d_id | first %}{% if tp_d %}<span class="chip">{% include icono.html n=tp_d.icon %}{{ tp_d | tr: "title" }}</span>{% endif %}{% endfor -%}
+    </div>
+    {%- endif %}
+    <dl class="spec">
+      <dt>{{ t.projects.type }}</dt><dd>{% if tp.type == "private" %}{{ t.projects.private }}{% elsif tp.type == "competitive" %}{{ t.projects.competitive }}{% else %}<span class="todo">{{ t.tbc }}</span>{% endif %}</dd>
+      <dt>{{ t.projects.programme }}</dt><dd>{% if tp.programme %}{{ tp.programme }}{% else %}<span class="todo">{{ t.tbc }}</span>{% endif %}</dd>
+      <dt>{{ t.period }}</dt><dd>{% if tp.start %}{{ tp.start | date: "%Y" }}–{{ tp.end | date: "%Y" }}{% else %}<span class="todo">{{ t.tbc }}</span>{% endif %}</dd>
+    </dl>
+  </div>
+</article>

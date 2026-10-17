@@ -1,0 +1,13 @@
+{%- comment -%}
+  Cabecera de sección de la portada (mockup: secHead).
+  Parámetros: id (del <h2>), icono, etiqueta, titulo, mas (texto del enlace),
+  ruta (id de _data/routes.yml para el enlace), entradilla (opcional).
+{%- endcomment -%}
+<div class="sec-head">
+  <div>
+    <div class="label"><span class="bub">{% include icono.html n=include.icono %}</span>{{ include.etiqueta }}</div>
+    <h2 class="rule" id="{{ include.id }}">{{ include.titulo }}</h2>
+    {%- if include.entradilla %}<p>{{ include.entradilla }}</p>{% endif %}
+  </div>
+  {%- if include.mas %}<a class="more" href="{{ include.ruta | route_url }}">{{ include.mas }} <span aria-hidden="true">→</span></a>{% endif %}
+</div>

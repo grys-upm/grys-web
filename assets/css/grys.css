@@ -211,6 +211,11 @@ section{padding:72px 0}
 .project .body{padding:20px;display:flex;flex-direction:column;gap:10px;flex:1}
 .project .top{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .acr{font-family:var(--f-datos);font-weight:600;color:var(--accent);font-size:14.5px;letter-spacing:.4px}
+.project .img-logo{display:grid;place-items:center;background:#fff;padding:18px;border-bottom:1px solid var(--line)}
+.project .img-logo img{max-height:100%;max-width:100%;object-fit:contain}
+.facts-src{margin-top:8px;font-size:13px}
+.box-more{margin-top:12px}
+.labband .video{margin:0}.labband .video figcaption a{color:#E5E9F0}
 .project h3{font-size:19px}
 .project h3 a{color:var(--text);text-decoration:none}.project h3 a:hover{color:var(--accent);text-decoration:underline}
 .project .spec{border-top:2px dashed var(--line);padding-top:10px;margin-top:auto}

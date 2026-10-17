@@ -2,11 +2,21 @@
 layout: default
 ---
 {%- comment -%}
-  Portada. Fase 1: solo el bloque principal (hero). Ejes, ámbitos, proyectos,
-  noticias, agenda, convocatorias, publicaciones y banda del laboratorio
-  llegan en la fase 3 como includes.
+  Portada (mockup v4). Todo sale de los datos:
+    · cifras: nº de proyectos (_projects/) y métricas (_data/metrics.yml);
+    · ejes y líneas (_data/axes.yml, _lines/), ámbitos (_domains/);
+    · proyectos destacados, nº de noticias/eventos/publicaciones y banda del
+      laboratorio: _data/portada.yml;
+    · noticias (_news/), agenda (_events/, próximos según la fecha de
+      compilación), convocatorias abiertas (_opportunities/), publicaciones
+      (site.data.pubs, _plugins/bib_index.rb).
+  Textos de interfaz: _data/i18n/<idioma>.yml, bloque «home».
 {%- endcomment -%}
 {%- include page-vars.html -%}
+{%- assign po = site.data.portada -%}
+{%- assign mx = site.data.metrics -%}
+{%- assign h = t.home -%}
+
 <section class="hero" aria-labelledby="h-hero" style="padding:0">
   <div class="trama" aria-hidden="true"></div>
   <div class="wrap">
@@ -19,6 +29,127 @@ layout: default
         <a class="btn primary" href="{{ 'lines' | route_url: lang }}">{{ t.hero.cta_research }}</a>
         <a class="btn secondary" href="{{ 'transfer' | route_url: lang }}">{{ t.hero.cta_collab }}</a>
       </div>
+      <div class="facts" role="group" aria-label="{{ h.facts_label }}">
+        <div><b>{{ site.projects.size }}</b><span>{{ h.f_projects }}</span></div>
+        <div><b>{{ mx.scopus_docs }}</b><span>{{ h.f_scopus }}</span></div>
+        <div><b>{{ mx.scopus_h }}</b><span>{{ h.f_h }}</span></div>
+        <div><b>{{ mx.phd_theses }}</b><span>{{ h.f_phd }}</span></div>
+      </div>
+      <p class="datos facts-src">{{ h.facts_source }}: {% if mx.source_url %}<a href="{{ mx.source_url }}">{{ mx.source }}</a>{% else %}{{ mx.source }}{% endif %} ({{ mx.date }}) · {{ h.facts_projects_src }}</p>
+    </div>
+  </div>
+</section>
+
+{%- comment -%} ---------- Ejes y líneas ---------- {%- endcomment %}
+<section aria-labelledby="h-lineas"><div class="wrap">
+  {% include portada/cabecera-seccion.html id="h-lineas" icono="doc" etiqueta=h.research_label titulo=h.research_title mas=h.research_more ruta="lines" entradilla=h.research_lead %}
+  <div class="grid4">
+  {%- for ax in site.data.axes %}
+    <article class="pillar">
+      <div class="n">{{ t.lines.axis | upcase }} 0{{ ax.id }}</div>
+      <h3>{{ ax.title | l10n }}</h3>
+      {%- assign hm_lines = site.lines | where: "axis", ax.id | sort: "order" %}
+      <ul class="nodes">{% for l in hm_lines %}<li><a href="{{ l | detail_url }}">{{ l | tr: "title" }}</a></li>{% endfor %}</ul>
+    </article>
+  {%- endfor %}
+  </div>
+</div></section>
+
+{%- comment -%} ---------- Ámbitos ---------- {%- endcomment %}
+<section class="alt" aria-labelledby="h-ambitos"><div class="wrap">
+  {% include portada/cabecera-seccion.html id="h-ambitos" icono="net" etiqueta=h.domains_label titulo=h.domains_title mas=h.domains_more ruta="domains" %}
+  <div class="domains">
+  {%- assign hm_doms = site.domains | sort: "order" %}
+  {%- for dm in hm_doms %}
+    {%- assign hm_pj = "" | split: "" %}{% for p in site.projects %}{% if p.domains contains dm.key %}{% assign hm_pj = hm_pj | push: p.acronym %}{% endif %}{% endfor %}
+    <a class="domain" href="{{ 'domains' | route_url }}#{{ dm.key }}">
+      <span class="hexi">{% include icono.html n=dm.icon %}</span>
+      <h3>{{ dm | tr: "title" }}</h3>
+      <p>{{ dm | tr: "desc" }}</p>
+      {%- if hm_pj.size > 0 %}<span class="pj">{{ hm_pj | join: " · " }}</span>{% endif %}
+    </a>
+  {%- endfor %}
+  </div>
+</div></section>
+
+{%- comment -%} ---------- Proyectos destacados ---------- {%- endcomment %}
+{%- capture hm_pmore %}{{ h.projects_more }} ({{ site.projects.size }}){% endcapture %}
+<section aria-labelledby="h-proyectos"><div class="wrap">
+  {% include portada/cabecera-seccion.html id="h-proyectos" icono="doc" etiqueta=h.projects_label titulo=h.projects_title mas=hm_pmore ruta="projects" %}
+  <div class="grid3">
+  {%- for slug in po.destacados %}
+    {%- for p in site.projects %}{% assign hm_s = p | slug_of %}{% if hm_s == slug %}{% include tarjeta-proyecto.html p=p %}{% endif %}{% endfor %}
+  {%- endfor %}
+  </div>
+</div></section>
+
+{%- comment -%} ---------- Actualidad: noticias + agenda + convocatorias ---------- {%- endcomment %}
+{%- assign hm_today = site.time | date: "%Y-%m-%d" -%}
+{%- assign hm_up = "" | split: "" -%}
+{%- assign hm_last = false -%}
+{%- assign hm_evs = site.events | sort: "date" -%}
+{%- for ev in hm_evs -%}
+  {%- assign hm_end = ev.end | default: ev.date | date: "%Y-%m-%d" -%}
+  {%- if hm_end >= hm_today -%}{%- assign hm_up = hm_up | push: ev -%}{%- else -%}{%- assign hm_last = ev -%}{%- endif -%}
+{%- endfor -%}
+{%- assign hm_now = site.time | date: "%s" | plus: 0 -%}
+{%- assign hm_open = 0 -%}
+{%- for o in site.opportunities -%}
+  {%- assign hm_dl = o.deadline | date: "%s" | plus: 0 -%}
+  {%- if hm_dl > hm_now -%}{%- assign hm_open = hm_open | plus: 1 -%}{%- endif -%}
+{%- endfor %}
+<section class="alt" aria-labelledby="h-noticias"><div class="wrap split">
+  <div>
+    {% include portada/cabecera-seccion.html id="h-noticias" icono="cal" etiqueta=h.news_label titulo=h.news_title mas=h.news_more ruta="news" %}
+    {% include listas/noticias.html limite=po.noticias %}
+  </div>
+  <aside aria-label="{{ h.aside_label }}">
+    <div class="box">
+      <h3>{{ h.agenda }}</h3>
+      {%- if hm_up.size > 0 %}
+      <div class="events">{% for ev in hm_up limit: po.eventos %}{% include listas/evento.html ev=ev %}{% endfor %}</div>
+      {%- else %}
+      <div class="empty"><span class="bub">{% include icono.html n="cal" %}</span><div>
+        <p><b>{{ t.events.none_upcoming }}</b></p>
+        {%- if hm_last %}<p>{{ h.last_event }} {{ hm_last | tr: "title" }} (<time datetime="{{ hm_last.date | date: '%Y-%m-%d' }}">{{ hm_last.date | date: "%d/%m/%Y" }}</time>).</p>{% endif %}
+      </div></div>
+      {%- endif %}
+      <p class="box-more"><a href="{{ 'events' | route_url }}">{{ h.all_events }} <span aria-hidden="true">→</span></a></p>
+    </div>
+    <div class="box">
+      <h3>{{ h.join }}</h3>
+      {%- if hm_open > 0 %}
+      <p><a href="{{ 'opportunities' | route_url }}"><b>{{ hm_open }}</b> {% if hm_open == 1 %}{{ h.open_one }}{% else %}{{ h.open_many }}{% endif %}</a></p>
+      {%- else %}
+      <p>{{ h.none_open }} <a href="{{ 'students' | route_url }}">{{ h.see_students }}</a> {{ h.or }} <a href="{{ 'contact' | route_url }}">{{ h.write_us }}</a>.</p>
+      {%- endif %}
+    </div>
+  </aside>
+</div></section>
+
+{%- comment -%} ---------- Publicaciones recientes ---------- {%- endcomment %}
+<section aria-labelledby="h-pubs"><div class="wrap">
+  {% include portada/cabecera-seccion.html id="h-pubs" icono="doc" etiqueta=h.pubs_label titulo=h.pubs_title mas=h.pubs_more ruta="publications" %}
+  <ul class="pubs">{% for p in site.data.pubs limit: po.publicaciones %}{% include pub-item.html p=p %}{% endfor %}</ul>
+</div></section>
+
+{%- comment -%} ---------- Banda del OpenTech Lab ---------- {%- endcomment %}
+{%- assign lab = po.laboratorio %}
+<section class="labband" aria-labelledby="h-lab">
+  <div class="trama" aria-hidden="true"></div>
+  <div class="wrap">
+    <div>
+      <div class="tag">{{ h.lab_tag }}</div>
+      <h2 id="h-lab" class="rule">OpenTech Lab</h2>
+      <p>{{ lab.texto | l10n }}</p>
+      <ul>{% for x in lab.puntos %}<li>{% include icono.html n="check" %}{{ x | l10n }}</li>{% endfor %}</ul>
+      <a class="btn" href="{{ 'lab' | route_url }}">{{ h.lab_cta }}</a>
+    </div>
+    <div>
+      {%- if lab.video %}
+      {%- assign hm_vt = lab.video_titulo | l10n %}
+      {% include video.html youtube=lab.video titulo=hm_vt %}
+      {%- endif %}
     </div>
   </div>
 </section>

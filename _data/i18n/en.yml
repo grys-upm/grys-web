@@ -61,6 +61,43 @@ pubs:
   metrics_show: Show impact metrics
   metrics_hide: Hide impact metrics
   metrics_note: Altmetric and Dimensions badges. Showing them connects your browser to those services.
+home:
+  facts_label: The group in figures
+  f_projects: projects
+  f_scopus: Scopus docs.
+  f_h: h-index (Scopus)
+  f_phd: PhD theses
+  facts_source: Source
+  facts_projects_src: projects, this website
+  research_label: Research
+  research_title: Four axes, eleven lines
+  research_lead: The group's eleven research lines, grouped so you can see at a glance what we do.
+  research_more: All research lines
+  domains_label: Application domains
+  domains_title: Where our research is applied
+  domains_more: See domains
+  projects_label: Projects
+  projects_title: Featured projects
+  projects_more: All projects
+  news_label: News
+  news_title: News
+  news_more: All news
+  aside_label: Events and opportunities
+  agenda: Upcoming events
+  last_event: "The latest was:"
+  all_events: All events
+  join: Join the group
+  open_one: open call
+  open_many: open calls
+  none_open: There are no open calls right now.
+  see_students: See student project proposals
+  or: or
+  write_us: write to us
+  pubs_label: Scientific output
+  pubs_title: Recent publications
+  pubs_more: All publications
+  lab_tag: The group's lab
+  lab_cta: Visit the lab
 hero:
   label: UPM research group · since 2009
   title: Next-generation networks and services
