@@ -3,20 +3,32 @@
 # vuelve a escribir en papers.bib y theses.bib.
 #   portal_upm: ID en el Portal Científico UPM · archivo_upm: ID en oa.upm.es
 #   project: slug(s) de _projects (separados por comas) · lines: id(s) de _lines
+bastosLocationBasedDataAuditing2021:
+  portal_upm: '9822546'
 beck_doninelli_improvements_2019:
   archivo_upm: '65747'
 bergesgarcíaContribuciónDesarrolloMetodologías2018:
   archivo_upm: '53211'
+caoDetectingAsymptomaticInfections2022:
+  archivo_upm: '86145'
 castillejoparrillaContributionIntelligentService2015:
   archivo_upm: '37254'
 chenContributionAuthenticationData2019:
   archivo_upm: '58144'
+chenDynamicMembershipGroupBased2021:
+  portal_upm: '9299194'
+  archivo_upm: '86138'
+chenResilientGroupBasedMultisubset2023:
+  portal_upm: '10036524'
+  archivo_upm: '86096'
 chen_aplicaciones_2022:
   archivo_upm: '71842'
 cuerva__garcia_modelo_2016:
   archivo_upm: '43690'
 cuervagarcíaRedesServiciosUbicuos2012:
   archivo_upm: '13950'
+delaparteBreakingIoTSilos2023:
+  portal_upm: '10101148'
 delgado_marquez_sistema_2025:
   archivo_upm: '92637'
 duanRosNodeProcessing2018:
@@ -41,10 +53,21 @@ huangContributionsResilienceManagement2015:
   archivo_upm: '37209'
 jimbara_usability_2018:
   archivo_upm: '54392'
+liConetBorderlessDecentralized2022:
+  portal_upm: '10098862'
 liContextAwarenessCooperation2017:
   archivo_upm: '48359'
 liContributionsCommunicationNetworking2018:
   archivo_upm: '52562'
+liGeographicalTopologyControlBased2021:
+  archivo_upm: '86137'
+liNetworkBasedCandidateForwarding2021:
+  archivo_upm: '86143'
+liTrapezoidalSketchSketch2023:
+  portal_upm: '10340438'
+  archivo_upm: '86146'
+liVariableWeightMADMAlgorithm2022:
+  portal_upm: '9994363'
 li_context_2014:
   archivo_upm: '38177'
 lopez_gavilanez_environmental_2019:
@@ -69,26 +92,55 @@ muriel_elduayen_sistema_2020:
   archivo_upm: '65270'
 parsamehrIntrusionDetectionPrevention2021:
   archivo_upm: '67763'
+parteSISSSemanticInteroperability2025:
+  portal_upm: '10377091'
+  archivo_upm: '95619'
 paytuvi_egui_smartbnb_2018:
   archivo_upm: '52140'
 perez_sechi_arquitectura_2016:
   archivo_upm: '44527'
+rodriguez-molinaSEDIBLOFRABlockchainBasedSecure2021:
+  archivo_upm: '87072'
 rodriguez-molina_distribution_2015:
   archivo_upm: '38136'
 rodríguezmolinaContributionDesignImplementation2017:
   archivo_upm: '47152'
 rodríguezmolinaSemanticMiddlewareDevelopment2012:
   archivo_upm: '13841'
+royoBlockchainBasedInternetThings2021:
+  archivo_upm: '87064'
 san_emeterio_de_la_parte_contributions_2024:
   archivo_upm: '83151'
+san_emeterio_de_la_parte_secure_2026:
+  portal_upm: '10468396'
+  archivo_upm: '95620'
+sanemeteriodelaparteBigDataPrecision2023:
+  portal_upm: '10041287'
+  archivo_upm: '74287'
+sanemeteriodelaparteSpatioTemporalSemanticData2023:
+  portal_upm: '10011312'
+  archivo_upm: '86095'
+sanemeteriodelaparteSpatiotemporalSemanticData2024:
+  portal_upm: '10135541'
+  archivo_upm: '81568'
 sanzbarrioDisenoAplicacionMovil2024:
   archivo_upm: '90970'
 su_aplicaciones_2023:
   archivo_upm: '73158'
 sánchezalcónSistemaAyudaSelección2016:
   archivo_upm: '39379'
+wangEdgeenabledIAMIoTs2025:
+  portal_upm: '10267242'
+  archivo_upm: '91623'
+yangAAIAEfficientAggregation2023:
+  archivo_upm: '86094'
 yuanContributionsRoboticUnderwater2018:
   archivo_upm: '52563'
+yuanPerformanceComparisonSea2023:
+  portal_upm: '10109235'
+yuanUnderwaterWirelessSensor2023:
+  portal_upm: '10109237'
+  archivo_upm: '86101'
 zhaiContributionsCaseBasedReasoning2020:
   archivo_upm: '64746'
 zhai_mission_2018:
