@@ -1,5 +1,27 @@
 # Registro de cambios
 
+## Fase 3 · Paso 3.4: publicaciones en las fichas (17-10-2026)
+
+- **`_plugins/bib_index.rb`** (nuevo) genera dos índices de `papers.bib`:
+  - `site.data.pubs`: las publicaciones de la más reciente a la más antigua, con proyectos, líneas y **miembros autores**;
+  - `site.data.pub_index`: las mismas, por clave.
+- **Autoría:** se calcula comparando los autores del BibTeX con `given`/`family` de `_members/`, sin tildes ni mayúsculas.
+  - Debe coincidir el primer apellido. Si los dos tienen segundo apellido, también ese (Sánchez Alcón ≠ Sánchez Fernández).
+  - Debe coincidir algún nombre, entero o por la inicial.
+  - Para formas que no encajan hay un campo nuevo y opcional `bib_names` en los miembros (esquema y `docs/DATOS.md` actualizados).
+- **Fichas:**
+  - **Proyecto:** «Publicaciones del proyecto (n)», con `project` de `etiquetas.yml`.
+  - **Línea:** «Publicaciones de la línea (n)», con `lines`.
+  - **Miembro:** «Publicaciones recientes», con las 5 últimas y el enlace «Ver todas sus publicaciones (n)», que abre Publicaciones filtrada por esa persona.
+  - Las fichas de proyecto y de línea muestran «por completar» mientras no haya etiquetas. La de miembro omite la sección si no hay ninguna publicación.
+- **`_includes/pub-item.html`** (nuevo): publicación en formato breve, con título, autoría, revista, DOI, Portal y Archivo.
+- **Publicaciones:** filtro nuevo **«Autoría»** (`?autor=slug`). Solo lista a los miembros que tienen publicaciones.
+- **`verificar_sitio.py`** comprueba ahora que cada enlace `?autor=` tiene su opción en el filtro.
+- **PENDIENTES.md:**
+  - el rediseño de las métricas de impacto, que se hará en el último paso de la fase 3;
+  - etiquetar las publicaciones con `project` y `lines`;
+  - revisar la autoría calculada.
+
 ## Fase 3 · Paso 3.3: filtros e insignias en Publicaciones (17-10-2026)
 
 - **Filtros en Publicaciones**, como en el mockup:

@@ -1,4 +1,5 @@
-{%- comment -%} Cuerpo de la ficha de un miembro: biografía + proyectos que dirige + líneas. {%- endcomment -%}
+{%- comment -%} Cuerpo de la ficha de un miembro: biografía + proyectos que dirige + líneas + publicaciones recientes
+ (por autoría: _plugins/bib_index.rb; las 5 últimas y enlace a todas, filtradas). {%- endcomment -%}
 {%- assign fm_slug = page.page_id | remove_first: "members/" -%}
 {{ include.cuerpo }}
 {%- assign fm_proj = "" | split: "" -%}
@@ -12,4 +13,10 @@
 {%- if page.lines and page.lines.size > 0 %}
 <h2 class="rule">{{ t.members.lines }}</h2>
 <div class="chips">{% for lid in page.lines %}{% assign fm_l = site.lines | where: "key", lid | first %}{% if fm_l %}<a class="chip" href="{{ fm_l | detail_url }}">{{ fm_l | tr: "title" }}</a>{% endif %}{% endfor %}</div>
+{%- endif %}
+{%- assign fm_pubs = site.data.pubs | where_exp: "p", "p.members contains fm_slug" %}
+{%- if fm_pubs.size > 0 %}
+<h2 class="rule">{{ t.members.publications }}</h2>
+<ul class="pubs">{% for p in fm_pubs limit: 5 %}{% include pub-item.html p=p %}{% endfor %}</ul>
+<p><a class="more" href="{{ 'publications' | route_url }}?autor={{ fm_slug }}">{{ t.members.all_pubs }} ({{ fm_pubs.size }})</a></p>
 {%- endif %}

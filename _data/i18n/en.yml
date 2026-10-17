@@ -95,10 +95,14 @@ members:
   profiles: Profiles
   projects: Projects led
   lines: Research lines
+  publications: Recent publications
+  all_pubs: See all their publications
 filters:
   label: Filters
   search: Search
   all: All
+  author: Author
+  all_members: All group members
   all_f: All
   all_projects: All projects
   all_domains: All domains
@@ -145,6 +149,7 @@ lines:
   axis: Axis
   people: Who works on this line
   projects: Related projects
+  publications: Publications in this line
 domains:
   projects: Projects in this domain
 news:

@@ -95,10 +95,14 @@ members:
   profiles: Perfiles
   projects: Proyectos que dirige
   lines: Líneas de investigación
+  publications: Publicaciones recientes
+  all_pubs: Ver todas sus publicaciones
 filters:
   label: Filtros
   search: Buscar
   all: Todos
+  author: Autoría
+  all_members: Todas las personas del grupo
   all_f: Todas
   all_projects: Todos los proyectos
   all_domains: Todos los ámbitos
@@ -145,6 +149,7 @@ lines:
   axis: Eje
   people: Quién trabaja en esta línea
   projects: Proyectos relacionados
+  publications: Publicaciones de la línea
 domains:
   projects: Proyectos en este ámbito
 news:

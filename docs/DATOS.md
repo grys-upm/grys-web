@@ -29,6 +29,7 @@ Una persona del grupo. El nombre del fichero es su slug (URL).
 | `github` | string |  |  |
 | `sciprofiles` | string |  |  |
 | `lines` | lista |  | Ids de líneas de investigación: `cps`, `wsan`, `iot`, `sec`, `nca`, `rob`, `dss`, `mw`, `sw`, `edge`, `smart` |
+| `bib_names` | lista de string |  | Formas del nombre en el BibTeX que no se reconocen solas (p. ej. «Martinez, Joser Fernan») |
 | `lang` | string | sí | Idioma en que está escrito el texto (es/en): `es`, `en` |
 | `only_lang` | string |  | Publicar solo en ese idioma: `es`, `en` |
 | `slug` | string |  | Parte final de la URL (por defecto, el nombre del fichero) |

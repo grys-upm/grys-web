@@ -2,7 +2,8 @@
   Publicaciones desde _bibliography/papers.bib (jekyll-scholar, agrupadas por año).
   · Los recuentos salen del propio BibTeX (_plugins/bib_stats.rb); las métricas de
     Scopus, de _data/metrics.yml con su fuente y fecha.
-  · Filtros (assets/js/grys.js, «Filtros»): texto, tipo, año, proyecto y línea.
+  · Filtros (assets/js/grys.js, «Filtros»): texto, tipo, año, autoría (miembros,
+    calculada en _plugins/bib_index.rb), proyecto y línea.
     Cada entrada lleva sus valores en un <span class="pubdata" hidden data-*>
     (_layouts/bib.html). Los años sin resultados se ocultan. Las opciones sin
     publicaciones se eliminan (data-prune), y si un desplegable se queda vacío
@@ -33,6 +34,14 @@
     {%- if pb_s.first_year and pb_s.last_year %}{% for y in (pb_s.first_year..pb_s.last_year) reversed %}
     <option value="{{ y }}">{{ y }}</option>
     {%- endfor %}{% endif %}
+  </select>
+  <label class="sr" for="pb-autor">{{ t.filters.author }}</label>
+  <select id="pb-autor" name="autor" data-prune>
+    <option value="">{{ t.filters.all_members }}</option>
+    {%- assign pb_mem = site.members | sort: "family" %}{% for m in pb_mem %}
+    {%- assign pb_ms = m.page_id | remove_first: "members/" %}
+    <option value="{{ pb_ms }}">{{ m.family }}, {{ m.given }}</option>
+    {%- endfor %}
   </select>
   <label class="sr" for="pb-proyecto">{{ t.projects.project }}</label>
   <select id="pb-proyecto" name="proyecto" data-prune>
