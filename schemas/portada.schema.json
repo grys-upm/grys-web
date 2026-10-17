@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "_data/portada.yml",
+  "description": "Qué destaca la portada y cuántos elementos muestra.",
+  "type": "object",
+  "required": [
+    "destacados",
+    "noticias",
+    "eventos",
+    "publicaciones",
+    "laboratorio"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "destacados": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+      }
+    },
+    "noticias": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 12
+    },
+    "eventos": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10
+    },
+    "publicaciones": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10
+    },
+    "laboratorio": {
+      "type": "object",
+      "required": [
+        "texto",
+        "puntos"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "texto": {
+          "type": "object",
+          "required": [
+            "es",
+            "en"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "es": {
+              "type": "string",
+              "minLength": 1
+            },
+            "en": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "puntos": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "es",
+              "en"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "es": {
+                "type": "string",
+                "minLength": 1
+              },
+              "en": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "video": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]{6,20}$"
+        },
+        "video_titulo": {
+          "type": "object",
+          "required": [
+            "es",
+            "en"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "es": {
+              "type": "string",
+              "minLength": 1
+            },
+            "en": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,6 +1,6 @@
 # Pendientes
 
-*Actualizado: fase 3, paso 3.4 (17-10-2026).* Marcas: 🔴 bloquea la publicación definitiva · 🟠 hay que revisarlo o decidirlo · 🔵 planificado para una fase posterior.
+*Actualizado: fase 3, paso 3.5 (17-10-2026).* Marcas: 🔴 bloquea la publicación definitiva · 🟠 hay que revisarlo o decidirlo · 🔵 planificado para una fase posterior.
 
 El detalle de los datos que faltan, elemento a elemento, lo genera `scripts/informe_pendientes.py` (`reports/pendientes-datos.md`). Ese informe también aparece en el resumen de cada ejecución de Actions. Lo que se decidió durante la migración está en `scripts/migracion/INFORME_MIGRACION.md`.
 
@@ -41,6 +41,7 @@ El detalle de los datos que faltan, elemento a elemento, lo genera `scripts/info
 ## D. Propuestas que hay que revisar (marcadas en los ficheros)
 
 - Ejes de las líneas (`_data/axes.yml`) y la asignación de cada línea a un eje.
+- Portada (`_data/portada.yml`): los proyectos destacados (NexTArc, AFarCloud y SWARMs, como en el mockup), el texto y los puntos de la banda del OpenTech Lab y el vídeo (Industry Day 2025). El título «Cuatro ejes, once líneas» (`_data/i18n`, `home.research_title`) hay que cambiarlo a mano si cambian los ejes o las líneas.
 - Ámbitos: textos (`_domains/`) y asignación a 12 proyectos (`domains`).
 - Traducciones del mockup: puestos y roles (`_data/positions.yml`, `roles.yml`), 32 títulos de proyecto y 10 de noticia.
 - Estado de los proyectos: se calcula con las fechas. A 16-10-2026 solo NexTArc está en curso; SIMGEOSEV terminó el 31-08-2026.
@@ -63,7 +64,7 @@ SVG oficiales del logotipo y del favicon · marca de la UPM para el pie · marca
 
 | Fase | Pendiente |
 |---|---|
-| 3 | Diseño de componentes, en pasos con una PR cada uno:<br>3.1 ✅ pestañas en Equipo y Tesis<br>3.2 ✅ tabla de Proyectos con filtros<br>3.3 ✅ Publicaciones: filtros e insignias oficiales de Altmetric y Dimensions<br>3.4 ✅ publicaciones en las fichas de proyecto, línea y miembro<br>3.5 portada completa<br>3.6 páginas de texto (Quiénes somos, ODS, Contacto, Laboratorio, Transferencia, Docencia…)<br>3.7 buscador |
+| 3 | Diseño de componentes, en pasos con una PR cada uno:<br>3.1 ✅ pestañas en Equipo y Tesis<br>3.2 ✅ tabla de Proyectos con filtros<br>3.3 ✅ Publicaciones: filtros e insignias oficiales de Altmetric y Dimensions<br>3.4 ✅ publicaciones en las fichas de proyecto, línea y miembro<br>3.5 ✅ portada completa<br>3.6 páginas de texto (Quiénes somos, ODS, Contacto, Laboratorio, Transferencia, Docencia…)<br>3.7 buscador |
 | 4 | Revisión del bilingüe y de la accesibilidad (WCAG 2.2 AA) |
 | Más adelante | **Completar `portal_upm` consultando el Portal publicación a publicación por DOI**. Las exportaciones CSV solo traen el ID de la ficha en 25 de las 157 coincidencias. Un script consultaría el buscador del Portal por cada DOI del BibTeX y propondría el ID, con prueba en seco y `--aplicar` como `cruce_portal.py`. Antes hay que comprobar si el Portal tiene una API o permite búsquedas automatizadas (condiciones de uso) |
 | 3.6 | **Política de privacidad** (`/privacidad/`): mencionar las insignias de Altmetric y Dimensions. Solo se cargan si el visitante pulsa «Mostrar métricas de impacto», y entonces su navegador se conecta con esos servicios; la preferencia se guarda en `localStorage` (`grys-metrics`), igual que el tema (`grys-theme`). No hay cookies propias |

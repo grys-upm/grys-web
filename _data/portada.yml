@@ -1,0 +1,38 @@
+# =====================================================================
+#  PORTADA · qué se destaca y cuántos elementos se muestran
+# ---------------------------------------------------------------------
+#  El resto de la portada sale solo de los datos: ejes y líneas, ámbitos,
+#  noticias, eventos, convocatorias, publicaciones y cifras.
+#  Validado con schemas/portada.schema.json.
+# =====================================================================
+
+# Proyectos destacados (slug = nombre del fichero en _projects/, sin .md).
+# Se muestran en este orden; lo recomendable son 3.
+destacados:
+  - nextarc
+  - afarcloud
+  - swarms
+
+# Número de elementos en cada bloque
+noticias: 4
+eventos: 3
+publicaciones: 3
+
+# Banda del OpenTech Lab (PROPUESTA del mockup v4: textos pendientes de validar)
+laboratorio:
+  texto:
+    es: "Entorno abierto y modular para orquestar misiones cooperativas entre sistemas autónomos: vehículos, sensores, actuadores y datos en un mismo marco."
+    en: "An open, modular environment to orchestrate cooperative missions among autonomous systems: vehicles, sensors, actuators and data in a single framework."
+  puntos:
+    - es: Orquestación de misiones aéreas, terrestres y marinas
+      en: Aerial, ground and marine mission orchestration
+    - es: Simulación y validación antes del despliegue
+      en: Simulation and validation before deployment
+    - es: Consulta de datos en lenguaje natural
+      en: Natural-language data querying
+  # Vídeo de YouTube (solo el identificador). Industry Day 2025 (CAR-CSIC),
+  # el mismo de la noticia del 27-11-2025.
+  video: tG4MBzXMFho
+  video_titulo:
+    es: El OpenTech Lab en el Industry Day 2025
+    en: The OpenTech Lab at Industry Day 2025

@@ -61,6 +61,43 @@ pubs:
   metrics_show: Mostrar métricas de impacto
   metrics_hide: Ocultar métricas de impacto
   metrics_note: Insignias de Altmetric y Dimensions. Al mostrarlas, tu navegador se conecta con esos servicios.
+home:
+  facts_label: El grupo en cifras
+  f_projects: proyectos
+  f_scopus: docs. en Scopus
+  f_h: índice h (Scopus)
+  f_phd: tesis doctorales
+  facts_source: Fuente
+  facts_projects_src: proyectos, esta web
+  research_label: Investigación
+  research_title: Cuatro ejes, once líneas
+  research_lead: Las once líneas del grupo, agrupadas para que se entienda de un vistazo qué hacemos.
+  research_more: Todas las líneas
+  domains_label: Ámbitos de aplicación
+  domains_title: Dónde se aplica nuestra investigación
+  domains_more: Ver ámbitos
+  projects_label: Proyectos
+  projects_title: Proyectos destacados
+  projects_more: Todos los proyectos
+  news_label: Actualidad
+  news_title: Noticias
+  news_more: Todas las noticias
+  aside_label: Agenda y convocatorias
+  agenda: Agenda
+  last_event: "El último fue:"
+  all_events: Todos los eventos
+  join: Únete al grupo
+  open_one: convocatoria abierta
+  open_many: convocatorias abiertas
+  none_open: Ahora no hay convocatorias abiertas.
+  see_students: Consulta las propuestas de TFG y TFM
+  or: o
+  write_us: escríbenos
+  pubs_label: Producción científica
+  pubs_title: Publicaciones recientes
+  pubs_more: Todas las publicaciones
+  lab_tag: Laboratorio del grupo
+  lab_cta: Visita el laboratorio
 hero:
   label: Grupo de investigación UPM · desde 2009
   title: Redes y servicios de próxima generación

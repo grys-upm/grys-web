@@ -230,10 +230,14 @@ repos_data = load_yaml(os.path.join(ROOT, "_data", "repos.yml")) or []
 repo_names = {r.get("name") for r in repos_data}
 for e in validate(normalize(repos_data), schema("repos")):
     err(f"_data/repos.yml: {e}")
-for dname in ("positions", "roles", "metrics", "axes"):
+for dname in ("positions", "roles", "metrics", "axes", "portada"):
     data = load_yaml(os.path.join(ROOT, "_data", f"{dname}.yml"))
     for e in validate(normalize(data), schema(dname)):
         err(f"_data/{dname}.yml: {e}")
+portada = load_yaml(os.path.join(ROOT, "_data", "portada.yml")) or {}
+for s in portada.get("destacados") or []:
+    if s not in items["projects"]:
+        err(f"_data/portada.yml: proyecto destacado «{s}» no existe en _projects/")
 for slug, p in items["projects"].items():
     for m in p.get("pi") or []:
         if m not in items["members"]:

@@ -18,7 +18,9 @@ Comprueba:
   · Publicaciones tiene sus filtros y un .pubdata por entrada de papers.bib, y
     ninguna página carga scripts de Altmetric/Dimensions sin pedirlo el visitante;
   · cada enlace «?autor=slug» de las fichas de miembro tiene su opción en el
-    filtro de autoría de Publicaciones (si no, el enlace mostraría todo).
+    filtro de autoría de Publicaciones (si no, el enlace mostraría todo);
+  · la portada (ES y EN) tiene todas sus secciones, las 4 cifras, una tarjeta por
+    proyecto destacado de _data/portada.yml y el nº de publicaciones configurado.
 Sale con código 1 si hay errores. Solo usa la biblioteca estándar + PyYAML.
 """
 import argparse
@@ -278,6 +280,26 @@ def main():
                     errors.append(f"{relf}: enlace ?autor={slug} sin opción en el filtro de autoría")
     if opciones and n_autor == 0:
         print("AVISO  ninguna ficha de miembro enlaza a sus publicaciones (¿falla _plugins/bib_index.rb?)")
+    # 9. Portada: secciones, cifras, destacados y publicaciones
+    po = yaml.safe_load(open(os.path.join(ROOT, "_data", "portada.yml"), encoding="utf-8")) or {}
+    for rel in ("index.html", os.path.join("en", "index.html")):
+        f = os.path.join(site, rel)
+        if not os.path.exists(f):
+            continue
+        html = open(f, encoding="utf-8").read()
+        for sid in ("h-hero", "h-lineas", "h-ambitos", "h-proyectos", "h-noticias", "h-pubs", "h-lab"):
+            if f'id="{sid}"' not in html:
+                errors.append(f"{rel}: falta la sección de portada #{sid}")
+        facts = re.search(r'<div class="facts".*?</div>\s*</div>', html, re.S)
+        if not facts or facts.group(0).count("<b>") != 4:
+            errors.append(f"{rel}: la portada debe mostrar 4 cifras (.facts)")
+        n_card = html.count('<article class="project">')
+        if n_card != len(po.get("destacados") or []):
+            errors.append(f"{rel}: {n_card} proyectos destacados y _data/portada.yml pide {len(po.get('destacados') or [])}")
+        sec = html.split('id="h-pubs"', 1)[-1].split('id="h-lab"', 1)[0]
+        n_pub = sec.count('<div class="yr">')
+        if n_pub != min(po.get("publicaciones", 0), 169) and n_pub == 0:
+            errors.append(f"{rel}: la portada no muestra publicaciones recientes")
     todo = sum(1 for w in warnings if "por completar" in w)
     for e in errors:
         print(f"ERROR  {e}")
