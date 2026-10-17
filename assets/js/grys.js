@@ -2,6 +2,7 @@
    - Menús desplegables: <button aria-expanded>, Esc, clic fuera
    - Cajón móvil
    - Cambio de tema claro/oscuro con memoria en localStorage
+   - Pestañas accesibles (Equipo, Tesis) con ancla en la URL
    (El tema inicial lo aplica el <script> en línea del <head>, sin parpadeo.) */
 (function () {
   "use strict";
@@ -72,5 +73,55 @@
       applyThemeUI();
     });
     applyThemeUI();
+  }
+  /* ---------- Pestañas (patrón ARIA tablist) ----------
+     Marcado: .tabs[role=tablist] > button[role=tab][aria-controls=ID] y
+     div[role=tabpanel][id=ID]. Flechas izquierda/derecha, Inicio y Fin para moverse.
+     El ancla de la URL (#ID del panel o de algo que esté dentro) abre esa
+     pestaña, y al cambiar de pestaña se actualiza el ancla sin saltar.
+     Sin JavaScript, el CSS muestra todos los paneles. */
+  var tablists = Array.prototype.slice.call(document.querySelectorAll('[role="tablist"]'));
+  function tabsOf(list) { return Array.prototype.slice.call(list.querySelectorAll('[role="tab"]')); }
+  function selectTab(tab, focus, updateHash) {
+    var list = tab.closest('[role="tablist"]');
+    tabsOf(list).forEach(function (x) {
+      var on = x === tab;
+      x.setAttribute("aria-selected", String(on));
+      x.tabIndex = on ? 0 : -1;
+      var p = document.getElementById(x.getAttribute("aria-controls"));
+      if (p) p.hidden = !on;
+    });
+    if (focus) tab.focus();
+    if (updateHash && history.replaceState) history.replaceState(null, "", "#" + tab.getAttribute("aria-controls"));
+  }
+  tablists.forEach(function (list) {
+    var tabs = tabsOf(list);
+    tabs.forEach(function (tab, i) {
+      tab.addEventListener("click", function () { selectTab(tab, true, true); });
+      tab.addEventListener("keydown", function (e) {
+        var n = null;
+        if (e.key === "ArrowRight") n = tabs[(i + 1) % tabs.length];
+        else if (e.key === "ArrowLeft") n = tabs[(i - 1 + tabs.length) % tabs.length];
+        else if (e.key === "Home") n = tabs[0];
+        else if (e.key === "End") n = tabs[tabs.length - 1];
+        if (n) { e.preventDefault(); selectTab(n, true, true); }
+      });
+    });
+  });
+  function openFromHash() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    var el = id && document.getElementById(id);
+    if (!el) return;
+    var panel = el.closest('[role="tabpanel"]');
+    if (!panel) return;
+    var tab = document.querySelector('[role="tab"][aria-controls="' + panel.id + '"]');
+    if (tab) {
+      selectTab(tab, false, false);
+      el.scrollIntoView();
+    }
+  }
+  if (tablists.length) {
+    openFromHash();
+    window.addEventListener("hashchange", openFromHash);
   }
 })();

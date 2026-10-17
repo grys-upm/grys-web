@@ -69,6 +69,7 @@ members:
   current: Current members
   former: Former members
   memoriam: In memoriam
+  tabs: Group members
   position: Position
   role: Role in the group
   email: Email
@@ -147,6 +148,12 @@ theses:
   award: Award
   in_site: "on this site"
   in_portal: "according to the UPM Scientific Portal"
+  tabs: Type of work
+  tab_phd: PhD
+  tab_master: Master's
+  tab_bachelor: Bachelor's
+  empty: No entries in this category yet
+  empty_hint: "They are added in _bibliography/theses.bib with the level field."
 pubs_extra:
   portal: Scientific Portal
   archivo: UPM Digital Archive
