@@ -1,0 +1,36 @@
+{%- comment -%}
+  Página «Docencia»: objetivos y, si hay, asignaturas (_data/docencia.yml).
+  Sin asignaturas no se muestra esa sección (nada de «próximamente»).
+{%- endcomment -%}
+{%- include page-vars.html -%}
+{%- assign dc = site.data.docencia -%}
+<div class="docencia">
+<h2 class="rule">{{ t.teaching_page.aims }}</h2>
+<ul class="nodes">{% for o in dc.objetivos %}<li>{{ o | l10n }}</li>{% endfor %}</ul>
+{%- if dc.asignaturas.size > 0 %}
+<h2 class="rule">{{ t.teaching_page.courses }}</h2>
+<table class="ptable">
+<caption class="sr">{{ t.teaching_page.courses }}</caption>
+<thead><tr><th scope="col">{{ t.teaching_page.course }}</th><th scope="col">{{ t.teaching_page.degree }}</th><th scope="col">{{ t.teaching_page.when }}</th><th scope="col">{{ t.teaching_page.lecturers }}</th></tr></thead>
+<tbody>
+{%- for a in dc.asignaturas %}
+<tr>
+<td>{% if a.url %}<a href="{{ a.url }}">{{ a.title | l10n }}</a>{% else %}{{ a.title | l10n }}{% endif %}</td>
+<td>{{ a.titulacion | l10n }}</td>
+<td class="datos">{% if a.curso %}{{ a.curso }}.º{% endif %}{% if a.semestre %} · S{{ a.semestre }}{% endif %}</td>
+<td>{% for s in a.profesorado %}{% assign dc_m = s | member %}{% if dc_m %}<a href="{{ dc_m | detail_url }}">{{ dc_m.given }} {{ dc_m.family }}</a>{% unless forloop.last %}, {% endunless %}{% endif %}{% endfor %}</td>
+</tr>
+{%- endfor %}
+</tbody>
+</table>
+{%- endif %}
+<div class="box dc-box">
+<h2>{{ t.teaching_page.contribute }}</h2>
+<p>{{ t.teaching_page.contribute_text }}</p>
+<ul class="nodes">
+<li><a href="{{ 'students' | route_url }}">{{ t.teaching_page.link_students }}</a></li>
+<li><a href="{{ 'opportunities' | route_url }}">{{ t.teaching_page.link_opps }}</a></li>
+<li><a href="{{ 'contact' | route_url }}">{{ t.teaching_page.link_contact }}</a></li>
+</ul>
+</div>
+</div>

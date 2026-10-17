@@ -84,6 +84,36 @@ Edita `_data/ods.yml`:
 - **Colores:** `color` es el oficial de Naciones Unidas, y `fg` el color del número: `#000000` o `#FFFFFF`, el que dé más contraste.
 - **Proyectos:** `proyectos` son slugs de `_projects/`, y `comprobar_datos.py` avisa si alguno no existe.
 
+## Añadir un tema de TFG, TFM o doctorado
+
+En `_data/estudiantes.yml`, añade un elemento a `propuestas`:
+
+```yaml
+propuestas:
+  - nivel: tfm                     # tfg | tfm | phd
+    title: { es: "Gemelo digital de una flota de drones", en: "Digital twin of a drone fleet" }
+    lines: [rob, edge]             # opcional
+    tutores: [nestor-lucas-martinez]
+    estado: abierta                # cuando se asigne, cámbialo a «asignada» y deja de mostrarse
+```
+
+## Añadir una asignatura
+
+En `_data/docencia.yml` → `asignaturas`, cada elemento lleva:
+- `title` y `titulacion`, en ES/EN;
+- `curso` y `semestre`, opcionales;
+- `profesorado`, con los slugs de `_members/`;
+- `url`, opcional: la guía docente.
+
+Mientras la lista esté vacía, la sección no aparece.
+
+## Añadir un demostrador o una oferta tecnológica
+
+- **Demostradores:** en `_data/demostradores.yml`, con `key`, `title`, `desc`, `personas` (slugs de miembros), `domains`, `repo` (nombre en `_data/repos.yml`), `imagen` o `video` (id de YouTube) y `presentado`.
+- **Ofertas tecnológicas:** en `_data/transferencia.yml` → `ofertas`, con `icon`, `title`, `desc` y, si los hay, `repo` y `url`.
+
+`comprobar_datos.py` avisa si una persona, un repositorio, un ámbito o un icono no existen.
+
 ## Cambiar datos de contacto, cómo llegar o accesibilidad
 
 Todo está en `_data/grupo.yml`:

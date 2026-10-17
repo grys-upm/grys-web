@@ -1,0 +1,22 @@
+{%- comment -%} Página «Transferencia»: _data/transferencia.yml. {%- endcomment -%}
+{%- include page-vars.html -%}
+{%- assign tf = site.data.transferencia -%}
+<div class="transfer">
+<div class="label"><span class="bub">{% include icono.html n="handshake" %}</span>{{ t.transfer_page.offer_label }}</div>
+<h2 class="rule">{{ t.transfer_page.offer_title }}</h2>
+<div class="grid2">
+{%- for o in tf.ofertas %}
+<article class="card line-card"><span class="hexi">{% include icono.html n=o.icon %}</span>
+<h3>{{ o.title | l10n }}</h3>
+<p>{{ o.desc | l10n }}</p>
+{%- if o.repo %}{% assign tr_r = site.data.repos | where: "name", o.repo | first %}<p><a href="https://github.com/{{ tr_r.owner | default: 'grys-upm' }}/{{ o.repo }}">GitHub · {{ o.repo }}</a></p>{% endif %}
+{%- if o.url %}<p><a href="{{ o.url }}">{{ t.more_info }}</a></p>{% endif %}
+</article>
+{%- endfor %}
+</div>
+{%- if tf.catalogo %}<p class="tr-cat"><a href="{{ tf.catalogo }}">{{ t.transfer_page.catalogue }}</a></p>{% endif %}
+<div class="label tr-how"><span class="bub">{% include icono.html n="handshake" %}</span>{{ t.transfer_page.how_label }}</div>
+<h2 class="rule">{{ t.transfer_page.how_title }}</h2>
+<div class="grid4">{% for f in tf.formas %}<div class="card"><h3>{{ f.title | l10n }}</h3><p>{{ f.desc | l10n }}</p></div>{% endfor %}</div>
+<div class="acts"><a class="btn primary" href="{{ 'contact' | route_url }}">{{ t.transfer_page.cta }}</a></div>
+</div>

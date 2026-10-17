@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "_data/estudiantes.yml",
+  "description": "Propuestas de TFG/TFM/doctorado y pasos.",
+  "type": "object",
+  "required": [
+    "propuestas",
+    "pasos"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "propuestas": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "nivel",
+          "title",
+          "tutores",
+          "estado"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "nivel": {
+            "type": "string",
+            "enum": [
+              "tfg",
+              "tfm",
+              "phd"
+            ]
+          },
+          "title": {
+            "type": "object",
+            "required": [
+              "es",
+              "en"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "es": {
+                "type": "string",
+                "minLength": 1
+              },
+              "en": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "desc": {
+            "type": "object",
+            "required": [
+              "es",
+              "en"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "es": {
+                "type": "string",
+                "minLength": 1
+              },
+              "en": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "lines": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "cps"
+              ]
+            }
+          },
+          "tutores": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+            }
+          },
+          "estado": {
+            "type": "string",
+            "enum": [
+              "abierta",
+              "asignada"
+            ]
+          }
+        }
+      }
+    },
+    "pasos": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "title",
+          "desc"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "title": {
+            "type": "object",
+            "required": [
+              "es",
+              "en"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "es": {
+                "type": "string",
+                "minLength": 1
+              },
+              "en": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "desc": {
+            "type": "object",
+            "required": [
+              "es",
+              "en"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "es": {
+                "type": "string",
+                "minLength": 1
+              },
+              "en": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -507,3 +507,28 @@ p.todo,div.todo{display:inline-block;white-space:normal;font-size:14px;padding:6
 .map-frame iframe{width:100%;height:100%;border:0;display:block}
 .map-links{margin-top:8px}
 .contacto .spec{margin-top:10px}
+
+/* Páginas de OpenTech Lab y Colabora (fase 3.6b) */
+.about .acts{margin-top:24px}
+.capacidades,.tr-how,.es-sec{margin-top:56px}
+.demos{margin-top:28px}
+.demos .video{margin:0}
+.demo-img{height:220px;overflow:hidden}
+.demo-img img{width:100%;height:100%;object-fit:cover;display:block}
+.transfer{margin-top:28px}
+.tr-cat{margin-top:16px}
+.transfer .card h3{font-size:18px}
+.transfer .grid4 .card p{margin-top:6px;color:var(--muted)}
+.transfer .acts,.estudiantes .acts{margin-top:28px}
+.cifras .yr{font-size:40px}
+.cifras p{margin-top:6px}
+.estudiantes .card h3{font-size:19px;margin:8px 0 4px}
+.estudiantes .card .chips{margin-top:10px}
+.pasos{list-style:none;margin:0}
+.pasos p{color:var(--muted)}
+.docencia{margin-top:28px}
+.docencia h2.rule{font-size:28px;margin:0 0 16px}
+.docencia .ptable{margin-bottom:28px}
+.dc-box{margin-top:32px}
+.dc-box h2{font-size:21px;margin-bottom:8px}
+.dc-box .nodes{margin-top:10px}

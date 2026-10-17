@@ -1,0 +1,34 @@
+{%- comment -%}
+  Página «Demostradores»: tarjetas desde _data/demostradores.yml.
+  Personas → ficha del miembro; repo → GitHub (dueño de _data/repos.yml).
+{%- endcomment -%}
+{%- include page-vars.html -%}
+<div class="grid2 demos">
+{%- for d in site.data.demostradores %}
+{%- assign dm_title = d.title | l10n %}
+<article class="project" id="{{ d.key }}">
+{%- assign dm_img = d.imagen | asset_exists %}
+{%- if d.video %}
+{% include video.html youtube=d.video titulo=dm_title %}
+{%- elsif dm_img %}
+<div class="img demo-img"><img src="{{ d.imagen | relative_url }}" alt="" loading="lazy" decoding="async"></div>
+{%- endif %}
+<div class="body">
+<h3>{{ dm_title }}</h3>
+<p>{{ d.desc | l10n }}</p>
+{%- if d.domains.size > 0 %}
+<div class="chips">{% for k in d.domains %}{% assign dm_d = site.domains | where: "key", k | first %}{% if dm_d %}<span class="chip">{% include icono.html n=dm_d.icon %}{{ dm_d | tr: "title" }}</span>{% endif %}{% endfor %}</div>
+{%- endif %}
+<dl class="spec">
+{%- if d.personas.size > 0 %}
+<dt>{{ t.demos.by }}</dt><dd>{% for s in d.personas %}{% assign dm_m = s | member %}{% if dm_m %}<a href="{{ dm_m | detail_url }}">{{ dm_m.given }} {{ dm_m.family }}</a>{% unless forloop.last %}, {% endunless %}{% endif %}{% endfor %}</dd>
+{%- endif %}
+{%- if d.repo %}{% assign dm_r = site.data.repos | where: "name", d.repo | first %}
+<dt>{{ t.demos.code }}</dt><dd><a href="https://github.com/{{ dm_r.owner | default: 'grys-upm' }}/{{ d.repo }}">{{ dm_r.owner | default: 'grys-upm' }}/{{ d.repo }}</a></dd>
+{%- endif %}
+{%- if d.presentado %}<dt>{{ t.demos.shown }}</dt><dd>{{ d.presentado | l10n }}</dd>{% endif %}
+</dl>
+</div>
+</article>
+{%- endfor %}
+</div>

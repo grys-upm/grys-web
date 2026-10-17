@@ -1,0 +1,39 @@
+# =====================================================================
+#  TRANSFERENCIA (página Colabora › Transferencia)
+# ---------------------------------------------------------------------
+#  · ofertas: soluciones tecnológicas disponibles. url (opcional) y/o repo
+#    (nombre en _data/repos.yml).
+#  · formas: maneras de colaborar con el grupo.
+#  Fuente: mockup v4 y menú «Innovation» de la web anterior.
+#  PROPUESTA pendiente de validar. Validado con schemas/transferencia.schema.json.
+# =====================================================================
+
+# Catálogo de soluciones del grupo en el HUB de Innovación UPM
+catalogo: https://www.upm.es/recursosidi/search/?_sft_product_cat=soluciones-tecnologicas&_sft_donde=grupo-de-redes-y-servicios-de-proxima-generacion-grys&sort_order=date+desc
+
+ofertas:
+  - icon: net
+    title:
+      es: Controlador autoadaptativo de potencia de transmisión para IoT
+      en: Self-Adaptive Transmission Power Controller for the IoT
+    desc:
+      es: Ajusta la potencia de transmisión de los sensores de una red inalámbrica para reducir el consumo total de energía. Publicado en el HUB de Innovación UPM.
+      en: Adapts sensor transmission power in a wireless sensor network to reduce total energy consumption. Listed in the UPM Innovation Hub.
+  - icon: code
+    title:
+      es: "SISS: sistema de soporte a la interoperabilidad semántica"
+      en: "SISS: Semantic Interoperability Support System"
+    desc:
+      es: Propiedad intelectual registrada. Código abierto disponible en GitHub.
+      en: Registered intellectual property. Open source available on GitHub.
+    repo: SISS-Semantic-Interoperability-Support-System
+
+formas:
+  - title: { es: Contratos de I+D, en: R&D contracts }
+    desc: { es: Desarrollos a medida con empresas e instituciones., en: Bespoke developments with companies and institutions. }
+  - title: { es: Proyectos colaborativos, en: Collaborative projects }
+    desc: { es: Consorcios europeos y nacionales., en: European and national consortia. }
+  - title: { es: Licencias, en: Licensing }
+    desc: { es: Software registrado del grupo., en: The group's registered software. }
+  - title: { es: OpenTech Lab, en: OpenTech Lab }
+    desc: { es: Pruebas y validación de tecnología., en: Technology testing and validation. }

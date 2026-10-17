@@ -1,0 +1,39 @@
+# =====================================================================
+#  OPENTECH LAB · partes estructuradas de la página «El laboratorio»
+#  (el texto corrido está en _pages/<idioma>/lab.md; el vídeo es el de la
+#  banda de la portada, _data/portada.yml → laboratorio.video)
+#  Fuente: página «About the OpenTechLab» de la web anterior + mockup v4.
+#  Validado con schemas/laboratorio.schema.json.
+# =====================================================================
+
+capacidades:
+  - icon: net
+    title: { es: Orquestación cooperativa de misiones, en: Cooperative mission orchestration }
+    desc:
+      es: Agentes autónomos aéreos, terrestres o marinos se coordinan hacia objetivos comunes.
+      en: Aerial, ground or marine autonomous agents coordinate towards shared objectives.
+  - icon: play
+    title: { es: Monitorización y control en tiempo real, en: Real-time monitoring and control }
+    desc:
+      es: Las misiones se definen, lanzan y siguen con interfaces sencillas y realimentación continua.
+      en: Missions are defined, launched and tracked through intuitive interfaces with continuous feedback.
+  - icon: doc
+    title: { es: Integración y visualización de datos, en: Data integration and visualisation }
+    desc:
+      es: Datos de sensores y actuadores descritos semánticamente, con analítica, visualización y consultas en lenguaje natural.
+      en: Semantically described sensor and actuator data, with analytics, visualisation and natural-language querying.
+  - icon: lab
+    title: { es: Simulación y validación, en: Simulation and validation }
+    desc:
+      es: Los escenarios se modelan y prueban en un entorno digital controlado antes de salir al campo.
+      en: Mission scenarios are modelled and tested in a controlled digital environment before field deployment.
+  - icon: check
+    title: { es: Interoperabilidad segura, en: Secure interoperability }
+    desc:
+      es: Comunicaciones y flujos de datos diseñados con criterios de ciberseguridad para un funcionamiento fiable.
+      en: Communications and data flows designed with cybersecurity in mind for trustworthy operation.
+  - icon: globe
+    title: { es: Aplicaciones, en: Applications }
+    desc:
+      es: Movilidad inteligente, monitorización ambiental, agricultura de precisión y automatización industrial.
+      en: Smart mobility, environmental monitoring, precision agriculture and industrial automation.

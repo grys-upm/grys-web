@@ -1,0 +1,28 @@
+{%- comment -%}
+  Página «El laboratorio». Parámetro: texto = Markdown escrito en
+  _pages/<idioma>/lab.md (entre «capture texto» y «endcapture»).
+  Capacidades: _data/laboratorio.yml · vídeo: _data/portada.yml (laboratorio.video).
+{%- endcomment -%}
+{%- include page-vars.html -%}
+{%- assign lb = site.data.laboratorio -%}
+{%- assign lb_v = site.data.portada.laboratorio -%}
+<div class="grid2 about">
+<div class="prose">
+{{ include.texto | markdownify }}
+<div class="acts">
+<a class="btn primary" href="{{ 'contact' | route_url }}">{{ t.lab_page.cta_collab }}</a>
+<a class="btn secondary" href="{{ 'demonstrators' | route_url }}">{{ t.lab_page.cta_demos }}</a>
+</div>
+</div>
+<div>
+{%- if lb_v.video %}
+{%- assign lb_vt = lb_v.video_titulo | l10n %}
+{% include video.html youtube=lb_v.video titulo=lb_vt %}
+{%- endif %}
+</div>
+</div>
+<div class="capacidades">
+<div class="label"><span class="bub">{% include icono.html n="check" %}</span>{{ t.lab_page.caps_label }}</div>
+<h2 class="rule">{{ t.lab_page.caps_title }}</h2>
+<div class="grid3">{% for c in lb.capacidades %}<article class="card line-card"><span class="hexi">{% include icono.html n=c.icon %}</span><h3>{{ c.title | l10n }}</h3><p>{{ c.desc | l10n }}</p></article>{% endfor %}</div>
+</div>

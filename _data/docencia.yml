@@ -1,0 +1,24 @@
+# =====================================================================
+#  DOCENCIA (página Colabora › Docencia)
+# ---------------------------------------------------------------------
+#  asignaturas: si está vacía, la sección NO aparece (nada de «próximamente»).
+#  Campos de cada asignatura:
+#    title:       { es: …, en: … }
+#    titulacion:  { es: …, en: … }
+#    curso:       1-6 (opcional) · semestre: 1 | 2 (opcional)
+#    profesorado: [slugs de _members/]
+#    url:         guía docente o página oficial (opcional)
+#  Validado con schemas/docencia.schema.json.
+# =====================================================================
+
+objetivos:
+  - es: Integrar temas de investigación actuales en las asignaturas (CPS, IoT, robótica cooperativa, middleware, seguridad, cloud-edge).
+    en: Integrate up-to-date research topics into courses (CPS, IoT, cooperative robotics, middleware, security, cloud-edge).
+  - es: Ofrecer prácticas de laboratorio y proyectos basados en investigación activa.
+    en: Offer lab exercises and project work driven by active research.
+  - es: Trabajar con herramientas abiertas, experimentos reproducibles y datos reales, incluidos los del OpenTech Lab.
+    en: Use open tools, reproducible experiments and real datasets, including those from the OpenTech Lab.
+  - es: Preparar para la investigación o la industria mediante la dirección de proyectos y trabajos con empresas.
+    en: Prepare students for research or industry through project supervision and industry-linked assignments.
+
+asignaturas: []

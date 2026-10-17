@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "_data/demostradores.yml",
+  "description": "Demostradores del OpenTech Lab.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "key",
+      "title",
+      "desc"
+    ],
+    "additionalProperties": false,
+    "properties": {
+      "key": {
+        "type": "string",
+        "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+      },
+      "title": {
+        "type": "object",
+        "required": [
+          "es",
+          "en"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "es": {
+            "type": "string",
+            "minLength": 1
+          },
+          "en": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "desc": {
+        "type": "object",
+        "required": [
+          "es",
+          "en"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "es": {
+            "type": "string",
+            "minLength": 1
+          },
+          "en": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "personas": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+        }
+      },
+      "domains": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "enum": [
+            "campo"
+          ]
+        }
+      },
+      "repo": {
+        "type": "string",
+        "minLength": 1
+      },
+      "imagen": {
+        "type": "string",
+        "pattern": "^/assets/"
+      },
+      "video": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9_-]{6,20}$"
+      },
+      "presentado": {
+        "type": "object",
+        "required": [
+          "es",
+          "en"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "es": {
+            "type": "string",
+            "minLength": 1
+          },
+          "en": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}

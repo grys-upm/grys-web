@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "_data/transferencia.yml",
+  "description": "Oferta tecnológica y formas de colaborar.",
+  "type": "object",
+  "required": [
+    "ofertas",
+    "formas"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "catalogo": {
+      "type": "string",
+      "pattern": "^https?://"
+    },
+    "ofertas": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "icon",
+          "title",
+          "desc"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "icon": {
+            "type": "string",
+            "enum": [
+              "net"
+            ]
+          },
+          "title": {
+            "type": "object",
+            "required": [
+              "es",
+              "en"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "es": {
+                "type": "string",
+                "minLength": 1
+              },
+              "en": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "desc": {
+            "type": "object",
+            "required": [
+              "es",
+              "en"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "es": {
+                "type": "string",
+                "minLength": 1
+              },
+              "en": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "repo": {
+            "type": "string",
+            "minLength": 1
+          },
+          "url": {
+            "type": "string",
+            "pattern": "^https?://"
+          }
+        }
+      }
+    },
+    "formas": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "title",
+          "desc"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "title": {
+            "type": "object",
+            "required": [
+              "es",
+              "en"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "es": {
+                "type": "string",
+                "minLength": 1
+              },
+              "en": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "desc": {
+            "type": "object",
+            "required": [
+              "es",
+              "en"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "es": {
+                "type": "string",
+                "minLength": 1
+              },
+              "en": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

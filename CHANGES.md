@@ -1,5 +1,26 @@
 # Registro de cambios
 
+## Fase 3 · Paso 3.6b: OpenTech Lab y Colabora (17-10-2026)
+
+- **El laboratorio:**
+  - texto (ES/EN) en Markdown en la página;
+  - 6 capacidades en `_data/laboratorio.yml`;
+  - el vídeo del Industry Day, el mismo de la portada;
+  - botones «Proponer una colaboración» y «Ver demostradores».
+- **Demostradores:** tarjetas desde `_data/demostradores.yml` (Smart Fleet Manager y la consulta en lenguaje natural), con autoría enlazada a la ficha, ámbitos, repositorio y dónde se presentaron.
+- **Transferencia:** oferta tecnológica y formas de colaborar desde `_data/transferencia.yml`, con enlace al catálogo del grupo en el HUB de Innovación UPM.
+- **TFG, TFM y doctorado:**
+  - cifras de `metrics.yml`;
+  - temas abiertos de `_data/estudiantes.yml`; si no hay ninguno, un bloque que invita a proponer uno;
+  - tres pasos para empezar.
+- **Docencia:** objetivos y, si las hay, tabla de asignaturas (`_data/docencia.yml`). **Sin «próximamente»:** la sección de asignaturas no aparece mientras la lista esté vacía.
+- **5 esquemas nuevos.** `comprobar_datos.py` valida las personas, repositorios, ámbitos e iconos citados. Se ha probado con datos erróneos: detecta los 5 tipos de error.
+- **`verificar_sitio.py`** comprueba ahora:
+  - estas 10 páginas (ES/EN);
+  - que el nº de capacidades y de demostradores coincide con los datos;
+  - que ninguna página migrada dice «próximamente» ni «coming soon».
+- **`docs/RECETAS.md`:** recetas para añadir temas de TFG/TFM, asignaturas, demostradores y ofertas.
+
 ## Proyectos destacados automáticos (17-10-2026)
 
 - **`_plugins/destacados.rb`** (nuevo) elige los proyectos destacados de la portada en cada compilación:

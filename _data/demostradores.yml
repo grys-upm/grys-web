@@ -1,0 +1,40 @@
+# =====================================================================
+#  DEMOSTRADORES del OpenTech Lab (página OpenTech Lab › Demostradores)
+# ---------------------------------------------------------------------
+#  · personas: slugs de _members/ (se enlazan a su ficha)
+#  · domains:  claves de _domains/
+#  · repo:     nombre de un repositorio de _data/repos.yml (se enlaza a GitHub)
+#  · imagen:   ruta en /assets/… (opcional) · video: id de YouTube (opcional)
+#  · presentado: dónde y cuándo se mostró (texto ES/EN, opcional)
+#  Fuente: noticia del Industry Day 2025 (27-11-2025) + mockup v4.
+#  Validado con schemas/demostradores.schema.json.
+# =====================================================================
+
+- key: smart-fleet-manager
+  title:
+    es: Smart Fleet Manager y mapas de prescripción
+    en: Smart Fleet Manager and prescription maps
+  desc:
+    es: Dispositivo embarcado en un UAV que captura imágenes agrícolas, las procesa con IA en el borde y genera mapas de prescripción en tiempo real.
+    en: A UAV-mounted device that captures agricultural images, processes them with edge AI and generates prescription maps in real time.
+  personas: [estela-mora-barba]
+  domains: [campo, aire]
+  repo: opentechlab-smartpm
+  imagen: /assets/img/noticias/2025-11-27-car-csic-industry-day-2025/20251127-124804.webp
+  presentado:
+    es: Industry Day 2025 (CAR-CSIC, Arganda del Rey), 27/11/2025
+    en: Industry Day 2025 (CAR-CSIC, Arganda del Rey), 27/11/2025
+
+- key: consulta-lenguaje-natural
+  title:
+    es: Consulta de bases de datos IoT en lenguaje natural
+    en: Natural-language querying of IoT databases
+  desc:
+    es: Herramienta interactiva que traduce preguntas en lenguaje natural a consultas SQL de forma segura y eficiente.
+    en: An interactive tool that securely and efficiently translates natural-language questions into SQL queries.
+  personas: [mario-san-emeterio-de-la-parte]
+  domains: []
+  repo: LLM-based-HMI_Evaluations
+  presentado:
+    es: Industry Day 2025 (CAR-CSIC, Arganda del Rey), 27/11/2025
+    en: Industry Day 2025 (CAR-CSIC, Arganda del Rey), 27/11/2025

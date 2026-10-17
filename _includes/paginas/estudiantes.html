@@ -1,0 +1,46 @@
+{%- comment -%}
+  Página «TFG, TFM y doctorado»: cifras (_data/metrics.yml), propuestas
+  abiertas y pasos (_data/estudiantes.yml).
+{%- endcomment -%}
+{%- include page-vars.html -%}
+{%- assign es_d = site.data.estudiantes -%}
+{%- assign mx = site.data.metrics -%}
+{%- assign es_open = es_d.propuestas | where: "estado", "abierta" -%}
+<div class="estudiantes">
+<div class="grid3 cifras">
+<div class="card"><div class="yr">{{ mx.bachelor_theses }}</div><p>{{ t.students_page.n_bachelor }}</p></div>
+<div class="card"><div class="yr">{{ mx.master_theses }}</div><p>{{ t.students_page.n_master }}</p></div>
+<div class="card"><div class="yr">{{ mx.phd_theses }}</div><p>{{ t.students_page.n_phd }}</p></div>
+</div>
+<p class="datos">{{ t.portada.facts_source }}: {% if mx.source_url %}<a href="{{ mx.source_url }}">{{ mx.source }}</a>{% else %}{{ mx.source }}{% endif %} ({{ mx.date }}) · <a href="{{ 'theses' | route_url }}">{{ t.students_page.see_theses }}</a></p>
+
+<div class="label es-sec"><span class="bub">{% include icono.html n="cap" %}</span>{{ t.students_page.topics_label }}</div>
+<h2 class="rule">{{ t.students_page.topics_title }}</h2>
+{%- if es_open.size > 0 %}
+<div class="grid2">
+{%- for p in es_open %}
+{%- assign es_lv = "level_" | append: p.nivel %}
+<article class="card">
+<div class="datos">{{ t.students_page[es_lv] }}</div>
+<h3>{{ p.title | l10n }}</h3>
+{%- if p.desc %}<p>{{ p.desc | l10n }}</p>{% endif %}
+{%- if p.lines.size > 0 %}<div class="chips">{% for k in p.lines %}{% assign es_l = site.lines | where: "key", k | first %}{% if es_l %}<a class="chip" href="{{ es_l | detail_url }}">{{ es_l | tr: "title" }}</a>{% endif %}{% endfor %}</div>{% endif %}
+{%- if p.tutores.size > 0 %}<p class="datos">{{ t.students_page.supervisors }}: {% for s in p.tutores %}{% assign es_m = s | member %}{% if es_m %}<a href="{{ es_m | detail_url }}">{{ es_m.given }} {{ es_m.family }}</a>{% unless forloop.last %}, {% endunless %}{% endif %}{% endfor %}</p>{% endif %}
+</article>
+{%- endfor %}
+</div>
+{%- else %}
+<div class="empty"><span class="bub">{% include icono.html n="cap" %}</span><div>
+<h3>{{ t.students_page.no_topics }}</h3>
+<p>{{ t.students_page.no_topics_text }} <a href="mailto:{{ site.data.grupo.email }}">{{ site.data.grupo.email }}</a></p>
+</div></div>
+{%- endif %}
+
+<div class="label es-sec"><span class="bub">{% include icono.html n="check" %}</span>{{ t.students_page.steps_label }}</div>
+<h2 class="rule">{{ t.students_page.steps_title }}</h2>
+<ol class="grid3 pasos">{% for s in es_d.pasos %}<li class="card"><div class="yr">0{{ forloop.index }}</div><h3>{{ s.title | l10n }}</h3><p>{{ s.desc | l10n }}</p></li>{% endfor %}</ol>
+<div class="acts">
+<a class="btn primary" href="{{ 'contact' | route_url }}">{{ t.students_page.cta }}</a>
+<a class="btn secondary" href="{{ 'lines' | route_url }}">{{ t.students_page.see_lines }}</a>
+</div>
+</div>

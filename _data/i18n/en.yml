@@ -94,6 +94,51 @@ contact_page:
   car: By car
   source: Source
   access: Building accessibility
+lab_page:
+  cta_collab: Propose a collaboration
+  cta_demos: See demonstrators
+  caps_label: Capabilities
+  caps_title: What the platform enables
+demos:
+  by: Developed by
+  code: Code
+  shown: Presented at
+transfer_page:
+  offer_label: Technology offer
+  offer_title: Available solutions
+  catalogue: See all our solutions in the UPM Innovation Hub
+  how_label: How to collaborate
+  how_title: Ways to work with us
+  cta: Let's talk
+students_page:
+  n_bachelor: bachelor's projects supervised
+  n_master: master's and DEA theses
+  n_phd: PhD theses
+  see_theses: See previous theses
+  topics_label: Proposals
+  topics_title: Available topics
+  no_topics: No topics are published right now
+  no_topics_text: "You can propose your own: tell us what interests you and we will shape it together."
+  level_tfg: Bachelor's project
+  level_tfm: Master's thesis
+  level_phd: PhD
+  supervisors: Supervision
+  steps_label: How to start
+  steps_title: Three steps
+  cta: Contact us
+  see_lines: See our research lines
+teaching_page:
+  aims: Aims
+  courses: Courses
+  course: Course
+  degree: Degree
+  when: Year
+  lecturers: Group lecturers
+  contribute: Want to collaborate on teaching?
+  contribute_text: "If you are a researcher, educator or company interested in collaborating on course modules, student projects or workshops, write to us."
+  link_students: Student projects and PhD
+  link_opps: Opportunities
+  link_contact: Contact
 portada:
   facts_label: The group in figures
   f_projects: projects

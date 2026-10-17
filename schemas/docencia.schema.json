@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "_data/docencia.yml",
+  "description": "Objetivos y asignaturas.",
+  "type": "object",
+  "required": [
+    "objetivos",
+    "asignaturas"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "objetivos": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "es",
+          "en"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "es": {
+            "type": "string",
+            "minLength": 1
+          },
+          "en": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "asignaturas": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "title",
+          "titulacion",
+          "profesorado"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "title": {
+            "type": "object",
+            "required": [
+              "es",
+              "en"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "es": {
+                "type": "string",
+                "minLength": 1
+              },
+              "en": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "titulacion": {
+            "type": "object",
+            "required": [
+              "es",
+              "en"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "es": {
+                "type": "string",
+                "minLength": 1
+              },
+              "en": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "curso": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 6
+          },
+          "semestre": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2
+          },
+          "profesorado": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+            }
+          },
+          "url": {
+            "type": "string",
+            "pattern": "^https?://"
+          }
+        }
+      }
+    }
+  }
+}
