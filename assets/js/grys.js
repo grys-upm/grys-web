@@ -3,7 +3,8 @@
    - Cajón móvil
    - Cambio de tema claro/oscuro con memoria en localStorage
    - Pestañas accesibles (Equipo, Tesis) con ancla en la URL
-   - Filtros de la tabla de Proyectos, con su estado en la URL
+   - Filtros de Proyectos y Publicaciones, con su estado en la URL
+   - Insignias de Altmetric y Dimensions bajo demanda
    (El tema inicial lo aplica el <script> en línea del <head>, sin parpadeo.) */
 (function () {
   "use strict";
@@ -125,12 +126,15 @@
     openFromHash();
     window.addEventListener("hashchange", openFromHash);
   }
-  /* ---------- Filtros de tabla (Proyectos) ----------
+  /* ---------- Filtros (Proyectos, Publicaciones) ----------
      Marcado: form.filters[data-filter=P] (oculto con «hidden» hasta que este
      script lo muestra), con controles que tienen name (input/select) o grupos
      .seg[data-name] de botones aria-pressed. Elementos asociados por id:
-     P-table (filas con data-<name>), P-count (recuento, data-one/data-many) y
-     P-empty (aviso sin resultados). Un valor de filtro coincide si está entre los
+     P-table (filas <tr> con data-<name>) o P-list (elementos .pubdata con
+     data-<name>; se oculta su <li> y, si un <ul> se queda vacío, también el
+     <ul> y su encabezado de año), P-count (recuento, data-one/data-many) y
+     P-empty (aviso sin resultados). Los <select data-prune> pierden las
+     opciones que no tiene ningún elemento; si no queda ninguna, no se muestran. Un valor de filtro coincide si está entre los
      valores de data-<name>, separados por espacios; «q» busca en data-q sin
      tener en cuenta mayúsculas ni tildes. El estado se guarda en la URL (?tipo=…). */
   function norm(s) {
@@ -138,13 +142,32 @@
   }
   Array.prototype.slice.call(document.querySelectorAll("form.filters[data-filter]")).forEach(function (form) {
     var p = form.getAttribute("data-filter");
-    var table = document.getElementById(p + "-table");
+    var table = document.getElementById(p + "-table") || document.getElementById(p + "-list");
     if (!table) return;
-    var rows = Array.prototype.slice.call(table.tBodies[0].rows);
+    var isTable = table.tagName === "TABLE";
+    var rows = isTable ? Array.prototype.slice.call(table.tBodies[0].rows)
+      : Array.prototype.slice.call(table.querySelectorAll(".pubdata"));
+    function box(r) { return isTable ? r : (r.closest("li") || r); }
     var count = document.getElementById(p + "-count");
     var empty = document.getElementById(p + "-empty");
     var fields = Array.prototype.slice.call(form.querySelectorAll("input[name], select[name]"));
     var segs = Array.prototype.slice.call(form.querySelectorAll(".seg[data-name]"));
+    // Quitar opciones sin elementos (y el desplegable entero si queda vacío)
+    fields.forEach(function (f) {
+      if (f.tagName !== "SELECT" || !f.hasAttribute("data-prune")) return;
+      var have = {};
+      rows.forEach(function (r) {
+        (r.getAttribute("data-" + f.name) || "").split(/\s+/).forEach(function (v) { if (v) have[v] = true; });
+      });
+      Array.prototype.slice.call(f.options).forEach(function (o) {
+        if (o.value && !have[o.value]) f.removeChild(o);
+      });
+      if (f.options.length <= 1) {
+        f.hidden = true;
+        var lb = form.querySelector('label[for="' + f.id + '"]');
+        if (lb) lb.hidden = true;
+      }
+    });
 
     function segValue(seg) {
       var b = seg.querySelector('button[aria-pressed="true"]');
@@ -175,9 +198,17 @@
           if (vals.indexOf(s[k]) < 0) ok = false;
         });
         if (ok && q) ok = norm(r.getAttribute("data-q")).indexOf(q) >= 0;
-        r.hidden = !ok;
+        box(r).hidden = !ok;
         if (ok) n++;
       });
+      if (!isTable) {
+        Array.prototype.slice.call(table.querySelectorAll("ul")).forEach(function (ul) {
+          var any = Array.prototype.slice.call(ul.children).some(function (li) { return !li.hidden; });
+          ul.hidden = !any;
+          var h = ul.previousElementSibling;
+          if (h && /^H[1-6]$/.test(h.tagName)) h.hidden = !any;
+        });
+      }
       if (count) count.textContent = n + " " + count.getAttribute(n === 1 ? "data-one" : "data-many");
       if (empty) { empty.hidden = n > 0; table.hidden = n === 0; }
       if (updateUrl && history.replaceState && window.URLSearchParams) {
@@ -215,4 +246,42 @@
     form.hidden = false;
     apply(false);
   });
+  /* ---------- Insignias de Altmetric y Dimensions (bajo demanda) ----------
+     Las insignias (<span class="badges" hidden>) están en el HTML, pero los
+     scripts externos solo se cargan cuando el visitante pulsa el botón
+     [data-metrics] button (privacidad y rendimiento). La elección se guarda en
+     localStorage («grys-metrics») y se aplica en las visitas siguientes. */
+  var mbar = document.querySelector("[data-metrics]");
+  var METRIC_SCRIPTS = [
+    "https://embed.altmetric.com/assets/embed.js",
+    "https://integration-badge.dimensions.ai/static/ai/badge.js"
+  ];
+  var metricsLoaded = false;
+  function showMetrics(on) {
+    Array.prototype.slice.call(document.querySelectorAll(".badges")).forEach(function (b) { b.hidden = !on; });
+    if (on && !metricsLoaded) {
+      metricsLoaded = true;
+      METRIC_SCRIPTS.forEach(function (src) {
+        var s = document.createElement("script");
+        s.src = src; s.async = true; s.charset = "utf-8";
+        document.body.appendChild(s);
+      });
+    }
+    if (mbar) {
+      var b = mbar.querySelector("button");
+      b.setAttribute("aria-pressed", String(on));
+      b.textContent = b.getAttribute(on ? "data-on" : "data-off");
+    }
+  }
+  if (mbar && document.querySelector(".badges")) {
+    var mpref = null;
+    try { mpref = localStorage.getItem("grys-metrics"); } catch (e) { /* modo privado */ }
+    mbar.hidden = false;
+    mbar.querySelector("button").addEventListener("click", function () {
+      var on = this.getAttribute("aria-pressed") !== "true";
+      try { localStorage.setItem("grys-metrics", on ? "1" : "0"); } catch (e) { /* modo privado */ }
+      showMetrics(on);
+    });
+    if (mpref === "1") showMetrics(true);
+  }
 })();

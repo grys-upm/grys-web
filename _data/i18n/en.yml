@@ -44,6 +44,23 @@ redirect:
 pubs:
   bibtex: BibTeX
   doi: DOI
+  type: Type
+  year: Year
+  all_years: All years
+  journals: Journals
+  conferences: Conferences
+  books: Books and chapters
+  n_journal: journal articles
+  n_conference: conference papers
+  n_book: books and chapters
+  documents: documents
+  citations: citations
+  search_ph: Title, authors, venue or DOI…
+  count_one: publication
+  count_many: publications
+  metrics_show: Show impact metrics
+  metrics_hide: Hide impact metrics
+  metrics_note: Altmetric and Dimensions badges. Showing them connects your browser to those services.
 hero:
   label: UPM research group · since 2009
   title: Next-generation networks and services
@@ -82,6 +99,8 @@ filters:
   label: Filters
   search: Search
   all: All
+  all_f: All
+  all_projects: All projects
   all_domains: All domains
   all_lines: All lines
   line: Research line
