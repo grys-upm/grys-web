@@ -39,7 +39,7 @@
   <select id="pb-autor" name="autor" data-prune>
     <option value="">{{ t.filters.all_members }}</option>
     {%- assign pb_mem = site.members | sort: "family" %}{% for m in pb_mem %}
-    {%- assign pb_ms = m.page_id | remove_first: "members/" %}
+    {%- assign pb_ms = m | slug_of %}
     <option value="{{ pb_ms }}">{{ m.family }}, {{ m.given }}</option>
     {%- endfor %}
   </select>

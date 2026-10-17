@@ -1,5 +1,14 @@
 # Registro de cambios
 
+## Corrección 5 · Filtro «Autoría» vacío (17-10-2026)
+
+- **Síntoma:** `verificar_sitio` daba 56 errores del tipo «enlace ?autor=… sin opción en el filtro de autoría». Los enlaces de las fichas eran correctos, pero el desplegable de Publicaciones tenía todas las opciones vacías.
+- **Causa:** el listado sacaba el slug de `m.page_id`, que solo existe en las páginas de ficha que genera el plugin, no en los documentos de la colección `site.members`.
+- **Solución:**
+  - filtro nuevo `slug_of` (`_plugins/grys.rb`), que da el slug con la misma regla que las URL de las fichas; lo usa ya el listado de Publicaciones;
+  - `bib_index.rb` usa también esa regla, para que los dos lados coincidan siempre.
+- **Prevención:** `comprobar_datos.py` da error si una plantilla usa `<variable>.page_id` con algo que no sea `page`, y añade `slug_of` a la lista de filtros permitidos.
+
 ## Fase 3 · Paso 3.4: publicaciones en las fichas (17-10-2026)
 
 - **`_plugins/bib_index.rb`** (nuevo) genera dos índices de `papers.bib`:

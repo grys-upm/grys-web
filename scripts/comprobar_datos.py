@@ -324,7 +324,7 @@ SIMPLE = {"else", "elsif", "when", "assign", "include", "include_relative", "bre
 # remove_last o replace_last NO existen aquí.
 LIQUID4_FILTERS = set("""size downcase upcase capitalize escape h escape_once url_encode url_decode slice truncate truncatewords split strip lstrip rstrip strip_html strip_newlines join sort sort_natural where uniq reverse map compact replace replace_first remove remove_first append concat prepend newline_to_br date first last abs plus minus times divided_by modulo round ceil floor at_least at_most default""".split())
 JEKYLL_FILTERS = set("""markdownify smartify sassify scssify slugify xml_escape cgi_escape uri_escape normalize_whitespace number_of_words array_to_sentence_string jsonify where where_exp find find_exp to_integer sort pop push shift unshift sample inspect group_by group_by_exp date_to_xmlschema date_to_rfc822 date_to_string date_to_long_string relative_url absolute_url strip_index""".split())
-OWN_FILTERS = set("""route_url url_lang detail_url alt_url l10n tr bib_text url_label member ref asset_exists""".split())
+OWN_FILTERS = set("""route_url url_lang detail_url alt_url l10n tr bib_text url_label member ref asset_exists slug_of""".split())
 FILTERS = LIQUID4_FILTERS | JEKYLL_FILTERS | OWN_FILTERS
 
 LIQ_FILES = []
@@ -376,6 +376,10 @@ for f in sorted(set(LIQ_FILES)):
             re.search(r"for\s+\w+\s+in\s+site\.static_files", text):
         err(f"{rel(f)}: no recorras site.static_files para saber si un fichero existe "
             "(en Liquid no expone relative_path y el resultado es siempre «no»); usa el filtro asset_exists")
+    for m in re.finditer(r"\b(?!page\b)(\w+)\.page_id\b", text):
+        line = text.count("\n", 0, m.start()) + 1
+        err(f"{rel(f)}:{line}: «{m.group(1)}.page_id» no existe en los documentos de una colección "
+            f"(solo en las páginas de ficha generadas); para el slug usa «{m.group(1)} | slug_of»")
     for tag, line in stack:
         err(f"{rel(f)}:{line}: {{% {tag} %}} sin cerrar")
     for m in re.finditer(r"{{-?(.*?)-?}}", text, re.S):

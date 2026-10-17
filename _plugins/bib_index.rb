@@ -81,7 +81,7 @@ module GRyS
         giv = tokens(d.data["given"])
         next nil if fam.empty? || giv.empty?
 
-        { "slug" => d.data["slug"] || d.basename_without_ext, "fam" => fam, "giv" => giv,
+        { "slug" => GRyS::Util.detail_slug(d, GRyS::Util.default_lang(site)), "fam" => fam, "giv" => giv,
           "alias" => Array(d.data["bib_names"]).map { |n| tokens(n) } }
       end.compact
     end
