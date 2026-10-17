@@ -1,0 +1,150 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "_data/quienes_somos.yml",
+  "description": "Fotos, valores e historia de la página Quiénes somos.",
+  "type": "object",
+  "required": [
+    "valores",
+    "historia"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "fotos": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "src",
+          "alt"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "src": {
+            "type": "string",
+            "pattern": "^/assets/"
+          },
+          "alt": {
+            "type": "object",
+            "required": [
+              "es",
+              "en"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "es": {
+                "type": "string",
+                "minLength": 1
+              },
+              "en": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "pie": {
+            "type": "object",
+            "required": [
+              "es",
+              "en"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "es": {
+                "type": "string",
+                "minLength": 1
+              },
+              "en": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "valores": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "nombre",
+          "texto"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "nombre": {
+            "type": "object",
+            "required": [
+              "es",
+              "en"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "es": {
+                "type": "string",
+                "minLength": 1
+              },
+              "en": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "texto": {
+            "type": "object",
+            "required": [
+              "es",
+              "en"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "es": {
+                "type": "string",
+                "minLength": 1
+              },
+              "en": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "historia": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "hito",
+          "texto"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "hito": {
+            "type": "string",
+            "minLength": 1
+          },
+          "texto": {
+            "type": "object",
+            "required": [
+              "es",
+              "en"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "es": {
+                "type": "string",
+                "minLength": 1
+              },
+              "en": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

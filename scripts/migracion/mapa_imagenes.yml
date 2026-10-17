@@ -596,3 +596,13 @@
   kind: pdf
   used_in:
   - _opportunities/2026-07-22-humami-job.md
+- from: assets/img/pictures/grys/GRyS-2023.jpg
+  to: assets/img/grupo/grys-2023.webp
+  kind: foto
+  used_in:
+  - _data/quienes_somos.yml
+- from: assets/img/pictures/grys/GRyS-20230710-01.jpg
+  to: assets/img/grupo/grys-20230710-01.webp
+  kind: foto
+  used_in:
+  - _data/quienes_somos.yml

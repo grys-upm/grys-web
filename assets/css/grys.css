@@ -478,3 +478,32 @@ p.todo,div.todo{display:inline-block;white-space:normal;font-size:14px;padding:6
 .prose hr{border:0;border-top:2px dashed var(--line);margin:28px 0}
 .prose ol{margin:10px 0 0 22px}
 @media(max-width:640px){.news .thumb{display:none}}
+
+/* Páginas de texto (fase 3.6): Quiénes somos, ODS, Contacto */
+.page-body .wrap > p{max-width:760px}
+.page-body .wrap > p + p{margin-top:12px}
+.about,.contacto{align-items:start;gap:44px}
+.about .fig{margin:0 0 22px}
+.valores h2,.contacto .box h2{font-size:21px;margin-bottom:12px}
+.historia{margin-top:56px}
+.historia ol{list-style:none;margin:0}
+.historia li p{margin-top:8px}
+.ods{margin-top:32px}
+.ods .od-rest{margin-top:48px}
+.ods > p.datos{margin-top:14px}
+.ods > h2:not(.rule){font-size:24px;margin:36px 0 10px}
+.sdg h3{font-size:19px}
+.sdg p{margin-top:6px}
+.sdg .metas{margin:10px 0 0 18px;font-size:15px}
+.sdg .metas li{margin:4px 0}
+.sdg .chips{margin-top:10px}
+.contact-list h2{font-size:17px;margin-bottom:2px}
+.contacto address{font-style:normal}
+.contacto .box{margin-top:28px}
+.contacto .box p{margin-top:12px}
+.contacto h2:not(.rule){margin-top:28px}
+.contact-list h2{margin-top:0!important}
+.map-frame{height:320px;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--alt)}
+.map-frame iframe{width:100%;height:100%;border:0;display:block}
+.map-links{margin-top:8px}
+.contacto .spec{margin-top:10px}

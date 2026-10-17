@@ -1,0 +1,18 @@
+{%- comment -%}
+  Página «ODS»: tarjetas desde _data/ods.yml (principales y resto).
+  Los proyectos se enlazan a su ficha por slug.
+{%- endcomment -%}
+{%- include page-vars.html -%}
+{%- assign od_main = site.data.ods | where: "principal", true -%}
+{%- assign od_rest = site.data.ods | where_exp: "o", "o.principal != true" -%}
+<div class="ods">
+<div class="label"><span class="bub">{% include icono.html n="check" %}</span>{{ t.sdgs.main_label }}</div>
+<h2 class="rule">{{ t.sdgs.main_title }}</h2>
+<div class="grid2">{% for o in od_main %}{% include paginas/ods-tarjeta.html o=o %}{% endfor %}</div>
+<div class="label od-rest"><span class="bub">{% include icono.html n="net" %}</span>{{ t.sdgs.other_label }}</div>
+<h2 class="rule">{{ t.sdgs.other_title }}</h2>
+<div class="grid2">{% for o in od_rest %}{% include paginas/ods-tarjeta.html o=o %}{% endfor %}</div>
+<p class="datos">{{ t.sdgs.colours_note }} {{ t.proposal_note }}</p>
+<h2>{{ t.sdgs.more }}</h2>
+<ul class="nodes">{% for l in site.data.grupo.links.upm %}{% unless l.url contains "etsist" %}<li><a href="{{ l.url }}">{{ l.title | l10n }}</a></li>{% endunless %}{% endfor %}</ul>
+</div>

@@ -1,0 +1,122 @@
+# =====================================================================
+#  OBJETIVOS DE DESARROLLO SOSTENIBLE (página Grupo › ODS)
+# ---------------------------------------------------------------------
+#  · principal: true → «ODS principales» (declarados en el HUB de Innovación
+#    UPM); el resto, «Otros ODS a los que contribuyen nuestros proyectos».
+#  · color: color OFICIAL de Naciones Unidas (contenido de terceros, no es la
+#    paleta del grupo). fg: color del número sobre ese fondo, elegido para que
+#    el contraste sea ≥ 3:1 (texto grande, WCAG 2.2 AA).
+#  · proyectos: slugs de _projects/ (se enlazan a su ficha).
+#  · metas: metas de la Agenda 2030 (número y texto ES/EN).
+#  Fuente: página «SDGs Alignment» de la web anterior + mockup v4.
+#  PROPUESTA pendiente de validar por el grupo (ver PENDIENTES.md).
+#  Validado con schemas/ods.schema.json.
+# =====================================================================
+
+- num: 9
+  principal: true
+  color: "#FD6925"
+  fg: "#000000"
+  title: { es: "Industria, innovación e infraestructura", en: "Industry, innovation and infrastructure" }
+  desc:
+    es: "Diseñamos y desplegamos infraestructuras digitales resilientes, seguras y adaptativas para redes y servicios de próxima generación, a escala industrial y de investigación: redes, middleware y plataformas abiertas, con transferencia de tecnología."
+    en: "We design and deploy resilient, secure and adaptive digital infrastructures for next-generation networks and services, at both industrial and research scales: networks, middleware and open platforms, with technology transfer."
+  metas:
+    - { num: "9.1", es: "Desarrollar infraestructuras fiables y resilientes para el desarrollo sostenible.", en: "Develop reliable and resilient infrastructure for sustainable development." }
+    - { num: "9.5", es: "Aumentar la investigación científica y mejorar la capacidad tecnológica de la industria.", en: "Enhance scientific research and upgrade the technological capabilities of industries." }
+  proyectos: []
+
+- num: 2
+  principal: true
+  color: "#DDA63A"
+  fg: "#000000"
+  title: { es: "Hambre cero", en: "Zero hunger" }
+  desc:
+    es: "Contribuimos a sistemas agrícolas sostenibles y resilientes con proyectos de agricultura de precisión y automatización de explotaciones, y con el OpenTech Lab."
+    en: "We contribute to sustainable and resilient agricultural systems through precision agriculture and farm automation projects, and through the OpenTech Lab."
+  metas:
+    - { num: "2.4", es: "Asegurar sistemas de producción de alimentos sostenibles y aplicar prácticas agrícolas resilientes.", en: "Ensure sustainable food production systems and implement resilient agricultural practices." }
+    - { num: "2.a", es: "Aumentar la inversión y la cooperación en investigación y desarrollo tecnológico agrícola.", en: "Increase investment and cooperation in agricultural research and technology development." }
+  proyectos: [afarcloud, demeter]
+
+- num: 11
+  color: "#FD9D24"
+  fg: "#000000"
+  title: { es: "Ciudades y comunidades sostenibles", en: "Sustainable cities and communities" }
+  desc:
+    es: "Movilidad urbana, ciudades inteligentes y servicios urbanos basados en IoT para ecosistemas urbanos más eficientes, inclusivos y sostenibles."
+    en: "Urban mobility, smart cities and IoT-based urban services for more efficient, inclusive and sustainable city ecosystems."
+  metas:
+    - { num: "11.2", es: "Acceso a sistemas de transporte seguros, asequibles, accesibles y sostenibles.", en: "Access to safe, affordable, accessible and sustainable transport systems." }
+    - { num: "11.6", es: "Reducir el impacto ambiental de las ciudades, incluida la calidad del aire y la gestión de residuos.", en: "Reduce the environmental impact of cities, including air quality and waste management." }
+  proyectos: [accus, ci-rti, nextarc, simgeosev]
+
+- num: 7
+  color: "#FCC30B"
+  fg: "#000000"
+  title: { es: "Energía asequible y no contaminante", en: "Affordable and clean energy" }
+  desc:
+    es: "Redes eléctricas inteligentes, gestión distribuida de la energía y computación eficiente para la transición hacia sistemas energéticos más limpios."
+    en: "Smart grids, distributed energy management and energy-efficient computing for the transition to cleaner energy systems."
+  metas:
+    - { num: "7.3", es: "Duplicar la tasa mundial de mejora de la eficiencia energética.", en: "Double the global rate of improvement in energy efficiency." }
+    - { num: "7.a", es: "Aumentar la cooperación internacional para facilitar el acceso a la investigación y la tecnología de energías limpias.", en: "Enhance international cooperation to facilitate access to clean-energy research and technology." }
+  proyectos: [i3res, e-gotham]
+
+- num: 3
+  color: "#4C9F38"
+  fg: "#000000"
+  title: { es: "Salud y bienestar", en: "Good health and well-being" }
+  desc:
+    es: "Tecnologías vestibles, entornos asistidos y servicios TIC para la salud y la vida independiente."
+    en: "Wearable technologies, assisted environments and ICT services for health and independent living."
+  metas: []
+  proyectos: [aware, lifewear, tic-spaces]
+
+- num: 14
+  color: "#0A97D9"
+  fg: "#000000"
+  title: { es: "Vida submarina", en: "Life below water" }
+  desc:
+    es: "Vehículos submarinos autónomos y cooperativos para explorar y vigilar el medio marino de forma sostenible."
+    en: "Autonomous and cooperative underwater vehicles for the sustainable exploration and monitoring of marine environments."
+  metas:
+    - { num: "14.3", es: "Reducir los efectos de la acidificación de los océanos mediante la cooperación científica.", en: "Minimise and address the impacts of ocean acidification through scientific cooperation." }
+    - { num: "14.a", es: "Aumentar los conocimientos científicos y la capacidad de investigación en tecnología marina.", en: "Increase scientific knowledge and research capacity in marine technology." }
+  proyectos: [swarms]
+
+- num: 13
+  color: "#3F7E44"
+  fg: "#FFFFFF"
+  title: { es: "Acción por el clima", en: "Climate action" }
+  desc:
+    es: "Sistemas adaptativos y tolerantes a fallos que refuerzan la resiliencia frente a riesgos climáticos."
+    en: "Adaptive, fault-tolerant systems that strengthen resilience to climate-related hazards."
+  metas:
+    - { num: "13.1", es: "Fortalecer la resiliencia y la capacidad de adaptación a los riesgos climáticos y los desastres naturales.", en: "Strengthen resilience and adaptive capacity to climate-related hazards and natural disasters." }
+    - { num: "13.3", es: "Mejorar la educación y la sensibilización sobre la mitigación del cambio climático y la adaptación a él.", en: "Improve education and awareness on climate-change mitigation and adaptation." }
+  proyectos: []
+
+- num: 4
+  color: "#C5192D"
+  fg: "#FFFFFF"
+  title: { es: "Educación de calidad", en: "Quality education" }
+  desc:
+    es: "Formamos a estudiantes de grado, máster y doctorado con prácticas de investigación, trabajos fin de estudios y participación en proyectos de innovación."
+    en: "We train undergraduate, master's and doctoral students through research internships, final projects and participation in innovation initiatives."
+  metas:
+    - { num: "4.4", es: "Aumentar el número de jóvenes y adultos con competencias técnicas y profesionales.", en: "Increase the number of youth and adults with relevant technical and vocational skills." }
+    - { num: "4.7", es: "Garantizar que los estudiantes adquieran los conocimientos necesarios para promover el desarrollo sostenible.", en: "Ensure that learners acquire the knowledge and skills needed to promote sustainable development." }
+  proyectos: []
+
+- num: 17
+  color: "#19486A"
+  fg: "#FFFFFF"
+  title: { es: "Alianzas para lograr los objetivos", en: "Partnerships for the goals" }
+  desc:
+    es: "Colaboramos con universidades, centros de investigación y empresas de Europa y de fuera de ella en Horizonte 2020, Horizonte Europa y programas nacionales de I+D+i."
+    en: "We collaborate with universities, research centres and industry across Europe and beyond through Horizon 2020, Horizon Europe and national R&D&I programmes."
+  metas:
+    - { num: "17.6", es: "Mejorar la cooperación en ciencia, tecnología e innovación.", en: "Enhance cooperation on science, technology and innovation." }
+    - { num: "17.16", es: "Mejorar la alianza mundial para el desarrollo sostenible.", en: "Enhance the global partnership for sustainable development." }
+  proyectos: []

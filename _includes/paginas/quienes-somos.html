@@ -1,0 +1,31 @@
+{%- comment -%}
+  Página «Quiénes somos». Parámetro: texto = texto corrido en Markdown (lo
+  escribe el editor en _pages/<idioma>/about.md, entre «capture texto» y «endcapture»).
+  Fotos, valores e historia: _data/quienes_somos.yml.
+  OJO: este HTML no se sangra con 4 espacios al principio de línea fuera de
+  las etiquetas, porque la página es Markdown (se convertiría en bloque de código).
+{%- endcomment -%}
+{%- include page-vars.html -%}
+{%- assign qs = site.data.quienes_somos -%}
+{%- assign qs_foto = false -%}
+{%- for f in qs.fotos -%}{%- assign qs_ok = f.src | asset_exists -%}{%- if qs_ok and qs_foto == false -%}{%- assign qs_foto = f -%}{%- endif -%}{%- endfor -%}
+<div class="grid2 about">
+<div class="prose">
+{{ include.texto | markdownify }}
+</div>
+<div>
+{%- if qs_foto %}
+{%- assign qs_alt = qs_foto.alt | l10n -%}{%- assign qs_pie = qs_foto.pie | l10n -%}
+{% include figura.html src=qs_foto.src alt=qs_alt pie=qs_pie %}
+{%- endif %}
+<div class="card valores">
+<h2>{{ t.about.values }}</h2>
+<ul class="nodes">{% for v in qs.valores %}<li><span><b>{{ v.nombre | l10n }}</b>. {{ v.texto | l10n }}</span></li>{% endfor %}</ul>
+</div>
+</div>
+</div>
+<div class="historia">
+<div class="label"><span class="bub">{% include icono.html n="cal" %}</span>{{ t.about.story_label }}</div>
+<h2 class="rule">{{ t.about.story_title }}</h2>
+<ol class="grid4">{% for h in qs.historia %}<li class="card"><div class="yr">{{ h.hito }}</div><p>{{ h.texto | l10n }}</p></li>{% endfor %}</ol>
+</div>

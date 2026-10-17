@@ -1,0 +1,15 @@
+{%- comment -%} Una tarjeta de ODS. Parámetro: o = elemento de _data/ods.yml. {%- endcomment -%}
+{%- assign ot = include.o -%}
+<article class="card sdg">
+<span class="num" style="background:{{ ot.color }};color:{{ ot.fg }}" aria-hidden="true">{{ ot.num }}</span>
+<div>
+<h3>{{ t.sdgs.sdg }} {{ ot.num }} · {{ ot.title | l10n }}</h3>
+<p>{{ ot.desc | l10n }}</p>
+{%- if ot.metas.size > 0 %}
+<ul class="metas">{% for m in ot.metas %}<li><b>{{ t.sdgs.target }} {{ m.num }}</b>: {{ m | l10n }}</li>{% endfor %}</ul>
+{%- endif %}
+{%- if ot.proyectos.size > 0 %}
+<div class="chips">{% for s in ot.proyectos %}{% for p in site.projects %}{% assign ot_s = p | slug_of %}{% if ot_s == s %}<a class="chip" href="{{ p | detail_url }}">{{ p.acronym }}</a>{% endif %}{% endfor %}{% endfor %}</div>
+{%- endif %}
+</div>
+</article>

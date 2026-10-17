@@ -168,10 +168,41 @@ from esquemas import normalize, validate  # noqa: E402
 SCHEMAS = os.path.join(ROOT, "schemas")
 
 
+def _keys(folder):
+    return sorted(os.path.basename(p)[:-3] for p in glob.glob(os.path.join(ROOT, folder, "*.md")))
+
+
+def _icons():
+    svg = os.path.join(ROOT, "_includes", "iconos.svg")
+    return sorted(re.findall(r'<symbol id="i-([a-z0-9-]+)"', open(svg, encoding="utf-8").read()))
+
+
+def _dynamic_enums(node):
+    """Las listas de ámbitos, líneas e iconos NO se fijan en los esquemas: se
+    toman de lo que existe (_domains/*.md, _lines/*.md, _includes/iconos.svg).
+    Así, para añadir un ámbito o una línea basta con crear su fichero."""
+    if isinstance(node, dict):
+        for k, v in node.items():
+            if k in ("domains", "lines") and isinstance(v, dict) and "enum" in v.get("items", {}):
+                v["items"]["enum"] = _keys(f"_{k}")
+            elif k == "icon" and isinstance(v, dict) and "enum" in v:
+                v["enum"] = _icons()
+            else:
+                _dynamic_enums(v)
+    elif isinstance(node, list):
+        for v in node:
+            _dynamic_enums(v)
+    return node
+
+
 def schema(name):
     import json
     with open(os.path.join(SCHEMAS, f"{name}.schema.json"), encoding="utf-8") as fh:
-        return json.load(fh)
+        sch = _dynamic_enums(json.load(fh))
+    # La clave de un ámbito o una línea es el nombre de su fichero (se comprueba aparte)
+    if name in ("domains", "lines"):
+        sch.get("properties", {}).get("key", {}).pop("enum", None)
+    return sch
 
 
 COLLECTIONS = ["members", "projects", "lines", "domains", "news", "events", "opportunities"]
@@ -255,11 +286,15 @@ repos_data = load_yaml(os.path.join(ROOT, "_data", "repos.yml")) or []
 repo_names = {r.get("name") for r in repos_data}
 for e in validate(normalize(repos_data), schema("repos")):
     err(f"_data/repos.yml: {e}")
-for dname in ("positions", "roles", "metrics", "axes", "portada"):
+for dname in ("positions", "roles", "metrics", "axes", "portada", "ods", "quienes_somos"):
     data = load_yaml(os.path.join(ROOT, "_data", f"{dname}.yml"))
     for e in validate(normalize(data), schema(dname)):
         err(f"_data/{dname}.yml: {e}")
 portada = load_yaml(os.path.join(ROOT, "_data", "portada.yml")) or {}
+for o in load_yaml(os.path.join(ROOT, "_data", "ods.yml")) or []:
+    for s in o.get("proyectos") or []:
+        if s not in items["projects"]:
+            err(f"_data/ods.yml (ODS {o.get('num')}): proyecto «{s}» no existe en _projects/")
 for s in portada.get("destacados") or []:
     if s not in items["projects"]:
         err(f"_data/portada.yml: proyecto destacado «{s}» no existe en _projects/")
