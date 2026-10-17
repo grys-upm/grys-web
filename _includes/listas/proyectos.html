@@ -1,11 +1,61 @@
 {%- comment -%}
-  Tabla de proyectos (más recientes primero). El estado lo calcula el plugin
-  (campo «state») a partir de las fechas. Fase 3: filtros (filters) y tarjetas.
+  Tabla de proyectos (más recientes primero) con filtros, como en el mockup.
+  · El estado lo calcula el plugin (campo «state») a partir de las fechas.
+  · Filtros (assets/js/grys.js, «Filtros de tabla»): texto, tipo, ámbito, línea
+    y estado. Cada fila lleva sus valores en atributos data-*. Los filtros se
+    reflejan en la URL (?tipo=private&ambito=mar…) para poder compartirlos.
+  · Las opciones de ámbito, línea y estado solo incluyen los valores que tiene
+    algún proyecto; si ningún proyecto tiene líneas, ese filtro no aparece.
+  · Sin JavaScript, los filtros no se muestran y se ve la tabla completa.
 {%- endcomment -%}
 {%- include page-vars.html -%}
 {%- assign pr_list = site.projects | sort: "start", "first" | reverse -%}
-<p class="count">{{ pr_list.size }} {{ t.projects.count }}</p>
-<table class="ptable">
+{%- assign pr_doms = site.projects | map: "domains" | join: "," | split: "," | uniq -%}
+{%- assign pr_lines = site.projects | map: "lines" | join: "," | split: "," | uniq -%}
+{%- assign pr_states = site.projects | map: "state" | uniq -%}
+{%- assign pr_state_order = "ongoing,upcoming,completed,unknown" | split: "," -%}
+
+<form class="filters" role="search" aria-label="{{ t.filters.label }}" data-filter="pr" hidden>
+  <label class="sr" for="pr-q">{{ t.filters.search }}</label>
+  <input type="search" id="pr-q" name="q" placeholder="{{ t.projects.search_ph }}" autocomplete="off">
+  <div class="seg" role="group" aria-label="{{ t.projects.type }}" data-name="tipo">
+    <button type="button" data-value="" aria-pressed="true">{{ t.filters.all }}</button>
+    <button type="button" data-value="competitive" aria-pressed="false">{{ t.projects.competitive_pl }}</button>
+    <button type="button" data-value="private" aria-pressed="false">{{ t.projects.private_pl }}</button>
+  </div>
+  {%- assign pr_ndom = 0 %}{% for d in pr_doms %}{% if d != "" %}{% assign pr_ndom = pr_ndom | plus: 1 %}{% endif %}{% endfor %}
+  {%- if pr_ndom > 0 %}
+  <label class="sr" for="pr-ambito">{{ t.projects.domains }}</label>
+  <select id="pr-ambito" name="ambito">
+    <option value="">{{ t.filters.all_domains }}</option>
+    {%- for d in site.domains %}{% if pr_doms contains d.key %}
+    <option value="{{ d.key }}">{{ d | tr: "title" }}</option>
+    {%- endif %}{% endfor %}
+  </select>
+  {%- endif %}
+  {%- assign pr_nlin = 0 %}{% for l in pr_lines %}{% if l != "" %}{% assign pr_nlin = pr_nlin | plus: 1 %}{% endif %}{% endfor %}
+  {%- if pr_nlin > 0 %}
+  <label class="sr" for="pr-linea">{{ t.filters.line }}</label>
+  <select id="pr-linea" name="linea">
+    <option value="">{{ t.filters.all_lines }}</option>
+    {%- for l in site.lines %}{% if pr_lines contains l.key %}
+    <option value="{{ l.key }}">{{ l | tr: "title" }}</option>
+    {%- endif %}{% endfor %}
+  </select>
+  {%- endif %}
+  <label class="sr" for="pr-estado">{{ t.projects.status }}</label>
+  <select id="pr-estado" name="estado">
+    <option value="">{{ t.filters.any_status }}</option>
+    {%- for st in pr_state_order %}{% if pr_states contains st %}
+    {%- assign st_key = "status_" | append: st %}
+    <option value="{{ st }}">{{ t.projects[st_key] }}</option>
+    {%- endif %}{% endfor %}
+  </select>
+  <button type="reset" class="linkbtn">{{ t.filters.reset }}</button>
+</form>
+
+<p class="count" id="pr-count" aria-live="polite" data-one="{{ t.projects.count_one }}" data-many="{{ t.projects.count }}">{{ pr_list.size }} {{ t.projects.count }}</p>
+<table class="ptable" id="pr-table">
   <caption class="sr">{{ page_title }}</caption>
   <thead><tr>
     <th scope="col">{{ t.projects.project }}</th>
@@ -17,7 +67,7 @@
   <tbody>
   {%- for p in pr_list %}
     {%- assign pr_title = p | tr: "title" %}
-    <tr>
+    <tr data-tipo="{{ p.type }}" data-estado="{{ p.state }}" data-ambito="{{ p.domains | join: ' ' }}" data-linea="{{ p.lines | join: ' ' }}" data-q="{{ p.acronym | escape }} {{ p.title_es | escape }} {{ p.title_en | escape }} {{ p.programme | escape }}">
       <td><a class="acr" href="{{ p | detail_url }}">{{ p.acronym }}</a>{% if pr_title %}{{ pr_title }}{% else %}<span class="todo">{{ t.tbc }}</span>{% endif %}</td>
       <td>{% if p.type == "private" %}{{ t.projects.private }}{% elsif p.type == "competitive" %}{{ t.projects.competitive }}{% else %}<span class="todo">{{ t.tbc }}</span>{% endif %}</td>
       <td class="datos">{% if p.start %}{{ p.start | date: "%Y" }}–{{ p.end | date: "%Y" }}{% else %}<span class="todo">{{ t.tbc }}</span>{% endif %}</td>
@@ -30,4 +80,8 @@
   {%- endfor %}
   </tbody>
 </table>
+<div class="empty" id="pr-empty" hidden><span class="bub">{% include icono.html n="search" %}</span><div>
+  <h3>{{ t.filters.no_results }}</h3>
+  <p>{{ t.filters.no_results_hint }}</p>
+</div></div>
 <p class="datos">{{ t.proposal_note }} ({{ t.projects.domains }})</p>

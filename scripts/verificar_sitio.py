@@ -12,10 +12,13 @@ Comprueba:
   · no quedan restos de Liquid ({{ … }}, {% … %}) ni contenido de demostración;
   · los enlaces internos (href/src) apuntan a ficheros que existen;
   · las pestañas (Equipo, Tesis) están bien enlazadas: cada tab con su panel,
-    una sola seleccionada y solo su panel visible; anclas antiguas (#phd…) vivas.
+    una sola seleccionada y solo su panel visible; anclas antiguas (#phd…) vivas;
+  · la tabla de Proyectos tiene sus filtros (ocultos sin JS) y una fila con
+    datos de filtrado por cada proyecto de _projects/.
 Sale con código 1 si hay errores. Solo usa la biblioteca estándar + PyYAML.
 """
 import argparse
+import glob
 import os
 import re
 import sys
@@ -205,6 +208,24 @@ def main():
             for a in need:
                 if a not in ids:
                     errors.append(f"{rel}/index.html: falta el panel con ancla #{a}")
+    # 6. Filtros de Proyectos (ES y EN)
+    n_proj = len(glob.glob(os.path.join(ROOT, "_projects", "*.md")))
+    for rel in ("investigacion/proyectos", "en/research/projects"):
+        f = os.path.join(site, rel, "index.html")
+        if not os.path.exists(f):
+            continue
+        html = open(f, encoding="utf-8").read()
+        form = re.search(r'<form[^>]*data-filter="pr"[^>]*>', html)
+        if not form:
+            errors.append(f"{rel}/index.html: faltan los filtros (form data-filter=pr)")
+        elif " hidden" not in form.group(0):
+            errors.append(f"{rel}/index.html: los filtros deben llevar «hidden» (los muestra el JS)")
+        for i in ("pr-table", "pr-count", "pr-empty"):
+            if f'id="{i}"' not in html:
+                errors.append(f"{rel}/index.html: falta el elemento #{i}")
+        filas = len(re.findall(r"<tr data-tipo=", html))
+        if filas != n_proj:
+            errors.append(f"{rel}/index.html: {filas} filas filtrables y hay {n_proj} proyectos")
     todo = sum(1 for w in warnings if "por completar" in w)
     for e in errors:
         print(f"ERROR  {e}")

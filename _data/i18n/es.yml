@@ -78,6 +78,17 @@ members:
   profiles: Perfiles
   projects: Proyectos que dirige
   lines: Líneas de investigación
+filters:
+  label: Filtros
+  search: Buscar
+  all: Todos
+  all_domains: Todos los ámbitos
+  all_lines: Todas las líneas
+  line: Línea de investigación
+  any_status: Cualquier estado
+  reset: Quitar filtros
+  no_results: Ningún resultado con estos filtros
+  no_results_hint: Prueba con otros términos o pulsa «Quitar filtros».
 projects:
   type: Tipo
   competitive: Competitivo
@@ -106,6 +117,10 @@ projects:
   status_unknown: Estado por confirmar
   project: Proyecto
   count: proyectos
+  count_one: proyecto
+  competitive_pl: Competitivos
+  private_pl: Privados
+  search_ph: Buscar por acrónimo, título o programa…
   publications: Publicaciones del proyecto
 lines:
   axis: Eje

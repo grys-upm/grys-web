@@ -3,6 +3,7 @@
    - Cajón móvil
    - Cambio de tema claro/oscuro con memoria en localStorage
    - Pestañas accesibles (Equipo, Tesis) con ancla en la URL
+   - Filtros de la tabla de Proyectos, con su estado en la URL
    (El tema inicial lo aplica el <script> en línea del <head>, sin parpadeo.) */
 (function () {
   "use strict";
@@ -124,4 +125,94 @@
     openFromHash();
     window.addEventListener("hashchange", openFromHash);
   }
+  /* ---------- Filtros de tabla (Proyectos) ----------
+     Marcado: form.filters[data-filter=P] (oculto con «hidden» hasta que este
+     script lo muestra), con controles que tienen name (input/select) o grupos
+     .seg[data-name] de botones aria-pressed. Elementos asociados por id:
+     P-table (filas con data-<name>), P-count (recuento, data-one/data-many) y
+     P-empty (aviso sin resultados). Un valor de filtro coincide si está entre los
+     valores de data-<name>, separados por espacios; «q» busca en data-q sin
+     tener en cuenta mayúsculas ni tildes. El estado se guarda en la URL (?tipo=…). */
+  function norm(s) {
+    return String(s || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  }
+  Array.prototype.slice.call(document.querySelectorAll("form.filters[data-filter]")).forEach(function (form) {
+    var p = form.getAttribute("data-filter");
+    var table = document.getElementById(p + "-table");
+    if (!table) return;
+    var rows = Array.prototype.slice.call(table.tBodies[0].rows);
+    var count = document.getElementById(p + "-count");
+    var empty = document.getElementById(p + "-empty");
+    var fields = Array.prototype.slice.call(form.querySelectorAll("input[name], select[name]"));
+    var segs = Array.prototype.slice.call(form.querySelectorAll(".seg[data-name]"));
+
+    function segValue(seg) {
+      var b = seg.querySelector('button[aria-pressed="true"]');
+      return b ? b.getAttribute("data-value") : "";
+    }
+    function setSeg(seg, value) {
+      var found = false;
+      Array.prototype.slice.call(seg.querySelectorAll("button")).forEach(function (b) {
+        var on = b.getAttribute("data-value") === value;
+        if (on) found = true;
+        b.setAttribute("aria-pressed", String(on));
+      });
+      if (!found) seg.querySelector("button").setAttribute("aria-pressed", "true");
+    }
+    function state() {
+      var s = {};
+      fields.forEach(function (f) { s[f.name] = f.value.trim(); });
+      segs.forEach(function (g) { s[g.getAttribute("data-name")] = segValue(g); });
+      return s;
+    }
+    function apply(updateUrl) {
+      var s = state(), q = norm(s.q), n = 0;
+      rows.forEach(function (r) {
+        var ok = true;
+        Object.keys(s).forEach(function (k) {
+          if (!ok || !s[k] || k === "q") return;
+          var vals = (r.getAttribute("data-" + k) || "").split(/\s+/);
+          if (vals.indexOf(s[k]) < 0) ok = false;
+        });
+        if (ok && q) ok = norm(r.getAttribute("data-q")).indexOf(q) >= 0;
+        r.hidden = !ok;
+        if (ok) n++;
+      });
+      if (count) count.textContent = n + " " + count.getAttribute(n === 1 ? "data-one" : "data-many");
+      if (empty) { empty.hidden = n > 0; table.hidden = n === 0; }
+      if (updateUrl && history.replaceState && window.URLSearchParams) {
+        var u = new URLSearchParams();
+        Object.keys(s).forEach(function (k) { if (s[k]) u.set(k, s[k]); });
+        var qs = u.toString();
+        history.replaceState(null, "", location.pathname + (qs ? "?" + qs : "") + location.hash);
+      }
+    }
+    // Estado inicial desde la URL (solo valores que existan en los controles)
+    if (window.URLSearchParams) {
+      var u = new URLSearchParams(location.search);
+      fields.forEach(function (f) {
+        var v = u.get(f.name);
+        if (v === null) return;
+        if (f.tagName === "SELECT" && !f.querySelector('option[value="' + v.replace(/"/g, "") + '"]')) return;
+        f.value = v;
+      });
+      segs.forEach(function (g) { var v = u.get(g.getAttribute("data-name")); if (v !== null) setSeg(g, v); });
+    }
+    form.addEventListener("submit", function (e) { e.preventDefault(); });
+    form.addEventListener("input", function () { apply(true); });
+    form.addEventListener("change", function () { apply(true); });
+    form.addEventListener("reset", function () {
+      setTimeout(function () { segs.forEach(function (g) { setSeg(g, ""); }); apply(true); }, 0);
+    });
+    segs.forEach(function (g) {
+      g.addEventListener("click", function (e) {
+        var b = e.target.closest("button");
+        if (!b) return;
+        setSeg(g, b.getAttribute("data-value"));
+        apply(true);
+      });
+    });
+    form.hidden = false;
+    apply(false);
+  });
 })();

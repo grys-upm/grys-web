@@ -222,6 +222,10 @@ section{padding:72px 0}
 .seg button+button{border-left:1px solid var(--chip)}
 .seg button[aria-pressed=true]{background:var(--btn-bg);color:var(--btn-fg)}
 .count{font-family:var(--f-datos);font-size:14px;color:var(--muted);margin-bottom:12px}
+/* Filtros: el atributo hidden debe ganar a display:flex/block (también en móvil) */
+.filters[hidden],.empty[hidden],.ptable[hidden],.ptable tr[hidden]{display:none}
+.filters select{max-width:100%}
+.linkbtn{background:none;border:0;padding:9px 4px;font:600 14.5px var(--f-texto);color:var(--link);text-decoration:underline;text-underline-offset:3px;cursor:pointer;margin-left:auto}
 .ptable{width:100%;border-collapse:collapse;font-size:15.5px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
 .ptable th{text-align:left;padding:12px 14px;background:var(--alt);color:var(--muted);font:700 13px var(--f-titulo);letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid var(--line)}
 .ptable td{padding:14px;border-bottom:1px solid var(--line);vertical-align:top}

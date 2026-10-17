@@ -1,5 +1,23 @@
 # Registro de cambios
 
+## Fase 3 · Paso 3.2: filtros en Proyectos (17-10-2026)
+
+- **Filtros de la tabla de Proyectos**, como en el mockup:
+  - búsqueda por acrónimo, título (ES y EN) o programa; no distingue mayúsculas ni tildes;
+  - tipo: Todos, Competitivos o Privados;
+  - ámbito;
+  - línea de investigación;
+  - estado.
+- **Solo se ofrecen las opciones que existen** en algún proyecto. El filtro de línea no aparece mientras ningún proyecto tenga `lines`.
+- **Recuento en vivo** («12 proyectos»), anunciado a los lectores de pantalla (`aria-live`). Si no queda ningún resultado, sale el bloque vacío con el botón «Quitar filtros».
+- **Filtros en la URL:** por ejemplo, `/investigacion/proyectos/?tipo=private&ambito=mar` se puede compartir y abre la tabla ya filtrada.
+- **Sin JavaScript** no se muestran los filtros (atributo `hidden`) y se ve la tabla completa.
+- **`verificar_sitio.py`** comprueba ahora:
+  - que los filtros están presentes y ocultos sin JS;
+  - que existen la tabla, el recuento y el aviso de «sin resultados»;
+  - que hay una fila filtrable por cada fichero de `_projects/`.
+- **Textos nuevos:** un bloque `filters` reutilizable (para Publicaciones en el paso 3.3) y `projects.count_one`, `competitive_pl`, `private_pl` y `search_ph`.
+
 ## Fase 3 · Paso 3.1: pestañas en Equipo y Tesis (17-10-2026)
 
 - **Equipo:** tres pestañas («Miembros actuales (n)», «Antiguos miembros (n)», «In memoriam»), como en el mockup.
