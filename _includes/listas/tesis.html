@@ -1,19 +1,41 @@
 {%- comment -%}
-  Tesis desde _bibliography/theses.bib, por nivel. Se muestran dos cifras:
-  las fichas que hay en esta web (BibTeX) y las del Portal Científico (metrics.yml).
-  Fase 3: pestañas (role="tab").
+  Tesis desde _bibliography/theses.bib, en tres pestañas por nivel (campo «level»).
+  Cada panel indica cuántas fichas hay en esta web (BibTeX) y cuántas tiene el
+  Portal Científico (_data/metrics.yml).
+  Pestañas: patrón ARIA (assets/js/grys.js); sin JavaScript se ven seguidas.
+  Los id phd, master y bachelor son anclas estables: las redirecciones de
+  /education/theses/<nivel>/ apuntan a ellas y abren la pestaña correspondiente.
 {%- endcomment -%}
 {%- include page-vars.html -%}
 {%- assign th_s = site.data.bib_stats.theses -%}
 {%- assign mx = site.data.metrics -%}
-<h2 class="rule" id="phd">{{ t.theses.phd }}</h2>
-<p class="count">{{ th_s.phd }} {{ t.theses.in_site }} · {{ mx.phd_theses }} {{ t.theses.in_portal }} ({{ mx.date }})</p>
-{% bibliography --file theses --query @*[level=phd] --group_by none %}
+{%- assign th_levels = "phd,master,bachelor" | split: "," -%}
 
-<h2 class="rule" id="master">{{ t.theses.master }}</h2>
-<p class="count">{{ th_s.master }} {{ t.theses.in_site }} · {{ mx.master_theses }} {{ t.theses.in_portal }} ({{ mx.date }})</p>
-{% bibliography --file theses --query @*[level=master] --group_by none %}
+<div class="tabs" role="tablist" aria-label="{{ t.theses.tabs }}">
+{%- for lv in th_levels %}
+  {%- assign th_tab = "tab_" | append: lv %}
+  <button type="button" role="tab" id="tab-{{ lv }}" aria-controls="{{ lv }}"{% if forloop.first %} aria-selected="true"{% else %} aria-selected="false" tabindex="-1"{% endif %}>{{ t.theses[th_tab] }} ({{ th_s[lv] | default: 0 }})</button>
+{%- endfor %}
+</div>
 
-<h2 class="rule" id="bachelor">{{ t.theses.bachelor }}</h2>
-<p class="count">{{ th_s.bachelor }} {{ t.theses.in_site }} · {{ mx.bachelor_theses }} {{ t.theses.in_portal }} ({{ mx.date }})</p>
-{% bibliography --file theses --query @*[level=bachelor] --group_by none %}
+{%- for lv in th_levels %}
+{%- assign th_n = th_s[lv] | default: 0 %}
+{%- assign th_portal = lv | append: "_theses" %}
+<div role="tabpanel" id="{{ lv }}" aria-labelledby="tab-{{ lv }}" tabindex="0"{% unless forloop.first %} hidden{% endunless %}>
+  <h2 class="rule tabtitle">{{ t.theses[lv] }}</h2>
+  <p class="count">{{ th_n }} {{ t.theses.in_site }} · {{ mx[th_portal] }} {{ t.theses.in_portal }} ({{ mx.date }})</p>
+  {%- if th_n > 0 %}
+  {%- comment -%} Consultas literales: jekyll-scholar no interpreta variables Liquid en --query. {%- endcomment -%}
+  {%- case lv %}
+  {%- when "phd" %}{% bibliography --file theses --query @*[level=phd] --group_by none %}
+  {%- when "master" %}{% bibliography --file theses --query @*[level=master] --group_by none %}
+  {%- when "bachelor" %}{% bibliography --file theses --query @*[level=bachelor] --group_by none %}
+  {%- endcase %}
+  {%- else %}
+  <div class="empty"><span class="bub">{% include icono.html n="cap" %}</span><div>
+    <h3>{{ t.theses.empty }}</h3>
+    <p>{{ t.theses.empty_hint }}</p>
+  </div></div>
+  {%- endif %}
+</div>
+{%- endfor %}

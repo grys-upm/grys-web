@@ -1,5 +1,19 @@
 # Registro de cambios
 
+## Fase 3 · Paso 3.1: pestañas en Equipo y Tesis (17-10-2026)
+
+- **Equipo:** tres pestañas («Miembros actuales (n)», «Antiguos miembros (n)», «In memoriam»), como en el mockup.
+- **Tesis:** tres pestañas por nivel («Doctorado», «Máster», «Grado»), con el número de fichas. Si un nivel no tiene fichas, se muestra el bloque vacío del mockup.
+- **Accesibilidad:** patrón ARIA `tablist`/`tab`/`tabpanel`. Con el teclado se cambia de pestaña con las flechas, Inicio y Fin; el título de cada panel sigue disponible para los lectores de pantalla.
+- **Anclas:** la URL abre la pestaña correspondiente: `#actuales`, `#antiguos` y `#memoriam` en Equipo; `#phd`, `#master` y `#bachelor` en Tesis. Las redirecciones antiguas `/education/theses/<nivel>/` siguen funcionando. Al cambiar de pestaña se actualiza el ancla, así que el enlace se puede compartir.
+- **Sin JavaScript:** no se muestran las pestañas y los bloques aparecen seguidos, cada uno con su título.
+- **`verificar_sitio.py`** comprueba ahora:
+  - que cada pestaña tiene su panel;
+  - que hay una sola pestaña seleccionada y un solo panel visible al cargar;
+  - que existen las anclas.
+- **Textos nuevos** en `_data/i18n/{es,en}.yml`: `members.tabs`, `theses.tabs`, `theses.tab_*`, `theses.empty` y `theses.empty_hint`.
+- **PENDIENTES.md:** B1 y B2 hechos, pasos de la fase 3 y la idea de completar `portal_upm` consultando el Portal por DOI.
+
 ## Cruce con el Portal Científico · `cruce_portal.py` v2 (17-10-2026)
 
 Adaptado al formato real de la exportación CSV del Portal (ficha del grupo):

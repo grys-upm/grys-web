@@ -10,7 +10,9 @@ Comprueba:
   · cada página HTML tiene lang correcto, un solo <h1>, enlace «Saltar al
     contenido», tema oscuro por defecto y el script del tema antes del CSS;
   · no quedan restos de Liquid ({{ … }}, {% … %}) ni contenido de demostración;
-  · los enlaces internos (href/src) apuntan a ficheros que existen.
+  · los enlaces internos (href/src) apuntan a ficheros que existen;
+  · las pestañas (Equipo, Tesis) están bien enlazadas: cada tab con su panel,
+    una sola seleccionada y solo su panel visible; anclas antiguas (#phd…) vivas.
 Sale con código 1 si hay errores. Solo usa la biblioteca estándar + PyYAML.
 """
 import argparse
@@ -170,6 +172,39 @@ def main():
             if os.path.exists(team) and "/assets/img/equipo/" not in open(team, encoding="utf-8").read():
                 errors.append(f"{os.path.relpath(team, site)}: hay fotos en assets/img/equipo/ "
                               "pero la página no muestra ninguna (¿falla avatar.html?)")
+    # 5. Pestañas: patrón ARIA coherente en Equipo y Tesis (ES y EN)
+    tab_pages = {
+        ("grupo/equipo", "en/group/team"): ["actuales", "antiguos"],
+        ("investigacion/tesis", "en/research/theses"): ["phd", "master", "bachelor"],
+    }
+    for rels, need in tab_pages.items():
+        for rel in rels:
+            f = os.path.join(site, rel, "index.html")
+            if not os.path.exists(f):
+                continue
+            html = open(f, encoding="utf-8").read()
+            tabs = re.findall(r'<button[^>]*role="tab"[^>]*>', html)
+            panels = re.findall(r'<div[^>]*role="tabpanel"[^>]*>', html)
+            if not tabs:
+                errors.append(f"{rel}/index.html: no tiene pestañas (role=tab)")
+                continue
+            ids = [re.search(r'id="([^"]+)"', x).group(1) for x in panels]
+            sel = [x for x in tabs if 'aria-selected="true"' in x]
+            if len(sel) != 1:
+                errors.append(f"{rel}/index.html: {len(sel)} pestañas seleccionadas (debe ser 1)")
+            for x in tabs:
+                c = re.search(r'aria-controls="([^"]+)"', x)
+                tid = re.search(r'id="([^"]+)"', x)
+                if not c or c.group(1) not in ids:
+                    errors.append(f"{rel}/index.html: pestaña sin panel: {x[:80]}")
+                elif tid and f'aria-labelledby="{tid.group(1)}"' not in html:
+                    errors.append(f"{rel}/index.html: el panel {c.group(1)} no apunta a su pestaña")
+            visibles = [x for x in panels if " hidden" not in x]
+            if len(visibles) != 1:
+                errors.append(f"{rel}/index.html: {len(visibles)} paneles visibles al cargar (debe ser 1)")
+            for a in need:
+                if a not in ids:
+                    errors.append(f"{rel}/index.html: falta el panel con ancla #{a}")
     todo = sum(1 for w in warnings if "por completar" in w)
     for e in errors:
         print(f"ERROR  {e}")

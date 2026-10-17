@@ -1,6 +1,6 @@
 # Pendientes
 
-*Actualizado: fase 2 (16-10-2026).* Marcas: 🔴 bloquea la publicación definitiva · 🟠 hay que revisarlo o decidirlo · 🔵 planificado para una fase posterior.
+*Actualizado: fase 3, paso 3.1 (17-10-2026).* Marcas: 🔴 bloquea la publicación definitiva · 🟠 hay que revisarlo o decidirlo · 🔵 planificado para una fase posterior.
 
 El detalle de los datos que faltan, elemento a elemento, lo genera `scripts/informe_pendientes.py` (`reports/pendientes-datos.md`). Ese informe también aparece en el resumen de cada ejecución de Actions. Lo que se decidió durante la migración está en `scripts/migracion/INFORME_MIGRACION.md`.
 
@@ -19,8 +19,8 @@ El detalle de los datos que faltan, elemento a elemento, lo genera `scripts/info
 
 | # | Pendiente |
 |---|---|
-| B1 🔴 | **Migrar las imágenes**: `python scripts/migrar_imagenes.py RUTA/grys-upm.github.io` y subir `assets/img` y `assets/convocatorias` (docs/COMPILAR.md §1.7). Son 117 imágenes y 2 PDF; ocupaban 69,7 MB en origen y quedan en WebP |
-| B2 🟠 | **Exportación del Portal Científico** (CSV o RIS de las publicaciones del grupo) para ejecutar `scripts/cruce_portal.py --fuente portal … --aplicar`. Igual con el Archivo Digital |
+| B1 ✅ | *Hecho (rama `imagenes`).* **Migrar las imágenes**: `python scripts/migrar_imagenes.py RUTA/grys-upm.github.io` y subir `assets/img` y `assets/convocatorias` (docs/COMPILAR.md §1.7). Son 117 imágenes y 2 PDF; ocupaban 69,7 MB en origen y quedan en WebP |
+| B2 ✅ | *Hecho: con la exportación del grupo (2021–2026) y la del IP (1997–2026) hay 25 publicaciones enlazadas al Portal y 115 al Archivo Digital. Los informes, con las publicaciones que están en un solo sitio y los duplicados del Portal, se generan con `scripts/cruce_portal.py` en `reports/cruce-portal.md`.* **Exportación del Portal Científico** (CSV o RIS de las publicaciones del grupo) para ejecutar `scripts/cruce_portal.py --fuente portal … --aplicar`. Igual con el Archivo Digital |
 | B3 🟠 | **Idioma por defecto**: ver la nota de la respuesta de esta fase |
 
 ## C. Datos contradictorios o dudosos del origen (decidir)
@@ -51,7 +51,7 @@ El detalle de los datos que faltan, elemento a elemento, lo genera `scripts/info
 - **HumAMI**: el nombre del responsable en la UPM, que no es del grupo, va en el campo `pi_name`. Falta también el rol de GRyS.
 - **Miembros**: las líneas de investigación, en todos; la foto de Alejandro Botas; ORCID y Scholar de Alejandro Botas y Xi Tao; el correo de Xi Tao; las biografías de Xi Tao y Sara Lana.
 - **Noticias**: 6 títulos sin traducir; 2 imágenes y varias galerías sin texto alternativo.
-- **Publicaciones**: 26 sin DOI. Ninguna tiene todavía `portal_upm` ni `project` (`_bibliography/etiquetas.yml`).
+- **Publicaciones**: 26 sin DOI. Solo 25 tienen `portal_upm`: las exportaciones del Portal no traen el ID de la mayoría (ver G). Ninguna tiene todavía `project` ni `lines` (`_bibliography/etiquetas.yml`).
 - **Textos en español**: las biografías, las descripciones de proyecto, el texto largo de las líneas y las noticias solo existen en inglés. La web lo indica con un aviso y `lang="en"`.
 - **Repositorios**: 3 sin lenguaje ni descripción.
 
@@ -63,6 +63,7 @@ SVG oficiales del logotipo y del favicon · marca de la UPM para el pie · marca
 
 | Fase | Pendiente |
 |---|---|
-| 3 | Diseño de componentes: pestañas en Equipo y Tesis, filtros en Proyectos y Publicaciones, insignias oficiales de Altmetric y Dimensions, publicaciones por proyecto y por línea, buscador, portada completa y páginas de texto (Quiénes somos, ODS, Contacto, Laboratorio, Transferencia, Docencia…) |
+| 3 | Diseño de componentes, en pasos con una PR cada uno:<br>3.1 ✅ pestañas en Equipo y Tesis<br>3.2 tabla de Proyectos con filtros<br>3.3 Publicaciones: filtros e insignias oficiales de Altmetric y Dimensions<br>3.4 publicaciones en las fichas de proyecto, línea y miembro<br>3.5 portada completa<br>3.6 páginas de texto (Quiénes somos, ODS, Contacto, Laboratorio, Transferencia, Docencia…)<br>3.7 buscador |
 | 4 | Revisión del bilingüe y de la accesibilidad (WCAG 2.2 AA) |
+| Más adelante | **Completar `portal_upm` consultando el Portal publicación a publicación por DOI**. Las exportaciones CSV solo traen el ID de la ficha en 25 de las 157 coincidencias. Un script consultaría el buscador del Portal por cada DOI del BibTeX y propondría el ID, con prueba en seco y `--aplicar` como `cruce_portal.py`. Antes hay que comprobar si el Portal tiene una API o permite búsquedas automatizadas (condiciones de uso) |
 | 5 | CMS, plantillas de *issue*, lychee, Lighthouse CI, vista previa por PR, sincronización semanal con Zotero (+ `aplicar_etiquetas.py`), Dependabot y documentación para editores |
