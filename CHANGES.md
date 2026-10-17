@@ -1,5 +1,19 @@
 # Registro de cambios
 
+## Cruce con el Portal Científico · `cruce_portal.py` v2 (17-10-2026)
+
+Adaptado al formato real de la exportación CSV del Portal (ficha del grupo):
+- **Identificadores desde la columna `PIDs`:**
+  - `NNNN (iMarina)` → `portal_upm`, el ítem `…/ipublic/item/NNNN`;
+  - `https://oa.upm.es/NNNN/ (Archivo Digital UPM)` → `archivo_upm`;
+  - `10.… (Crossref)` → DOI.
+  La columna `INDENTIFICADOR`, con esa errata en el nombre, se lee como DOI.
+- **Una sola exportación** rellena a la vez los enlaces al Portal y al Archivo Digital.
+- **Duplicados del Portal:** se agrupan las filas repetidas (mismo DOI o mismo título) y se juntan sus IDs; con la exportación del grupo, 49 filas son 41 publicaciones. El informe avisa de cada duplicado con enlaces a todos sus IDs.
+- **Exportación de todos los ítems:** se acepta; solo se usan las filas de tipo «Publicaciones» y «Trabajos presentados en Congresos u Otros Eventos».
+- **Periodo:** «Solo en el BibTeX» se limita a los años que cubre la exportación (desde 2021); las anteriores se cuentan aparte.
+- **`--aplicar`:** nunca sustituye un enlace existente y se puede repetir sin efecto.
+
 ## Fase 2 · Corrección 4 (16-10-2026)
 
 - **Las fotos del equipo no se veían aunque estaban subidas.** `avatar.html` comprobaba si existía la foto recorriendo `site.static_files` y comparando `sf.relative_path`, pero ese dato no está disponible en Liquid (solo `sf.path`). La comprobación salía siempre negativa y se mostraban las iniciales. Ahora se usa el filtro nuevo `asset_exists` (`_plugins/grys.rb`), que mira directamente el fichero. El mismo fallo impedía en `figura.html` ofrecer la miniatura (`srcset`), aunque la imagen sí se veía.
