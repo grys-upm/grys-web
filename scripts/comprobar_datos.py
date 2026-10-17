@@ -225,6 +225,31 @@ for coll in COLLECTIONS:
                 if not os.path.exists(os.path.join(ROOT, s1.strip().lstrip("/"))):
                     warn(f"{rel(f)}: falta el fichero {s1.strip()} (¿pendiente de scripts/migrar_imagenes.py?)")
 
+# Claves repetidas en los YAML de _data/ (PyYAML y Jekyll se quedan con la última
+# sin avisar: así se «pisó» t.home al añadir el bloque de la portada)
+class _DupLoader(yaml.SafeLoader):
+    pass
+
+
+def _dup_mapping(loader, node, deep=False):
+    seen = {}
+    for k_node, _ in node.value:
+        k = loader.construct_object(k_node, deep=deep)
+        if k in seen:
+            raise yaml.constructor.ConstructorError(
+                None, None, f"clave repetida «{k}» (líneas {seen[k] + 1} y {k_node.start_mark.line + 1})",
+                k_node.start_mark)
+        seen[k] = k_node.start_mark.line
+    return loader.construct_mapping(node, deep=deep)
+
+
+_DupLoader.add_constructor(yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG, _dup_mapping)
+for f in sorted(glob.glob(os.path.join(ROOT, "_data", "**", "*.yml"), recursive=True)):
+    try:
+        yaml.load(open(f, encoding="utf-8"), Loader=_DupLoader)
+    except yaml.YAMLError as e:
+        err(f"{rel(f)}: {getattr(e, 'problem', None) or e}")
+
 # Referencias cruzadas entre colecciones
 repos_data = load_yaml(os.path.join(ROOT, "_data", "repos.yml")) or []
 repo_names = {r.get("name") for r in repos_data}

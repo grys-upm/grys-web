@@ -1,5 +1,15 @@
 # Registro de cambios
 
+## Corrección 6 · Código visible en la cabecera de todas las páginas y logos desbordados (17-10-2026)
+
+- **Síntoma 1:** en todas las páginas interiores, encima de las migas de pan, aparecía en texto plano el bloque completo de textos de la portada: `{"facts_label"=>"El grupo en cifras", …}`.
+- **Causa:** el bloque de textos de la portada (paso 3.5) se llamaba `home:`, igual que la clave existente `home: Inicio`, que es el texto del enlace «Inicio» en las migas. En YAML, una clave repetida se queda con el último valor sin avisar, así que `t.home` pasó a ser el bloque entero.
+- **Solución:** el bloque pasa a llamarse **`portada:`** en `_data/i18n/{es,en}.yml`, y `_layouts/home.html` usa `t.portada`.
+- **Prevención:** `comprobar_datos.py` da error ahora ante **cualquier clave repetida** en los YAML de `_data/`, con las dos líneas implicadas. Probado con el estado roto: detecta `home` en `es.yml` y `en.yml`.
+- **Síntoma 2:** en las tarjetas de proyectos destacados, el logo se salía de su caja y tapaba el texto.
+- **Causa:** la imagen no tenía un tamaño máximo efectivo dentro de la caja.
+- **Solución:** caja de 140 px de alto y logo de 108 px como máximo, centrado y sin deformarse (`assets/css/grys.css`).
+
 ## Fase 3 · Paso 3.5: portada completa (17-10-2026)
 
 - **Portada como en el mockup**, toda generada a partir de los datos:

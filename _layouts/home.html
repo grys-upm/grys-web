@@ -10,12 +10,12 @@ layout: default
     · noticias (_news/), agenda (_events/, próximos según la fecha de
       compilación), convocatorias abiertas (_opportunities/), publicaciones
       (site.data.pubs, _plugins/bib_index.rb).
-  Textos de interfaz: _data/i18n/<idioma>.yml, bloque «home».
+  Textos de interfaz: _data/i18n/<idioma>.yml, bloque «portada».
 {%- endcomment -%}
 {%- include page-vars.html -%}
 {%- assign po = site.data.portada -%}
 {%- assign mx = site.data.metrics -%}
-{%- assign h = t.home -%}
+{%- assign h = t.portada -%}
 
 <section class="hero" aria-labelledby="h-hero" style="padding:0">
   <div class="trama" aria-hidden="true"></div>
