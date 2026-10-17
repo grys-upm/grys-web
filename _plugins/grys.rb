@@ -277,6 +277,15 @@ module GRyS
 
       coll.docs.find { |d| Util.detail_slug(d, Util.default_lang(site)) == slug.to_s }
     end
+
+    # Slug de un documento de colección (el de su URL en el idioma por defecto).
+    # En los listados se usa esto, NO «page_id»: page_id solo existe en las
+    # páginas de ficha que genera el plugin, no en los documentos de la colección.
+    def slug_of(drop, coll = nil)
+      site = @context.registers[:site]
+      doc = Util.find_doc(site, drop, coll)
+      doc && Util.detail_slug(doc, Util.default_lang(site))
+    end
   end
 
   # ---------------------------------------------------------------------

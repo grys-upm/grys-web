@@ -1,5 +1,36 @@
 # Registro de cambios
 
+## Corrección 5 · Filtro «Autoría» vacío (17-10-2026)
+
+- **Síntoma:** `verificar_sitio` daba 56 errores del tipo «enlace ?autor=… sin opción en el filtro de autoría». Los enlaces de las fichas eran correctos, pero el desplegable de Publicaciones tenía todas las opciones vacías.
+- **Causa:** el listado sacaba el slug de `m.page_id`, que solo existe en las páginas de ficha que genera el plugin, no en los documentos de la colección `site.members`.
+- **Solución:**
+  - filtro nuevo `slug_of` (`_plugins/grys.rb`), que da el slug con la misma regla que las URL de las fichas; lo usa ya el listado de Publicaciones;
+  - `bib_index.rb` usa también esa regla, para que los dos lados coincidan siempre.
+- **Prevención:** `comprobar_datos.py` da error si una plantilla usa `<variable>.page_id` con algo que no sea `page`, y añade `slug_of` a la lista de filtros permitidos.
+
+## Fase 3 · Paso 3.4: publicaciones en las fichas (17-10-2026)
+
+- **`_plugins/bib_index.rb`** (nuevo) genera dos índices de `papers.bib`:
+  - `site.data.pubs`: las publicaciones de la más reciente a la más antigua, con proyectos, líneas y **miembros autores**;
+  - `site.data.pub_index`: las mismas, por clave.
+- **Autoría:** se calcula comparando los autores del BibTeX con `given`/`family` de `_members/`, sin tildes ni mayúsculas.
+  - Debe coincidir el primer apellido. Si los dos tienen segundo apellido, también ese (Sánchez Alcón ≠ Sánchez Fernández).
+  - Debe coincidir algún nombre, entero o por la inicial.
+  - Para formas que no encajan hay un campo nuevo y opcional `bib_names` en los miembros (esquema y `docs/DATOS.md` actualizados).
+- **Fichas:**
+  - **Proyecto:** «Publicaciones del proyecto (n)», con `project` de `etiquetas.yml`.
+  - **Línea:** «Publicaciones de la línea (n)», con `lines`.
+  - **Miembro:** «Publicaciones recientes», con las 5 últimas y el enlace «Ver todas sus publicaciones (n)», que abre Publicaciones filtrada por esa persona.
+  - Las fichas de proyecto y de línea muestran «por completar» mientras no haya etiquetas. La de miembro omite la sección si no hay ninguna publicación.
+- **`_includes/pub-item.html`** (nuevo): publicación en formato breve, con título, autoría, revista, DOI, Portal y Archivo.
+- **Publicaciones:** filtro nuevo **«Autoría»** (`?autor=slug`). Solo lista a los miembros que tienen publicaciones.
+- **`verificar_sitio.py`** comprueba ahora que cada enlace `?autor=` tiene su opción en el filtro.
+- **PENDIENTES.md:**
+  - el rediseño de las métricas de impacto, que se hará en el último paso de la fase 3;
+  - etiquetar las publicaciones con `project` y `lines`;
+  - revisar la autoría calculada.
+
 ## Fase 3 · Paso 3.3: filtros e insignias en Publicaciones (17-10-2026)
 
 - **Filtros en Publicaciones**, como en el mockup:

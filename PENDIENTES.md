@@ -1,6 +1,6 @@
 # Pendientes
 
-*Actualizado: fase 3, paso 3.3 (17-10-2026).* Marcas: 🔴 bloquea la publicación definitiva · 🟠 hay que revisarlo o decidirlo · 🔵 planificado para una fase posterior.
+*Actualizado: fase 3, paso 3.4 (17-10-2026).* Marcas: 🔴 bloquea la publicación definitiva · 🟠 hay que revisarlo o decidirlo · 🔵 planificado para una fase posterior.
 
 El detalle de los datos que faltan, elemento a elemento, lo genera `scripts/informe_pendientes.py` (`reports/pendientes-datos.md`). Ese informe también aparece en el resumen de cada ejecución de Actions. Lo que se decidió durante la migración está en `scripts/migracion/INFORME_MIGRACION.md`.
 
@@ -63,10 +63,13 @@ SVG oficiales del logotipo y del favicon · marca de la UPM para el pie · marca
 
 | Fase | Pendiente |
 |---|---|
-| 3 | Diseño de componentes, en pasos con una PR cada uno:<br>3.1 ✅ pestañas en Equipo y Tesis<br>3.2 ✅ tabla de Proyectos con filtros<br>3.3 ✅ Publicaciones: filtros e insignias oficiales de Altmetric y Dimensions<br>3.4 publicaciones en las fichas de proyecto, línea y miembro<br>3.5 portada completa<br>3.6 páginas de texto (Quiénes somos, ODS, Contacto, Laboratorio, Transferencia, Docencia…)<br>3.7 buscador |
+| 3 | Diseño de componentes, en pasos con una PR cada uno:<br>3.1 ✅ pestañas en Equipo y Tesis<br>3.2 ✅ tabla de Proyectos con filtros<br>3.3 ✅ Publicaciones: filtros e insignias oficiales de Altmetric y Dimensions<br>3.4 ✅ publicaciones en las fichas de proyecto, línea y miembro<br>3.5 portada completa<br>3.6 páginas de texto (Quiénes somos, ODS, Contacto, Laboratorio, Transferencia, Docencia…)<br>3.7 buscador |
 | 4 | Revisión del bilingüe y de la accesibilidad (WCAG 2.2 AA) |
 | Más adelante | **Completar `portal_upm` consultando el Portal publicación a publicación por DOI**. Las exportaciones CSV solo traen el ID de la ficha en 25 de las 157 coincidencias. Un script consultaría el buscador del Portal por cada DOI del BibTeX y propondría el ID, con prueba en seco y `--aplicar` como `cruce_portal.py`. Antes hay que comprobar si el Portal tiene una API o permite búsquedas automatizadas (condiciones de uso) |
 | 3.6 | **Política de privacidad** (`/privacidad/`): mencionar las insignias de Altmetric y Dimensions. Solo se cargan si el visitante pulsa «Mostrar métricas de impacto», y entonces su navegador se conecta con esos servicios; la preferencia se guarda en `localStorage` (`grys-metrics`), igual que el tema (`grys-theme`). No hay cookies propias |
 | Más adelante | **Descarga del BibTeX completo** (botón «⤓ BibTeX» del mockup): generar al compilar un `.bib` público sin campos internos (los mismos que `bibtex_skip_fields`) |
+| Último paso de la fase 3 | **Métricas de impacto: rediseño** (decisión del 17-10-2026). La solución del paso 3.3 (botón «Mostrar métricas de impacto» y las insignias oficiales de Altmetric y Dimensions junto a cada publicación) funciona, pero no encaja con el estilo. Se mantiene el criterio de no cargarlas por defecto. Opciones que hay que valorar: (a) cifras propias con el estilo del sitio (citas y menciones) obtenidas al compilar desde las API gratuitas de Dimensions y Altmetric, sin scripts externos para el visitante; (b) insignia solo en una vista de detalle de cada publicación; (c) solo los enlaces de texto actuales |
+| Datos | **Etiquetar publicaciones** con `project` y `lines` en `_bibliography/etiquetas.yml`. Hasta entonces, las fichas de proyecto y de línea muestran «por completar» en «Publicaciones» y los filtros de proyecto y línea no aparecen |
+| Datos | **Revisar la autoría calculada** (fichas de miembro y filtro «Autoría»): la detección es automática por nombre; si a alguien le faltan publicaciones porque firma de otra forma, añadir esas formas en `bib_names` de su ficha |
 | Más adelante | **Estilo**: revisión de detalles visuales cuando haya contenido (decisión del 17-10-2026) |
 | 5 | CMS, plantillas de *issue*, lychee, Lighthouse CI, vista previa por PR, sincronización semanal con Zotero (+ `aplicar_etiquetas.py`), Dependabot y documentación para editores |

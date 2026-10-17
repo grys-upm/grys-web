@@ -129,6 +129,13 @@
         ]
       }
     },
+    "bib_names": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
     "lang": {
       "type": "string",
       "enum": [

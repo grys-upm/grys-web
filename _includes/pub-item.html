@@ -1,0 +1,16 @@
+{%- comment -%}
+  Una publicación en formato breve (fichas de proyecto, línea y miembro).
+  Parámetro: p = elemento de site.data.pubs (_plugins/bib_index.rb).
+  Va dentro de <ul class="pubs">. La versión completa (BibTeX, insignias)
+  está en la página Publicaciones (_layouts/bib.html).
+{%- endcomment -%}
+{%- assign pi_p = include.p -%}
+<li><div class="yr">{{ pi_p.year }}<small>{{ pi_p.venue }}</small></div><div>
+  <h3>{{ pi_p.title }}</h3>
+  <p class="au">{{ pi_p.authors }}</p>
+  <div class="acts2">
+    {%- if pi_p.doi != "" %}<a href="https://doi.org/{{ pi_p.doi }}">DOI<span class="sr">: {{ pi_p.doi }}</span></a>{% endif %}
+    {%- if pi_p.portal_upm != "" %}<a href="https://portalcientifico.upm.es/{{ lang }}/ipublic/item/{{ pi_p.portal_upm }}">{{ t.pubs_extra.portal }}</a>{% endif %}
+    {%- if pi_p.archivo_upm != "" %}<a href="https://oa.upm.es/{{ pi_p.archivo_upm }}/">{{ t.pubs_extra.archivo }}</a>{% endif %}
+  </div>
+</div></li>

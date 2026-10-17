@@ -11,6 +11,7 @@ import os
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 DESC = {
+    "bib_names": "Formas del nombre en el BibTeX que no se reconocen solas (p. ej. «Martinez, Joser Fernan»)",
     "given": "Nombre", "family": "Apellidos", "gender": "m/f: forma del puesto en español",
     "position": "Puesto (clave de _data/positions.yml)", "role": "pi = investigador/a principal; ext = colaboración externa",
     "status": "current = actual; former = antiguo; memoriam", "since": "Fecha de incorporación (AAAA-MM-DD)",

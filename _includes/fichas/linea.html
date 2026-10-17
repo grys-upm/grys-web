@@ -1,5 +1,5 @@
 {%- comment -%} OJO: en colecciones no se usan los campos «id» ni «url» (Jekyll los reserva); se usa «key».
- Cuerpo de la ficha de una línea: texto + personas + proyectos (campo «lines» de cada uno). {%- endcomment -%}
+ Cuerpo de la ficha de una línea: texto + personas + proyectos (campo «lines» de cada uno) + publicaciones (lines en etiquetas.yml). {%- endcomment -%}
 {%- assign fl_id = page.key -%}
 {%- assign fl_ax = site.data.axes | where: "id", page.axis | first -%}
 <p class="datos">{{ t.lines.axis }} 0{{ page.axis }} · {{ fl_ax.title | l10n }}</p>
@@ -15,4 +15,9 @@
 <h2 class="rule">{{ t.lines.projects }}</h2>
 {%- if fl_proj.size > 0 %}
 <ul class="nodes">{% for p in fl_proj %}<li><a href="{{ p | detail_url }}">{{ p.acronym }}</a> · {{ p | tr: "title" }}</li>{% endfor %}</ul>
+{%- else %}<p class="todo">{{ t.tbc }}</p>{% endif %}
+{%- assign fl_pubs = site.data.pubs | where_exp: "p", "p.lines contains fl_id" %}
+<h2 class="rule">{{ t.lines.publications }}{% if fl_pubs.size > 0 %} ({{ fl_pubs.size }}){% endif %}</h2>
+{%- if fl_pubs.size > 0 %}
+<ul class="pubs">{% for p in fl_pubs %}{% include pub-item.html p=p %}{% endfor %}</ul>
 {%- else %}<p class="todo">{{ t.tbc }}</p>{% endif %}

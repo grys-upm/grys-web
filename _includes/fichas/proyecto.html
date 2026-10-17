@@ -18,4 +18,9 @@
 <h2 class="rule">{{ t.projects.repos }}</h2>
 <ul class="nodes">{% for r in page.repos %}<li><a href="https://github.com/grys-upm/{{ r }}">grys-upm/{{ r }}</a></li>{% endfor %}</ul>
 {%- endif %}
-{%- comment -%} Fase 3: publicaciones con project = {slug} en papers.bib (pub-item). {%- endcomment -%}
+{%- comment -%} Publicaciones con project = slug en etiquetas.yml (site.data.pubs, _plugins/bib_index.rb). {%- endcomment -%}
+{%- assign fp_pubs = site.data.pubs | where_exp: "p", "p.projects contains fp_slug" %}
+<h2 class="rule">{{ t.projects.publications }}{% if fp_pubs.size > 0 %} ({{ fp_pubs.size }}){% endif %}</h2>
+{%- if fp_pubs.size > 0 %}
+<ul class="pubs">{% for p in fp_pubs %}{% include pub-item.html p=p %}{% endfor %}</ul>
+{%- else %}<p class="todo">{{ t.tbc }}</p>{% endif %}

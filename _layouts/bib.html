@@ -24,7 +24,8 @@
   {%- capture b_authors %}{% for a in entry.author_array %}{{ a.first }} {{ a.last }} {% endfor %}{% endcapture -%}
   {%- assign b_proj = entry.project | default: "" | replace: ",", " " | split: " " | join: " " -%}
   {%- assign b_lines = entry.lines | default: "" | replace: ",", " " | split: " " | join: " " -%}
-<span class="pubdata" hidden data-tipo="{{ b_kind }}" data-anio="{{ entry.year }}" data-proyecto="{{ b_proj }}" data-linea="{{ b_lines }}" data-q="{{ b_title | escape }} {{ b_authors | strip | escape }} {{ b_venue | escape }} {{ entry.doi }}"></span>
+{%- assign b_ix = site.data.pub_index[entry.key] %}
+<span class="pubdata" hidden data-autor="{{ b_ix.members | join: ' ' }}" data-tipo="{{ b_kind }}" data-anio="{{ entry.year }}" data-proyecto="{{ b_proj }}" data-linea="{{ b_lines }}" data-q="{{ b_title | escape }} {{ b_authors | strip | escape }} {{ b_venue | escape }} {{ entry.doi }}"></span>
 {%- endunless %}
 <div class="yr">{{ entry.year }}<small>{{ b_venue }}</small></div>
 <div>

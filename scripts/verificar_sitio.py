@@ -16,7 +16,9 @@ Comprueba:
   · la tabla de Proyectos tiene sus filtros (ocultos sin JS) y una fila con
     datos de filtrado por cada proyecto de _projects/;
   · Publicaciones tiene sus filtros y un .pubdata por entrada de papers.bib, y
-    ninguna página carga scripts de Altmetric/Dimensions sin pedirlo el visitante.
+    ninguna página carga scripts de Altmetric/Dimensions sin pedirlo el visitante;
+  · cada enlace «?autor=slug» de las fichas de miembro tiene su opción en el
+    filtro de autoría de Publicaciones (si no, el enlace mostraría todo).
 Sale con código 1 si hay errores. Solo usa la biblioteca estándar + PyYAML.
 """
 import argparse
@@ -254,6 +256,28 @@ def main():
                 if re.search(r'<script[^>]+src="[^"]*(altmetric|dimensions)', h, re.I):
                     errors.append(f"{os.path.relpath(os.path.join(dirpath, fn), site)}: carga un script de "
                                   "Altmetric/Dimensions sin consentimiento (debe hacerlo grys.js bajo demanda)")
+    # 8. Enlaces ?autor= de las fichas → opción en el filtro de autoría
+    opciones = {}
+    for lang_dir, rel in (("", "investigacion/publicaciones"), ("en", "en/research/publications")):
+        f = os.path.join(site, rel, "index.html")
+        if os.path.exists(f):
+            h = open(f, encoding="utf-8").read()
+            sel = re.search(r'<select id="pb-autor".*?</select>', h, re.S)
+            opciones[lang_dir] = set(re.findall(r'<option value="([^"]+)"', sel.group(0))) if sel else set()
+    n_autor = 0
+    for dirpath, _, files in os.walk(site):
+        for fn in files:
+            if not fn.endswith(".html"):
+                continue
+            fp = os.path.join(dirpath, fn)
+            relf = os.path.relpath(fp, site)
+            for slug in re.findall(r'href="[^"]*\?autor=([^"&#]+)', open(fp, encoding="utf-8").read()):
+                n_autor += 1
+                ld = "en" if relf.startswith("en" + os.sep) else ""
+                if ld in opciones and slug not in opciones[ld]:
+                    errors.append(f"{relf}: enlace ?autor={slug} sin opción en el filtro de autoría")
+    if opciones and n_autor == 0:
+        print("AVISO  ninguna ficha de miembro enlaza a sus publicaciones (¿falla _plugins/bib_index.rb?)")
     todo = sum(1 for w in warnings if "por completar" in w)
     for e in errors:
         print(f"ERROR  {e}")
