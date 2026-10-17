@@ -1,5 +1,16 @@
 # Registro de cambios
 
+## Proyectos destacados automáticos (17-10-2026)
+
+- **`_plugins/destacados.rb`** (nuevo) elige los proyectos destacados de la portada en cada compilación:
+  1. primero, los **en curso**, del más reciente al más antiguo por fecha de inicio;
+  2. después, el resto por fecha de fin, del más reciente al más antiguo;
+  
+  con empates resueltos por acrónimo. El resultado queda en `site.data.destacados`.
+- **Decisión manual opcional** en `_data/portada.yml` → `destacados`: `numero`, `fijos` (siempre primero y en ese orden) y `excluir`. El esquema y `comprobar_datos.py` validan que los slugs existen y que ninguno está en las dos listas.
+- **`verificar_sitio.py`** replica la regla y comprueba que la portada muestra exactamente los proyectos esperados y en ese orden.
+- **`docs/RECETAS.md`** actualizado.
+
 ## Fase 3 · Paso 3.6a: páginas del menú Grupo y ámbitos/líneas sin listas fijas (17-10-2026)
 
 - **Quiénes somos:**

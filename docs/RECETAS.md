@@ -57,9 +57,25 @@ Funciona igual que un ámbito, con un fichero `_lines/<clave>.md`:
 - **Dónde se asigna:** en el campo `lines` de miembros y proyectos, y en `lines` de `_bibliography/etiquetas.yml` para las publicaciones.
 - **Título de la portada:** si cambia el número de líneas o de ejes, actualiza a mano `portada.research_title` («Cuatro ejes, once líneas») en `_data/i18n/es.yml` y `en.yml`.
 
-## Cambiar los proyectos destacados de la portada
+## Proyectos destacados de la portada
 
-Edita la lista `destacados` de `_data/portada.yml` con los slugs, es decir, los nombres de fichero de `_projects/` sin `.md`. Lo recomendable son 3.
+**Se eligen solos** cada vez que se compila el sitio, también en la compilación diaria:
+1. primero, los proyectos **en curso**, del que empezó más tarde al que empezó antes;
+2. después, el resto en **orden cronológico inverso**: los que terminaron más recientemente, primero.
+
+Cuando un proyecto empieza o termina, la portada cambia sola.
+
+**Decisión manual (opcional)** en `_data/portada.yml`, usando slugs (el nombre del fichero de `_projects/` sin `.md`):
+
+```yaml
+destacados:
+  numero: 3            # cuántos se muestran (1 a 6)
+  fijos: [swarms]      # van siempre, los primeros y en este orden
+  excluir: [humami]    # no se eligen nunca automáticamente
+```
+
+- **`fijos`:** los huecos que dejan los fijos se rellenan automáticamente.
+- **Errores:** `comprobar_datos.py` avisa si un slug no existe o si un proyecto está a la vez en `fijos` y en `excluir`.
 
 ## Añadir o quitar un ODS
 
