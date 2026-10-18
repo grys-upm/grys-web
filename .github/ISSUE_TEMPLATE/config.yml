@@ -1,0 +1,10 @@
+# Opciones de «New issue». Los formularios (noticia.yml, evento.yml…) los
+# genera scripts/issue_a_contenido.py --plantillas.
+blank_issues_enabled: true
+contact_links:
+  - name: ✏️ Editar algo que ya está en la web
+    url: https://grys-upm.github.io/grys-web/admin/
+    about: Gestor de contenidos (necesitas permiso de edición). Para crear contenido nuevo también puedes usar los formularios de arriba.
+  - name: 📘 Guía para editar la web
+    url: https://github.com/grys-upm/grys-web/blob/main/docs/EDITAR.md
+    about: Cómo se publica un cambio, imágenes, idiomas y qué hacer si algo falla.

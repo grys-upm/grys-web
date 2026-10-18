@@ -1,0 +1,70 @@
+# GENERADO por scripts/issue_a_contenido.py --plantillas a partir de _data/ y las
+# colecciones. No lo edites a mano: cambia el script y vuelve a generarlo.
+name: 📰 Nueva noticia
+description: Propón una noticia para la web. Se convierte en una propuesta de cambios con vista previa.
+title: '[Noticia] '
+labels:
+- contenido
+- noticia
+body:
+- type: markdown
+  attributes:
+    value: Rellena el formulario y pulsa **Submit new issue**. Si tienes permiso de edición en la web, en un par de minutos aparecerá aquí un enlace a la **propuesta de cambios** con su vista previa; si no, alguien del equipo web la revisará. Si te equivocas, **edita la issue** y la propuesta se rehace.
+- type: input
+  id: date
+  attributes:
+    label: Fecha
+    description: AAAA-MM-DD, p. ej. 2026-11-05 (también vale 05/11/2026)
+  validations:
+    required: true
+- type: input
+  id: title_es
+  attributes:
+    label: Título en español
+  validations:
+    required: true
+- type: input
+  id: title_en
+  attributes:
+    label: Título en inglés
+    description: Si lo dejas vacío, la versión inglesa muestra el español con un aviso.
+- type: dropdown
+  id: category
+  attributes:
+    label: Categoría
+    options:
+    - Premio
+    - Evento
+    - Proyecto
+    - Personas
+    - Transferencia
+    - Laboratorio
+- type: dropdown
+  id: lang
+  attributes:
+    label: Idioma en que escribes el texto
+    options:
+    - Español
+    - Inglés
+  validations:
+    required: true
+- type: textarea
+  id: texto
+  attributes:
+    label: Texto
+    description: 'Markdown. Encabezados con «## » (no uses «# »). Puedes arrastrar imágenes aquí: se guardarán en la web.'
+- type: textarea
+  id: traduccion
+  attributes:
+    label: Traducción del texto al otro idioma (opcional)
+    description: Se publica como traducción provisional, con un aviso, hasta que alguien la revise.
+- type: textarea
+  id: imagenes
+  attributes:
+    label: Imágenes
+    description: Arrastra aquí las fotos. La primera será la de la tarjeta; si hay más, se añade una galería al final.
+- type: textarea
+  id: alts
+  attributes:
+    label: Descripción de cada imagen
+    description: 'Una línea por imagen, en el mismo orden: qué se ve (para quien no puede verla).'

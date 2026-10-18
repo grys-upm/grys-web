@@ -396,6 +396,21 @@ if os.path.exists(_cms):
             if _fn in _props and _fn in (_c.get("identifier_field"),) and _fl.get("required") is False:
                 err(f"admin/config.yml ({_name}): el identificador «{_fn}» debe ser obligatorio")
 
+# Formularios de issue (.github/ISSUE_TEMPLATE/): sus listas de puestos, líneas
+# y ámbitos se generan desde los datos. Si han cambiado, hay que regenerarlos.
+try:
+    import importlib.util as _ilu
+    _spec = _ilu.spec_from_file_location("issue_a_contenido", os.path.join(ROOT, "scripts", "issue_a_contenido.py"))
+    _iac = _ilu.module_from_spec(_spec)
+    _spec.loader.exec_module(_iac)
+    _desfasadas = [os.path.relpath(_r, ROOT) for _r, _txt in _iac.plantillas().items()
+                   if not os.path.exists(_r) or open(_r, encoding="utf-8").read() != _txt]
+    if _desfasadas:
+        warn("formularios de issue desactualizados (" + ", ".join(_desfasadas) +
+             "): ejecuta python scripts/issue_a_contenido.py --plantillas")
+except Exception as _e:   # nunca bloquea por esto
+    warn(f"no se pudieron revisar los formularios de issue: {_e}")
+
 # Referencias cruzadas entre colecciones
 repos_data = load_yaml(os.path.join(ROOT, "_data", "repos.yml")) or []
 repo_names = {r.get("name") for r in repos_data}

@@ -1,0 +1,95 @@
+# GENERADO por scripts/issue_a_contenido.py --plantillas a partir de _data/ y las
+# colecciones. No lo edites a mano: cambia el script y vuelve a generarlo.
+name: 📣 Nueva convocatoria
+description: Publica una oferta de contrato, beca, TFG/TFM o doctorado. Deja de publicarse sola al pasar el plazo.
+title: '[Convocatoria] '
+labels:
+- contenido
+- convocatoria
+body:
+- type: markdown
+  attributes:
+    value: Rellena el formulario y pulsa **Submit new issue**. Si tienes permiso de edición en la web, en un par de minutos aparecerá aquí un enlace a la **propuesta de cambios** con su vista previa; si no, alguien del equipo web la revisará. Si te equivocas, **edita la issue** y la propuesta se rehace.
+- type: input
+  id: deadline
+  attributes:
+    label: Plazo (último día)
+    description: AAAA-MM-DD, p. ej. 2026-11-05 (también vale 05/11/2026). Se cierra a las 23:59 de ese día, hora de Madrid.
+  validations:
+    required: true
+- type: input
+  id: date
+  attributes:
+    label: Fecha de publicación
+    description: AAAA-MM-DD, p. ej. 2026-11-05 (también vale 05/11/2026). Vacío = hoy.
+- type: dropdown
+  id: type
+  attributes:
+    label: Tipo
+    options:
+    - Contrato
+    - Beca
+    - TFG o TFM
+    - Doctorado
+  validations:
+    required: true
+- type: input
+  id: title_es
+  attributes:
+    label: Título en español
+  validations:
+    required: true
+- type: input
+  id: title_en
+  attributes:
+    label: Título en inglés
+- type: input
+  id: project
+  attributes:
+    label: Proyecto (acrónimo)
+    placeholder: NexTArc
+- type: dropdown
+  id: line
+  attributes:
+    label: Línea de investigación
+    options:
+    - Sistemas ciberfísicos (CPS)
+    - Redes de sensores y actuadores (WSAN)
+    - Internet de las cosas y computación ubicua
+    - Seguridad en redes y servicios
+    - Agentes cooperativos en red
+    - Robótica cooperativa en red
+    - Soporte a decisiones e inteligencia artificial
+    - Middleware semántico y aplicaciones distribuidas
+    - Ingeniería de software avanzada
+    - Computación cloud y edge
+    - Tecnologías habilitadoras para dominios inteligentes
+- type: input
+  id: contact
+  attributes:
+    label: Correo de contacto
+    placeholder: gi.grys@upm.es
+- type: dropdown
+  id: lang
+  attributes:
+    label: Idioma en que escribes el texto
+    options:
+    - Español
+    - Inglés
+  validations:
+    required: true
+- type: textarea
+  id: texto
+  attributes:
+    label: Texto
+    description: 'Markdown. Encabezados con «## » (no uses «# »). Puedes arrastrar imágenes aquí: se guardarán en la web.'
+- type: textarea
+  id: traduccion
+  attributes:
+    label: Traducción del texto al otro idioma (opcional)
+    description: Se publica como traducción provisional, con un aviso, hasta que alguien la revise.
+- type: textarea
+  id: pdf
+  attributes:
+    label: Convocatoria en PDF
+    description: Arrastra aquí el PDF (opcional).

@@ -1,0 +1,112 @@
+# GENERADO por scripts/issue_a_contenido.py --plantillas a partir de _data/ y las
+# colecciones. No lo edites a mano: cambia el script y vuelve a generarlo.
+name: 🧑‍🔬 Nuevo miembro
+description: Da de alta a una persona del grupo.
+title: '[Miembro] '
+labels:
+- contenido
+- miembro
+body:
+- type: markdown
+  attributes:
+    value: Rellena el formulario y pulsa **Submit new issue**. Si tienes permiso de edición en la web, en un par de minutos aparecerá aquí un enlace a la **propuesta de cambios** con su vista previa; si no, alguien del equipo web la revisará. Si te equivocas, **edita la issue** y la propuesta se rehace.
+- type: input
+  id: given
+  attributes:
+    label: Nombre
+  validations:
+    required: true
+- type: input
+  id: family
+  attributes:
+    label: Apellidos
+  validations:
+    required: true
+- type: dropdown
+  id: gender
+  attributes:
+    label: Género gramatical del puesto en español
+    options:
+    - Masculino (Profesor…)
+    - Femenino (Profesora…)
+  validations:
+    required: true
+- type: dropdown
+  id: position
+  attributes:
+    label: Puesto
+    options:
+    - Catedrático de Universidad / Catedrática de Universidad
+    - Profesor Titular de Universidad / Profesora Titular de Universidad
+    - Profesor Titular de Escuela Universitaria / Profesora Titular de Escuela Universitaria
+    - Profesor Permanente Laboral / Profesora Permanente Laboral
+    - Profesor Ayudante Doctor / Profesora Ayudante Doctora
+    - Ayudante
+    - Personal investigador predoctoral
+    - Investigador posdoctoral / Investigadora posdoctoral
+    - Investigador R1 / Investigadora R1
+    - Técnico de apoyo a la investigación / Técnica de apoyo a la investigación
+    - Estudiante en prácticas
+    - Personal de administración
+  validations:
+    required: true
+- type: input
+  id: since
+  attributes:
+    label: En el grupo desde
+    description: AAAA-MM-DD, p. ej. 2026-11-05 (también vale 05/11/2026)
+- type: input
+  id: email
+  attributes:
+    label: Correo
+- type: input
+  id: orcid
+  attributes:
+    label: ORCID
+    placeholder: 0000-0002-1825-0097
+- type: input
+  id: scholar
+  attributes:
+    label: Google Scholar (lo que va tras «user=» en la dirección)
+    placeholder: AbCdEfGhIjKl
+- type: dropdown
+  id: lines
+  attributes:
+    label: Líneas de investigación
+    options:
+    - Sistemas ciberfísicos (CPS)
+    - Redes de sensores y actuadores (WSAN)
+    - Internet de las cosas y computación ubicua
+    - Seguridad en redes y servicios
+    - Agentes cooperativos en red
+    - Robótica cooperativa en red
+    - Soporte a decisiones e inteligencia artificial
+    - Middleware semántico y aplicaciones distribuidas
+    - Ingeniería de software avanzada
+    - Computación cloud y edge
+    - Tecnologías habilitadoras para dominios inteligentes
+    multiple: true
+- type: dropdown
+  id: lang
+  attributes:
+    label: Idioma en que escribes el texto
+    options:
+    - Español
+    - Inglés
+  validations:
+    required: true
+- type: textarea
+  id: texto
+  attributes:
+    label: Biografía
+    description: Markdown, en tercera persona.
+- type: textarea
+  id: traduccion
+  attributes:
+    label: Traducción del texto al otro idioma (opcional)
+    description: Se publica como traducción provisional, con un aviso, hasta que alguien la revise.
+- type: textarea
+  id: foto
+  attributes:
+    label: Foto
+    description: Arrastra aquí una foto cuadrada (opcional).

@@ -44,3 +44,16 @@ En **«Flujo editorial»** ves todos los cambios guardados y aún sin publicar, 
 - **No veo «Publicar»:** el estado tiene que estar en «Listo».
 - **«No se pudo publicar»:** alguna comprobación ha fallado o aún no ha empezado. Espera un par de minutos y vuelve a intentarlo; si sigue, mira el detalle en la PR.
 - **He publicado algo por error:** edita la ficha y publica la corrección, o pide al administrador que deshaga el cambio (todo queda en el historial de GitHub y se puede recuperar).
+
+## 5. Sin entrar en el gestor: los formularios
+
+Para **crear** una noticia, un evento, una convocatoria, un miembro o un proyecto también puedes usar un formulario de GitHub. Es útil desde el móvil, o si prefieres que otra persona lo revise.
+
+1. **Elegir el formulario.** En el repositorio `grys-web`, abre la pestaña *Issues*, pulsa *New issue* y elige el formulario.
+2. **Rellenarlo.** Las imágenes y el PDF se **arrastran** a su casilla; se descargan y se convierten solas. En las noticias, escribe una descripción por imagen, en el mismo orden.
+3. **Enviar.** Pulsa *Submit new issue*. Un par de minutos después aparece un comentario:
+   - ✅ con el enlace a la **propuesta de cambios** (con comprobaciones y vista previa). Al fusionarla se publica y la issue se cierra sola;
+   - ❌ con lo que hay que corregir. **Edita la issue** (⋯ → *Edit*) y la propuesta se rehace.
+4. **Sin permiso de edición.** Si no estás en el equipo `web`, la issue queda pendiente hasta que alguien del equipo la revise y le añada la etiqueta **generar-pr**.
+
+Los formularios solo **crean** contenido nuevo. Para cambiar algo que ya existe, usa el gestor.
