@@ -160,3 +160,30 @@ Sin este paso solo se puede entrar con un token personal, que funciona pero es i
 4. **Publicar.** Pon la noticia en «Listo» y pulsa «Publicar». ✅ La PR se fusiona cuando «Comprobar PR» termina, y la rama se borra.
 
 **Versión del gestor.** `admin/index.html` carga siempre la última versión publicada de Sveltia CMS. Está en beta y recibe correcciones casi a diario. Si una versión nueva diera problemas, se puede fijar una concreta cambiando la dirección del *script* (por ejemplo `@sveltia/cms@0.235.1`).
+
+## 9. Formularios de issue (opcional)
+
+Los formularios de `.github/ISSUE_TEMPLATE/` (Noticia, Evento, Convocatoria, Miembro, Proyecto) crean una PR con el fichero ya hecho. El flujo `issue-a-pr.yml` usa `scripts/issue_a_contenido.py`:
+- **Quién puede usarlos:** solo generan la PR si quien abre la issue tiene permiso de escritura, o si alguien con permiso le añade la etiqueta `generar-pr`.
+- **Qué se comprueba:** los datos se validan con `comprobar_datos.py` antes de abrir la PR, y los errores se contestan en la propia issue.
+- **Las etiquetas** se crean solas.
+
+**Listas de opciones.** Los puestos, líneas y ámbitos de los formularios se generan desde los datos. Si añades uno, `comprobar_datos.py` avisa de que hay que regenerarlos: `python scripts/issue_a_contenido.py --plantillas`.
+
+**Comprobaciones de las PR generadas.** GitHub no lanza otros flujos cuando la PR la crea el token normal de Actions. Sin más configuración, la PR lleva un comentario que pide **cerrarla y reabrirla** una vez para lanzar las comprobaciones. Para que se lancen solas, crea una aplicación de GitHub (una sola vez, unos 10 minutos):
+
+1. **Crear la aplicación.** En `grys-upm` → *Settings → Developer settings → GitHub Apps → New GitHub App*:
+   - nombre `grys-web-contenido`;
+   - *Homepage URL*: la del repositorio;
+   - desmarca *Webhook → Active*;
+   - permisos de repositorio: **Contents: Read and write** y **Pull requests: Read and write**;
+   - *Where can this GitHub App be installed?*: *Only on this account*.
+2. **Clave privada.** En la página de la aplicación, anota el **App ID** y pulsa *Generate a private key* (se descarga un `.pem`).
+3. **Instalarla.** *Install App* → `grys-upm` → *Only select repositories* → `grys-web`.
+4. **Guardar sus datos en el repositorio.** En `grys-web` → *Settings → Secrets and variables → Actions*:
+   - variable `CONTENIDO_APP_ID` = el App ID;
+   - secreto `CONTENIDO_APP_KEY` = el contenido completo del `.pem`.
+
+   Después borra el `.pem` de tu ordenador.
+
+**En la migración a producción:** cambia en `.github/ISSUE_TEMPLATE/config.yml` la dirección del gestor por `https://grys.etsist.upm.es/admin/` e instala la aplicación también en el repositorio de producción.

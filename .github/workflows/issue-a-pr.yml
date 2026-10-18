@@ -1,0 +1,196 @@
+# Formularios de issue → propuesta de cambios (PR).
+# Cuando alguien rellena un formulario (Noticia, Evento, Convocatoria, Miembro
+# o Proyecto; plantillas en .github/ISSUE_TEMPLATE/):
+#   · si tiene permiso de escritura en el repositorio (equipo «web»), se crea
+#     el fichero con scripts/issue_a_contenido.py (descargando imágenes y PDF),
+#     se comprueba con comprobar_datos.py y se abre o actualiza la PR
+#     «contenido/issue-N», que cierra la issue al fusionarse;
+#   · si no lo tiene, se le contesta que alguien del equipo web debe revisarla
+#     y añadir la etiqueta «generar-pr».
+# Editar la issue rehace la propuesta. Los errores se explican en un
+# comentario de la issue, que se actualiza en cada intento.
+#
+# Comprobaciones de la PR: las PR que abre GitHub Actions con su token
+# normal NO lanzan otros flujos (regla de GitHub). Con la aplicación
+# «grys-web-contenido» configurada (variable CONTENIDO_APP_ID y secreto
+# CONTENIDO_APP_KEY, docs/COMPILAR.md §9) se lanzan solas; sin ella, hay que
+# cerrar y reabrir la PR una vez (se indica en un comentario).
+name: Formulario a propuesta de cambios
+
+on:
+  issues:
+    types: [opened, edited, reopened, labeled]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: issue-${{ github.event.issue.number }}
+  cancel-in-progress: true
+
+jobs:
+  contenido:
+    # Solo issues abiertas, de personas y con forma de formulario (### Pregunta)
+    if: github.event.issue.state == 'open' && github.event.issue.user.type != 'Bot' && contains(github.event.issue.body, '### ')
+    runs-on: ubuntu-24.04   # fijo: ubuntu-latest pasa a Ubuntu 26 desde el 19-10-2026
+    env:
+      TIENE_APP: ${{ secrets.CONTENIDO_APP_KEY != '' && vars.CONTENIDO_APP_ID != '' }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --quiet pyyaml pillow
+
+      - name: Leer el formulario
+        id: leer
+        env:
+          ISSUE: ${{ toJSON(github.event.issue) }}   # por variable de entorno: el texto de la issue nunca llega al intérprete de órdenes
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          python scripts/issue_a_contenido.py --salida "$RUNNER_TEMP/resultado.json" > /dev/null
+          echo "formulario=$(jq -r .formulario "$RUNNER_TEMP/resultado.json")" >> "$GITHUB_OUTPUT"
+          echo "ok=$(jq -r .ok "$RUNNER_TEMP/resultado.json")" >> "$GITHUB_OUTPUT"
+          echo "rama=$(jq -r .rama "$RUNNER_TEMP/resultado.json")" >> "$GITHUB_OUTPUT"
+
+      - name: ¿Puede generar la propuesta?
+        id: permisos
+        if: steps.leer.outputs.formulario != ''
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const nivel = async (u) => {
+              try { return (await github.rest.repos.getCollaboratorPermissionLevel({ owner, repo, username: u })).data.permission; }
+              catch (e) { return "none"; }
+            };
+            const escribe = (p) => ["admin", "maintain", "write"].includes(p);
+            const issue = context.payload.issue;
+            let ok = escribe(await nivel(issue.user.login));
+            const conEtiqueta = (issue.labels || []).some(l => l.name === "generar-pr");
+            if (!ok && conEtiqueta) ok = escribe(await nivel(context.payload.sender.login));
+            core.setOutput("autorizado", ok ? "true" : "false");
+
+      - name: Comprobar los datos
+        id: comprobar
+        if: steps.leer.outputs.ok == 'true' && steps.permisos.outputs.autorizado == 'true'
+        run: |
+          set +e
+          python scripts/comprobar_datos.py > "$RUNNER_TEMP/comprobacion.txt" 2>&1; RC=$?
+          cat "$RUNNER_TEMP/comprobacion.txt"
+          echo "rc=$RC" >> "$GITHUB_OUTPUT"
+
+      - name: Token de la aplicación (si está configurada)
+        id: app
+        if: steps.comprobar.outputs.rc == '0' && env.TIENE_APP == 'true'
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ vars.CONTENIDO_APP_ID }}
+          private-key: ${{ secrets.CONTENIDO_APP_KEY }}
+
+      - name: Subir la rama
+        id: rama
+        if: steps.comprobar.outputs.rc == '0'
+        env:
+          TOKEN: ${{ steps.app.outputs.token || github.token }}
+          RAMA: ${{ steps.leer.outputs.rama }}
+          N: ${{ github.event.issue.number }}
+          AUTOR: ${{ github.event.issue.user.login }}
+          AUTOR_ID: ${{ github.event.issue.user.id }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          REMOTO="https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git switch -c "$RAMA"
+          jq -r '.ficheros[]' "$RUNNER_TEMP/resultado.json" | while read -r f; do git add -- "$f"; done
+          TITULO=$(jq -r .titulo "$RUNNER_TEMP/resultado.json")
+          git commit -q -m "$TITULO" -m "Generado a partir de la issue #$N." -m "Co-authored-by: $AUTOR <$AUTOR_ID+$AUTOR@users.noreply.github.com>"
+          # Si la rama ya existe con el mismo contenido, no se sube (no relanza las comprobaciones)
+          if git fetch -q "$REMOTO" "$RAMA" 2>/dev/null && git diff --quiet FETCH_HEAD HEAD; then
+            echo "cambios=false" >> "$GITHUB_OUTPUT"
+          else
+            git push -q --force "$REMOTO" "HEAD:refs/heads/$RAMA"
+            echo "cambios=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Abrir o actualizar la propuesta
+        id: pr
+        if: steps.comprobar.outputs.rc == '0'
+        uses: actions/github-script@v7
+        env:
+          RAMA: ${{ steps.leer.outputs.rama }}
+          CON_APP: ${{ steps.app.outputs.token != '' }}
+          CAMBIOS: ${{ steps.rama.outputs.cambios }}
+        with:
+          github-token: ${{ steps.app.outputs.token || github.token }}
+          script: |
+            const fs = require("fs");
+            const res = JSON.parse(fs.readFileSync(`${process.env.RUNNER_TEMP}/resultado.json`, "utf8"));
+            const { owner, repo } = context.repo;
+            const n = context.payload.issue.number;
+            const body = [
+              `Propuesta generada a partir del formulario de la issue #${n}.`, "",
+              "**Ficheros:**", ...res.ficheros.map(f => `- \`${f}\``),
+              ...(res.avisos.length ? ["", "**Avisos:**", ...res.avisos.map(a => `- ${a}`)] : []),
+              "", "Para corregir algo, edita la issue (la propuesta se rehace) o cambia la ficha en el gestor de contenidos.",
+              "", `Closes #${n}`].join("\n");
+            const abiertas = await github.rest.pulls.list({ owner, repo, state: "open", head: `${owner}:${process.env.RAMA}` });
+            let pr = abiertas.data[0];
+            if (pr) {
+              await github.rest.pulls.update({ owner, repo, pull_number: pr.number, title: res.titulo, body });
+            } else {
+              pr = (await github.rest.pulls.create({ owner, repo, head: process.env.RAMA, base: "main", title: res.titulo, body })).data;
+            }
+            if (process.env.CON_APP !== "true" && process.env.CAMBIOS === "true") {
+              await github.rest.issues.createComment({ owner, repo, issue_number: pr.number, body:
+                "⚠️ Esta propuesta la ha creado GitHub Actions sin la aplicación «grys-web-contenido», así que **las comprobaciones no se lanzan solas** (regla de GitHub).\n\n" +
+                "Para lanzarlas: pulsa **Close pull request** y después **Reopen pull request**. Para que no haga falta, configura la aplicación (docs/COMPILAR.md §9)." });
+            }
+            core.setOutput("url", pr.html_url);
+
+      - name: Contestar en la issue
+        if: always() && steps.leer.outputs.formulario != ''
+        uses: actions/github-script@v7
+        env:
+          FORMULARIO: ${{ steps.leer.outputs.formulario }}
+          AUTORIZADO: ${{ steps.permisos.outputs.autorizado }}
+          RC: ${{ steps.comprobar.outputs.rc }}
+          PR_URL: ${{ steps.pr.outputs.url }}
+        with:
+          script: |
+            const fs = require("fs");
+            const { owner, repo } = context.repo;
+            const n = context.payload.issue.number;
+            const leer = (f) => { try { return fs.readFileSync(`${process.env.RUNNER_TEMP}/${f}`, "utf8"); } catch (e) { return ""; } };
+            const res = JSON.parse(leer("resultado.json") || "{}");
+            const ejecucion = `${context.serverUrl}/${owner}/${repo}/actions/runs/${context.runId}`;
+            // Etiquetas (se crean si no existen)
+            for (const [name, color] of [["contenido", "1d76db"], [process.env.FORMULARIO, "c5def5"], ["generar-pr", "0e8a16"]]) {
+              try { await github.rest.issues.createLabel({ owner, repo, name, color }); } catch (e) { /* ya existe */ }
+            }
+            await github.rest.issues.addLabels({ owner, repo, issue_number: n, labels: ["contenido", process.env.FORMULARIO] });
+            let txt;
+            if (process.env.AUTORIZADO !== "true") {
+              txt = "Gracias. Esta propuesta la tiene que revisar alguien del equipo web de la página. " +
+                    "Cuando esté lista, quien la revise solo tiene que añadir la etiqueta **generar-pr** y se creará la propuesta de cambios.";
+            } else if ((res.errores || []).length) {
+              txt = "❌ **No se ha podido generar la propuesta.** Edita la issue (⋯ → *Edit*) y corrige:\n\n" + res.errores.map(e => `- ${e}`).join("\n");
+            } else if (process.env.RC && process.env.RC !== "0") {
+              const errs = leer("comprobacion.txt").split("\n").filter(l => l.startsWith("ERROR")).map(l => "- " + l.replace(/^ERROR\s+/, ""));
+              txt = "❌ **Los datos no pasan la comprobación.** Edita la issue y corrige:\n\n" + (errs.join("\n") || `(detalle en la [ejecución](${ejecucion}))`);
+            } else if (process.env.PR_URL) {
+              txt = `✅ **Propuesta de cambios:** ${process.env.PR_URL}\n\nEn unos minutos tendrá sus comprobaciones y un enlace a la vista previa. Se publica al fusionarla, y entonces esta issue se cierra sola.` +
+                    ((res.avisos || []).length ? "\n\n**Avisos:**\n" + res.avisos.map(a => `- ${a}`).join("\n") : "");
+            } else {
+              txt = `⚠️ Algo ha fallado al generar la propuesta. Detalle en la [ejecución](${ejecucion}).`;
+            }
+            const marca = "<!-- grys-formulario -->";
+            const body = `${marca}\n${txt}\n\n<sub>Actualizado: ${new Date().toISOString().slice(0, 16).replace("T", " ")} UTC · [ejecución](${ejecucion})</sub>`;
+            const todos = await github.paginate(github.rest.issues.listComments, { owner, repo, issue_number: n });
+            const previo = todos.find(c => c.body && c.body.includes(marca));
+            if (previo) await github.rest.issues.updateComment({ owner, repo, comment_id: previo.id, body });
+            else await github.rest.issues.createComment({ owner, repo, issue_number: n, body });

@@ -1,0 +1,132 @@
+# GENERADO por scripts/issue_a_contenido.py --plantillas a partir de _data/ y las
+# colecciones. No lo edites a mano: cambia el script y vuelve a generarlo.
+name: 🧩 Nuevo proyecto
+description: Añade un proyecto de investigación o un contrato.
+title: '[Proyecto] '
+labels:
+- contenido
+- proyecto
+body:
+- type: markdown
+  attributes:
+    value: Rellena el formulario y pulsa **Submit new issue**. Si tienes permiso de edición en la web, en un par de minutos aparecerá aquí un enlace a la **propuesta de cambios** con su vista previa; si no, alguien del equipo web la revisará. Si te equivocas, **edita la issue** y la propuesta se rehace.
+- type: input
+  id: acronym
+  attributes:
+    label: Acrónimo
+  validations:
+    required: true
+- type: input
+  id: title_es
+  attributes:
+    label: Título en español
+- type: input
+  id: title_en
+  attributes:
+    label: Título en inglés
+- type: dropdown
+  id: type
+  attributes:
+    label: Tipo
+    options:
+    - Competitivo (convocatoria pública)
+    - Contrato o convenio
+  validations:
+    required: true
+- type: input
+  id: start
+  attributes:
+    label: Inicio
+    description: AAAA-MM-DD, p. ej. 2026-11-05 (también vale 05/11/2026)
+- type: input
+  id: end
+  attributes:
+    label: Fin
+    description: AAAA-MM-DD, p. ej. 2026-11-05 (también vale 05/11/2026)
+- type: input
+  id: programme
+  attributes:
+    label: Programa
+    placeholder: Horizon Europe
+- type: input
+  id: funder
+  attributes:
+    label: Financiador
+    description: Organismos españoles con su nombre oficial en español; «European Commission» para la UE.
+- type: textarea
+  id: grant_ids
+  attributes:
+    label: Referencias de la ayuda (una por línea)
+- type: dropdown
+  id: role
+  attributes:
+    label: Papel de la UPM
+    options:
+    - Coordinador
+    - Socio
+    - Subcontratado
+- type: input
+  id: pi
+  attributes:
+    label: Investigador/a principal del grupo (nombre y apellidos; varios separados por comas)
+- type: input
+  id: pi_name
+  attributes:
+    label: Responsable si no es del grupo
+- type: dropdown
+  id: domains
+  attributes:
+    label: Ámbitos de aplicación
+    options:
+    - Campo
+    - Mar
+    - Ciudad y energía
+    - Aire
+    - Personas
+    multiple: true
+- type: dropdown
+  id: lines
+  attributes:
+    label: Líneas de investigación
+    options:
+    - Sistemas ciberfísicos (CPS)
+    - Redes de sensores y actuadores (WSAN)
+    - Internet de las cosas y computación ubicua
+    - Seguridad en redes y servicios
+    - Agentes cooperativos en red
+    - Robótica cooperativa en red
+    - Soporte a decisiones e inteligencia artificial
+    - Middleware semántico y aplicaciones distribuidas
+    - Ingeniería de software avanzada
+    - Computación cloud y edge
+    - Tecnologías habilitadoras para dominios inteligentes
+    multiple: true
+- type: input
+  id: website
+  attributes:
+    label: Página web del proyecto
+    placeholder: https://…
+- type: dropdown
+  id: lang
+  attributes:
+    label: Idioma en que escribes el texto
+    options:
+    - Español
+    - Inglés
+  validations:
+    required: true
+- type: textarea
+  id: texto
+  attributes:
+    label: Texto
+    description: 'Markdown. Encabezados con «## » (no uses «# »). Puedes arrastrar imágenes aquí: se guardarán en la web.'
+- type: textarea
+  id: traduccion
+  attributes:
+    label: Traducción del texto al otro idioma (opcional)
+    description: Se publica como traducción provisional, con un aviso, hasta que alguien la revise.
+- type: textarea
+  id: logo
+  attributes:
+    label: Logotipo
+    description: Arrastra aquí el logotipo (opcional).

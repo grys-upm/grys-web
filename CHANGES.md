@@ -1,5 +1,19 @@
 # Registro de cambios
 
+## Fase 5 · Paso 5.4: formularios de issue que generan la PR (18-10-2026)
+
+- **5 formularios** en *New issue*: Noticia, Evento, Convocatoria, Miembro y Proyecto. Los genera `scripts/issue_a_contenido.py --plantillas`; los puestos, líneas y ámbitos salen de los datos, y `comprobar_datos.py` avisa si quedan desfasados. Hay además enlaces al gestor y a la guía.
+- **`issue-a-pr.yml`:**
+  - **Permisos:** si quien abre la issue puede escribir en el repositorio, o alguien con permiso añade la etiqueta `generar-pr`, se crea el fichero.
+  - **Ficheros:** el nombre sigue las reglas del sitio. Las fechas aceptan AAAA-MM-DD o DD/MM/AAAA, el plazo de las convocatorias se fija a las 23:59 de Madrid y del ORCID o de Google Scholar se aprovecha la URL completa.
+  - **Relaciones:** el IP se busca por nombre entre los miembros y el proyecto por acrónimo.
+  - **Adjuntos:** las imágenes se descargan a WebP (máx. 1600 px); en las noticias, la primera es la de la tarjeta y el resto forman una galería con sus descripciones. Las imágenes dentro del texto pasan a `figura.html` y el PDF de la convocatoria se descarga.
+  - **Validación:** `comprobar_datos.py` revisa los datos y se abre o actualiza la PR `contenido/issue-N`, que cierra la issue al fusionarse. Los errores se contestan en un único comentario de la issue que se actualiza.
+  - **Edición:** editar la issue rehace la propuesta, y si el contenido no cambia, no se vuelve a subir.
+  - **Seguridad:** el texto de la issue solo llega al script por variable de entorno, nunca al intérprete de órdenes.
+  - **Comprobaciones de la PR:** se lanzan solas con la aplicación opcional `grys-web-contenido`; sin ella, la PR pide cerrarla y reabrirla una vez.
+- Documentación: `docs/EDITAR.md` §5 y `docs/COMPILAR.md` §9.
+
 ## Fase 5 · Paso 5.3: gestor de contenidos (18-10-2026)
 
 - **Sveltia CMS en `/admin/`** para Noticias, Eventos, Convocatorias, Miembros y Proyectos. Solo pueden guardar quienes tengan permiso de escritura en el repositorio (equipo `web` de la organización).
