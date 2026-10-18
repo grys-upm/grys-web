@@ -18,6 +18,7 @@
 - **Documentación:**
   - guía para editores en `docs/EDITAR.md`;
   - puesta en marcha en `docs/COMPILAR.md` §8: equipo `web`, *auto-merge*, autenticador OAuth en Cloudflare y prueba.
+- **Corrección:** con `cms.oauth_url` vacío, el gestor recibía `base_url: ""` y no arrancaba («must be an absolute URL»). En Liquid una cadena vacía cuenta como verdadera; ahora se comprueba que no esté vacía, y `verificar_sitio.py` da error si `base_url` no es una URL absoluta.
 - `schemas/members.schema.json`: añadido `pteu` a la lista de puestos (la validación real ya la tomaba de `_data/positions.yml`).
 
 ## Fase 5 · Paso 5.2: enlaces (lychee) y Lighthouse CI (18-10-2026)
