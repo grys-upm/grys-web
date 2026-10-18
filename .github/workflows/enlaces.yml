@@ -1,0 +1,78 @@
+# Comprobación SEMANAL de todos los enlaces externos del sitio (lychee).
+# · Cada lunes a las 06:30 UTC y a mano («Run workflow»).
+# · Si hay enlaces rotos, abre una issue «Enlaces rotos» (o actualiza la que ya
+#   esté abierta) con la lista; si ya no hay ninguno, la cierra.
+# · No publica nada ni bloquea nada. Configuración de lychee: lychee.toml.
+name: Enlaces externos
+
+on:
+  schedule:
+    - cron: "30 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: enlaces
+  cancel-in-progress: true
+
+jobs:
+  enlaces:
+    runs-on: ubuntu-24.04   # fijo: ubuntu-latest pasa a Ubuntu 26 desde el 19-10-2026
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - name: Compilar
+        run: bundle exec jekyll build --config _config.yml,_config.staging.yml
+      - name: Caché de lychee
+        uses: actions/cache@v5
+        with:
+          path: .lycheecache
+          key: lychee-${{ github.run_id }}
+          restore-keys: lychee-
+      - name: Comprobar enlaces externos
+        id: lychee
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --config lychee.toml --no-progress "_site/**/*.html"
+          format: markdown
+          output: reports/enlaces.md
+          fail: false
+          failIfEmpty: false
+          jobSummary: true
+      - name: Issue «Enlaces rotos»
+        uses: actions/github-script@v7
+        env:
+          CODIGO: ${{ steps.lychee.outputs.exit_code }}
+        with:
+          script: |
+            const fs = require("fs");
+            const titulo = "Enlaces rotos";
+            const { owner, repo } = context.repo;
+            const abiertas = await github.paginate(github.rest.issues.listForRepo, { owner, repo, state: "open", labels: "enlaces-rotos" });
+            const previa = abiertas.find(i => i.title === titulo);
+            const ejecucion = `${context.serverUrl}/${owner}/${repo}/actions/runs/${context.runId}`;
+            if (process.env.CODIGO === "0") {
+              if (previa) {
+                await github.rest.issues.createComment({ owner, repo, issue_number: previa.number,
+                  body: `✅ La comprobación del ${new Date().toISOString().slice(0, 10)} ya no encuentra enlaces rotos ([ejecución](${ejecucion})). Se cierra.` });
+                await github.rest.issues.update({ owner, repo, issue_number: previa.number, state: "closed" });
+              }
+              return;
+            }
+            let informe = fs.existsSync("reports/enlaces.md") ? fs.readFileSync("reports/enlaces.md", "utf8") : "(sin informe)";
+            if (informe.length > 60000) informe = informe.slice(0, 60000) + "\n\n… (informe recortado; completo en la ejecución)";
+            const body = [
+              `La comprobación semanal ha encontrado enlaces externos que no responden ([ejecución](${ejecucion})).`,
+              "",
+              "**Qué hacer:** para cada enlace, busca la página en el repositorio (el informe indica el fichero de `_site`; el texto está en `_news/`, `_projects/`, `_members/`, `_data/` o `_bibliography/`) y corrige la URL, cámbiala por una copia de https://web.archive.org o quítala. Si el enlace funciona en el navegador y el sitio bloquea robots, añádelo a `exclude` en `lychee.toml`.",
+              "",
+              "Esta issue se actualiza cada lunes y se cierra sola cuando no quedan enlaces rotos.",
+              "",
+              informe].join("\n");
+            if (previa) await github.rest.issues.update({ owner, repo, issue_number: previa.number, body });
+            else await github.rest.issues.create({ owner, repo, title: titulo, body, labels: ["enlaces-rotos"] });

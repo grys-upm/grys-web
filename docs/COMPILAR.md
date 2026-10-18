@@ -53,6 +53,16 @@ En Windows, Ruby se instala con [RubyInstaller](https://rubyinstaller.org/), eli
 | `jekyll build` | hay errores, o aparecen `Liquid Warning`, `Build Warning`, `Conflict:` o avisos `GRyS:` en el registro |
 | `verificar_sitio.py` | falta alguna página ES/EN o alguna redirección, alguna página no tiene exactamente un `<h1>`, falta «Saltar al contenido», el tema por defecto no es el oscuro, el *script* del tema no va antes del CSS, queda Liquid sin procesar o contenido de demostración, o hay enlaces internos rotos |
 
+### Comprobaciones informativas (no impiden fusionar)
+
+La protección de `main` solo exige el job `build` («Comprobar PR»). Estas otras salen en la PR con ✅ o ❌, pero no bloquean la fusión:
+
+| Comprobación | Cuándo | Qué hace | Si sale ❌ |
+|---|---|---|---|
+| **Enlaces nuevos** | cada PR | Comprueba con lychee solo las URL externas que **añade** la PR. La configuración y las exclusiones están en `lychee.toml` | Abre el resumen de la ejecución, corrige la URL y vuelve a subir. Si la URL funciona en el navegador, el sitio bloquea robots: añádelo a `exclude` en `lychee.toml` |
+| **Lighthouse** | cada PR que compila | Rendimiento, accesibilidad, buenas prácticas y SEO de 8 páginas representativas (mediana de 3 ejecuciones, móvil simulado). Las páginas están en `lighthouserc.json` | Error si accesibilidad < 95 o SEO < 90. Rendimiento < 80 y buenas prácticas < 90 solo dan aviso. Los informes completos están en el artefacto `informe-lighthouse` |
+| **Enlaces externos** | cada lunes y a mano | Comprueba todos los enlaces externos del sitio | Abre o actualiza la issue «Enlaces rotos» con la lista, y la cierra cuando ya no quedan |
+
 ## 4. Si algo falla
 
 En *Actions*, abre la ejecución fallida, despliega el paso en rojo y copia el texto completo del error. Para el paso *Compilar*, copia el registro entero.

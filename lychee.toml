@@ -1,0 +1,49 @@
+# Comprobación de ENLACES EXTERNOS con lychee (https://lychee.cli.rs).
+# Los enlaces internos los comprueba scripts/verificar_sitio.py en cada PR.
+# Lo usan:
+#   · .github/workflows/pr.yml, job «Enlaces nuevos»: solo las URL añadidas en la PR;
+#   · .github/workflows/enlaces.yml: todo el sitio, cada lunes; abre o actualiza
+#     una issue «Enlaces rotos».
+# Si un sitio da falsos positivos de forma habitual (bloquea robots), añádelo a
+# «exclude» con un comentario.
+
+scheme = ["https", "http"]          # solo enlaces web (no mailto:, tel:, ficheros locales)
+max_concurrency = 12
+max_retries = 2
+retry_wait_time = 5
+timeout = 25
+accept = ["100..=103", "200..=299", "429"]   # 429 = «demasiadas peticiones»: el enlace existe
+user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36"
+
+# Caché entre ejecuciones (se guarda con actions/cache): un enlace correcto no
+# se vuelve a pedir hasta pasados 3 días.
+cache = true
+max_cache_age = "3d"
+
+exclude = [
+  # El propio sitio: sus enlaces internos se comprueban aparte, y el dominio
+  # sirve todavía la web antigua hasta la migración (fase 6).
+  '^https?://grys\.etsist\.upm\.es',
+  '^https?://grys-upm\.github\.io',
+  # Plantillas Liquid sin procesar (solo aparecen al comprobar el código fuente)
+  '\{\{', '%7B%7B',
+  # DOI: identificadores persistentes; las editoriales bloquean a los robots (403)
+  '^https?://(dx\.)?doi\.org/',
+  # Sitios que bloquean sistemáticamente las peticiones automáticas
+  '^https?://([a-z]+\.)?linkedin\.com',
+  '^https?://scholar\.google\.',
+  '^https?://([a-z]+\.)?researchgate\.net',
+  '^https?://(www\.)?(x|twitter)\.com',
+  '^https?://dl\.acm\.org',
+  '^https?://ieeexplore\.ieee\.org',
+  '^https?://(www\.)?sciencedirect\.com',
+  '^https?://(www\.)?tandfonline\.com',
+  '^https?://onlinelibrary\.wiley\.com',
+  # Copias de archive.org: estables por naturaleza y muy lentas
+  '^https?://web\.archive\.org/',
+  # Enlaces de descarga con firma temporal
+  '^https?://eventos\.upm\.es/getFiles/',
+  # Incrustados (vídeos y mapa): se comprueban a mano (docs/REVISION_ACCESIBILIDAD.md)
+  '^https?://(www\.)?youtube-nocookie\.com/embed/',
+  '^https?://(www\.)?openstreetmap\.org/export/embed',
+]

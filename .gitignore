@@ -10,6 +10,9 @@ vendor/
 scripts/a11y/node_modules/
 scripts/a11y/package-lock.json
 
+# Caché de la comprobación de enlaces (lychee)
+.lycheecache
+
 # Informes generados en local (en CI se publican como artefactos)
 reports/
 
