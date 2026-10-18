@@ -38,10 +38,10 @@ jobs:
   build:
     runs-on: ubuntu-24.04   # fijo: ubuntu-latest pasa a Ubuntu 26 desde el 19-10-2026
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Python (para los scripts de comprobación)
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
         with:
           python-version: "3.12"
       - run: python -m pip install --quiet pyyaml
@@ -56,10 +56,10 @@ jobs:
 
       - name: Configurar Pages
         id: pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
 
       - name: Métricas de citas · recuperar las últimas
-        uses: actions/cache/restore@v5
+        uses: actions/cache/restore@v6
         with:
           path: _data/metricas_pubs.yml
           key: metricas-pubs-${{ github.run_id }}
@@ -71,7 +71,7 @@ jobs:
           if [ "${{ inputs.actualizar_metricas }}" = "true" ]; then FORZAR="--forzar"; fi
           python scripts/metricas_dimensions.py --max-edad "$METRICAS_MAX_EDAD" $FORZAR | tee -a "$GITHUB_STEP_SUMMARY"
       - name: Métricas de citas · guardar
-        uses: actions/cache/save@v5
+        uses: actions/cache/save@v6
         continue-on-error: true
         with:
           path: _data/metricas_pubs.yml
@@ -84,7 +84,7 @@ jobs:
         run: |
           python scripts/informe_pendientes.py
           cat reports/pendientes-datos.md >> "$GITHUB_STEP_SUMMARY"
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
           name: informe-pendientes
           path: reports/
@@ -111,12 +111,12 @@ jobs:
 
       - name: Guardar Gemfile.lock (para añadirlo al repositorio si no existe)
         if: hashFiles('Gemfile.lock') != ''
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: Gemfile.lock
           path: Gemfile.lock
 
-      - uses: actions/upload-pages-artifact@v4
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: _site
 
@@ -128,4 +128,4 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
