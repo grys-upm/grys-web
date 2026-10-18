@@ -1,0 +1,76 @@
+# =====================================================================
+#  PRENSA (página Actualidad › Prensa)
+# ---------------------------------------------------------------------
+#  apariciones: menciones del grupo en medios (más recientes primero, se
+#  ordenan solas por fecha). Si la lista está vacía se muestra un bloque vacío.
+#    - fecha: AAAA-MM-DD
+#      medio: El País
+#      titulo: "Titular tal cual se publicó"
+#      url: https://…
+#      lang: es            # idioma del artículo (es | en | …)
+#      tipo: prensa        # prensa | radio | tv | web
+#  kit: material para medios (ficheros en /assets/…; se comprueba que existen).
+#  descripciones: texto breve (~50 palabras) y largo (~150) para notas de prensa.
+#  Validado con schemas/prensa.schema.json.
+# =====================================================================
+
+apariciones: []
+
+kit:
+  - titulo: { es: "Logotipo GRyS (fondo claro, español)", en: "GRyS logo (light background, Spanish)" }
+    src: /assets/img/marca/grys-logo-es.png
+  - titulo: { es: "Logotipo GRyS (fondo oscuro, español)", en: "GRyS logo (dark background, Spanish)" }
+    src: /assets/img/marca/grys-logo-es-neg.png
+  - titulo: { es: "Logotipo GRyS (fondo claro, inglés)", en: "GRyS logo (light background, English)" }
+    src: /assets/img/marca/grys-logo-en.png
+  - titulo: { es: "Logotipo GRyS (fondo oscuro, inglés)", en: "GRyS logo (dark background, English)" }
+    src: /assets/img/marca/grys-logo-en-neg.png
+  - titulo: { es: "Logotipo compacto (fondo claro)", en: "Compact logo (light background)" }
+    src: /assets/img/marca/grys-logo-compacto.png
+  - titulo: { es: "Logotipo compacto (fondo oscuro)", en: "Compact logo (dark background)" }
+    src: /assets/img/marca/grys-logo-compacto-neg.png
+
+descripciones:
+  corta:
+    es: >-
+      GRyS (Grupo de Redes y Servicios de Próxima Generación) es un grupo de
+      investigación de la Universidad Politécnica de Madrid, con sede en la ETSI de
+      Sistemas de Telecomunicación. Desde 2009 investiga sistemas ciberfísicos, IoT,
+      robótica cooperativa, middleware semántico y computación cloud-edge, y los
+      aplica en agricultura, entornos marinos, ciudades y energía.
+    en: >-
+      GRyS (Next-Generation Networks and Services Group) is a research group at
+      Universidad Politécnica de Madrid, based at the School of Telecommunication
+      Systems and Engineering. Since 2009 it has researched cyber-physical systems,
+      IoT, cooperative robotics, semantic middleware and cloud-edge computing, applying
+      them to agriculture, marine environments, cities and energy.
+  larga:
+    es: >-
+      GRyS (Grupo de Redes y Servicios de Próxima Generación) es un grupo de
+      investigación de la Universidad Politécnica de Madrid (UPM), creado en 2009 y
+      reconocido como grupo consolidado en 2011, con sede en la ETSI de Sistemas de
+      Telecomunicación (Campus Sur). Su equipo multidisciplinar investiga sistemas
+      ciberfísicos, Internet de las cosas, redes de sensores, robótica cooperativa,
+      middleware semántico, seguridad y computación cloud-edge, con el objetivo de
+      hacer los sistemas conectados más inteligentes, adaptativos y resilientes. El
+      grupo ha participado en más de treinta proyectos competitivos y contratos, y ha
+      liderado iniciativas europeas como los proyectos H2020 SWARMs y AFarCloud.
+      Actualmente participa en NexTArc, AFarEdge y HumAMI (Horizonte Europa). Sus
+      resultados se aplican en agricultura de precisión, robótica submarina, ciudades
+      y energía, y se validan en el OpenTech Lab, su entorno abierto de
+      experimentación con sistemas autónomos. GRyS publica su software en abierto y
+      forma a estudiantes de grado, máster y doctorado.
+    en: >-
+      GRyS (Next-Generation Networks and Services Group) is a research group at
+      Universidad Politécnica de Madrid (UPM), founded in 2009 and recognised as a
+      consolidated group in 2011, based at the School of Telecommunication Systems and
+      Engineering (Campus Sur). Its multidisciplinary team researches cyber-physical
+      systems, the Internet of Things, sensor networks, cooperative robotics, semantic
+      middleware, security and cloud-edge computing, aiming to make connected systems
+      more intelligent, adaptive and resilient. The group has taken part in more than
+      thirty competitive projects and contracts, and has led European initiatives such
+      as the H2020 projects SWARMs and AFarCloud. It currently participates in NexTArc,
+      AFarEdge and HumAMI (Horizon Europe). Its results are applied to precision
+      agriculture, underwater robotics, cities and energy, and are validated in the
+      OpenTech Lab, its open experimentation environment for autonomous systems. GRyS
+      publishes its software openly and trains bachelor's, master's and PhD students.

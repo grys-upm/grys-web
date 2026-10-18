@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "_data/prensa.yml",
+  "description": "Apariciones en medios, kit de prensa y descripciones del grupo.",
+  "type": "object",
+  "required": [
+    "apariciones",
+    "kit",
+    "descripciones"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "apariciones": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "fecha",
+          "medio",
+          "titulo",
+          "url"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "fecha": {
+            "type": "string",
+            "format": "date"
+          },
+          "medio": {
+            "type": "string",
+            "minLength": 1
+          },
+          "titulo": {
+            "type": "string",
+            "minLength": 1
+          },
+          "url": {
+            "type": "string",
+            "pattern": "^https?://"
+          },
+          "lang": {
+            "type": "string",
+            "pattern": "^[a-z]{2}$"
+          },
+          "tipo": {
+            "type": "string",
+            "enum": [
+              "prensa",
+              "radio",
+              "tv",
+              "web"
+            ]
+          }
+        }
+      }
+    },
+    "kit": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "titulo",
+          "src"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "titulo": {
+            "type": "object",
+            "required": [
+              "es",
+              "en"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "es": {
+                "type": "string",
+                "minLength": 1
+              },
+              "en": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "src": {
+            "type": "string",
+            "pattern": "^/assets/"
+          }
+        }
+      }
+    },
+    "descripciones": {
+      "type": "object",
+      "required": [
+        "corta",
+        "larga"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "corta": {
+          "type": "object",
+          "required": [
+            "es",
+            "en"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "es": {
+              "type": "string",
+              "minLength": 1
+            },
+            "en": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "larga": {
+          "type": "object",
+          "required": [
+            "es",
+            "en"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "es": {
+              "type": "string",
+              "minLength": 1
+            },
+            "en": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    }
+  }
+}

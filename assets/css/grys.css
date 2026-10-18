@@ -532,3 +532,12 @@ p.todo,div.todo{display:inline-block;white-space:normal;font-size:14px;padding:6
 .dc-box{margin-top:32px}
 .dc-box h2{font-size:21px;margin-bottom:8px}
 .dc-box .nodes{margin-top:10px}
+
+/* Prensa (fase 3.6c) */
+.prensa{align-items:start;gap:44px}
+.prensa h2.rule{font-size:28px;margin-bottom:16px}
+.prensa .pz-desc{margin-top:44px}
+.prensa h3{font-size:18px;margin:18px 0 6px}
+.prensa .box h2{font-size:21px;margin-bottom:12px}
+.prensa .box p{margin-top:10px}
+.press-list li{grid-template-columns:1fr}

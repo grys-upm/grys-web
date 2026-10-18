@@ -1,5 +1,36 @@
 # Registro de cambios
 
+## Fase 3 · Paso 3.6c: Prensa, Accesibilidad y Privacidad; protección de resultados (18-10-2026)
+
+- **Transferencia: protección de cada resultado.** Campo nuevo `proteccion` en las ofertas (`_data/transferencia.yml`, con esquema): `tipo` (registro de PI, patente, modelo de utilidad, secreto industrial o código abierto), `numero` (asiento registral o nº de publicación), `oficina`, `fecha`, `titulares`, `url` y `licencia`.
+  - La tarjeta lo muestra como ficha.
+  - En patentes y modelos de utilidad sin `url`, el número enlaza a su búsqueda en Espacenet.
+  - SISS queda como registro de PI **sin asiento**: sale «por completar» y `comprobar_datos` avisa.
+- **Prensa** (`_data/prensa.yml`, con esquema):
+  - apariciones en medios, ordenadas por fecha, con bloque vacío si no hay;
+  - kit de prensa con los 6 logotipos PNG que existen;
+  - descripciones breve (~50 palabras) y larga (~150) en ES/EN;
+  - contacto de prensa.
+  
+  `comprobar_datos.py` comprueba que los ficheros del kit existen y avisa si las descripciones se salen de longitud.
+- **Accesibilidad:** declaración según el RD 1112/2018:
+  - situación de cumplimiento («parcialmente conforme»);
+  - contenido no accesible y contenido excluido;
+  - medidas adoptadas;
+  - preparación (autoevaluación, 18-10-2026; fechas en el *front matter*);
+  - contacto;
+  - procedimiento de reclamación ante la Unidad Responsable de Accesibilidad de la UPM.
+- **Privacidad:**
+  - sin cookies ni analítica;
+  - las 2 claves de `localStorage` (`grys-theme` y `grys-metrics`);
+  - alojamiento en GitHub Pages;
+  - terceros: YouTube sin cookies, OpenStreetMap y Altmetric/Dimensions solo bajo demanda;
+  - datos de quien nos escribe: la UPM como responsable, con el DPD (proteccion.datos@upm.es) y la AEPD.
+- **`verificar_sitio.py`:**
+  - comprueba Prensa, Accesibilidad y Privacidad (ES/EN);
+  - **comprueba que la política de privacidad sigue al día**: si el sitio empieza a usar otra clave de `localStorage` o a cargar otro servicio externo (en `iframe`, `script` o desde `grys.js`) sin explicarlo en Privacidad, la compilación falla.
+- **`docs/RECETAS.md`:** recetas para indicar la protección de un resultado, añadir apariciones en prensa y mantener la privacidad.
+
 ## Fase 3 · Paso 3.6b: OpenTech Lab y Colabora (17-10-2026)
 
 - **El laboratorio:**

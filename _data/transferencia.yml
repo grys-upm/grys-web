@@ -3,6 +3,19 @@
 # ---------------------------------------------------------------------
 #  · ofertas: soluciones tecnológicas disponibles. url (opcional) y/o repo
 #    (nombre en _data/repos.yml).
+#  · proteccion (opcional): cómo está protegida. Se muestra en la ficha.
+#      tipo:      registro_pi | patente | modelo_utilidad | secreto | abierto
+#      numero:    asiento registral (registro_pi) o nº de publicación (patente,
+#                 modelo de utilidad), tal como figura en el título. Obligatorio
+#                 salvo en «secreto» y «abierto»; si falta, sale «por completar».
+#      oficina:   { es, en } registro u oficina (p. ej. Registro Territorial de
+#                 la Propiedad Intelectual de la Comunidad de Madrid; OEPM; EPO)
+#      fecha:     AAAA-MM-DD (inscripción o concesión)
+#      titulares: { es, en } (por defecto, Universidad Politécnica de Madrid)
+#      url:       enlace a la publicación (Espacenet, OEPM…). En patentes y
+#                 modelos de utilidad, si no hay url, se enlaza la búsqueda del
+#                 número en Espacenet.
+#      licencia:  licencia de uso del código, si es abierto (p. ej. Apache-2.0)
 #  · formas: maneras de colaborar con el grupo.
 #  Fuente: mockup v4 y menú «Innovation» de la web anterior.
 #  PROPUESTA pendiente de validar. Validado con schemas/transferencia.schema.json.
@@ -27,6 +40,12 @@ ofertas:
       es: Propiedad intelectual registrada. Código abierto disponible en GitHub.
       en: Registered intellectual property. Open source available on GitHub.
     repo: SISS-Semantic-Interoperability-Support-System
+    proteccion:
+      tipo: registro_pi
+      numero: ""          # PENDIENTE: asiento registral
+      oficina:
+        es: Registro de la Propiedad Intelectual
+        en: Intellectual Property Registry
 
 formas:
   - title: { es: Contratos de I+D, en: R&D contracts }

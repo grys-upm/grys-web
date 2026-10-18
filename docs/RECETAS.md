@@ -114,6 +114,43 @@ Mientras la lista esté vacía, la sección no aparece.
 
 `comprobar_datos.py` avisa si una persona, un repositorio, un ámbito o un icono no existen.
 
+## Indicar la protección de un resultado (registro, patente…)
+
+En `_data/transferencia.yml`, dentro de la oferta, añade `proteccion`:
+
+```yaml
+    proteccion:
+      tipo: registro_pi          # registro_pi | patente | modelo_utilidad | secreto | abierto
+      numero: "M-000123/2024"    # asiento registral o nº de publicación, tal como figura en el título
+      oficina: { es: "Registro Territorial de la Propiedad Intelectual de la Comunidad de Madrid", en: "Madrid Regional Intellectual Property Registry" }
+      fecha: 2024-05-12          # inscripción o concesión
+      titulares: { es: "Universidad Politécnica de Madrid", en: "Universidad Politécnica de Madrid" }  # opcional (es el valor por defecto)
+      url: https://…             # opcional: enlace a la publicación
+      licencia: Apache-2.0       # opcional: si además el código es abierto
+```
+
+- **Patentes y modelos de utilidad sin `url`:** el número enlaza solo a su búsqueda en Espacenet (p. ej. `ES2912345B2`).
+- **Número vacío:** en registros, patentes y modelos de utilidad, `comprobar_datos.py` avisa y la web muestra «por completar».
+
+## Añadir una aparición en prensa
+
+En `_data/prensa.yml` → `apariciones`:
+
+```yaml
+  - fecha: 2026-11-03
+    medio: El País
+    titulo: "Titular tal cual se publicó"
+    url: https://…
+    lang: es
+    tipo: prensa      # prensa | radio | tv | web
+```
+
+Se ordenan solas por fecha, de la más reciente a la más antigua.
+
+## Privacidad y servicios externos
+
+Si se añade un servicio externo (un vídeo de otra plataforma, un mapa, un script) o una clave nueva de `localStorage`, hay que explicarlo en `_pages/es/privacy.md` y `_pages/en/privacy.md`. Si no se hace, `verificar_sitio.py` da error.
+
 ## Cambiar datos de contacto, cómo llegar o accesibilidad
 
 Todo está en `_data/grupo.yml`:
