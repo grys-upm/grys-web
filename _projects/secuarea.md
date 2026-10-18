@@ -5,9 +5,12 @@ acronym: SECUAREA
 title_es: Soluciones basadas en dispositivos biométricos
 title_en: Solutions Based on Biometric Devices
 type: private
+programme: Programa de Tecnologías de la Información de la Comunidad de Madrid
+funder: MTP S.L.
 start: 2006-11-01
 end: 2007-10-31
-pi: []
+pi:
+- lourdes-lopez-santidrian
 domains: []
 lines: []
 repos: []
@@ -15,9 +18,12 @@ image: /assets/img/proyectos/secuarea/logo.webp
 lang: en
 old_urls:
 - /research/projects/secuarea/
+traduccion: borrador
+texto_es: |-
+  ## Financiación
+
+  Este proyecto ha recibido financiación de la empresa MTP S.L.
 ---
-Organization:MTP
-Program: Information Technology Program of the Community of Madrid
-PI: Lourdes López
-DOI:
-This project has recived funding from MTP S.L. company.
+## Funding
+
+This project received funding from the company MTP S.L.

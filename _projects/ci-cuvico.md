@@ -19,9 +19,16 @@ image: /assets/img/proyectos/ci-cuvico/logo.webp
 lang: en
 old_urls:
 - /research/projects/ci-cuvico/
+traduccion: borrador
+texto_es: |-
+  ## Financiación
+
+  Este proyecto ha recibido financiación de la empresa INVENTIA KINETICS, S.L.
+
+  {% include figura.html src="/assets/img/proyectos/ci-cuvico/inventia-logo.webp" alt="Logotipo de INVENTIA KINETICS, S.L." %}
 ---
 ## Funding
 
-This project has recived funding from the INVENTIA KINETICS, S.L. company.
+This project received funding from the company INVENTIA KINETICS, S.L.
 
-{% include figura.html src="/assets/img/proyectos/ci-cuvico/inventia-logo.webp" alt="This project has recived funding from the INVENTIA KINETICS, S.L. company." %}
+{% include figura.html src="/assets/img/proyectos/ci-cuvico/inventia-logo.webp" alt="INVENTIA KINETICS, S.L. logo" %}

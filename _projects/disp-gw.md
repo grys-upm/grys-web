@@ -5,9 +5,11 @@ acronym: DISP-GW
 title_es: Mejora de la disponibilidad de servidores pasarela
 title_en: Improved Gateway Server Availability
 type: private
+funder: MTP S.L.
 start: 2007-06-01
 end: 2007-10-05
-pi: []
+pi:
+- antonio-da-silva-farina
 domains: []
 lines: []
 repos: []
@@ -15,9 +17,12 @@ image: /assets/img/proyectos/disp-gw/logo.webp
 lang: en
 old_urls:
 - /research/projects/disp-gw/
+traduccion: borrador
+texto_es: |-
+  ## Financiación
+
+  Este proyecto ha recibido financiación de la empresa MTP S.L.
 ---
-Organization:MTP
-Program:
-PI: Antonio Dasilva
-DOI:
-This project has recived funding from MTP S.L. company.
+## Funding
+
+This project received funding from the company MTP S.L.

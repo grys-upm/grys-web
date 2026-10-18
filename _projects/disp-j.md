@@ -5,9 +5,11 @@ acronym: DISP-J
 title_es: Mejora de la disponibilidad de aplicaciones Java
 title_en: Improving the Availability of Java-Based Applications
 type: private
+funder: MTP S.L.
 start: 2008-07-01
 end: 2009-10-30
-pi: []
+pi:
+- antonio-da-silva-farina
 domains: []
 lines: []
 repos: []
@@ -15,9 +17,12 @@ image: /assets/img/proyectos/disp-j/logo.webp
 lang: en
 old_urls:
 - /research/projects/disp-j/
+traduccion: borrador
+texto_es: |-
+  ## Financiación
+
+  Este proyecto ha recibido financiación de la empresa MTP S.L.
 ---
-Organization:MTP
-Program:
-PI: Antonio Dasilva
-DOI:
-This project has recived funding from MTP S.L. company.
+## Funding
+
+This project received funding from the company MTP S.L.

@@ -7,7 +7,7 @@ title_en: Driving Simulators and Geospatial Technologies for Traffic Safety Stud
 type: competitive
 programme: Plan Estatal de Investigación Científica, Técnica y de Innovación 2021-2023
 programme_url: https://www.ciencia.gob.es/InfoGeneralPortal/documento/e1f1deb1-7321-4dd9-b8ca-f97ece358d1c
-funder: Spanish Ministry of Science, Innovation and Universities
+funder: Ministerio de Ciencia, Innovación y Universidades
 grant_ids:
 - PID2021-122471OB-I00
 start: 2022-09-01
@@ -26,14 +26,22 @@ image: /assets/img/proyectos/simgeosev/logo.webp
 lang: en
 old_urls:
 - /research/projects/simgeosev/
+traduccion: borrador
+texto_es: |-
+  ## Personas clave en la UPM
+  - **Dr. Santiago Higuera de Frutos** (GRyS)
+
+  ## Financiación
+
+  Este proyecto ha recibido financiación del **Ministerio de Ciencia, Innovación y Universidades** (PID2021-122471OB-I00) y del FEDER «Una manera de hacer Europa», MCIN/AEI/10.13039/501100011033/
+
+  {% include figura.html src="/assets/img/proyectos/simgeosev/simgeosev-cofinanciadoue-aei.webp" alt="Cofinanciado por la Unión Europea; Ministerio de Ciencia e Innovación; Agencia Estatal de Investigación (AEI)" %}
 ---
 ## Key People at UPM
-- **Dr. Santiago Higuera de Frutos** – Assistant Professor
-
----
+- **Dr. Santiago Higuera de Frutos** (GRyS)
 
 ## Funding
 
 This project has received funding from the **Spanish Ministry of Science, Innovation and Universities** under grant agreement No. PID2021-122471OB-I00, and from ERDF A way of making Europe, MCIN/AEI/10.13039/501100011033/
 
-{% include figura.html src="/assets/img/proyectos/simgeosev/simgeosev-cofinanciadoue-aei.webp" alt="This project has recived funding from Spanish Ministry of Science and Innovation with Project code PID2021-122471OB-I00 and by ERDF A way of making Europe, MCIN/AEI/10.13039/501100011033/" %}
+{% include figura.html src="/assets/img/proyectos/simgeosev/simgeosev-cofinanciadoue-aei.webp" alt="Co-funded by the European Union; Spanish Ministry of Science and Innovation; State Research Agency (AEI)" %}

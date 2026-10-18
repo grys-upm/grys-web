@@ -5,9 +5,11 @@ acronym: PSAV-TIC
 title_es: Pruebas de seguridad y análisis de vulnerabilidades en sistemas TIC
 title_en: Security Tests and Analysis of Vulnerabilities in ICT Systems
 type: private
+funder: MTP S.L.
 start: 2010-11-01
 end: 2011-07-31
-pi: []
+pi:
+- antonio-da-silva-farina
 domains: []
 lines: []
 repos: []
@@ -15,11 +17,12 @@ image: /assets/img/proyectos/psav-tic/logo.webp
 lang: en
 old_urls:
 - /research/projects/psav-tic/
+traduccion: borrador
+texto_es: |-
+  ## Financiación
+
+  Este proyecto ha recibido financiación de la empresa MTP S.L.
 ---
-Start date: 2010-11-01
-End date: 2011-07-31
-Organization:MTP
-Program:
-PI: Antonio Dasilva
-DOI:
-This project has recived funding from MTP S.L. company.
+## Funding
+
+This project received funding from the company MTP S.L.

@@ -29,6 +29,60 @@ image: /assets/img/proyectos/esna/logo.webp
 lang: en
 old_urls:
 - /research/projects/esna/
+traduccion: borrador
+texto_es: |-
+  > *Soluciones de redes inalámbricas de sensores abiertas, interoperables y listas para el mercado.*
+
+  ---
+
+  ## Sobre el proyecto
+
+  El **proyecto ESNA** (ITEA 05023) se centró en crear una **arquitectura estandarizada y un marco de desarrollo** para **redes inalámbricas de sensores (WSN) orientadas a la empresa**.
+  Aportó una **plataforma de código abierto, interoperable y modular** compatible con nodos de sensores comerciales, que ofrecía a empresas y desarrolladores las herramientas necesarias para diseñar, desplegar y validar **experiencias inteligentes y conectadas**.
+
+  El proyecto produjo:
+
+  - Una **arquitectura de referencia** para aplicaciones interoperables basadas en sensores
+  - **Implementaciones de prueba de concepto** con casos de uso reales
+  - **Guías de desarrollo de aplicaciones** para soluciones WSN comerciales
+  - **SDK, middleware y componentes reutilizables** para acelerar su adopción
+
+  Con este enfoque, ESNA contribuyó a los primeros desarrollos del IoT y a la creación de ecosistemas para las **experiencias inteligentes «hazlo tú mismo»**.
+
+  ---
+
+  ## Objetivos
+
+  El proyecto ESNA se propuso:
+
+  - Definir una **arquitectura estándar** para redes inalámbricas de sensores que admita heterogeneidad e interoperabilidad.
+  - Ofrecer **tecnologías de código abierto** para el prototipado y el despliegue rápidos de aplicaciones basadas en sensores.
+  - Desarrollar **servicios de middleware y SDK** para integrar sin fisuras dispositivos, datos y aplicaciones.
+  - Demostrar el **potencial de negocio** de las WSN mediante implementaciones prácticas de prueba de concepto.
+  - Promover **especificaciones de interoperabilidad** que permitan su adopción a largo plazo en entornos comerciales.
+
+  ---
+
+  ## Contribución de la Universidad Politécnica de Madrid (UPM)
+
+  La UPM contribuyó al proyecto ESNA a través del **grupo de investigación GRyS**, apoyando el desarrollo de **arquitecturas IoT y WSN** avanzadas. Sus aportaciones principales fueron:
+
+  - Desarrollo y validación de **especificaciones de interoperabilidad** para sistemas de sensores heterogéneos.
+  - Contribuciones a **componentes de código abierto**, SDK y capas de middleware.
+  - Participación en la creación de **implementaciones de referencia** usadas en las evaluaciones de prueba de concepto.
+  - Apoyo en la definición de **guías de desarrollo de aplicaciones** y buenas prácticas.
+
+  ---
+
+  ## Financiación
+
+  Este proyecto ha recibido financiación de la **Unión Europea** y del **Ministerio de Industria, Comercio y Turismo** en el marco del **programa ITEA**.
+
+  {% include figura.html src="/assets/img/proyectos/esna/itea2.webp" alt="Logotipo del programa ITEA 2" %}
+
+  {% include figura.html src="/assets/img/proyectos/esna/european-commission.webp" alt="Logotipo de la Comisión Europea" %}
+
+  {% include figura.html src="/assets/img/proyectos/esna/logotipo-del-ministerio-de-industria-comercio-y-turismo.webp" alt="Logotipo del Ministerio de Industria, Comercio y Turismo" %}
 ---
 > *Enabling open, interoperable, and business-ready wireless sensor network solutions.*
 
@@ -77,8 +131,8 @@ UPM contributed to the ESNA project through the **GRyS Research Group**, support
 
 This project received funding from the **European Union** and the **Spanish Ministry of Industry, Trade and Tourism** within the framework of the **ITEA Programme**.
 
-{% include figura.html src="/assets/img/proyectos/esna/itea2.webp" alt="This project has received funding from the EU and the Spanish Ministry of Industry, Trade and Tourism under the ITEA Programme" %}
+{% include figura.html src="/assets/img/proyectos/esna/itea2.webp" alt="Logo of the ITEA 2 programme" %}
 
-{% include figura.html src="/assets/img/proyectos/esna/european-commission.webp" alt="This project has received funding from the EU and the Spanish Ministry of Industry, Trade and Tourism under the ITEA Programme" %}
+{% include figura.html src="/assets/img/proyectos/esna/european-commission.webp" alt="Logo of the European Commission" %}
 
-{% include figura.html src="/assets/img/proyectos/esna/logotipo-del-ministerio-de-industria-comercio-y-turismo.webp" alt="This project has received funding from the EU and the Spanish Ministry of Industry, Trade and Tourism under the ITEA Programme" %}
+{% include figura.html src="/assets/img/proyectos/esna/logotipo-del-ministerio-de-industria-comercio-y-turismo.webp" alt="Logo of the Spanish Ministry of Industry, Trade and Tourism" %}

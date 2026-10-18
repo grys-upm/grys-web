@@ -27,6 +27,43 @@ image: /assets/img/proyectos/woo/logo.webp
 lang: en
 old_urls:
 - /research/projects/woo/
+traduccion: borrador
+texto_es: |-
+  El proyecto ITEA 2 Web of Objects desarrolló un enfoque innovador de la automatización de edificios, basado en aplicaciones inteligentes que integran la información de distintos sistemas de control del edificio que hasta entonces funcionaban aislados. El proyecto buscaba crear un modelo de servicios unificado, basado en una arquitectura orientada a servicios, que incorporase la infraestructura de red y sus capacidades como parte de los servicios.
+
+  ## Participación
+  En el proyecto diseñamos, implementamos, validamos y verificamos una propuesta de virtualización de dispositivos y servicios según el modelo de arquitectura de referencia del Internet de las cosas. La propuesta integraba aspectos como:
+  - El descubrimiento de nuevos dispositivos en una red inalámbrica de sensores y de los servicios que ofrecen, con un registro resiliente.
+  - La representación virtual de estos dispositivos y sus servicios mediante contenedores OSGI independientes para cada dispositivo.
+  - La orquestación de nuevos servicios directamente en dispositivos de baja capacidad.
+  - La gestión de los eventos generados por los dispositivos de la red.
+
+  Con este trabajo publicamos una comunicación en congreso {% include cita.html clave="lucas-martínezVirtualizationEventSources2014a" %} y un artículo en revista {% include cita.html clave="lucas-martínezVirtualizationEventSources2014" %}.
+
+  ## Vídeos de demostración
+  Para el demostrador español del proyecto se grabaron varios vídeos. Los dos que se incluyen aquí son aquellos en los que participó GRyS.
+
+  ### Proceso de descubrimiento y registro
+  Este vídeo muestra el proceso de descubrimiento y registro de dispositivos que desarrollamos para el proyecto.
+
+  {% include video.html youtube="oYRuzhXKHCo" titulo="Open Smart Neighborhood, paso 0: registro y descubrimiento de objetos inteligentes" %}
+
+  <p class="pie">Open Smart Neighborhood, paso 0: registro y descubrimiento de objetos inteligentes<br><b>Créditos</b>: <i>vídeo de Web of Objects</i>.</p>
+
+  ### Sistema de detección de anomalías
+  Este vídeo muestra el sistema de detección de anomalías, en el que participamos componiendo el servicio de identificación de presencia y gestionando los eventos generados. Además, nuestro compañero Néstor Lucas-Martínez aparece en el vídeo en el papel del intruso que entra en la casa.
+
+  {% include video.html youtube="C2uN33ZhxFo" titulo="Open Smart Neighborhood, pasos 3 y 4: sistema de monitorización de anomalías" %}
+
+  <p class="pie">Open Smart Neighborhood, pasos 3 y 4: sistema de monitorización de anomalías<br><b>Créditos</b>: <i>vídeo de Web of Objects</i>.</p>
+
+  El resto de vídeos del demostrador español están disponibles en [esta lista de reproducción de YouTube](https://youtu.be/oYRuzhXKHCo?si=CbMMW9gDI_FUTn6K).
+
+  ## Financiación
+
+  {% include figura.html src="/assets/img/proyectos/woo/woo-funding.webp" alt="Logotipos de las entidades financiadoras: ITEA 2 y Ministerio de Industria, Comercio y Turismo" %}
+
+  Este proyecto ha recibido financiación de la Unión Europea y del Ministerio de Industria, Comercio y Turismo en el marco del programa ITEA 2.
 ---
 The ITEA 2 Web of Objects project developed an innovative approach to building automation. This approach utilized smart applications to integrate information from various building-control systems that were previously isolated. The project aimed to create a unified service model based on a service-oriented architecture, incorporating the network infrastructure and its capabilities as part of the services.
 
@@ -40,26 +77,26 @@ In the project, we worked on designing, implementing, validating, and verifying 
 With this work, we published a conference paper {% include cita.html clave="lucas-martínezVirtualizationEventSources2014a" %}, and a journal paper {% include cita.html clave="lucas-martínezVirtualizationEventSources2014" %}.
 
 ## Demonstration Videos
-As part of the Spanish demonstrator for the project, several videos were created. The two included here are those in which I participated.
+As part of the Spanish demonstrator for the project, several videos were created. The two included here are those in which GRyS participated.
 
 ### Discovery and Registration Process
 This video showcases the discovery and registration process of devices that we developed for the project.
 
-{% include video.html youtube="oYRuzhXKHCo" %}
+{% include video.html youtube="oYRuzhXKHCo" titulo="Open Smart Neighborhood - Step 0 - Registering and Discovering Smart Objects" %}
 
 <p class="pie">Open Smart Neighborhood - Step 0 - Registering and Discovering Smart Objects<br><b>Credit</b>: <i>Video by Web of Objects</i>.</p>
 
 ### Anomaly Detection System
 This video demonstrates the anomaly detection system, in which we participated by composing the presence identification service and handling the generated events. Additionally, our colleague Néstor Lucas-Martínez appears in the video playing the role of the intruder accessing the house.
 
-{% include video.html youtube="C2uN33ZhxFo" %}
+{% include video.html youtube="C2uN33ZhxFo" titulo="Open Smart Neighborhood - Steps 3 & 4 - Anomaly Monitoring System" %}
 
 <p class="pie">Open Smart Neighborhood - Steps 3 & 4 - Anomaly Monitoring System<br><b>Credit</b>: <i>Video by Web of Objects</i>.</p>
 
 The rest of the videos from the Spanish demonstrator are available in [this YouTube playlist](https://youtu.be/oYRuzhXKHCo?si=CbMMW9gDI_FUTn6K).
 
-## Disclaimer
+## Funding
 
-{% include figura.html src="/assets/img/proyectos/woo/woo-funding.webp" alt="This project has received funding from European Union and the Spanish Ministry of Industry, Trade and Tourism in the framework of the ITEA 2 Program" %}
+{% include figura.html src="/assets/img/proyectos/woo/woo-funding.webp" alt="Logos of the funding bodies: ITEA 2 and the Spanish Ministry of Industry, Trade and Tourism" %}
 
-<p class="pie"><p>This project has received funding from European Union and the Spanish Ministry of Industry, Trade and Tourism in the framework of the ITEA 2 Program.</p></p>
+This project received funding from the European Union and the Spanish Ministry of Industry, Trade and Tourism within the ITEA 2 Programme.
