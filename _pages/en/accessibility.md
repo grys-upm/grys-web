@@ -24,7 +24,6 @@ This website is **partially compliant** with Royal Decree 1112/2018 (requirement
 
 **Non-conformities:**
 
-- Some texts (biographies, project descriptions and news) are only available in English. They are marked with their language so that screen readers pronounce them correctly, and a notice is shown.
 - Some images inherited from the previous site do not yet have a descriptive text alternative.
 
 **Content outside the scope of the applicable legislation:**
@@ -39,12 +38,14 @@ This website is **partially compliant** with Royal Decree 1112/2018 (requirement
 - Atkinson Hyperlegible typeface, designed for people with low vision.
 - Full keyboard navigation, visible focus and a skip link. Menus, tabs and filters follow WAI-ARIA patterns.
 - Information never relies on colour alone: project status uses shape and text.
+- The sticky header never hides the element with keyboard focus, and it stops being sticky when the screen has little height available (for example, at 400% zoom).
+- All content is available in Spanish and English. Some Spanish translations of biographies, projects and news are provisional until the group reviews them; this is indicated with a notice, and the original text is marked with its language so that screen readers pronounce it correctly.
 - Your system's reduced-motion preference is respected.
 - The site works without JavaScript: tabs are shown as consecutive blocks and filters are hidden.
 
 ## Preparation of this statement
 
-This statement was prepared on **{{ page.a11y_preparacion | date: "%d/%m/%Y" }}** through a **self-assessment** by the group, using automated tools on every build (contrast, heading structure, language, links and text alternatives) and manual review. Last reviewed: **{{ page.a11y_revision | date: "%d/%m/%Y" }}**.
+This statement was prepared on **{{ page.a11y_preparacion | date: "%d/%m/%Y" }}** through a **self-assessment** by the group. Every change to the site is audited automatically before publication: WCAG 2.2 A and AA rules with axe-core in light and dark mode, reflow at 320 px width, a full keyboard walk-through (visible, unobscured focus and no keyboard traps), contrast, heading structure, language, links and text alternatives. A manual review with keyboard, screen reader and zoom has also been carried out, following the checklist in `docs/REVISION_ACCESIBILIDAD.md` in the repository. Last reviewed: **{{ page.a11y_revision | date: "%d/%m/%Y" }}**.
 
 ## Feedback and contact details
 

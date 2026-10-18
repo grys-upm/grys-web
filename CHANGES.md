@@ -1,5 +1,21 @@
 # Registro de cambios
 
+## Fase 4 · Paso 4.4: teclado, revisión manual y declaración (18-10-2026)
+
+- **Auditoría de teclado automática** en `auditar.mjs`. Recorre con el tabulador una página de cada plantilla (las de primer y segundo nivel, la ficha más grande de cada tipo y la portada en inglés) a 1280×900 y a 320×256 (zoom del 400 %). Comprueba:
+  - enlace «Saltar al contenido» (2.4.1);
+  - foco visible (2.4.7);
+  - foco no tapado por la cabecera fija (2.4.11);
+  - trampas de teclado (2.1.2).
+
+  Es bloqueante, como el resto, y los hallazgos salen en el registro como `TECLADO …`.
+- **Foco no tapado (2.4.11):** `scroll-padding-top` con la altura de la cabecera fija. Con menos de 500 px de alto útil la cabecera deja de ser fija.
+- **Revisión manual:** nueva lista `docs/REVISION_ACCESIBILIDAD.md` (teclado, lector de pantalla, zoom, colores forzados, WCAG 2.2, contenido) con plantilla de resultados para una *issue*.
+- **Declaración de accesibilidad (ES/EN):**
+  - se quita «textos solo en inglés» de la falta de conformidad (ya hay traducción de todo);
+  - se explican las traducciones provisionales y la cabecera;
+  - se describen las auditorías reales.
+
 ## Fase 4 · Paso 4.3d: noticias en español (18-10-2026)
 
 - **Borradores en español** (`texto_es`, `traduccion: borrador`) de las 8 noticias con texto; las demás solo tienen título, que ya estaba en los dos idiomas. Con esto, ningún texto se muestra solo en inglés en la versión española.

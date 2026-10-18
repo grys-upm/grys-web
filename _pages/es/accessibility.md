@@ -24,7 +24,6 @@ Este sitio web es **parcialmente conforme** con el RD 1112/2018 (requisitos de l
 
 **Falta de conformidad:**
 
-- Algunos textos (biografías, descripciones de proyectos y noticias) solo están en inglés. Están marcados con el idioma correspondiente para que los lectores de pantalla los pronuncien bien, y se indica con un aviso.
 - Algunas imágenes heredadas del sitio anterior todavía no tienen un texto alternativo descriptivo.
 
 **Contenido que no entra en el ámbito de la legislación aplicable:**
@@ -39,12 +38,14 @@ Este sitio web es **parcialmente conforme** con el RD 1112/2018 (requisitos de l
 - Tipografía Atkinson Hyperlegible, diseñada para personas con baja visión.
 - Navegación completa con teclado, foco visible y enlace para saltar al contenido. Los menús, las pestañas y los filtros siguen los patrones de WAI-ARIA.
 - La información nunca depende solo del color: los estados de los proyectos usan forma y texto.
+- La cabecera fija no tapa el elemento que tiene el foco, y deja de ser fija cuando la pantalla tiene poca altura útil (por ejemplo, con un zoom del 400 %).
+- Todo el contenido está en español y en inglés. Algunas traducciones de biografías, proyectos y noticias son provisionales hasta que el grupo las revise; se indica con un aviso, y el texto original se marca con su idioma para que los lectores de pantalla lo pronuncien bien.
 - Se respeta la preferencia de movimiento reducido del sistema.
 - El sitio funciona sin JavaScript: sin él, las pestañas se muestran como bloques seguidos y los filtros no aparecen.
 
 ## Preparación de esta declaración
 
-Esta declaración se preparó el **{{ page.a11y_preparacion | date: "%d/%m/%Y" }}** mediante una **autoevaluación** del propio grupo, con herramientas automáticas en cada compilación (comprobación de contraste, estructura de encabezados, idioma, enlaces y texto alternativo) y revisión manual. Última revisión: **{{ page.a11y_revision | date: "%d/%m/%Y" }}**.
+Esta declaración se preparó el **{{ page.a11y_preparacion | date: "%d/%m/%Y" }}** mediante una **autoevaluación** del propio grupo. Cada cambio en el sitio se audita automáticamente antes de publicarse: reglas WCAG 2.2 A y AA con axe-core en modo claro y oscuro, adaptación a 320 px de ancho, recorrido completo con el teclado (foco visible y no tapado, sin trampas), contraste, estructura de encabezados, idioma, enlaces y texto alternativo. Además, se ha hecho una revisión manual con teclado, lector de pantalla y zoom siguiendo la lista de `docs/REVISION_ACCESIBILIDAD.md` del repositorio. Última revisión: **{{ page.a11y_revision | date: "%d/%m/%Y" }}**.
 
 ## Observaciones y datos de contacto
 
