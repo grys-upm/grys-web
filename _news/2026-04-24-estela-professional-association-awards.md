@@ -4,11 +4,8 @@ title_es: Doble reconocimiento para Estela Mora-Barba en los XIX Premios COITT
 title_en: Double Recognition for GRyS Researcher Estela Mora-Barba at the XIX COITT Awards
 category: award
 image: /assets/img/noticias/2026-04-24-estela-professional-association-awards/20260424jr-0411.webp
+detail: true
 lang: en
-old_urls:
-- /news/2026-04-24-estela-professional-association-awards/
-- /news/2026-04-24-estela-professional-association-awards.html
-traduccion: borrador
 texto_es: |-
   Nos alegra mucho compartir que **Estela Mora-Barba**, graduada en el doble grado en Ingeniería Electrónica de Comunicaciones e Ingeniería Telemática por la UPM, ha recibido dos premios en los **XIX Premios Futuro de las Telecomunicaciones** del Colegio Oficial de Ingenieros Técnicos de Telecomunicación (COITT). La ceremonia se celebró el **24 de abril de 2026** en la Universidad Politécnica de Madrid, campus de Moncloa.
 
@@ -39,13 +36,19 @@ texto_es: |-
   - [Trabajo del primer premio (Ingeniería Telemática), Archivo Digital UPM](https://oa.upm.es/89100/)
   - [Trabajo del tercer premio (Sistemas Electrónicos), Archivo Digital UPM](https://oa.upm.es/90982/)
   - [Grupo de investigación GRyS](https://grys.etsist.upm.es/)
+traduccion: borrador
+old_urls:
+  - /news/2026-04-24-estela-professional-association-awards/
+  - /news/2026-04-24-estela-professional-association-awards.html
+published: true
 ---
-We are very pleased to share that **Estela Mora-Barba**, a double graduate in Electronic Communications Engineering and Telematic Engineering from UPM, has received two awards in the **XIX Premios Futuro de las Telecomunicaciones** organized by the Colegio Oficial de Ingenieros Técnicos de Telecomunicación (COITT). The ceremony took place on **April 24, 2026** at the Universidad Politécnica de Madrid – Moncloa.
+
+We are very pleased to share that **Estela Mora-Barba**, a double graduate in Electronic Communications Engineering and Telematic Engineering from UPM, has received two awards in the **XIX Premios Futuro de las Telecomunicaciones** organized by the Colegio Oficial de Ingenieros Técnicos de Telecomunicación (COITT). The ceremony took place on **April 24, 2026** at the Universidad Politécnica de Madrid (Campus Moncloa).
 
 Estela won:
 
-- **First Prize in Telematic Engineering** for her work *"Smart management system for unmanned autonomous vehicles in precision agriculture on Edge"*.
-- **Third Prize in Electronic Systems Engineering** for her work *"Device for generating prescription maps using embedded AI in precision agriculture"*.
+- **First Prize in Telematic Engineering** for her work _"Smart management system for unmanned autonomous vehicles in precision agriculture on Edge"_.
+- **Third Prize in Electronic Systems Engineering** for her work _"Device for generating prescription maps using embedded AI in precision agriculture"_.
 
 In her acceptance speech, Estela proudly represented our **Teleco Campus Sur (ETSIST - UPM)**, the school where she studied and where GRyS is based. It was a special moment to be welcomed by our sister school, **Teleco Moncloa (ETSIT - UPM)**, who hosted the ceremony with great warmth.
 
