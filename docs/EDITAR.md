@@ -57,3 +57,7 @@ Para **crear** una noticia, un evento, una convocatoria, un miembro o un proyect
 4. **Sin permiso de edición.** Si no estás en el equipo `web`, la issue queda pendiente hasta que alguien del equipo la revise y le añada la etiqueta **generar-pr**.
 
 Los formularios solo **crean** contenido nuevo. Para cambiar algo que ya existe, usa el gestor.
+
+## 6. Publicaciones
+
+Las publicaciones no se editan aquí: se añaden en la **biblioteca de Zotero del grupo**. Cada lunes se sincronizan solas, y se abre una propuesta de cambios para revisarlas. Para que una publicación salga en la ficha de un proyecto o de una línea, ponle en Zotero las etiquetas `proyecto:nextarc`, `linea:iot`…

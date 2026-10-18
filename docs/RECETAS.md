@@ -125,6 +125,15 @@ Añade la clave en `_data/positions.yml` con `es_m`, `es_f` y `en` (por ejemplo,
 
 Escribe `{% include cita.html clave="ClaveBibTeX" %}` (la clave es la del `.bib`, lo que va tras `@article{`). Se muestra «Autor et al. (año)» enlazado: si es una publicación, a Publicaciones ya filtrada; si es una tesis, a su entrada en Tesis. Si la clave no existe, la comprobación da un error.
 
+## Añadir o corregir una publicación
+
+1. **En Zotero.** Añade o corrige la publicación en la biblioteca del grupo, no en `papers.bib`: los cambios hechos a mano en ese fichero se perderían en la siguiente sincronización.
+2. **Clasificarla.** Ponle en Zotero las etiquetas `proyecto:<slug>` (p. ej. `proyecto:nextarc`) y `linea:<id>` (p. ej. `linea:iot`), una por proyecto o línea.
+3. **Esperar o lanzar la sincronización.** Espera al lunes, o lánzala ya en *Actions → Sincronizar con Zotero → Run workflow*. Revisa y fusiona la PR que se abre.
+4. **Portal Científico y Archivo Digital.** Los identificadores `portal_upm` y `archivo_upm` se ponen en `_bibliography/etiquetas.yml` (o con `scripts/cruce_portal.py`).
+
+Las **tesis** no vienen de Zotero: se añaden a mano en `_bibliography/theses.bib`, con `level`, `supervisor` y, si lo hay, `award`.
+
 ## Añadir una asignatura
 
 En `_data/docencia.yml` → `asignaturas`, cada elemento lleva:
