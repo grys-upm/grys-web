@@ -15,6 +15,7 @@
 
   Es informativo.
 - Las comprobaciones informativas están explicadas en `docs/COMPILAR.md` §3.
+- **Corrección:** la primera ejecución de «Enlaces nuevos» comprobó las direcciones `http://localhost/…` de `lighthouserc.json`, que solo existen dentro de Lighthouse. Ahora se excluyen las direcciones locales y los ficheros de configuración de las comprobaciones.
 
 ## Fase 5 · Paso 5.1: vista previa de cada PR y Dependabot (18-10-2026)
 

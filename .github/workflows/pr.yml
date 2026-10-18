@@ -203,7 +203,7 @@ jobs:
           HEAD: ${{ github.event.pull_request.head.sha }}
         run: |
           mkdir -p reports
-          git diff --unified=0 "$BASE" "$HEAD" -- . ':(exclude).github' ':(exclude)scripts' ':(exclude)*.lock' \
+          git diff --unified=0 "$BASE" "$HEAD" -- . ':(exclude).github' ':(exclude)scripts' ':(exclude)*.lock' ':(exclude)lighthouserc.json' ':(exclude)lychee.toml' \
             | grep '^+' | grep -v '^+++' | sed 's/^+//' > reports/lineas-nuevas.txt || true
           grep -oE 'https?://[^ )"<>]+' reports/lineas-nuevas.txt | sort -u > reports/urls-nuevas.txt || true
           N=$(wc -l < reports/urls-nuevas.txt)

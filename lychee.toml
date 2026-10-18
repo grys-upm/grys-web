@@ -21,6 +21,8 @@ cache = true
 max_cache_age = "3d"
 
 exclude = [
+  # Direcciones locales (configuración de Lighthouse, ejemplos de la documentación)
+  '^https?://(localhost|127\.0\.0\.1)([:/]|$)',
   # El propio sitio: sus enlaces internos se comprueban aparte, y el dominio
   # sirve todavía la web antigua hasta la migración (fase 6).
   '^https?://grys\.etsist\.upm\.es',
