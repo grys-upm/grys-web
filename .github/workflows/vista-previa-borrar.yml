@@ -1,0 +1,67 @@
+# Borra la vista previa de una PR cuando se cierra (fusionada o no).
+# · A mano («Run workflow»): borra las vistas previas de todas las PR que ya
+#   no están abiertas (por si alguna se quedó sin borrar).
+# Configuración (una vez): docs/COMPILAR.md, apartado «Vista previa de cada PR».
+name: Borrar vista previa
+
+on:
+  pull_request:
+    types: [closed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: read
+
+env:
+  PREVIEW_REPO: ${{ vars.PREVIEW_REPO || 'grys-upm/grys-web-previews' }}
+
+jobs:
+  borrar:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    concurrency:
+      group: vista-previa-borrar
+      cancel-in-progress: false
+    steps:
+      - name: ¿Está configurada la vista previa?
+        id: clave
+        env:
+          KEY: ${{ secrets.PREVIEW_DEPLOY_KEY }}
+        run: |
+          if [ -n "$KEY" ]; then echo "ok=true" >> "$GITHUB_OUTPUT"; else
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Vista previa sin configurar (falta el secreto PREVIEW_DEPLOY_KEY): no hay nada que borrar"
+          fi
+      - name: Qué vistas previas se borran
+        if: steps.clave.outputs.ok == 'true'
+        id: cuales
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "modo=borrar" >> "$GITHUB_OUTPUT"
+            echo "arg=pr-${{ github.event.pull_request.number }}" >> "$GITHUB_OUTPUT"
+          else
+            ABIERTAS=$(gh pr list --repo "$GITHUB_REPOSITORY" --state open --limit 200 --json number --jq '[.[].number | "pr-\(.)"] | join(" ")')
+            echo "modo=borrar-salvo" >> "$GITHUB_OUTPUT"
+            echo "arg=$ABIERTAS" >> "$GITHUB_OUTPUT"
+          fi
+      # Este repositorio (solo para el script), desde la rama principal: la
+      # referencia de una PR cerrada puede no existir ya.
+      - uses: actions/checkout@v6
+        if: steps.clave.outputs.ok == 'true'
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          sparse-checkout: scripts
+      - uses: actions/checkout@v6
+        if: steps.clave.outputs.ok == 'true'
+        with:
+          repository: ${{ env.PREVIEW_REPO }}
+          ssh-key: ${{ secrets.PREVIEW_DEPLOY_KEY }}
+          path: previas
+          fetch-depth: 1
+      - name: Borrar y publicar
+        if: steps.clave.outputs.ok == 'true'
+        working-directory: previas
+        run: bash ../scripts/vista_previa.sh "${{ steps.cuales.outputs.modo }}" "${{ steps.cuales.outputs.arg }}" | tee -a "$GITHUB_STEP_SUMMARY"

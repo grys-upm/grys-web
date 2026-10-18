@@ -246,6 +246,8 @@ video: Vídeo
 video_link: Ver en YouTube
 lang_notice: "Este contenido solo está disponible en inglés."
 translation_draft: "Traducción provisional al español, pendiente de revisión por el grupo."
+preview_banner: "Vista previa de la propuesta de cambios n.º %N%: no es la web publicada."
+preview_link: "Ver la propuesta en GitHub"
 title_notice: "(título en inglés)"
 period: Periodo
 since: desde

@@ -1,6 +1,10 @@
-# Compila cada Pull Request (sin publicar) y deja el sitio como artefacto
-# descargable «sitio-compilado» para revisarlo. La vista previa publicada
-# por PR llega en la fase 5.
+# Cada Pull Request:
+# · job «build» (Comprobar PR): comprueba datos, compila, verifica y audita
+#   la accesibilidad. Es el que exige la protección de la rama main.
+# · job «preview» (Vista previa): compila el sitio con la ruta de la vista
+#   previa, lo publica en el repositorio de vistas previas y deja el enlace en
+#   un comentario de la PR. No bloquea: si falla o no está configurado, la PR
+#   se puede fusionar igual. Configuración (una vez): docs/COMPILAR.md.
 name: Comprobar PR
 
 on:
@@ -88,3 +92,94 @@ jobs:
           name: sitio-compilado
           path: _site
           retention-days: 7
+
+  preview:
+    name: Vista previa
+    # Solo PR del propio repositorio (las de forks y Dependabot no tienen acceso
+    # a la clave) y no las de Dependabot (no cambian el contenido).
+    if: github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]'
+    runs-on: ubuntu-24.04   # fijo: ubuntu-latest pasa a Ubuntu 26 desde el 19-10-2026
+    permissions:
+      contents: read
+      pull-requests: write   # para el comentario con el enlace
+    concurrency:
+      group: vista-previa-${{ github.event.pull_request.number }}
+      cancel-in-progress: true   # un push nuevo sustituye a la compilación anterior
+    env:
+      PREVIEW_REPO: ${{ vars.PREVIEW_REPO || 'grys-upm/grys-web-previews' }}
+      PR: ${{ github.event.pull_request.number }}
+    steps:
+      - name: ¿Está configurada la vista previa?
+        id: clave
+        env:
+          KEY: ${{ secrets.PREVIEW_DEPLOY_KEY }}
+        run: |
+          if [ -n "$KEY" ]; then echo "ok=true" >> "$GITHUB_OUTPUT"; else
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::Vista previa sin configurar (falta el secreto PREVIEW_DEPLOY_KEY). Ver docs/COMPILAR.md, «Vista previa de cada PR»"
+          fi
+      - uses: actions/checkout@v6
+        if: steps.clave.outputs.ok == 'true'
+      - uses: actions/setup-python@v6
+        if: steps.clave.outputs.ok == 'true'
+        with:
+          python-version: "3.12"
+      - name: Fuentes
+        if: steps.clave.outputs.ok == 'true'
+        continue-on-error: true
+        run: ls assets/fonts/*.woff2 >/dev/null 2>&1 || python scripts/descargar_fuentes.py
+      - uses: ruby/setup-ruby@v1
+        if: steps.clave.outputs.ok == 'true'
+        with:
+          bundler-cache: true
+      - name: Métricas de citas · las últimas de main
+        if: steps.clave.outputs.ok == 'true'
+        uses: actions/cache/restore@v5
+        continue-on-error: true
+        with:
+          path: _data/metricas_pubs.yml
+          key: metricas-pubs-${{ github.run_id }}
+          restore-keys: metricas-pubs-
+      - name: Compilar la vista previa
+        if: steps.clave.outputs.ok == 'true'
+        id: compilar
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+        run: |
+          OWNER="${PREVIEW_REPO%%/*}"; NOMBRE="${PREVIEW_REPO#*/}"
+          printf 'preview_pr: %s\npreview_pr_url: "%s"\n' "$PR" "$PR_URL" > _config.preview.yml
+          bundle exec jekyll build --config _config.yml,_config.staging.yml,_config.preview.yml --baseurl "/$NOMBRE/pr-$PR"
+          echo "url=https://$OWNER.github.io/$NOMBRE/pr-$PR/" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@v6
+        if: steps.clave.outputs.ok == 'true'
+        with:
+          repository: ${{ env.PREVIEW_REPO }}
+          ssh-key: ${{ secrets.PREVIEW_DEPLOY_KEY }}
+          path: previas
+          fetch-depth: 1
+      - name: Publicar la vista previa
+        if: steps.clave.outputs.ok == 'true'
+        working-directory: previas
+        run: bash ../scripts/vista_previa.sh publicar "pr-$PR" ../_site
+      - name: Enlace en la PR
+        if: steps.clave.outputs.ok == 'true'
+        uses: actions/github-script@v7
+        env:
+          URL: ${{ steps.compilar.outputs.url }}
+        with:
+          script: |
+            const marca = "<!-- grys-vista-previa -->";
+            const sha = context.payload.pull_request.head.sha.slice(0, 7);
+            const body = [marca,
+              `🔎 **Vista previa de esta PR:** ${process.env.URL}`,
+              `· English: ${process.env.URL}en/`,
+              "",
+              `Corresponde al commit \`${sha}\` y se actualiza con cada *push*. GitHub tarda 1–2 minutos en publicarla después de que termine este paso.`,
+              "No es la web publicada ni la indexan los buscadores. Se borra al cerrar la PR."].join("\n");
+            const { owner, repo } = context.repo;
+            const issue_number = context.payload.pull_request.number;
+            const todos = await github.paginate(github.rest.issues.listComments, { owner, repo, issue_number });
+            const previo = todos.find(c => c.body && c.body.includes(marca));
+            if (previo) await github.rest.issues.updateComment({ owner, repo, comment_id: previo.id, body });
+            else await github.rest.issues.createComment({ owner, repo, issue_number, body });
+            await core.summary.addRaw(`Vista previa: ${process.env.URL}`).write();
