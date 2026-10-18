@@ -566,6 +566,7 @@ details.met .note{font-size:13.5px;color:var(--muted);max-width:460px;margin:0}
 .attr{margin-top:24px;font-size:13px}
 
 /* Reflow a 320 px (WCAG 1.4.10, fase 4.2) */
+.factsheet,.factsheet a,.prose a{overflow-wrap:anywhere;word-break:break-word}
 .detail > *,.grid2 > *,.split > *,.labband .wrap > *{min-width:0}
 .prose,.factsheet dd,.detail p,.detail li,.pubs h3,.au,.repo h3{overflow-wrap:anywhere}
 .chips .chip{white-space:normal;max-width:100%}

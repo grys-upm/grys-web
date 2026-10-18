@@ -241,6 +241,16 @@ async function main() {
   console.log(`auditar: ${paginas.length} páginas en ${Math.round((Date.now() - t0) / 1000)} s · ` +
     `${wcag} reglas WCAG incumplidas · reflow ${ag.reflow.length} · errores JS ${ag.js.length} · ` +
     `no completadas ${ag.fallos.length} → reports/a11y/axe.md`);
+  // DETALLE EN EL REGISTRO: lo imprescindible para corregir, sin tener que abrir el informe
+  for (const g of ag.reglas.filter(r => !r.bp)) {
+    const e = [...g.ejemplos.values()][0];
+    console.log(`  WCAG ${g.id} (${g.wcag.join(", ")}): ${g.paginas.size} páginas · p. ej. ${e.url} · ${e.target}`);
+  }
+  for (const r of ag.reflow) {
+    console.log(`  REFLOW ${r.url}: ${r.scrollWidth} px · ${r.culpables.map(c => c.desc + " (" + c.right + ")").join(", ")}`);
+  }
+  for (const e of ag.js.slice(0, 10)) console.log(`  JS ${e.url} (${e.modo}): ${e.error.slice(0, 160)}`);
+  for (const f of ag.fallos.slice(0, 10)) console.log(`  NO COMPLETADA ${f.url} (${f.modo}): ${f.fallo.slice(0, 160)}`);
   if (ESTRICTO && (wcag || ag.reflow.length || ag.js.length || ag.fallos.length)) process.exit(1);
 }
 
