@@ -601,3 +601,7 @@ li:has(h3:target){outline:2px solid var(--accent);outline-offset:6px;border-radi
    de la pantalla. */
 @media(max-width:640px){html{scroll-padding-top:100px}}
 @media(max-height:500px){header.site{position:static}html{scroll-padding-top:0}[id^="ref-"]{scroll-margin-top:0}}
+
+/* Franja de las vistas previas de PR (solo existe con site.preview_pr) */
+.aviso-previa{background:var(--btn-bg);color:var(--btn-fg);text-align:center;padding:8px 16px;margin:0;font-weight:700}
+.aviso-previa a{color:inherit;text-decoration:underline}

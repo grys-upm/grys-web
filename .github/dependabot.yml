@@ -1,0 +1,44 @@
+# Dependabot: propone por PR las actualizaciones de dependencias.
+# · Una vez al mes y agrupadas: como mucho una PR por tipo (acciones, gemas,
+#   paquetes de la auditoría de accesibilidad).
+# · Cada PR pasa «Comprobar PR» como cualquier otra: si compila y las
+#   comprobaciones salen bien, se puede fusionar; si fallan, no se fusiona y se
+#   avisa a quien mantenga el sitio.
+# · Las versiones MAYORES de las gemas (Jekyll 5, jekyll-scholar 8…) no se
+#   proponen: pueden romper el sitio y se hacen a mano, con calma.
+# · Las alertas de seguridad llegan aparte y en cualquier momento (Settings →
+#   Code security → Dependabot security updates).
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      acciones:
+        patterns: ["*"]
+    commit-message:
+      prefix: "Dependencias (acciones)"
+
+  - package-ecosystem: bundler
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      gemas:
+        patterns: ["*"]
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+    commit-message:
+      prefix: "Dependencias (gemas)"
+
+  - package-ecosystem: npm
+    directory: /scripts/a11y
+    schedule:
+      interval: monthly
+    groups:
+      auditoria:
+        patterns: ["*"]
+    commit-message:
+      prefix: "Dependencias (auditoría)"

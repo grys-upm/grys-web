@@ -246,6 +246,8 @@ video: Video
 video_link: Watch on YouTube
 lang_notice: "This content is only available in English."
 translation_draft: "Provisional English translation, pending review by the group."
+preview_banner: "Preview of pull request #%N%: this is not the published website."
+preview_link: "View the pull request on GitHub"
 title_notice: "(title in English)"
 period: Period
 since: since

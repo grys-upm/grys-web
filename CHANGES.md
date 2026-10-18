@@ -1,5 +1,17 @@
 # Registro de cambios
 
+## Fase 5 · Paso 5.1: vista previa de cada PR y Dependabot (18-10-2026)
+
+- **Vista previa por PR:**
+  - nuevo job `preview` en `pr.yml`: compila con la ruta `/grys-web-previews/pr-N/`, lo publica en el repositorio `grys-upm/grys-web-previews` (`scripts/vista_previa.sh`) y deja o actualiza un comentario con el enlace en la PR;
+  - la página lleva la franja «Vista previa de la propuesta de cambios n.º N»;
+  - `vista-previa-borrar.yml` la borra al cerrar la PR, y a mano borra las de todas las PR cerradas;
+  - el repositorio de vistas previas guarda un solo commit, para que no crezca;
+  - no bloquea la PR y, sin configurar, solo deja un aviso.
+
+  Configuración en `docs/COMPILAR.md`, apartado 5.
+- **Dependabot** (`.github/dependabot.yml`): acciones, gemas (sin versiones mayores) y paquetes de la auditoría, una vez al mes y agrupados.
+
 ## Fase 4 · Paso 4.4: teclado, revisión manual y declaración (18-10-2026)
 
 - **Auditoría de teclado automática** en `auditar.mjs`. Recorre con el tabulador una página de cada plantilla (las de primer y segundo nivel, la ficha más grande de cada tipo y la portada en inglés) a 1280×900 y a 320×256 (zoom del 400 %). Comprueba:

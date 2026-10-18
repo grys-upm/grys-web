@@ -6,6 +6,9 @@
 </head>
 <body>
 <a class="skip" href="#main">{{ t.skip }}</a>
+{%- if site.preview_pr %}
+<p class="aviso-previa">{{ t.preview_banner | replace: "%N%", site.preview_pr }} <a href="{{ site.preview_pr_url }}">{{ t.preview_link }}</a></p>
+{%- endif %}
 {% include iconos.svg %}
 {% include header.html %}
 <main id="main" tabindex="-1">

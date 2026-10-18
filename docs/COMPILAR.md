@@ -57,11 +57,48 @@ En Windows, Ruby se instala con [RubyInstaller](https://rubyinstaller.org/), eli
 
 En *Actions*, abre la ejecución fallida, despliega el paso en rojo y copia el texto completo del error. Para el paso *Compilar*, copia el registro entero.
 
-## 5. Migración a producción (cuando el sitio nuevo esté validado)
+## 5. Vista previa de cada PR (una sola vez)
+
+Cada PR (también las que creen el gestor de contenidos y los formularios de *issue* de la fase 5) se publica en una dirección propia, por ejemplo `https://grys-upm.github.io/grys-web-previews/pr-12/`. El enlace aparece en un comentario de la propia PR, y la página lleva una franja que indica que es una vista previa. Se borra sola al cerrar la PR.
+
+GitHub Pages solo permite una web por repositorio, así que las vistas previas van en un **repositorio aparte**. Para que GitHub Actions pueda escribir en él se usa una **clave de despliegue**, que solo da acceso a ese repositorio.
+
+1. **Crear el repositorio.** En `grys-upm`, crea el repositorio **público** `grys-web-previews` y marca *Add a README file*.
+2. **Activar Pages en él.** En *Settings → Pages → Source*, elige **Deploy from a branch**, rama `main` y carpeta `/ (root)`.
+3. **Crear la pareja de claves.** En tu ordenador (Linux, macOS o PowerShell de Windows 10/11):
+   ```
+   ssh-keygen -t ed25519 -N "" -C "grys-web vista previa" -f vista-previa
+   ```
+   Se crean dos ficheros: `vista-previa` (privada) y `vista-previa.pub` (pública).
+4. **Clave pública → repositorio de vistas previas.** En `grys-web-previews`, *Settings → Deploy keys → Add deploy key*:
+   - título: `grys-web`;
+   - contenido: el de `vista-previa.pub`;
+   - ✅ marca **Allow write access**.
+5. **Clave privada → repositorio de la web.** En `grys-web`, *Settings → Secrets and variables → Actions → New repository secret*:
+   - nombre: `PREVIEW_DEPLOY_KEY`;
+   - valor: el contenido completo de `vista-previa`, incluidas las líneas `-----BEGIN…` y `-----END…`.
+6. **Borrar las claves de tu ordenador.** Ya no hacen falta; si algún día se pierden, se crean otras.
+7. *(Solo si el repositorio de vistas previas tiene otro nombre.)* En `grys-web`, *Settings → Secrets and variables → Actions → Variables*, crea `PREVIEW_REPO` con el valor `organización/nombre`.
+
+Mientras no esté configurado, las PR funcionan igual: el paso «Vista previa» solo deja un aviso. Sigue existiendo el artefacto `sitio-compilado` para descargar. Las PR de Dependabot y las de *forks* no tienen vista previa, porque GitHub no les da acceso a la clave.
+
+**Limpieza:** si alguna vista previa se queda sin borrar, lanza *Actions → Borrar vista previa → Run workflow*. Borra las de todas las PR que ya no están abiertas.
+
+## 6. Dependabot
+
+`.github/dependabot.yml` revisa una vez al mes las acciones de GitHub, las gemas de Ruby y los paquetes de la auditoría de accesibilidad, y propone una PR por tipo. Las PR de Dependabot pasan «Comprobar PR» como cualquier otra:
+- **si todo sale en verde**, se pueden fusionar;
+- **si algo falla**, no se fusionan: se deja un comentario y quien mantenga el sitio lo revisa.
+
+Las versiones mayores de las gemas (Jekyll 5…) no se proponen; se actualizan a mano. Para recibir también las **alertas de seguridad**, activa en `grys-web` *Settings → Code security → Dependabot alerts* y *Dependabot security updates*.
+
+Para Dependabot con las gemas hace falta que **`Gemfile.lock` esté en el repositorio**. Si aún no lo subiste, mira el paso 6 del apartado 1.
+
+## 7. Migración a producción (cuando el sitio nuevo esté validado)
 
 1. **Copia de seguridad.** En `grys-upm/grys-upm.github.io`, crea la rama `archivo-al-folio` desde `main`.
-2. **Sustituir el contenido.** Sustituye el contenido de `main` por el de `web-grys`. Conserva el historial y no hace falta copiar `_config.staging.yml`.
+2. **Sustituir el contenido.** Sustituye el contenido de `main` por el de `grys-web`. Conserva el historial y no hace falta copiar `_config.staging.yml`.
 3. **Añadir el dominio.** Añade el fichero `CNAME` con una sola línea: `grys.etsist.upm.es`.
 4. **Activar el despliegue nuevo.** En *Settings → Pages*, pon *Source: GitHub Actions*. El dominio personalizado se mantiene. Desactiva el despliegue antiguo a `gh-pages` y borra esa rama.
-5. **Retirar las pruebas.** Desactiva Pages en `web-grys` o archiva ese repositorio.
+5. **Retirar las pruebas.** Desactiva Pages en `grys-web` o archiva ese repositorio, y archiva también `grys-web-previews` si la web de producción no va a usar vistas previas. Si las va a usar, mueve el secreto `PREVIEW_DEPLOY_KEY` al repositorio de producción.
 6. **Revisar las redirecciones.** Comprueba que las URL antiguas redirigen, por ejemplo `/team/` → `/en/group/team/`.
