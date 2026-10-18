@@ -304,10 +304,13 @@ for d in load_yaml(os.path.join(ROOT, "_data", "demostradores.yml")) or []:
     if d.get("repo"):
         _ref(o, "repositorio (en _data/repos.yml)", d["repo"], repo_names)
 for of in (load_yaml(os.path.join(ROOT, "_data", "transferencia.yml")) or {}).get("ofertas") or []:
-    _pr = of.get("proteccion") or {}
-    if _pr.get("tipo") in ("registro_pi", "patente", "modelo_utilidad") and not str(_pr.get("numero") or "").strip():
-        warn(f"_data/transferencia.yml ({(of.get('title') or {}).get('es')}): falta el "
-             f"{'asiento registral' if _pr['tipo'] == 'registro_pi' else 'número de publicación'} (sale «por completar»)")
+    _nombre = (of.get("title") or {}).get("es")
+    for _pr in of.get("proteccion") or []:
+        if _pr.get("tipo") in ("registro_pi", "patente", "modelo_utilidad") and not str(_pr.get("numero") or "").strip():
+            warn(f"_data/transferencia.yml ({_nombre}): falta el "
+                 f"{'asiento registral' if _pr['tipo'] == 'registro_pi' else 'número de publicación'} (sale «por completar»)")
+    if "licencia" in of and not str(of.get("licencia") or "").strip():
+        warn(f"_data/transferencia.yml ({_nombre}): falta la licencia de código abierto (sale «por completar»)")
     if of.get("repo"):
         _ref("_data/transferencia.yml", "repositorio (en _data/repos.yml)", of["repo"], repo_names)
 for p in (load_yaml(os.path.join(ROOT, "_data", "estudiantes.yml")) or {}).get("propuestas") or []:
@@ -431,7 +434,7 @@ FILTERS = LIQUID4_FILTERS | JEKYLL_FILTERS | OWN_FILTERS
 
 LIQ_FILES = []
 for pat in ("_layouts/*.html", "_includes/*.html", "_includes/*/*.html", "_includes/*.svg", "_pages/*/*.md",
-            "*.html", "*.xml", "*.txt",
+            "_includes/*.json", "*.json", "*.html", "*.xml", "*.txt",
             "_members/*.md", "_projects/*.md", "_lines/*.md", "_domains/*.md", "_news/*.md",
             "_events/*.md", "_opportunities/*.md"):
     LIQ_FILES += glob.glob(os.path.join(ROOT, pat))

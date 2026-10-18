@@ -33,6 +33,7 @@
       {%- endfor %}
       </ul>
     </nav>
+    <button class="iconbtn" id="searchbtn" type="button" aria-haspopup="dialog" aria-controls="search" aria-keyshortcuts="/" hidden>{% include icono.html n="search" %}<span>{{ t.search }}</span></button>
     <button class="iconbtn burger" id="burger" type="button" aria-expanded="false" aria-controls="drawer">{% include icono.html n="menu" %}<span class="sr">{{ t.menu }}</span></button>
   </div>
   <div class="drawer" id="drawer">

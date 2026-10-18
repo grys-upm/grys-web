@@ -25,6 +25,8 @@ Only two preferences, in your browser's local storage (`localStorage`). They are
 
 The language is not stored: it is part of the page address (`/en/` for English).
 
+The **search** works inside your browser: it downloads an index from this same site, and what you type is never sent to any server.
+
 ## Hosting
 
 This is a static site hosted on **GitHub Pages**. Like any web server, GitHub may log visitors' IP addresses for security and operational purposes, as described in its [privacy statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement).

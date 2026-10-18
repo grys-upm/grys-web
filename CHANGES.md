@@ -1,5 +1,27 @@
 # Registro de cambios
 
+## Fase 3 · Paso 3.7: buscador; corrección de la protección de resultados (18-10-2026)
+
+- **Buscador** (como en el mockup): botón «Buscar» en la cabecera y atajo de teclado `/`.
+  - **Índice:** se genera al compilar, uno por idioma (`/indice-busqueda.json` y `/en/indice-busqueda.json`, desde `_includes/indice-busqueda.json`). Contiene secciones, proyectos, personas, líneas, ámbitos, demostradores, noticias, eventos, repositorios y las 169 publicaciones; las publicaciones abren Publicaciones con `?q=` (DOI o título).
+  - **Descarga y privacidad:** el índice se descarga la primera vez que se abre el buscador, y la búsqueda se hace en el navegador, sin enviar nada a ningún servidor.
+  - **Cómo busca:** sin mayúsculas ni tildes; todas las palabras deben aparecer. Ordena primero los títulos que empiezan por la consulta y después por tipo. Muestra hasta 20 resultados con su tipo (Proyecto, Persona…) y anuncia el recuento a los lectores de pantalla.
+  - **Accesibilidad:** diálogo modal (`role="dialog"`, `aria-modal`) con el foco atrapado; Esc cierra; ↑/↓ recorren los resultados; al cerrar, el foco vuelve a donde estaba.
+  - **Sin JavaScript** no aparece ni el botón ni el diálogo.
+  - **Prueba:** el JS se ha probado con un DOM simulado (13 casos).
+- **`verificar_sitio.py`** comprueba ahora que los dos índices:
+  - son JSON válido y están en su idioma;
+  - tienen todos los tipos de contenido y los 34 proyectos;
+  - **no tienen ninguna URL rota**.
+  
+  También comprueba que toda página con botón tiene el diálogo.
+- **Privacidad:** una frase sobre el buscador («lo que escribes no se envía a ningún servidor»).
+- **Corrección: protección de resultados.** Un programa puede estar inscrito en el Registro de la Propiedad Intelectual **y además** ser código abierto, así que son dos datos independientes:
+  - `proteccion` es ahora una **lista** de títulos (registro de PI, patente, modelo de utilidad o secreto industrial), porque un resultado puede tener varios;
+  - `licencia` (SPDX) va aparte, en la oferta. Si no se indica, se toma la del repositorio, y enlaza a spdx.org.
+  
+  Se elimina el tipo «código abierto» de `proteccion`. SISS queda con su registro de PI y la licencia pendientes, y `comprobar_datos` avisa de las dos.
+
 ## Fase 3 · Paso 3.6c: Prensa, Accesibilidad y Privacidad; protección de resultados (18-10-2026)
 
 - **Transferencia: protección de cada resultado.** Campo nuevo `proteccion` en las ofertas (`_data/transferencia.yml`, con esquema): `tipo` (registro de PI, patente, modelo de utilidad, secreto industrial o código abierto), `numero` (asiento registral o nº de publicación), `oficina`, `fecha`, `titulares`, `url` y `licencia`.

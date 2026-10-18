@@ -1,0 +1,72 @@
+{%- comment -%}
+  Índice del buscador del sitio, en el idioma de la página que lo incluye
+  (indice-busqueda.es.json / .en.json, en la raíz). Se genera en cada
+  compilación a partir de los MISMOS datos que las páginas.
+  Cada elemento: k = tipo · t = título · s = subtítulo · u = URL · x = más texto
+  en el que buscar (no se muestra). El primer elemento (k: "meta") no es un
+  resultado: así cada elemento puede empezar por «,» sin dejar comas sueltas.
+  assets/js/grys.js («Buscador») lo descarga la primera vez que se abre.
+{%- endcomment -%}
+{%- include page-vars.html -%}
+{%- assign ib_pubs_url = 'publications' | route_url -%}
+[{"k":"meta","lang":{{ lang | jsonify }},"build":{{ site.time | date: "%Y-%m-%d" | jsonify }}}
+{%- comment -%} ---- Páginas de los menús ---- {%- endcomment -%}
+{%- for r in site.data.routes.pages %}{% if r.id != "home" %}
+{%- assign ib_t = r.title | l10n -%}{%- assign ib_s = r.desc | l10n | default: "" -%}
+,{"k":"page","t":{{ ib_t | jsonify }},"s":{{ ib_s | jsonify }},"u":{{ r.id | route_url | jsonify }}}
+{%- endif %}{% endfor %}
+{%- comment -%} ---- Proyectos ---- {%- endcomment -%}
+{%- assign ib_list = site.projects | sort: "start" | reverse -%}
+{%- for p in ib_list %}
+{%- assign ib_u = p | detail_url -%}{%- if ib_u -%}
+{%- assign ib_t = p | tr: "title" | default: "" -%}
+{%- capture ib_s %}{% if p.programme %}{{ p.programme }} · {% endif %}{% if p.start %}{{ p.start | date: "%Y" }}–{{ p.end | date: "%Y" }}{% endif %}{% endcapture -%}
+,{"k":"project","t":{{ p.acronym | append: " · " | append: ib_t | jsonify }},"s":{{ ib_s | strip | jsonify }},"u":{{ ib_u | jsonify }},"x":{{ p.title_es | append: " " | append: p.title_en | append: " " | append: p.call | jsonify }}}
+{%- endif -%}
+{%- endfor %}
+{%- comment -%} ---- Personas (actuales, antiguas e in memoriam) ---- {%- endcomment -%}
+{%- for m in site.members %}
+{%- assign ib_u = m | detail_url -%}{%- if ib_u -%}
+{%- capture ib_s %}{% include puesto.html m=m %}{% endcapture -%}
+,{"k":"member","t":{{ m.given | append: " " | append: m.family | jsonify }},"s":{{ ib_s | strip_html | strip | jsonify }},"u":{{ ib_u | jsonify }},"x":{{ m.bib_names | join: " " | default: "" | jsonify }}}
+{%- endif -%}
+{%- endfor %}
+{%- comment -%} ---- Líneas y ámbitos ---- {%- endcomment -%}
+{%- for l in site.lines %}
+{%- assign ib_u = l | detail_url -%}{%- if ib_u -%}
+,{"k":"line","t":{{ l | tr: "title" | jsonify }},"s":{{ l | tr: "desc" | default: "" | jsonify }},"u":{{ ib_u | jsonify }}}
+{%- endif -%}
+{%- endfor %}
+{%- assign ib_dom = 'domains' | route_url -%}
+{%- for d in site.domains %}
+,{"k":"domain","t":{{ d | tr: "title" | jsonify }},"s":{{ d | tr: "subtitle" | default: "" | jsonify }},"u":{{ ib_dom | append: "#" | append: d.key | jsonify }},"x":{{ d | tr: "desc" | default: "" | jsonify }}}
+{%- endfor %}
+{%- comment -%} ---- Noticias y eventos ---- {%- endcomment -%}
+{%- assign ib_news = 'news' | route_url -%}
+{%- assign ib_list = site.news | sort: "date" | reverse -%}
+{%- for n in ib_list %}
+{%- assign ib_u = n | detail_url | default: ib_news -%}
+,{"k":"news","t":{{ n | tr: "title" | jsonify }},"s":{{ n.date | date: "%d/%m/%Y" | jsonify }},"u":{{ ib_u | jsonify }}}
+{%- endfor %}
+{%- assign ib_ev = 'events' | route_url -%}
+{%- assign ib_list = site.events | sort: "date" | reverse -%}
+{%- for e in ib_list %}
+{%- capture ib_s %}{{ e.date | date: "%d/%m/%Y" }}{% if e.place %} · {{ e.place }}{% endif %}{% endcapture -%}
+,{"k":"event","t":{{ e | tr: "title" | jsonify }},"s":{{ ib_s | jsonify }},"u":{{ ib_ev | jsonify }}}
+{%- endfor %}
+{%- comment -%} ---- OpenTech Lab: demostradores y software ---- {%- endcomment -%}
+{%- assign ib_demo = 'demonstrators' | route_url -%}
+{%- for d in site.data.demostradores %}
+,{"k":"demo","t":{{ d.title | l10n | jsonify }},"s":{{ d.desc | l10n | jsonify }},"u":{{ ib_demo | append: "#" | append: d.key | jsonify }}}
+{%- endfor %}
+{%- assign ib_sw = 'software' | route_url -%}
+{%- for r in site.data.repos %}
+,{"k":"repo","t":{{ r.owner | default: "grys-upm" | append: "/" | append: r.name | jsonify }},"s":{{ r | tr: "desc" | default: "" | jsonify }},"u":{{ ib_sw | jsonify }}}
+{%- endfor %}
+{%- comment -%} ---- Publicaciones (abren Publicaciones filtrada) ---- {%- endcomment -%}
+{%- for p in site.data.pubs %}
+{%- if p.doi != "" %}{% assign ib_q = p.doi %}{% else %}{% assign ib_q = p.title %}{% endif -%}
+{%- assign ib_q = ib_q | url_encode -%}
+,{"k":"pub","t":{{ p.title | jsonify }},"s":{{ p.year | append: " · " | append: p.venue | jsonify }},"u":{{ ib_pubs_url | append: "?q=" | append: ib_q | jsonify }},"x":{{ p.authors | append: " " | append: p.doi | jsonify }}}
+{%- endfor %}
+]

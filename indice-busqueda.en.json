@@ -1,0 +1,9 @@
+---
+layout: null
+lang: en
+lang-exclusive: [en]
+page_id: search_index
+permalink: /indice-busqueda.json
+sitemap: false
+---
+{% include indice-busqueda.json %}
