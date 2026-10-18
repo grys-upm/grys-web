@@ -1,5 +1,16 @@
 # Registro de cambios
 
+## Fase 4 · Paso 4.3c: textos de proyectos en español (18-10-2026)
+
+- **Borradores en español** (`texto_es`, `traduccion: borrador`) de los 32 proyectos con texto.
+- **20 proyectos antiguos** (AWARE, CI-RTI, Análisis de vulnerabilidades ×2, DISP-GW, DISP-J, EXHAUSTIF, I3RES, LifeWear, MIRACLE, Periféricos, PSAV-TIC, RIMSI, SCOS, SECUAREA, SODA, SSBJP, TAPS, TIC-Spaces, uSWN) tenían como texto un volcado de la web antigua («Organization: … Program: … PI: … DOI:»), que se veía como un único párrafo. Esos datos pasan a la cabecera y se ven en la ficha técnica en los dos idiomas:
+  - `funder`, `funding`, `programme`, `call`, `grant_ids`;
+  - `pi` (miembros: José-Fernán Martínez, Ana Belén García, Lourdes López, Antonio Da Silva, Vicente Hernández) o `pi_name` (CI-RTI: Enrique Alba, U. Málaga);
+  - enlaces de LifeWear.
+  El texto queda en una frase de financiación.
+- **Inglés corregido** donde hacía falta: «recived», párrafo anidado en WoO, apartados vacíos, primera persona, textos alternativos de logotipos. Detalle en PENDIENTES C19.
+- Los vídeos de DEMANES y WoO tienen título propio en cada idioma (`titulo=`), que es el nombre accesible del reproductor.
+
 ## Fase 4 · Paso 4.3b: biografías en español y anclas de las citas (18-10-2026)
 
 - **Corrección:** el enlace de una cita a una tesis (p. ej., el TFM en DEMANES) abría Tesis, pero no la pestaña ni la entrada. jekyll-scholar solo pone `id` en su propio `<span>`, que la plantilla `_layouts/bib.html` no usa. Ahora cada entrada lleva `<h3 id="ref-<clave>">` (clave en ASCII), `cita.html` enlaza a `#ref-<clave>`, la cabecera fija no tapa el destino y la entrada se resalta. `verificar_sitio.py` comprueba que toda cita con ancla llega a un `id` existente.

@@ -28,6 +28,75 @@ image: /assets/img/proyectos/diyse/logo.webp
 lang: en
 old_urls:
 - /research/projects/diyse/
+traduccion: borrador
+texto_es: |-
+  > *Que usuarios sin conocimientos técnicos puedan crear experiencias inteligentes y conectadas en el incipiente mundo del Internet de las cosas.*
+
+  ---
+
+  ## Sobre el proyecto
+
+  **DiYSE (Do-it-Yourself Smart Experiences)** fue una iniciativa de investigación **ITEA 2** que buscaba democratizar la creación de aplicaciones del **Internet de las cosas (IoT)**.
+  El proyecto reunió a **más de 40 socios** de la industria y la universidad para construir un ecosistema completo que permitiera a:
+
+  - Usuarios cotidianos
+  - Desarrolladores
+  - Fabricantes de dispositivos
+  - Proveedores de servicios
+
+  crear, compartir y ejecutar aplicaciones con **sensores en red, objetos inteligentes y entornos interactivos**.
+
+  DiYSE se adelantó a la revolución del IoT al abordar los retos de la heterogeneidad de dispositivos, la interoperabilidad semántica, la creación de aplicaciones y su ejecución escalable en entornos distribuidos.
+
+  ---
+
+  ## Objetivos
+
+  DiYSE se propuso:
+
+  - Que usuarios sin conocimientos técnicos pudieran crear y personalizar aplicaciones IoT
+  - Reducir la complejidad de conectar sensores, dispositivos y objetos inteligentes
+  - Ofrecer capas de abstracción semántica para interpretar los datos con sentido
+  - Permitir a los desarrolladores compartir componentes reutilizables en un mercado abierto
+  - Ofrecer un entorno de ejecución distribuido y escalable para aplicaciones IoT en tiempo real
+  - Impulsar un ecosistema sostenible de innovación IoT en múltiples sectores
+
+  Con estos objetivos, DiYSE ofreció un **flujo de creación completo**, desde la instalación de sensores y la generación de datos hasta la construcción y ejecución de aplicaciones IoT a gran escala.
+
+  ---
+
+  ## Logros principales
+  - Soporte para las etapas *instalar y conectar*, *percibir*, *crear* y *ejecutar* del flujo de desarrollo de DiYSE
+  - Contribución a plataformas experimentales como **SenseTale**
+  - Participación en talleres europeos de innovación IoT y en actividades de normalización
+
+  ---
+
+  ## Resultados e impacto
+
+  DiYSE aportó:
+
+  - Plataformas IoT experimentales públicas para despliegues a gran escala
+  - Herramientas para crear aplicaciones IoT con la sencillez de PowerPoint
+  - Marcos de enriquecimiento semántico y de abstracción de sensores
+  - Arquitecturas distribuidas de flujo de datos para el procesamiento en tiempo real
+  - Activos de hardware, middleware y software que hoy se usan en productos M2M e IoT
+
+  Varios socios industriales de primer nivel (Alcatel-Lucent, Turkcell, Thales, Philips, Archos, Finwe, Neotiq, There) incorporaron resultados de DiYSE a **soluciones comerciales** en telecomunicaciones, domótica, vida asistida, gestión de emergencias y medios digitales.
+
+  DiYSE recibió el **ITEA Achievement Award 2012 (medalla de plata)** por su contribución innovadora a la democratización del IoT en Europa.
+
+  ---
+
+  ## Financiación
+
+  Este proyecto ha recibido financiación de la **Unión Europea** y del **Ministerio de Industria, Comercio y Turismo** en el marco del programa ITEA 2 (TSI-020400-2009-124, ITEA 08005).
+
+  {% include figura.html src="/assets/img/proyectos/diyse/european-commission.webp" alt="Comisión Europea" %}
+
+  {% include figura.html src="/assets/img/proyectos/diyse/itea2.webp" alt="Programa ITEA 2" %}
+
+  {% include figura.html src="/assets/img/proyectos/diyse/logotipo-del-ministerio-de-industria-comercio-y-turismo.webp" alt="Ministerio de Industria, Comercio y Turismo" %}
 ---
 > *Enabling non-technical users to create smart, connected experiences in an emerging Internet-of-Things world.*
 

@@ -31,6 +31,59 @@ image: /assets/img/proyectos/demeter/logo.webp
 lang: en
 old_urls:
 - /research/projects/demeter/
+traduccion: borrador
+texto_es: |-
+  > *Hacia un futuro sostenible, basado en datos e interoperable para la agricultura europea.*
+
+  ---
+
+  ## Sobre el proyecto
+
+  **DEMETER** es una iniciativa emblemática de **Horizonte 2020** dirigida a transformar el sector agroalimentario europeo mediante **soluciones de agricultura inteligente interoperables y basadas en datos**.
+  Con despliegues en **18 países** (15 de ellos Estados miembros de la UE), DEMETER integra tecnologías IoT, analítica de datos avanzada y modelos interoperables para lograr una **producción agrícola más sostenible, eficiente y resiliente**.
+
+  El proyecto se apoya en:
+
+  - **Sensores y dispositivos IoT** (más de 38 000 desplegados)
+  - **Datos integrados de fuentes diversas** (datos abiertos, satélite, sistemas heredados, sistemas geográficos)
+  - **Un enfoque centrado en el agricultor** en toda la cadena de valor agroalimentaria
+  - **Estándares de interoperabilidad** que dan forma al Modelo de Información Agrícola
+
+  Con estos pilares, DEMETER mejora la **gestión de recursos**, apoya la **toma de decisiones basada en datos** y contribuye a los objetivos generales de la UE de **agricultura sostenible**, **seguridad alimentaria** y **protección del medio ambiente**.
+
+  ---
+
+  ## Objetivos
+
+  DEMETER se propone:
+
+  - Desplegar **plataformas de agricultura inteligente interoperables** en **20 pilotos** y **25 emplazamientos**.
+  - Implicar y apoyar a **6000 agricultores** de sectores productivos variados (lácteo, cárnico, hortícola, frutícola y cultivos extensivos).
+  - Demostrar la **interoperabilidad real** entre tecnologías IoT y servicios basados en datos.
+  - Integrar múltiples fuentes de datos (IoT, datos abiertos, imágenes de satélite, sistemas heredados) en un **Modelo de Información Agrícola unificado**.
+  - Garantizar la **seguridad, la privacidad y la confidencialidad** en toda la cadena de valor agroalimentaria.
+  - Hacer posible «**hacer más con menos**» mediante optimización, prácticas sostenibles y herramientas de soporte a decisiones.
+  - Impulsar un **ecosistema IoT abierto y sostenible** que promueva la innovación y nuevas oportunidades de negocio en la agricultura europea.
+
+  ---
+
+  ## Contribución de la Universidad Politécnica de Madrid (UPM)
+
+  La UPM participó en DEMETER a través del **grupo de investigación GRyS**, contribuyendo a los fundamentos técnicos de unos sistemas agrícolas inteligentes, seguros e interoperables. Sus aportaciones principales fueron:
+
+  - **Arquitecturas IoT e interoperabilidad semántica**, en apoyo de la normalización del Modelo de Información Agrícola.
+  - **Metodologías de analítica de datos y soporte a decisiones** para la gestión sostenible de recursos.
+  - **Integración de flujos de datos heterogéneos**, incluidos sistemas heredados y redes de sensores.
+  - **Pruebas y validación** en pilotos seleccionados, garantizando la robustez y un diseño centrado en el usuario.
+  - **Difusión y transferencia de conocimiento**, en apoyo de buenas prácticas y de su adopción por la comunidad en toda la UE.
+
+  ---
+
+  ## Financiación
+
+  Este proyecto ha recibido financiación del **programa de investigación e innovación Horizonte 2020 de la Unión Europea** en virtud del acuerdo de subvención n.º **857202**.
+
+  {% include figura.html src="/assets/img/proyectos/demeter/european-commission.webp" alt="Este proyecto ha recibido financiación de la Comisión Europea en el programa Horizonte 2020 en virtud del acuerdo de subvención n.º 857202" %}
 ---
 > *Towards a sustainable, data-driven and interoperable future for European agriculture.*
 

@@ -29,11 +29,16 @@ image: /assets/img/proyectos/accus/logo.webp
 lang: en
 old_urls:
 - /research/projects/accus/
+traduccion: borrador
+texto_es: |-
+  El proyecto ACCUS abordó el reto de integrar sistemas urbanos como el tráfico, la energía o el alumbrado exterior, gestionados por sistemas embebidos independientes. Esta integración buscaba hacer posibles nuevas aplicaciones y optimizar el rendimiento conjunto sin alterar los fines ni las políticas de cada sistema. ACCUS se centró en tres innovaciones principales: una plataforma de integración y coordinación de sistemas urbanos, una arquitectura de control adaptativo y cooperativo, y metodologías y herramientas para aplicaciones colaborativas en tiempo real. El proyecto validó su sistema y sus herramientas en un caso de uso ampliado en Polonia, apoyándose en los resultados de otros proyectos ARTEMIS y en un consorcio con amplia experiencia en programas europeos y nacionales.
+
+  ## Financiación
+
+  Este proyecto ha recibido financiación de la Empresa Común ARTEMIS (código de proyecto ARTEMIS-333020-1).
 ---
 The ACCUS project tackled the challenge of integrating urban systems like traffic, energy, and outdoor lighting, which are managed by independent embedded systems. This integration aimed to enable new applications and optimize collective performance without disrupting the individual systems’ purposes and policies. ACCUS focused on three main innovations: creating an integration and coordination platform for urban systems, developing an adaptive and cooperative control architecture, and providing methodologies and tools for real-time collaborative applications. The project validated its system and tools through an extended use case in Poland, leveraging the work of several other ARTEMIS projects and a consortium with extensive experience in European and National programs.
 
-## Participation
+## Funding
 
-## Disclaimer
-
-<p>This project has recived funding from the Artemis program with Project code ARTEMIS-333020-1.</p>
+This project received funding from the ARTEMIS Joint Undertaking (project code ARTEMIS-333020-1).

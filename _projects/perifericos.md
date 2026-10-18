@@ -5,9 +5,11 @@ acronym: PERIFERICOS
 title_es: PERIFÉRICOS
 title_en: PERIFERICOS
 type: private
+funder: TELICE
 start: 2015-08-01
 end: 2016-03-31
-pi: []
+pi:
+- vicente-hernandez-diaz
 domains: []
 lines: []
 repos: []
@@ -15,9 +17,12 @@ image: /assets/img/proyectos/perifericos/logo.webp
 lang: en
 old_urls:
 - /research/projects/perifericos/
+traduccion: borrador
+texto_es: |-
+  ## Financiación
+
+  Este proyecto ha recibido financiación de la empresa TELICE.
 ---
-Organization:TELICE
-Program:
-PI: Vicente Hernández Díaz
-DOI:
-This project has recived funding from the TELICE company.
+## Funding
+
+This project received funding from the company TELICE.

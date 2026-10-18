@@ -34,6 +34,78 @@ image: /assets/img/proyectos/nextarc/logo.webp
 lang: en
 old_urls:
 - /research/projects/nextarc/
+traduccion: borrador
+texto_es: |-
+  > *Una IA y un IoT fiables para ciudades, industrias y movilidad sostenibles en Europa.*
+
+  ---
+
+  ## Sobre el proyecto
+
+  **NexTArc** es un proyecto de Horizonte Europa de la Empresa Común Chips (Chips JU) que reúne a **38 socios de 10 países** para impulsar la próxima generación de **tecnologías de IA en el borde e IoT fiables** para sociedades sostenibles y resilientes frente al clima.
+
+  El proyecto se centra en tres ámbitos clave:
+
+  - **Barrios inteligentes, sostenibles y habitables (SLN)**
+  - **Espacios industriales inteligentes, sostenibles y transparentes (STI)**
+  - **Movilidad multimodal fiable y respetuosa con el medio ambiente (TEM)**
+
+  Combinando:
+  - **IA embebida de bajo consumo**
+  - **Arquitecturas ciberresilientes**
+  - **Computación de altas prestaciones confiable**
+  - **Una pila de soluciones integral**
+
+  NexTArc contribuye a la visión de la UE de la **Ley de Chips** y del **Reglamento de Ciberseguridad**.
+
+  ---
+
+  ## Objetivos
+
+  NexTArc se propone:
+
+  - Acelerar la adopción de tecnologías de IA y conectividad
+  - Mejorar la eficiencia de la transmisión de datos (**+40 %**) reduciendo el consumo de energía (**–30 %**)
+  - Garantizar diseños de hardware y software seguros, protegidos y abiertos
+  - Alinearse con la innovación de código abierto y con los principales estándares de la industria
+
+  Con este enfoque integrado, NexTArc aportará **15 innovaciones clave** para reforzar el liderazgo europeo en **tecnologías digitales sostenibles y fiables** para la vida urbana, la industria y la movilidad.
+
+  ---
+
+  ## Contribución de la Universidad Politécnica de Madrid (UPM)
+
+  La UPM, a través del **grupo de investigación GRyS**, contribuye a NexTArc en varias áreas clave:
+
+  - **Gestión de la investigación**: participación en la coordinación del proyecto y en su gestión científica y técnica (WP1).
+  - **Modelado semántico**: liderazgo de la especificación de las necesidades de fiabilidad y resiliencia (T2.3) y apoyo a la definición de requisitos (T2.4).
+  - **IA en el borde y explicable**:
+    - Diseño de hardware optimizado para IA (T5.1)
+    - Inteligencia embebida y soluciones de IA en el borde (T5.3), con contribución a la *innovación clave 2.2* (conciencia situacional basada en IA)
+    - IA escalable, modular y explicable en entornos distribuidos (T5.4)
+  - **Validación y demostración**: diseño de los escenarios de validación del UC3 y de las demostraciones de movilidad y logística (T7.1, T7.2).
+  - **Difusión**: publicación de resultados científicos y contribución a las actividades de difusión del proyecto (WP9).
+
+  ### Contribuciones a los casos de uso
+  - **UC1**: experiencia en modelado semántico para la fiabilidad y la resiliencia.
+  - **UC2**: métodos de IA en el borde y marcos de interoperabilidad semántica.
+  - **UC3**: liderazgo en navegación autónoma, IA explicable, seguridad de los CPS, soporte a decisiones basado en IA para la movilidad, IA con la persona en el bucle para generar confianza e interoperabilidad semántica entre modos de transporte.
+
+  ### Personas clave en la UPM
+  - **Dr. Néstor Lucas-Martínez**: profesor permanente laboral, **investigador principal de NexTArc** en la UPM
+  - **Prof. José Fernán Martínez-Ortega**: catedrático, **director del grupo de investigación GRyS**
+
+  Otros miembros del equipo: Vicente Hernández-Díaz, Pedro Castillejo Parrilla, Mario San Emeterio, Yiting Wang y Estela Mora-Barba.
+
+  ---
+
+  ## Financiación
+
+  Este proyecto ha recibido financiación del **programa de investigación e innovación Horizonte Europa de la Unión Europea** en virtud del acuerdo de subvención n.º 101194287, y del **Ministerio de Ciencia, Innovación y Universidades** (PCI2025-163248).
+
+  {% include figura.html src="/assets/img/proyectos/nextarc/nextarc-chipsju-horizon.webp" alt="Este proyecto ha recibido financiación del programa de investigación e innovación Horizonte Europa de la Unión Europea en virtud del acuerdo de subvención n.º 101194287" %}
+
+  {% include figura.html src="/assets/img/proyectos/nextarc/miciu-cofinanciado-aei.webp" alt="Este proyecto ha recibido financiación del Ministerio de Ciencia, Innovación y Universidades (PCI2025-163248)" %}
 ---
 > *Shaping trustworthy AI and IoT for sustainable cities, industries, and mobility in Europe.*
 
@@ -91,7 +163,7 @@ UPM, through the **GRyS Research Group**, contributes to NexTArc in several key 
 - **UC3**: Lead contributions on autonomous navigation, explainable AI, CPS safety, AI-based decision support for mobility, human-in-the-loop AI for trust, and semantic interoperability across transport modes.
 
 ### Key People at UPM
-- **Dr. Néstor Lucas-Martínez** – Associate Professor, **Principal Investigator for NexTArc** at UPM  
+- **Dr. Néstor Lucas-Martínez** – Associate Professor (Profesor Permanente Laboral), **Principal Investigator for NexTArc** at UPM  
 - **Prof. José Fernán Martínez-Ortega** – Full Professor, **GRyS Research Group Lead**
 
 Other team members include Vicente Hernández-Díaz, Pedro Castillejo Parrilla, Mario San Emeterio, Yiting Wang, Estela Mora-Barba.

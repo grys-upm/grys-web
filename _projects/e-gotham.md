@@ -32,6 +32,65 @@ image: /assets/img/proyectos/e-gotham/logo.webp
 lang: en
 old_urls:
 - /research/projects/e-gotham/
+traduccion: borrador
+texto_es: |-
+  > *Sentando las bases de ecosistemas de microrredes escalables, interoperables y sostenibles.*
+
+  ---
+
+  ## Sobre el proyecto
+
+  **e-GOTHAM** fue un proyecto **FP7-JTI ARTEMIS** dirigido a hacer posible un nuevo modelo de **demanda energética agregada** basado en el concepto de **microrred**.
+  Su objetivo era integrar mejor las fuentes de energía renovable, mejorar la eficiencia de la gestión de la red e impulsar una nueva generación de **tecnologías energéticamente eficientes** y de **modelos de negocio**.
+
+  El proyecto aportó:
+
+  - Una **solución completa de microrred** para entornos residenciales, terciarios e industriales
+  - Una **arquitectura abierta** que favorece la interoperabilidad y la escalabilidad
+  - Una **capa de middleware inteligente** para comunicaciones en tiempo real y optimización energética
+  - Modelos y algoritmos que relacionan **energía**, **coste**, **contaminación** y **patrones de comportamiento**
+  - Un **modelo de comunicación adaptativo *just-in-time*** para protocolos heterogéneos
+
+  Con estos desarrollos, e-GOTHAM contribuyó a dar forma a las redes eléctricas inteligentes de nueva generación, centradas en la sostenibilidad, la eficiencia y la implicación de los usuarios.
+
+  ---
+
+  ## Objetivos
+
+  e-GOTHAM se propuso:
+
+  - Implantar un **nuevo modelo de demanda energética agregada** que ajuste dinámicamente oferta y demanda.
+  - Aumentar la integración de **fuentes de energía renovable**, reduciendo las emisiones de carbono.
+  - Ofrecer herramientas que mejoren la **conciencia energética** de los usuarios y optimicen el consumo.
+  - Crear una **arquitectura abierta, escalable y segura** para la gestión de microrredes.
+  - Desarrollar un **middleware** que dé soporte a la interoperabilidad, las medidas en tiempo real y comunicaciones fiables.
+  - Construir una **red de sistemas embebidos a gran escala** para la gestión inteligente de la energía.
+  - Hacer posibles **innovaciones orientadas al mercado** que respondan a las necesidades de productores de energía, operadores de microrredes, consumidores y reguladores.
+  - Crear un **ecosistema** que impulse nuevos servicios y productos más allá de la duración del proyecto.
+
+  ---
+
+  ## Contribución de la Universidad Politécnica de Madrid (UPM)
+
+  La UPM, a través del **grupo de investigación GRyS**, contribuyó a e-GOTHAM en varias áreas tecnológicas y científicas clave:
+
+  - **Diseño e integración** de tecnologías de middleware abiertas e interoperables para entornos de redes eléctricas inteligentes.
+  - **Desarrollo de modelos y algoritmos** de optimización energética dinámica entre componentes heterogéneos de la microrred.
+  - Apoyo a la creación de **redes de sistemas embebidos escalables** para la monitorización y el control en tiempo real.
+  - Colaboración en **estrategias de gestión inteligente de datos** que relacionan energía, contaminación, coste y comportamiento.
+  - Participación en **despliegues piloto** que validaron el sistema en contextos operativos reales.
+
+  ---
+
+  ## Financiación
+
+  Este proyecto ha recibido financiación de la **Unión Europea** en el marco del **programa FP7-JTI ARTEMIS**, con los códigos de proyecto **ART-010000-2012-3** / **ARTEMIS-295378**.
+
+  {% include figura.html src="/assets/img/proyectos/e-gotham/eu-fp7-logo.webp" alt="Logotipo del Séptimo Programa Marco de la Unión Europea" %}
+
+  {% include figura.html src="/assets/img/proyectos/e-gotham/artemis-ia.webp" alt="Logotipo de ARTEMIS Industry Association" %}
+
+  {% include figura.html src="/assets/img/proyectos/e-gotham/logotipo-del-ministerio-de-industria-energia-y-turismo.webp" alt="Logotipo del Ministerio de Industria, Energía y Turismo" %}
 ---
 > *Building the foundations for scalable, interoperable and sustainable microgrid ecosystems.*
 
@@ -85,8 +144,8 @@ UPM, through the **GRyS Research Group**, contributed to e-GOTHAM in several key
 
 This project received funding from the **European Union** under the **FP7-JTI ARTEMIS programme**, project codes **ART-010000-2012-3** / **ARTEMIS-295378**.
 
-{% include figura.html src="/assets/img/proyectos/e-gotham/eu-fp7-logo.webp" alt="This project has received funding from the European Union under the FP7-JTI ARTEMIS programme" %}
+{% include figura.html src="/assets/img/proyectos/e-gotham/eu-fp7-logo.webp" alt="Logo of the European Union's Seventh Framework Programme" %}
 
-{% include figura.html src="/assets/img/proyectos/e-gotham/artemis-ia.webp" alt="This project has received funding from the European Union under the FP7-JTI ARTEMIS programme" %}
+{% include figura.html src="/assets/img/proyectos/e-gotham/artemis-ia.webp" alt="Logo of the ARTEMIS Industry Association" %}
 
-{% include figura.html src="/assets/img/proyectos/e-gotham/logotipo-del-ministerio-de-industria-energia-y-turismo.webp" alt="This project has received funding from the European Union under the FP7-JTI ARTEMIS programme" %}
+{% include figura.html src="/assets/img/proyectos/e-gotham/logotipo-del-ministerio-de-industria-energia-y-turismo.webp" alt="Logo of the Spanish Ministry of Industry, Energy and Tourism" %}

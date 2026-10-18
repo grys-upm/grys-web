@@ -24,6 +24,11 @@ image: /assets/img/proyectos/afarcloud/logo.webp
 lang: en
 old_urls:
 - /research/projects/afarcloud/
+traduccion: borrador
+texto_es: |-
+  Este proyecto ha recibido financiación de la Empresa Común ECSEL en virtud del acuerdo de subvención n.º 783221. La Empresa Común recibe apoyo del programa de investigación e innovación Horizonte 2020 de la Unión Europea.
+
+  Proyecto PCI2018-092965 financiado por el Ministerio de Ciencia, Innovación y Universidades.
 ---
 This project has received funding from the ECSEL Joint Undertaking (JU) under grant agreement No 783221. The JU receives support from the European Union's Horizon 2020 research and innovation programme.
 

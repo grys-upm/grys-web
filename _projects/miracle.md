@@ -5,9 +5,17 @@ acronym: MIRACLE
 title_es: Marco de intermediación entre aplicaciones y sistemas distribuidos heterogéneos en redes de sensores
 title_en: Intermediation Framework between Applications and Heterogeneous Distributed Systems on a Wireless Sensor Network
 type: competitive
+grant_ids:
+- CCG07/UPM/TIC-1981
+programme: IV PRICIT (Comunidad de Madrid)
+funding:
+- Comunidad de Madrid
+- Universidad Politécnica de Madrid
+funder: Comunidad de Madrid
 start: 2008-01-01
 end: 2008-12-31
-pi: []
+pi:
+- ana-belen-garcia-hernando
 domains: []
 lines: []
 repos: []
@@ -15,9 +23,12 @@ image: /assets/img/proyectos/miracle/logo.webp
 lang: en
 old_urls:
 - /research/projects/miracle/
+traduccion: borrador
+texto_es: |-
+  ## Financiación
+
+  Este proyecto ha recibido financiación de la Comunidad de Madrid y de la Universidad Politécnica de Madrid en el marco del IV PRICIT (CCG07/UPM/TIC-1981).
 ---
-Organization:Comunidad de Madrid
-Program: IV PRICIT Program
-PI: Ana Belén García
-DOI:
-This project has recived funding from Comunidad de Madrid and Universidad Politécnica de Madrid in the framework of the IV PRICIT Program with Project code CCG07/UPM/TIC-1981
+## Funding
+
+This project received funding from the Community of Madrid and the Universidad Politécnica de Madrid within the IV PRICIT programme (CCG07/UPM/TIC-1981).
