@@ -19,8 +19,9 @@ backend:
   name: github
   repo: {{ cms_repo | jsonify }}
   branch: main
-{%- if site.cms.oauth_url %}
-  base_url: {{ site.cms.oauth_url | jsonify }}
+{%- assign cms_oauth = site.cms.oauth_url | default: "" | strip -%}
+{%- if cms_oauth != "" %}
+  base_url: {{ cms_oauth | jsonify }}
 {%- endif %}
   # Cada cambio va en una PR (rama cms/…): pasa «Comprobar PR» y tiene vista
   # previa. «Publicar» la fusiona (o la deja programada hasta que las

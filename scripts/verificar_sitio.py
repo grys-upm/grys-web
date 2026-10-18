@@ -477,6 +477,9 @@ def main():
                 for fl in c.get("fields") or []:
                     if fl.get("widget") == "select" and not fl.get("options"):
                         errors.append(f"admin/config.yml ({c.get('name')}.{fl.get('name')}): lista de opciones vacía")
+            bu = (ccfg.get("backend") or {}).get("base_url")
+            if bu is not None and not re.match(r"^https?://", str(bu)):
+                errors.append(f"admin/config.yml: backend.base_url «{bu}» no es una URL absoluta (cms.oauth_url en _config.yml)")
             if "{{" in str(ccfg.get("backend", {}).get("repo", "")) or "/" not in str(ccfg.get("backend", {}).get("repo", "")):
                 errors.append("admin/config.yml: backend.repo no es «organización/repositorio»")
         if os.path.exists(os.path.join(site, "en", "admin")):
