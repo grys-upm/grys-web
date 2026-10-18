@@ -28,7 +28,8 @@ Correcciones:
 - **Barra superior** (institución, Contacto, tema, idioma): pasa a ser `<nav aria-label="Accesos rápidos">`, para que todo el contenido esté en una región (buena práctica `region`).
 - **Prevención:**
   - `comprobar_datos.py` da error si el texto de un elemento usa `#` (nivel 1) o salta niveles de encabezado; se ha probado con el caso de SIMGEOSEV;
-  - `a11y_estatico.py` ignora los bloques ocultos (`hidden`), como axe, y cuenta las páginas sin repetir.
+  - `a11y_estatico.py` no revisa lo que está oculto (`hidden`: diálogo del buscador, filtros sin JavaScript), igual que axe, y cuenta las páginas sin repetir.
+  - **Corrección dentro del paso:** la primera versión trataba `hidden` como `aria-hidden` y descartaba también el texto de los botones ocultos, lo que daba 604 falsos «sin nombre» («Buscar», «Cerrar», botones de filtro). Ahora `aria-hidden` solo excluye ese texto del nombre (iconos) y `hidden` hace que el elemento no se compruebe. Se ha probado con 5 casos: 2 problemas reales detectados y 0 falsos positivos.
 - **`pr.yml`: auditoría BLOQUEANTE** (`--estricto` en los dos scripts). El informe se publica aunque falle.
 - **`docs/ACCESIBILIDAD.md`:** qué hacer si una PR falla por accesibilidad.
 
