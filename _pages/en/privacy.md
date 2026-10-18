@@ -3,7 +3,7 @@ layout: page
 lang: en
 page_id: privacy
 permalink: /privacy/
-privacidad_revision: 2026-10-18
+privacidad_revision: 2026-10-18  # + métricas (Más métricas), 18-10-2026
 lead: "This site does not use tracking cookies."
 ---
 {%- comment -%}
@@ -16,12 +16,11 @@ lead: "This site does not use tracking cookies."
 
 ## What is stored in your browser
 
-Only two preferences, in your browser's local storage (`localStorage`). They are never sent to any server, and you can delete them at any time from your browser settings:
+Only one preference, in your browser's local storage (`localStorage`). It is never sent to any server, and you can delete it at any time from your browser settings:
 
 | Key | Purpose | When it is stored |
 |---|---|---|
 | `grys-theme` | Remember the theme (light or dark) | When you press the theme button |
-| `grys-metrics` | Remember whether you want to see impact metrics | When you press “Show impact metrics” in Publications |
 
 The language is not stored: it is part of the page address (`/en/` for English).
 
@@ -37,7 +36,9 @@ Some pages include content from other services. When it loads, your browser conn
 
 - **YouTube videos** (news, projects and OpenTech Lab), in privacy-enhanced mode (`youtube-nocookie.com`). When you play a video, [Google's privacy policy](https://policies.google.com/privacy?hl=en) applies.
 - **OpenStreetMap map** (Contact). The [OpenStreetMap Foundation privacy policy](https://osmfoundation.org/wiki/Privacy_Policy) applies.
-- **Altmetric and Dimensions badges** (Publications). **They are only loaded if you press “Show impact metrics”**. The [Altmetric](https://www.altmetric.com/privacy-policy/) and [Dimensions](https://www.dimensions.ai/privacy/) policies apply.
+- **Altmetric and Dimensions badges** (Publications). **They are only loaded if you open “More metrics” on a publication**, and only for that publication. The [Altmetric](https://www.altmetric.com/privacy-policy/) and [Dimensions](https://www.dimensions.ai/privacy/) policies apply.
+
+The **citation counts** shown in Publications are retrieved from Dimensions when the site is built, on GitHub's servers: your browser does not connect to Dimensions to display them.
 
 Links to other sites (DOI, Scientific Portal, Google Scholar, GitHub, etc.) only take you there if you click them.
 

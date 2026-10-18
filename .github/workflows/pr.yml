@@ -26,6 +26,13 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
+      - name: Métricas de citas · las últimas de main (sin consultar la API)
+        uses: actions/cache/restore@v5
+        continue-on-error: true
+        with:
+          path: _data/metricas_pubs.yml
+          key: metricas-pubs-${{ github.run_id }}
+          restore-keys: metricas-pubs-
       - name: Comprobar datos
         run: python scripts/comprobar_datos.py
 

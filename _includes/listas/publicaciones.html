@@ -9,15 +9,15 @@
     publicaciones se eliminan (data-prune), y si un desplegable se queda vacío
     no se muestra (por ejemplo, proyecto o línea mientras no haya etiquetas en
     etiquetas.yml).
-  · Insignias de Altmetric y Dimensions: no se cargan hasta que el visitante
-    pulsa «Mostrar métricas de impacto» (privacidad y rendimiento). La elección
-    se recuerda en el navegador.
+  · Citas (Dimensions): _data/metricas_pubs.yml, generado al compilar. Sus
+    condiciones exigen la atribución en la página donde se muestran: va al final.
 {%- endcomment -%}
 {%- include page-vars.html -%}
 {%- assign pb_s = site.data.bib_stats.papers -%}
 {%- assign mx = site.data.metrics -%}
 <p class="count">{{ pb_s.total }} {{ t.pubs_extra.count }} · {{ pb_s.journal }} {{ t.pubs.n_journal }} · {{ pb_s.conference }} {{ t.pubs.n_conference }} · {{ pb_s.chapter | plus: pb_s.book | plus: pb_s.other }} {{ t.pubs.n_book }}</p>
-<p class="datos">Scopus: {{ mx.scopus_docs }} {{ t.pubs.documents }} · {{ mx.scopus_citations }} {{ t.pubs.citations }} · h = {{ mx.scopus_h }} ({{ mx.source }}, {{ mx.date }})</p>
+{%- assign dm = site.data.metricas_pubs -%}
+<p class="datos">Scopus: {{ mx.scopus_docs }} {{ t.pubs.documents }} · {{ mx.scopus_citations }} {{ t.pubs.citations }} · h = {{ mx.scopus_h }} ({{ mx.source }}, {{ mx.date }}){% if dm.total_citas > 0 %} · Dimensions: {{ dm.total_citas }} {{ t.pubs.citations }} ({{ dm.fecha | date: "%Y-%m-%d" }}){% endif %}</p>
 
 <form class="filters" role="search" aria-label="{{ t.filters.label }}" data-filter="pb" hidden>
   <label class="sr" for="pb-q">{{ t.filters.search }}</label>
@@ -60,11 +60,6 @@
   <button type="reset" class="linkbtn">{{ t.filters.reset }}</button>
 </form>
 
-<div class="metricsbar" data-metrics hidden>
-  <button type="button" class="btn secondary small" aria-pressed="false" data-on="{{ t.pubs.metrics_hide }}" data-off="{{ t.pubs.metrics_show }}">{{ t.pubs.metrics_show }}</button>
-  <span class="datos">{{ t.pubs.metrics_note }}</span>
-</div>
-
 <p class="count" id="pb-count" aria-live="polite" data-one="{{ t.pubs.count_one }}" data-many="{{ t.pubs.count_many }}">{{ pb_s.total }} {{ t.pubs.count_many }}</p>
 <div id="pb-list">
 {% bibliography --file papers %}
@@ -73,3 +68,6 @@
   <h3>{{ t.filters.no_results }}</h3>
   <p>{{ t.filters.no_results_hint }}</p>
 </div></div>
+{%- if dm.total_citas > 0 %}
+<p class="attr datos">{{ t.pubs.attribution }} <a href="{{ dm.fuente_url }}">Dimensions</a>, {{ t.pubs.attribution_by }} ({{ t.pubs.updated }} {{ dm.fecha | date: "%d/%m/%Y" }}). {{ t.pubs.fcr_long }} (FCR): {{ t.pubs.fcr_help }}.</p>
+{%- endif %}

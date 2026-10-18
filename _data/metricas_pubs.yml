@@ -1,0 +1,9 @@
+# GENERADO por scripts/metricas_dimensions.py: NO editar a mano.
+# Citas de cada publicación según Dimensions (Digital Science), por DOI en minúsculas.
+# En el repositorio queda vacío; en GitHub Actions se rellena antes de compilar.
+fecha: null
+fuente: Dimensions
+fuente_url: https://www.dimensions.ai
+total_citas: 0
+consultados: []
+items: {}

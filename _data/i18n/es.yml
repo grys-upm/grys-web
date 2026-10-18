@@ -44,6 +44,16 @@ redirect:
 pubs:
   bibtex: Cita BibTeX
   doi: DOI
+  cite_one: cita
+  cite_many: citas
+  cites_source: según Dimensions
+  fcr_long: Field Citation Ratio
+  fcr_help: citas respecto a la media de publicaciones de su campo y año (1 = media)
+  more_metrics: Más métricas
+  more_metrics_note: "Insignias oficiales con el detalle por fuente. Se cargan al abrir este panel (tu navegador se conecta con Altmetric y Dimensions). Páginas de detalle:"
+  attribution: "Citas: datos de"
+  attribution_by: "sistema de información de investigación de Digital Science"
+  updated: actualizados el
   type: Tipo
   year: Año
   all_years: Todos los años
@@ -58,9 +68,6 @@ pubs:
   search_ph: Título, autoría, revista o DOI…
   count_one: publicación
   count_many: publicaciones
-  metrics_show: Mostrar métricas de impacto
-  metrics_hide: Ocultar métricas de impacto
-  metrics_note: Insignias de Altmetric y Dimensions. Al mostrarlas, tu navegador se conecta con esos servicios.
 about:
   values: Valores
   story_label: Historia
