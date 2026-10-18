@@ -1,5 +1,27 @@
 # Registro de cambios
 
+## Fase 4 · Paso 4.1: auditoría automática de accesibilidad (18-10-2026)
+
+- **`scripts/a11y/auditar.mjs`** (nuevo, con su `package.json`): auditoría con navegador real (Chrome sin ventana + axe-core) de **todas las páginas ES/EN**, salvo las redirecciones. Hace tres pasadas por página:
+  - **tema oscuro** y **tema claro** a 1280 px, con todas las reglas automáticas de WCAG 2.0/2.1/2.2 A y AA, más las buenas prácticas, que se informan aparte;
+  - **reflow a 320 px** (WCAG 1.4.10), que busca desplazamiento horizontal y señala los elementos que se salen;
+  - además, en todas las pasadas, los **errores de JavaScript**.
+  
+  Solo carga recursos del propio sitio (los de terceros se bloquean), así que el resultado es repetible. Informe en `reports/a11y/axe.md` y `.json`, agrupado por regla, con impacto, criterio WCAG, páginas afectadas y ejemplos. Se ha probado de principio a fin con un navegador simulado.
+- **`scripts/a11y_estatico.py`** (nuevo): 9 comprobaciones sin navegador:
+  - ids repetidos y referencias `aria-*`/`for`/anclas rotas;
+  - imágenes sin `alt` e iframes sin `title`;
+  - saltos de encabezado;
+  - enlaces y botones sin nombre accesible;
+  - `lang` no válido;
+  - selector de idioma que no lleva al idioma anunciado;
+  - **textos de interfaz de `es.yml` que aparecen en páginas en inglés** (o al revés).
+  
+  Se ha probado con una página con un caso de cada: detecta los 9 sin falsos positivos.
+- **`pr.yml`:** ejecuta las dos auditorías después de compilar, publica los informes en el resumen y en el artefacto `informe-accesibilidad`. **De momento solo informan**: no bloquean la PR.
+- **`docs/ACCESIBILIDAD.md`** (nuevo): qué se revisa, cómo leer los informes y cómo ejecutarlos en local. **`.gitignore`:** `scripts/a11y/node_modules/` y su `package-lock.json`.
+- **PENDIENTES.md:** plan de la fase 4 (4.1 a 4.4).
+
 ## Fase 3 · Paso final: métricas de impacto (A + B) (18-10-2026)
 
 - **Citas como fichas del sitio** (opción A):

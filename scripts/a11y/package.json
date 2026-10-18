@@ -1,0 +1,10 @@
+{
+  "name": "grys-web-a11y",
+  "private": true,
+  "description": "Auditoría de accesibilidad del sitio compilado (axe-core + Chrome sin ventana). Ver docs/ACCESIBILIDAD.md",
+  "type": "module",
+  "dependencies": {
+    "axe-core": "^4.10.0",
+    "puppeteer": "^24.0.0"
+  }
+}
