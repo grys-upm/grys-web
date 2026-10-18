@@ -4,7 +4,7 @@
    - Cambio de tema claro/oscuro con memoria en localStorage
    - Pestañas accesibles (Equipo, Tesis) con ancla en la URL
    - Filtros de Proyectos y Publicaciones, con su estado en la URL
-   - Insignias de Altmetric y Dimensions bajo demanda
+   - Insignias oficiales de Altmetric y Dimensions solo al abrir «Más métricas»
    - Buscador del sitio (índice JSON generado al compilar)
    (El tema inicial lo aplica el <script> en línea del <head>, sin parpadeo.) */
 (function () {
@@ -247,44 +247,49 @@
     form.hidden = false;
     apply(false);
   });
-  /* ---------- Insignias de Altmetric y Dimensions (bajo demanda) ----------
-     Las insignias (<span class="badges" hidden>) están en el HTML, pero los
-     scripts externos solo se cargan cuando el visitante pulsa el botón
-     [data-metrics] button (privacidad y rendimiento). La elección se guarda en
-     localStorage («grys-metrics») y se aplica en las visitas siguientes. */
-  var mbar = document.querySelector("[data-metrics]");
-  var METRIC_SCRIPTS = [
-    "https://embed.altmetric.com/assets/embed.js",
-    "https://integration-badge.dimensions.ai/static/ai/badge.js"
-  ];
-  var metricsLoaded = false;
-  function showMetrics(on) {
-    Array.prototype.slice.call(document.querySelectorAll(".badges")).forEach(function (b) { b.hidden = !on; });
-    if (on && !metricsLoaded) {
-      metricsLoaded = true;
-      METRIC_SCRIPTS.forEach(function (src) {
-        var s = document.createElement("script");
-        s.src = src; s.async = true; s.charset = "utf-8";
-        document.body.appendChild(s);
-      });
-    }
-    if (mbar) {
-      var b = mbar.querySelector("button");
-      b.setAttribute("aria-pressed", String(on));
-      b.textContent = b.getAttribute(on ? "data-on" : "data-off");
-    }
+  /* ---------- Más métricas (insignias oficiales, bajo demanda) ----------
+     Cada publicación con DOI tiene <details class="met"> con dos marcadores
+     (.altmetric-pend y .dimensions-pend). Llevan clases «pendientes» a
+     propósito: los scripts de Altmetric y Dimensions recorren la página al
+     cargarse y, si llevaran ya sus clases oficiales, pedirían las 169
+     insignias. Al abrir un panel por primera vez se activan SOLO sus
+     marcadores y, si hace falta, se cargan los scripts (una sola vez).
+     Nada se guarda en el navegador. */
+  var MET_SCRIPTS = {
+    altmetric: "https://embed.altmetric.com/assets/embed.js",
+    dimensions: "https://integration-badge.dimensions.ai/static/ai/badge.js"
+  };
+  var metState = {};   // nombre → "cargando" | "listo"
+  function metLoad(name, onReady) {
+    if (metState[name] === "listo") { onReady(); return; }
+    if (metState[name] === "cargando") return;   // el propio script recorrerá la página al cargar
+    metState[name] = "cargando";
+    var s = document.createElement("script");
+    s.src = MET_SCRIPTS[name]; s.async = true; s.charset = "utf-8";
+    s.onload = function () { metState[name] = "listo"; };
+    s.onerror = function () { metState[name] = null; };
+    document.body.appendChild(s);
   }
-  if (mbar && document.querySelector(".badges")) {
-    var mpref = null;
-    try { mpref = localStorage.getItem("grys-metrics"); } catch (e) { /* modo privado */ }
-    mbar.hidden = false;
-    mbar.querySelector("button").addEventListener("click", function () {
-      var on = this.getAttribute("aria-pressed") !== "true";
-      try { localStorage.setItem("grys-metrics", on ? "1" : "0"); } catch (e) { /* modo privado */ }
-      showMetrics(on);
+  Array.prototype.slice.call(document.querySelectorAll("details.met")).forEach(function (d) {
+    d.addEventListener("toggle", function () {
+      if (!d.open || d.getAttribute("data-cargado")) return;
+      d.setAttribute("data-cargado", "1");
+      var a = d.querySelector(".altmetric-pend"), m = d.querySelector(".dimensions-pend");
+      if (a) {
+        a.className = "altmetric-embed";
+        metLoad("altmetric", function () {
+          if (typeof window._altmetric_embed_init === "function") window._altmetric_embed_init(d);
+        });
+      }
+      if (m) {
+        m.className = "__dimensions_badge_embed__";
+        metLoad("dimensions", function () {
+          if (window.__dimensions_embed && window.__dimensions_embed.addBadges) window.__dimensions_embed.addBadges();
+        });
+      }
     });
-    if (mpref === "1") showMetrics(true);
-  }
+  });
+
   /* ---------- Buscador ----------
      Botón #searchbtn (cabecera) o tecla «/» → diálogo #search. El índice
      (data-index, generado al compilar: _includes/indice-busqueda.json) se

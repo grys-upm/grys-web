@@ -5,8 +5,11 @@
   Archivo Digital UPM (archivo_upm), Google Scholar, Altmetric y Dimensions.
   Filtros: <span class="pubdata" hidden data-*> con tipo, año, proyecto, línea y
   texto de búsqueda (lo usa assets/js/grys.js; solo en publicaciones, no en tesis).
-  Insignias oficiales de Altmetric y Dimensions: <span class="badges" hidden>.
-  Los scripts externos solo se cargan si el visitante pulsa «Mostrar métricas».
+  Métricas (opción A + B, 18-10-2026):
+    · citas y FCR de Dimensions como fichas del sitio, desde _data/metricas_pubs.yml
+      (lo rellena scripts/metricas_dimensions.py en Actions antes de compilar);
+    · «Más métricas»: <details class="met"> con las insignias oficiales de
+      Altmetric y Dimensions, que assets/js/grys.js carga solo al abrirlo.
   El BibTeX publicado omite los campos de scholar.bibtex_skip_fields.
   Para limpiar llaves y LaTeX de un campo se usa el filtro bib_text (_plugins/grys.rb).
 {%- endcomment -%}
@@ -38,6 +41,18 @@
     {%- if entry.award %}<dt>{{ t.theses.award }}</dt><dd lang="en">{{ entry.award | bib_text }}</dd>{% endif %}
   </dl>
   {%- endif %}
+  {%- if entry.doi and b_thesis == false %}
+  {%- assign b_doi = entry.doi | downcase | strip %}
+  {%- assign b_m = site.data.metricas_pubs.items[b_doi] %}
+  {%- if b_m %}
+  <div class="mtrs">
+    <a class="mtr" href="https://badge.dimensions.ai/details/doi/{{ entry.doi }}">{% include icono.html n="cita" %}<b>{{ b_m.citas }}</b> <span class="lbl">{% if b_m.citas == 1 %}{{ t.pubs.cite_one }}{% else %}{{ t.pubs.cite_many }}{% endif %}</span><span class="sr"> ({{ t.pubs.cites_source }})</span></a>
+    {%- if b_m.fcr %}{% assign b_fcr = b_m.fcr | round: 1 | append: "" %}{% if lang == "es" %}{% assign b_fcr = b_fcr | replace: ".", "," %}{% endif %}
+    <span class="mtr"><abbr title="{{ t.pubs.fcr_long }}">FCR</abbr> <b>{{ b_fcr }}</b><span class="sr">: {{ t.pubs.fcr_help }}</span></span>
+    {%- endif %}
+  </div>
+  {%- endif %}
+  {%- endif %}
   <div class="acts2">
     {%- if entry.doi %}
     <a href="https://doi.org/{{ entry.doi }}">DOI<span class="sr">: {{ entry.doi }}</span></a>
@@ -48,14 +63,22 @@
     {%- if entry.archivo_upm %}<a href="https://oa.upm.es/{{ entry.archivo_upm }}/">{{ t.pubs_extra.archivo }}</a>{% endif %}
     {%- if entry.teseo %}<a href="{{ entry.teseo }}">TESEO</a>{% endif %}
     {%- if entry.doi and b_thesis == false %}
-    <a href="https://www.altmetric.com/details/doi/{{ entry.doi }}">Altmetric</a>
-    <a href="https://badge.dimensions.ai/details/doi/{{ entry.doi }}">Dimensions</a>
-    <span class="badges" hidden><span class="altmetric-embed" data-badge-type="2" data-badge-popover="right" data-hide-no-mentions="true" data-doi="{{ entry.doi }}"></span><span class="__dimensions_badge_embed__" data-doi="{{ entry.doi }}" data-style="small_rectangle" data-legend="hover-right" data-hide-zero-citations="true"></span></span>
+    {%- assign b_more_metrics = true %}
+    {%- else %}{% assign b_more_metrics = false %}
     {%- endif %}
     {%- if entry.google_scholar_id %}
     <a href="https://scholar.google.com/citations?view_op=view_citation&amp;citation_for_view={{ entry.google_scholar_id }}">{{ t.pubs_extra.scholar }}</a>
     {%- elsif b_thesis == false %}
     <a href="https://scholar.google.com/scholar?q={{ b_title | prepend: '"' | append: '"' | url_encode }}">{{ t.pubs_extra.scholar }}</a>
+    {%- endif %}
+    {%- if b_more_metrics %}
+    <details class="met"><summary>{{ t.pubs.more_metrics }}<span class="sr">: {{ b_title | truncatewords: 6 }}</span></summary>
+      <div class="panel">
+        <span class="altmetric-pend" data-badge-type="donut" data-badge-details="right" data-hide-no-mentions="true" data-doi="{{ entry.doi }}"></span>
+        <span class="dimensions-pend" data-doi="{{ entry.doi }}" data-style="small_rectangle" data-legend="always" data-hide-zero-citations="true"></span>
+        <p class="note">{{ t.pubs.more_metrics_note }} <a href="https://www.altmetric.com/details/doi/{{ entry.doi }}">Altmetric</a> · <a href="https://badge.dimensions.ai/details/doi/{{ entry.doi }}">Dimensions</a></p>
+      </div>
+    </details>
     {%- endif %}
     <details class="bib"><summary>{{ t.pubs.bibtex }}<span class="sr">: {{ b_title | truncatewords: 6 }}</span></summary><pre>{{ entry.bibtex | escape }}</pre></details>
   </div>

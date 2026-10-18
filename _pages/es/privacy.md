@@ -3,7 +3,7 @@ layout: page
 lang: es
 page_id: privacy
 permalink: /privacidad/
-privacidad_revision: 2026-10-18
+privacidad_revision: 2026-10-18  # + métricas (Más métricas), 18-10-2026
 lead: "Este sitio no usa cookies de seguimiento."
 ---
 {%- comment -%}
@@ -16,12 +16,11 @@ lead: "Este sitio no usa cookies de seguimiento."
 
 ## Qué se guarda en tu navegador
 
-Solo dos preferencias, en el almacenamiento local del navegador (`localStorage`). No se envían a ningún servidor y puedes borrarlas cuando quieras desde la configuración del navegador:
+Solo una preferencia, en el almacenamiento local del navegador (`localStorage`). No se envía a ningún servidor y puedes borrarla cuando quieras desde la configuración del navegador:
 
 | Clave | Para qué | Cuándo se guarda |
 |---|---|---|
 | `grys-theme` | Recordar el tema (claro u oscuro) | Al pulsar el botón de cambio de tema |
-| `grys-metrics` | Recordar si quieres ver las métricas de impacto | Al pulsar «Mostrar métricas de impacto» en Publicaciones |
 
 El idioma no se guarda: va en la dirección de la página (`/en/` para el inglés).
 
@@ -37,7 +36,9 @@ Algunas páginas incluyen contenidos de otros servicios. Al cargarlos, tu navega
 
 - **Vídeos de YouTube** (noticias, proyectos y OpenTech Lab), en el modo de privacidad mejorada (`youtube-nocookie.com`). Al reproducir un vídeo se aplica la [política de privacidad de Google](https://policies.google.com/privacy?hl=es).
 - **Mapa de OpenStreetMap** (Contacto). Se aplica la [política de privacidad de la Fundación OpenStreetMap](https://osmfoundation.org/wiki/Privacy_Policy).
-- **Insignias de Altmetric y Dimensions** (Publicaciones). **Solo se cargan si pulsas «Mostrar métricas de impacto»**. Se aplican las políticas de [Altmetric](https://www.altmetric.com/privacy-policy/) y [Dimensions](https://www.dimensions.ai/privacy/).
+- **Insignias de Altmetric y Dimensions** (Publicaciones). **Solo se cargan si abres «Más métricas» en una publicación**, y solo las de esa publicación. Se aplican las políticas de [Altmetric](https://www.altmetric.com/privacy-policy/) y [Dimensions](https://www.dimensions.ai/privacy/).
+
+Las **cifras de citas** que se ven en Publicaciones se obtienen de Dimensions al compilar el sitio, en los servidores de GitHub: tu navegador no se conecta con Dimensions para mostrarlas.
 
 Los enlaces a otros sitios (DOI, Portal Científico, Google Scholar, GitHub, etc.) solo te llevan allí si los pulsas.
 

@@ -155,6 +155,16 @@ Se ordenan solas por fecha, de la más reciente a la más antigua.
 
 Si se añade un servicio externo (un vídeo de otra plataforma, un mapa, un script) o una clave nueva de `localStorage`, hay que explicarlo en `_pages/es/privacy.md` y `_pages/en/privacy.md`. Si no se hace, `verificar_sitio.py` da error.
 
+## Métricas de citas (Dimensions)
+
+No hay que mantener nada: las cifras se piden a Dimensions **al compilar**, como mucho cada 7 días (`METRICAS_MAX_EDAD` en `.github/workflows/deploy.yml`).
+
+**Para actualizarlas ya:**
+1. Ve a GitHub → *Actions* → «Compilar y publicar» → *Run workflow*.
+2. Marca «Actualizar ya las métricas de citas» y pulsa *Run workflow*.
+
+**Dónde se guardan:** en la caché de Actions, no en el repositorio. Si la API falla, se publican las últimas cifras conocidas. En tu ordenador, `python scripts/metricas_dimensions.py` rellena `_data/metricas_pubs.yml` para probar, pero **no subas ese fichero con datos**: en el repositorio debe quedar vacío.
+
 ## Buscador
 
 No hay que mantener nada: el índice se genera en cada compilación a partir de los mismos datos que las páginas. Incluye:

@@ -230,10 +230,8 @@ section{padding:72px 0}
 /* Filtros: el atributo hidden debe ganar a display:flex/block (también en móvil) */
 .filters[hidden],.empty[hidden],.ptable[hidden],.ptable tr[hidden]{display:none}
 .filters select{max-width:100%}
-.filters [hidden],.pubs [hidden],#pb-list [hidden],.metricsbar[hidden],.badges[hidden]{display:none}
-.metricsbar{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin:-8px 0 18px}
+.filters [hidden],.pubs [hidden],#pb-list [hidden]{display:none}
 .btn.small{padding:7px 14px;font-size:14px}
-.badges{display:inline-flex;gap:10px;align-items:center;font-weight:400}
 .linkbtn{background:none;border:0;padding:9px 4px;font:600 14.5px var(--f-texto);color:var(--link);text-decoration:underline;text-underline-offset:3px;cursor:pointer;margin-left:auto}
 .ptable{width:100%;border-collapse:collapse;font-size:15.5px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
 .ptable th{text-align:left;padding:12px 14px;background:var(--alt);color:var(--muted);font:700 13px var(--f-titulo);letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid var(--line)}
@@ -551,3 +549,18 @@ body.search-open{overflow:hidden}
 .results .kind{grid-row:span 2;font:700 11px var(--f-datos);letter-spacing:.6px;text-transform:uppercase;color:var(--accent);border:1px solid var(--chip);border-radius:999px;padding:2px 8px;white-space:nowrap;align-self:start;margin-top:2px}
 .results .noresult{padding:10px 12px}
 @media(max-width:640px){.search{padding:16px 8px}.results{max-height:60vh}.results li a{grid-template-columns:1fr}.results .kind{grid-row:auto;justify-self:start;margin-bottom:4px}}
+
+/* Métricas de impacto (fase 3, último paso): fichas propias + «Más métricas» */
+.mtrs{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.mtr{display:inline-flex;align-items:center;gap:6px;font:700 13.5px var(--f-datos);color:var(--text);text-decoration:none;border:1.5px solid var(--chip);border-radius:999px;padding:2px 10px 2px 8px;white-space:nowrap}
+a.mtr:hover{border-color:var(--accent)}
+.mtr svg{width:15px;height:15px;color:var(--accent)}
+.mtr .lbl{font-weight:400;color:var(--muted)}
+.mtr abbr{text-decoration:none;font-weight:400;color:var(--muted)}
+details.met summary{cursor:pointer;color:var(--link);list-style:none;text-decoration:underline;text-underline-offset:3px}
+details.met summary::-webkit-details-marker{display:none}
+details.met[open]{flex-basis:100%}
+details.met .panel{margin-top:10px;padding:14px;border:1px solid var(--line);border-radius:var(--r);background:var(--alt);display:flex;gap:18px;align-items:center;flex-wrap:wrap;font-weight:400}
+details.met .panel:empty{display:none}
+details.met .note{font-size:13.5px;color:var(--muted);max-width:460px;margin:0}
+.attr{margin-top:24px;font-size:13px}

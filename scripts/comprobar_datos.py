@@ -287,7 +287,7 @@ repo_names = {r.get("name") for r in repos_data}
 for e in validate(normalize(repos_data), schema("repos")):
     err(f"_data/repos.yml: {e}")
 for dname in ("positions", "roles", "metrics", "axes", "portada", "ods", "quienes_somos",
-              "laboratorio", "demostradores", "transferencia", "estudiantes", "docencia", "prensa"):
+              "laboratorio", "demostradores", "transferencia", "estudiantes", "docencia", "prensa", "metricas_pubs"):
     data = load_yaml(os.path.join(ROOT, "_data", f"{dname}.yml"))
     for e in validate(normalize(data), schema(dname)):
         err(f"_data/{dname}.yml: {e}")

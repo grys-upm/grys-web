@@ -297,9 +297,15 @@ def main():
         n_pd = html.count('class="pubdata"')
         if n_pd != n_bib:
             errors.append(f"{rel}/index.html: {n_pd} publicaciones filtrables y papers.bib tiene {n_bib}")
-        n_doi = html.count('class="badges" hidden')
-        if n_doi == 0:
-            print(f"AVISO  {rel}/index.html: ninguna insignia de Altmetric/Dimensions")
+        if html.count('<details class="met">') == 0:
+            print(f"AVISO  {rel}/index.html: ninguna publicación con «Más métricas»")
+        # Los marcadores deben llegar «pendientes»: con las clases oficiales, los
+        # scripts pedirían las insignias de TODAS las publicaciones al cargarse
+        if 'class="altmetric-embed"' in html or 'class="__dimensions_badge_embed__"' in html:
+            errors.append(f"{rel}/index.html: hay insignias con su clase oficial en el HTML; "
+                          "deben ir como .altmetric-pend/.dimensions-pend (las activa grys.js al abrir)")
+        if 'class="mtr"' in html and 'href="https://www.dimensions.ai"' not in html:
+            errors.append(f"{rel}/index.html: muestra citas de Dimensions sin la atribución que exigen sus condiciones")
     for dirpath, _, files in os.walk(site):
         for fn in files:
             if fn.endswith(".html"):

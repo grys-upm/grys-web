@@ -44,6 +44,16 @@ redirect:
 pubs:
   bibtex: BibTeX
   doi: DOI
+  cite_one: citation
+  cite_many: citations
+  cites_source: according to Dimensions
+  fcr_long: Field Citation Ratio
+  fcr_help: citations relative to the average for publications in the same field and year (1 = average)
+  more_metrics: More metrics
+  more_metrics_note: "Official badges with a breakdown by source. They load when you open this panel (your browser connects to Altmetric and Dimensions). Detail pages:"
+  attribution: "Citations: data sourced from"
+  attribution_by: "a research information system provided by Digital Science"
+  updated: updated on
   type: Type
   year: Year
   all_years: All years
@@ -58,9 +68,6 @@ pubs:
   search_ph: Title, authors, venue or DOI…
   count_one: publication
   count_many: publications
-  metrics_show: Show impact metrics
-  metrics_hide: Hide impact metrics
-  metrics_note: Altmetric and Dimensions badges. Showing them connects your browser to those services.
 about:
   values: Values
   story_label: Our story

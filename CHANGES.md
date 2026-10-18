@@ -1,5 +1,35 @@
 # Registro de cambios
 
+## Fase 3 · Paso final: métricas de impacto (A + B) (18-10-2026)
+
+- **Citas como fichas del sitio** (opción A):
+  - en cada publicación con citas: «14 citas», que enlaza a su ficha en Dimensions, y el *Field Citation Ratio* («FCR 1,8», con su explicación para lectores de pantalla);
+  - en la cabecera de Publicaciones, el total de citas;
+  - **la atribución que exigen las condiciones de Dimensions** al final de la página, con la fecha de actualización.
+  
+  Si no hay citas, no se muestra nada (nunca «0»).
+- **«Más métricas»** (opción B): desplegable en cada publicación con DOI.
+  - Al abrirlo, se cargan las insignias oficiales de Altmetric y Dimensions **solo de esa publicación**.
+  - Los marcadores llegan con clases «pendientes» para que los scripts externos no pidan las 169 insignias al cargarse.
+  - Incluye los enlaces de texto a las páginas de detalle, que funcionan sin JavaScript.
+- **Desaparecen** el botón general «Mostrar métricas de impacto» y la preferencia `grys-metrics` del navegador.
+- **`scripts/metricas_dimensions.py`** (nuevo) consulta la Dimensions Metrics API por DOI y escribe `_data/metricas_pubs.yml` (esquema nuevo). Funcionamiento:
+  - solo consulta si los datos tienen más de N días o con `--forzar`;
+  - si hay DOI nuevos, pide solo esos;
+  - **nunca rompe la compilación**: si la API falla, conserva los datos anteriores.
+  
+  Se ha probado con una API simulada (8 casos).
+- **`deploy.yml`:**
+  - recupera las métricas de la caché, las actualiza si toca (`METRICAS_MAX_EDAD: 7`) y las vuelve a guardar;
+  - *Run workflow* tiene la casilla **«Actualizar ya las métricas»**.
+  
+  `pr.yml` usa las últimas métricas guardadas, sin consultar la API.
+- **Privacidad (ES/EN):** queda una sola preferencia guardada (`grys-theme`). Las insignias se cargan solo al abrir «Más métricas», y las cifras de citas se obtienen al compilar, sin conexión del visitante con Dimensions.
+- **`verificar_sitio.py`:**
+  - da error si alguna insignia llega con su clase oficial en el HTML, porque provocaría la carga masiva;
+  - da error si se muestran citas sin la atribución a Dimensions.
+- **Icono nuevo** `cita`. **`docs/RECETAS.md`:** cómo actualizar las métricas a mano.
+
 ## Fase 3 · Paso 3.7: buscador; corrección de la protección de resultados (18-10-2026)
 
 - **Buscador** (como en el mockup): botón «Buscar» en la cabecera y atajo de teclado `/`.

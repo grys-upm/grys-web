@@ -3,6 +3,10 @@
 #   (para que eventos y convocatorias se reclasifiquen según la fecha).
 # · En el repositorio de pruebas añade _config.staging.yml (noindex) y usa
 #   como baseurl la ruta que da GitHub Pages (/nombre-del-repo).
+# · Métricas de citas (Dimensions): se piden ANTES de compilar si los datos
+#   tienen más de METRICAS_MAX_EDAD días, o ya mismo con «Run workflow» →
+#   «Actualizar ya las métricas». Se guardan en la caché de Actions (no en el
+#   repositorio); si la API falla, se publican las últimas cifras conocidas.
 # Requisito: Settings → Pages → Source: «GitHub Actions».
 name: Compilar y publicar
 
@@ -10,6 +14,11 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      actualizar_metricas:
+        description: "Actualizar ya las métricas de citas (Dimensions)"
+        type: boolean
+        default: false
   schedule:
     - cron: "15 5 * * *"
 
@@ -21,6 +30,9 @@ permissions:
 concurrency:
   group: pages
   cancel-in-progress: false
+
+env:
+  METRICAS_MAX_EDAD: 7   # días; 1 = se actualizan en cada compilación diaria
 
 jobs:
   build:
@@ -45,6 +57,25 @@ jobs:
       - name: Configurar Pages
         id: pages
         uses: actions/configure-pages@v5
+
+      - name: Métricas de citas · recuperar las últimas
+        uses: actions/cache/restore@v5
+        with:
+          path: _data/metricas_pubs.yml
+          key: metricas-pubs-${{ github.run_id }}
+          restore-keys: metricas-pubs-
+      - name: Métricas de citas · actualizar si toca (Dimensions)
+        continue-on-error: true   # nunca impide publicar
+        run: |
+          FORZAR=""
+          if [ "${{ inputs.actualizar_metricas }}" = "true" ]; then FORZAR="--forzar"; fi
+          python scripts/metricas_dimensions.py --max-edad "$METRICAS_MAX_EDAD" $FORZAR | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Métricas de citas · guardar
+        uses: actions/cache/save@v5
+        continue-on-error: true
+        with:
+          path: _data/metricas_pubs.yml
+          key: metricas-pubs-${{ github.run_id }}
 
       - name: Comprobar datos
         run: python scripts/comprobar_datos.py

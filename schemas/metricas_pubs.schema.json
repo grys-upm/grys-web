@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "_data/metricas_pubs.yml",
+  "description": "Generado por scripts/metricas_dimensions.py (citas de Dimensions por DOI).",
+  "type": "object",
+  "required": [
+    "fuente",
+    "items"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "fecha": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "fuente": {
+      "type": "string"
+    },
+    "fuente_url": {
+      "type": "string",
+      "pattern": "^https?://"
+    },
+    "total_citas": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "consultados": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "items": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "citas"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "citas": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "recientes": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "fcr": {
+            "type": "number",
+            "minimum": 0
+          },
+          "rcr": {
+            "type": "number",
+            "minimum": 0
+          }
+        }
+      }
+    }
+  }
+}
