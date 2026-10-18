@@ -9,6 +9,7 @@
   - trampas de teclado (2.1.2).
 
   Es bloqueante, como el resto, y los hallazgos salen en el registro como `TECLADO …`.
+  - **Corrección:** la primera ejecución dio 4 «foco invisible» en elementos al azar (el mismo enlace pasaba en otras páginas). Con 4 pestañas en paralelo, solo la que está al frente tiene el foco real. Las pasadas de teclado van ahora en serie, con la pestaña al frente, y el foco se vuelve a medir tras dos fotogramas antes de darlo por invisible.
 - **Foco no tapado (2.4.11):** `scroll-padding-top` con la altura de la cabecera fija. Con menos de 500 px de alto útil la cabecera deja de ser fija.
 - **Revisión manual:** nueva lista `docs/REVISION_ACCESIBILIDAD.md` (teclado, lector de pantalla, zoom, colores forzados, WCAG 2.2, contenido) con plantilla de resultados para una *issue*.
 - **Declaración de accesibilidad (ES/EN):**

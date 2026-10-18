@@ -85,8 +85,10 @@ export function paginasTeclado(paginas, site) {
   return sel;
 }
 
-// Estado del elemento con el foco (se ejecuta en la página)
-function estadoFoco() {
+// Estado del elemento con el foco (se ejecuta en la página). Si el indicador no
+// se ve, se vuelve a medir tras dos fotogramas: el estilo :focus-visible puede
+// aplicarse un instante después de la pulsación.
+async function estadoFoco() {
   const el = document.activeElement;
   if (!el || el === document.body || el === document.documentElement) return null;
   if (!el.dataset.a11yN) el.dataset.a11yN = String((window.__a11yN = (window.__a11yN || 0) + 1));
@@ -94,18 +96,28 @@ function estadoFoco() {
   const txt = (el.getAttribute("aria-label") || el.textContent || el.getAttribute("title") || "").trim().replace(/\s+/g, " ").slice(0, 40);
   const desc = el.tagName.toLowerCase() + (el.id ? "#" + el.id : "") + cls + (txt ? " «" + txt + "»" : "");
   const iframe = el.tagName === "IFRAME";
-  const r = el.getBoundingClientRect();
-  const cs = getComputedStyle(el);
-  const contorno = cs.outlineStyle !== "none" && parseFloat(cs.outlineWidth) > 0;
-  const sombra = cs.boxShadow && cs.boxShadow !== "none";
-  const visible = iframe || ((contorno || sombra) && r.width > 0 && r.height > 0);
+  const medir = () => {
+    const b = el.getBoundingClientRect();
+    const cs = getComputedStyle(el);
+    const contorno = cs.outlineStyle !== "none" && parseFloat(cs.outlineWidth) > 0;
+    const sombra = cs.boxShadow && cs.boxShadow !== "none";
+    return { b, ok: iframe || ((contorno || sombra) && b.width > 0 && b.height > 0) };
+  };
+  let m = medir();
+  if (!m.ok) {
+    await new Promise(res => requestAnimationFrame(() => requestAnimationFrame(res)));
+    m = medir();
+  }
+  const r = m.b;
+  const visible = m.ok;
   let tapado = false;
   const cab = document.querySelector("header.site");
   if (cab && !cab.contains(el) && /sticky|fixed/.test(getComputedStyle(cab).position)) {
     const c = cab.getBoundingClientRect();
     tapado = r.height > 0 && r.top >= c.top - 1 && r.bottom <= c.bottom + 1;
   }
-  return { clave: el.dataset.a11yN, desc, iframe, visible, tapado, salto: el.classList.contains("skip") };
+  return { clave: el.dataset.a11yN, desc, iframe, visible, tapado, salto: el.classList.contains("skip"),
+    pestanaConFoco: document.hasFocus() };
 }
 
 // ------------------------------------------------------------------ servidor
@@ -146,7 +158,10 @@ async function pasada(browser, base, url, modo) {
     });
     await page.goto(base + url, { waitUntil: "load", timeout: 30000 });
     await page.evaluate(() => (document.fonts ? document.fonts.ready.then(() => true) : true));
-    if (teclado) return { teclado: await recorrerConTab(page), errores };
+    if (teclado) {
+      if (page.bringToFront) await page.bringToFront();
+      return { teclado: await recorrerConTab(page), errores };
+    }
     if (reflow) {
       const r = await page.evaluate(() => {
         const w = window.innerWidth, sw = document.documentElement.scrollWidth;
@@ -202,7 +217,7 @@ export async function recorrerConTab(page) {
     previo = f.clave;
     if (vistos.has(f.clave)) break;           // ha dado la vuelta
     vistos.add(f.clave);
-    if (!f.visible) hallazgos.push({ tipo: "foco-invisible", desc: f.desc });
+    if (!f.visible && f.pestanaConFoco !== false) hallazgos.push({ tipo: "foco-invisible", desc: f.desc });
     if (f.tapado) hallazgos.push({ tipo: "foco-tapado", desc: f.desc });
   }
   return hallazgos;
@@ -314,7 +329,10 @@ async function main() {
   const browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox", "--disable-dev-shm-usage"] });
   const tareas = [];
   for (const url of paginas) for (const modo of ["oscuro", "claro", "reflow"]) tareas.push({ url, modo });
-  for (const url of paginasTeclado(paginas, SITE)) for (const modo of Object.keys(VISTAS_TECLADO)) tareas.push({ url, modo });
+  // El teclado va aparte y en serie: con varias pestañas a la vez solo la que
+  // está al frente tiene el foco real, y :focus-visible no es fiable en las demás.
+  const tareasTeclado = [];
+  for (const url of paginasTeclado(paginas, SITE)) for (const modo of Object.keys(VISTAS_TECLADO)) tareasTeclado.push({ url, modo });
   const resultados = [];
   let i = 0;
   const t0 = Date.now();
@@ -326,6 +344,7 @@ async function main() {
     }
   }
   await Promise.all(Array.from({ length: CONCURRENCIA }, trabajador));
+  for (const t of tareasTeclado) resultados.push({ ...t, r: await pasada(browser, base, t.url, t.modo) });
   await browser.close();
   srv.close();
   const ag = agregar(resultados);
