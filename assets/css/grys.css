@@ -56,7 +56,7 @@
   --shadow:0 14px 34px rgba(0,0,0,.35);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;scroll-padding-top:116px}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
 body{font-family:var(--f-texto);color:var(--text);background:var(--bg);font-size:17px;line-height:1.6;transition:background .2s,color .2s}
 a{color:var(--link);text-underline-offset:3px;cursor:pointer}
@@ -593,3 +593,11 @@ a.cita{white-space:nowrap}
    el destino (WCAG 2.4.11) y que se vea a qué entrada se ha llegado */
 [id^="ref-"]{scroll-margin-top:140px}
 li:has(h3:target){outline:2px solid var(--accent);outline-offset:6px;border-radius:var(--r)}
+
+/* WCAG 2.4.11 (foco no tapado) y zoom: la cabecera fija ocupa 100 px (84 px en
+   móvil). scroll-padding-top hace que el navegador deje ese hueco al llevar a
+   la vista el elemento con el foco o un ancla. Con poca altura útil (zoom del
+   400 %, móvil en horizontal) la cabecera deja de ser fija: taparía un tercio
+   de la pantalla. */
+@media(max-width:640px){html{scroll-padding-top:100px}}
+@media(max-height:500px){header.site{position:static}html{scroll-padding-top:0}[id^="ref-"]{scroll-margin-top:0}}

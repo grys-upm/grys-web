@@ -9,7 +9,7 @@ En «Comprobar PR» hay dos informes. Se ven en el **resumen de la ejecución** 
 | Informe | Herramienta | Qué revisa |
 |---|---|---|
 | `reports/a11y/estatico.md` | `scripts/a11y_estatico.py` (Python) | ids repetidos, referencias `aria-*`/`for`/anclas rotas, imágenes sin `alt`, iframes sin `title`, saltos de encabezado, enlaces y botones sin nombre, `lang` no válido, selector de idioma, textos de interfaz en el idioma equivocado |
-| `reports/a11y/axe.md` | `scripts/a11y/auditar.mjs` (Chrome sin ventana + axe-core) | todas las reglas automáticas de WCAG 2.0, 2.1 y 2.2 A/AA en **tema oscuro y claro**; **reflow a 320 px** (1.4.10); errores de JavaScript |
+| `reports/a11y/axe.md` | `scripts/a11y/auditar.mjs` (Chrome sin ventana + axe-core) | todas las reglas automáticas de WCAG 2.0, 2.1 y 2.2 A/AA en **tema oscuro y claro**; **reflow a 320 px** (1.4.10); **recorrido con el tabulador** de una página de cada plantilla a 1280×900 y a 320×256 (zoom del 400 %): enlace de salto (2.4.1), foco visible (2.4.7), foco no tapado por la cabecera fija (2.4.11) y trampas de teclado (2.1.2); errores de JavaScript |
 
 Detalles del informe de axe:
 - Solo se cargan recursos del propio sitio: YouTube, OpenStreetMap y las insignias se bloquean.
@@ -19,6 +19,7 @@ Detalles del informe de axe:
 **Desde el paso 4.2 son bloqueantes** (`--estricto`): la PR falla si aparece cualquiera de estos problemas:
 - un incumplimiento WCAG;
 - desplazamiento horizontal a 320 px;
+- un problema de teclado o de foco;
 - un error de JavaScript;
 - un hallazgo de las comprobaciones estáticas.
 
@@ -44,4 +45,12 @@ Los informes quedan en `reports/a11y/`, que no se sube al repositorio.
 
 ## 3. Lo que ninguna herramienta comprueba (revisión manual)
 
-Las herramientas automáticas detectan alrededor de un tercio de los problemas. El resto se revisa a mano con la lista de la fase 4.4 (teclado, lector de pantalla, zoom, textos alternativos, idioma…), que se añadirá aquí.
+Las herramientas automáticas detectan alrededor de un tercio de los problemas. El resto se revisa a mano con la lista de **`docs/REVISION_ACCESIBILIDAD.md`**: teclado, lector de pantalla, zoom al 200 y al 400 %, colores forzados, criterios nuevos de WCAG 2.2 y contenido. Tarda entre 60 y 90 minutos y se repite antes de publicar, una vez al año y cuando cambie una plantilla.
+
+Al terminar, actualiza la fecha `a11y_revision` de las dos declaraciones (`_pages/es/accessibility.md` y `_pages/en/accessibility.md`). Si algo no se cumple y no se corrige enseguida, añádelo a «Falta de conformidad».
+
+## 4. Decisiones de diseño relacionadas
+
+- **Cabecera fija:** `scroll-padding-top` reserva su altura, para que el foco y las anclas no queden debajo (2.4.11). Con menos de 500 px de alto útil (zoom del 400 %, móvil en horizontal) deja de ser fija.
+- **Indicador de foco:** contorno naranja de 3 px con `:focus-visible` en todos los elementos. No se quita en ningún componente.
+- **Sin JavaScript:** las pestañas se ven como bloques seguidos y los filtros no aparecen. Nada imprescindible depende de JavaScript.
