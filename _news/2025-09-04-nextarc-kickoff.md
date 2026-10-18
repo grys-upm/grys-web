@@ -8,6 +8,78 @@ lang: en
 old_urls:
 - /news/2025-09-04-nextarc-kickoff/
 - /news/2025-09-04-nextarc-kickoff.html
+traduccion: borrador
+texto_es: |-
+  {% include figura.html src="/assets/img/noticias/2025-09-04-nextarc-kickoff/nextarc-kickoff-group.webp" alt="" %}
+
+  El **proyecto NexTArc de Horizonte Europa** arrancó oficialmente con una reunión de dos días en **Estocolmo (Suecia)** los días **2 y 3 de septiembre de 2025**. El encuentro lo organizó el coordinador del proyecto, el **Dr. Baran Curuklu**, de la **Universidad de Mälardalen (MDU)**, y reunió a los 38 socios de 10 países para poner en marcha el trabajo conjunto en **arquitecturas de IA embebida fiables para ciudades inteligentes, industria y movilidad**.
+
+  La sede fue **7A Posthuset**, un edificio histórico junto a la estación central de Estocolmo ([7a.se/posthuset](https://www.7a.se/posthuset)).
+
+  ---
+
+  ## Día 1: visión general del proyecto y paquetes de trabajo
+
+  La primera jornada empezó con un café de bienvenida y *fika*, seguido de una presentación general del proyecto a cargo del coordinador. Cada socio se presentó antes de entrar en las discusiones técnicas.
+
+  El programa incluyó las **presentaciones de los paquetes de trabajo (WP)** por sus responsables:
+
+  - **WP2**: Michal Kasparel (IMA)
+  - **WP3**: Gianluigi Ferrari (UNIPR)
+  - **WP4**: Stefan Eckardt (GD)
+  - **WP5**: Willibald Krenn (SAL)
+  - **WP6**: Pierre Kirişçi (REDI)
+  - **WP7**: George Violettas (SYSGO)
+
+  WP2 y WP3 se presentaron por la mañana, y WP4 a WP7 después de la comida (12:40–14:00).
+
+  Por la tarde, el programa incluyó:
+  - **Presentación del UC3** por una persona del equipo del caso de uso
+  - **Presentación del WP9** por Charlie Gullström (SWECO)
+  - **Sesión de debate** con reflexiones y preguntas abiertas, moderada por Baran y Charlie
+
+  La jornada terminó con una **cena en el [Restaurang Hubertus](https://restauranghubertus.se/) (19:00)**, una ocasión estupenda para conocerse, compartir experiencias y estrechar lazos entre los socios.
+
+  ---
+
+  ## Día 2: casos de uso, WP1 y taller del UC1
+
+  La segunda jornada empezó con un *fika* informal y conversaciones abiertas, seguidos de:
+
+  - **Presentación del WP1** por el coordinador
+  - **Presentaciones del UC1 y el UC2** (por los responsables de los casos de uso y de las demostraciones)
+  - **Presentación del WP8**
+  - **Sesión sobre la plataforma técnica** a cargo de Alper (ERARGE), responsable técnico y científico (TSM), que mostró la integración con GitHub y abrió un debate sobre herramientas de colaboración
+
+  Tras una comida temprana (12:00), el grupo disfrutó de un **paseo guiado de 43 minutos** por Estocolmo, dirigido por Baran, que hizo también de guía local. Por el camino, el consorcio descubrió algunos de los lugares emblemáticos de la ciudad antes de llegar a la **sede de Sweco** para el taller de la tarde.
+
+  {% include figura.html src="/assets/img/noticias/2025-09-04-nextarc-kickoff/img-2330.webp" alt="" %}
+
+  <p class="pie">Vista desde la sede de Sweco</p>
+
+  En la sede de Sweco, el **taller del UC1** comenzó con una visita guiada por la manzana, seguida de:
+  - Presentaciones sobre **NexTArc** y **Scale Stockholm, ciudad piloto para el clima y la salud**
+  - Una sesión de **SweGreen** con los resultados de su trabajo
+
+  El taller terminó hacia las 17:00, pero las conversaciones siguieron en grupos más pequeños hasta la noche, marcando el tono de las futuras colaboraciones.
+
+  {% include galeria.html fotos="/assets/img/noticias/2025-09-04-nextarc-kickoff/img-2305.webp,/assets/img/noticias/2025-09-04-nextarc-kickoff/img-2313.webp,/assets/img/noticias/2025-09-04-nextarc-kickoff/img-2315.webp" %}
+
+  <p class="pie">Fotos del taller del UC1 en la sede de Sweco.<br><b>Créditos</b>: <i>fotos de NexTArc</i>.</p>
+
+  ---
+
+  ## Notas personales
+
+  Más allá del programa oficial, la reunión de lanzamiento fue también una ocasión para disfrutar del **encanto de Estocolmo**, desde las calles históricas en torno a la estación central hasta los paseos junto al agua.
+
+  ---
+
+  ## Próximos pasos
+
+  El consorcio NexTArc dejó Estocolmo con un fuerte sentido de propósito compartido y de colaboración. Durante los próximos tres años, los socios trabajarán juntos para ofrecer **soluciones de IA e IoT fiables, sostenibles e innovadoras** para la vida urbana, la industria y la movilidad.
+
+  ¡Seguiremos informando de los avances del proyecto!
 ---
 {% include figura.html src="/assets/img/noticias/2025-09-04-nextarc-kickoff/nextarc-kickoff-group.webp" alt="" %}
 

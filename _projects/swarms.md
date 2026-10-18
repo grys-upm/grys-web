@@ -10,9 +10,10 @@ programme_url: https://research-and-innovation.ec.europa.eu/funding/funding-oppo
 funder: European Commission
 funding:
 - INDUSTRIAL LEADERSHIP - Leadership in enabling and industrial technologies - Information and Communication Technologies (ICT)
-- Spanish Ministry of Science, Innovation and Universities (Project PCI2018)
+- Ministerio de Economía y Competitividad (PCIN-2014-022-C02-02)
 grant_ids:
 - '662107'
+- PCIN-2014-022-C02-02
 start: 2015-07-01
 end: 2018-06-30
 pi: []
@@ -54,7 +55,7 @@ texto_es: |-
 
   ## Financiación
 
-  Este proyecto ha recibido financiación del programa Horizonte 2020 de la Unión Europea en virtud del acuerdo de subvención n.º 662107 y del Ministerio de Ciencia, Innovación y Universidades (PCI2018).
+  Este proyecto ha recibido financiación del programa Horizonte 2020 de la Unión Europea en virtud del acuerdo de subvención n.º 662107 y del Ministerio de Economía y Competitividad (PCIN-2014-022-C02-02).
 ---
 The primary goal of the SWARMs project was to expand the use of underwater and surface vehicles (AUVs, ROVs, USVs) to facilitate the conception, planning and execution of maritime and offshore operations and missions, reducing operational costs, increasing the safety of tasks and of the people involved, and expanding the offshore sector.
 
@@ -77,4 +78,4 @@ SWARMs was an industry-led project, in which large technology companies collabor
 
 ## Funding
 
-This project received funding from the European Union's Horizon 2020 programme under grant agreement No 662107 and from the Spanish Ministry of Science, Innovation and Universities (PCI2018).
+This project received funding from the European Union's Horizon 2020 programme under grant agreement No 662107 and from the Spanish Ministry of Economy and Competitiveness (PCIN-2014-022-C02-02).

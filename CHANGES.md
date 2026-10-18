@@ -1,5 +1,11 @@
 # Registro de cambios
 
+## Fase 4 · Paso 4.3d: noticias en español (18-10-2026)
+
+- **Borradores en español** (`texto_es`, `traduccion: borrador`) de las 8 noticias con texto; las demás solo tienen título, que ya estaba en los dos idiomas. Con esto, ningún texto se muestra solo en inglés en la versión española.
+- **Inglés corregido**: primera persona en textos del grupo («recognition of my effort», «presents me»), atributo `alt` en enlaces (no válido), `<figure>` con estilos en línea en Industry Day, pie del vídeo de 2026 que decía 2023 (PENDIENTES C20). Los vídeos tienen título propio en cada idioma.
+- **Proyectos**: SWARMs con la referencia nacional PCIN-2014-022-C02-02; los dos análisis de vulnerabilidades para Defensa pasan a `private`.
+
 ## Fase 4 · Paso 4.3c: textos de proyectos en español (18-10-2026)
 
 - **Borradores en español** (`texto_es`, `traduccion: borrador`) de los 32 proyectos con texto.
