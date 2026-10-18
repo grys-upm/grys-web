@@ -21,6 +21,10 @@
 #    los dos idiomas; si el texto no está en el idioma de la página, la
 #    plantilla lo marca con lang="…" y un aviso. «only_lang: es» restringe
 #    la publicación a un idioma.
+#  · Traducción: «texto_es» / «texto_en» (Markdown, en el front matter) es el
+#    texto en ese idioma cuando el cuerpo está en el otro. Si existe, la ficha
+#    de ese idioma lo usa en lugar del cuerpo. «traduccion: borrador» muestra
+#    un aviso de traducción pendiente de revisión; «revisada», ninguno.
 # =====================================================================
 
 require "date"
@@ -293,7 +297,7 @@ module GRyS
     safe true
     priority :low
 
-    SKIP_KEYS = %w[layout permalink excerpt output collection draft].freeze
+    SKIP_KEYS = %w[layout permalink excerpt output collection draft texto_es texto_en].freeze
 
     def generate(site)
       lang = Util.active_lang(site)
@@ -338,10 +342,15 @@ module GRyS
         alt[l] = Util.full_path(site, l, Util.detail_path(site, coll, doc, l))
       end
 
+      src_lang = (doc.data["lang"] || lang).to_s
+      traducido = doc.data["texto_#{lang}"].to_s
+      usa_traduccion = src_lang != lang && !traducido.strip.empty?
+
       page.data.merge!(
         "layout" => cfg["layout"] || "detail",
         "lang" => lang,
-        "content_lang" => (doc.data["lang"] || lang).to_s,
+        "content_lang" => usa_traduccion ? lang : src_lang,
+        "traduccion_borrador" => usa_traduccion && doc.data["traduccion"].to_s != "revisada",
         "page_id" => "#{coll}/#{Util.detail_slug(doc, Util.default_lang(site))}",
         "permalink" => path,
         "title" => Util.title_for(doc, lang, langs),
@@ -352,7 +361,7 @@ module GRyS
         "source_path" => doc.relative_path,
         "alt_paths" => alt
       )
-      page.content = doc.content
+      page.content = usa_traduccion ? traducido : doc.content
       page
     end
 

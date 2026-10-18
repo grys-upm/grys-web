@@ -13,5 +13,12 @@ slug_es: dominios-inteligentes
 slug_en: smart-domains
 lang: en
 keywords: []
+traduccion: borrador
+texto_es: >-
+  GRyS contribuye al desarrollo de **entornos inteligentes**, como ciudades, redes
+  eléctricas y fábricas, integrando IoT, inteligencia artificial e infraestructuras de
+  comunicación. Estas tecnologías favorecen un desarrollo urbano sostenible, una gestión
+  eficiente de la energía y una mejor calidad de vida gracias a la digitalización
+  inteligente.
 ---
 GRyS contributes to the development of **smart environments** such as cities, grids, and factories, integrating IoT, AI, and communication infrastructures. These technologies support sustainable urban development, efficient energy management, and improved quality of life through intelligent digitalization.

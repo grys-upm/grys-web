@@ -35,7 +35,7 @@ The DEMANES project provided component-based methods, frameworks, and tools for 
 
 ## Participation
 
-a conference paper <span class="todo">[ref. LucasMartinezECSA2015]</span>, a couple of journal papers <span class="todo">[ref. HernandezDiaz2015, LucasMartinez2016]</span>, and my Master Thesis <span class="todo">[ref. LucasMartinezMScThesis2016]</span>
+a conference paper {% include cita.html clave="lucas-martínezCommunicationRangeDynamics2015" %}, a couple of journal papers <span class="todo">[ref. HernandezDiaz2015]</span> {% include cita.html clave="lucas-martínezCommunicationRangeDynamics2016" %}, and my Master Thesis {% include cita.html clave="lucas-martinez_development_2016" %}
 
 ## Video
 

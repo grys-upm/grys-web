@@ -12,6 +12,8 @@ layout: default
 {%- capture ficha_cuerpo -%}
   {%- if page.content_lang != lang and content != "" -%}
   <p class="aviso-idioma datos">{{ t.lang_notice }}</p>
+  {%- elsif page.traduccion_borrador -%}
+  <p class="aviso-idioma datos">{{ t.translation_draft }}</p>
   {%- endif -%}
   <div class="prose"{% if page.content_lang != lang %} lang="{{ page.content_lang }}"{% endif %}>
 {{ content }}

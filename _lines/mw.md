@@ -13,5 +13,11 @@ slug_es: middleware-semantico
 slug_en: semantic-middleware
 lang: en
 keywords: []
+traduccion: borrador
+texto_es: >-
+  El middleware semántico proporciona interoperabilidad entre aplicaciones distribuidas
+  mediante **ontologías**, **metadatos** y **razonamiento sensible al contexto**.
+  Diseñamos e implementamos plataformas que facilitan el intercambio de datos, el
+  descubrimiento de servicios y la integración de sistemas entre tecnologías heterogéneas.
 ---
 Semantic middleware provides interoperability across distributed applications through **ontologies**, **metadata**, and **context-aware reasoning**. We design and implement platforms that enable seamless data exchange, service discovery, and system integration across heterogeneous technologies.

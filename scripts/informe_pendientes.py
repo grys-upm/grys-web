@@ -66,7 +66,15 @@ def main():
             if coll == "members" and fm.get("status") == "current" and len(body_txt) < 40:
                 issues.append("sin biografía")
             if fm.get("lang") == "en" and coll in ("projects", "members", "news", "lines") and len(body_txt) >= 40:
-                issues.append("texto solo en inglés")
+                if not fm.get("texto_es"):
+                    issues.append("texto solo en inglés")
+                elif fm.get("traduccion") != "revisada":
+                    issues.append("traducción al español en borrador (revisar y poner «traduccion: revisada»)")
+            if fm.get("lang") == "es" and coll in ("projects", "members", "news", "lines") and len(body_txt) >= 40:
+                if not fm.get("texto_en"):
+                    issues.append("texto solo en español")
+                elif fm.get("traduccion") != "revisada":
+                    issues.append("traducción al inglés en borrador (revisar y poner «traduccion: revisada»)")
             if coll == "lines" and fm.get("lang") == "en":
                 pass
             n_alt = len(re.findall(r'include figura\.html[^%]*alt=""', body))

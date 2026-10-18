@@ -2,6 +2,7 @@
 # Proyecto creado a partir de su convocatoria de empleo (julio 2026) y de los datos
 # confirmados por el grupo el 16-10-2026 y CORDIS.
 acronym: AFarEdge
+title_es: "Inteligencia agregada para la agricultura en el borde"
 title_en: Aggregated Intelligence for Farming at the Edge
 type: competitive
 programme: Horizon Europe

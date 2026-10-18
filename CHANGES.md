@@ -1,5 +1,12 @@
 # Registro de cambios
 
+## Fase 4 · Paso 4.3a: mecanismo bilingüe y citas (20-10-2026)
+
+- **Traducciones del texto principal:** campos `texto_es` / `texto_en` y `traduccion` (`borrador` / `revisada`) en miembros, proyectos, líneas y noticias. Si existe la traducción, la página la muestra en lugar del texto original; si es borrador, con el aviso «Traducción provisional…». Receta en `docs/RECETAS.md`.
+- **Primer lote de borradores:** texto en español de las 11 líneas de investigación; `title_es` de 6 noticias y de los proyectos AFarEdge y HumAMI.
+- **Citas en los textos:** nuevo `_includes/cita.html` («Autor et al. (año)», enlazado a Publicaciones filtradas o a la tesis). Sustituye las claves rotas de DEMANES y WoO (salvo `HernandezDiaz2015`, sin candidato).
+- **Comprobaciones nuevas:** cita a una clave inexistente (error); `texto_X` en el mismo idioma que el cuerpo (error); traducción con distintos `include` que el original (aviso). El informe de pendientes separa «texto solo en inglés» de «traducción en borrador».
+
 ## Fase 4 · Paso 4.2: correcciones de la auditoría y auditoría bloqueante (18-10-2026)
 
 Resultado de la primera auditoría (paso 4.1, 231 páginas × 3 pasadas):

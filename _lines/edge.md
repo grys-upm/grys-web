@@ -13,5 +13,12 @@ slug_es: computacion-cloud-y-edge
 slug_en: cloud-and-edge-computing
 lang: en
 keywords: []
+traduccion: borrador
+texto_es: >-
+  Exploramos arquitecturas híbridas que combinan la **capacidad de cómputo de la nube**
+  con la **rapidez de respuesta de los dispositivos en el borde**. Esta investigación hace
+  posibles soluciones de computación distribuida escalables, de baja latencia y eficientes
+  en energía para aplicaciones con gran volumen de datos o con requisitos de tiempo
+  estrictos.
 ---
 We explore hybrid architectures that combine the **computational power of the cloud** with the **responsiveness of edge devices**. This research enables scalable, low-latency, and energy-efficient distributed computing solutions for data-intensive and time-critical applications.

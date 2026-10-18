@@ -585,3 +585,6 @@ details.met .note{font-size:13.5px;color:var(--muted);max-width:460px;margin:0}
   .iconbtn{padding:8px 10px}
   .ptable{font-size:14.5px}
 }
+
+/* Citas al BibTeX dentro de los textos (include cita.html) */
+a.cita{white-space:nowrap}

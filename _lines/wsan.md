@@ -13,5 +13,12 @@ slug_es: redes-de-sensores-y-actuadores
 slug_en: wireless-sensor-and-actuator-networks
 lang: en
 keywords: []
+traduccion: borrador
+texto_es: >-
+  Las redes inalámbricas de sensores y actuadores son la columna vertebral de muchas
+  infraestructuras ciberfísicas actuales. Nuestro trabajo estudia la **comunicación de
+  bajo consumo**, la **fiabilidad de la red** y la **fusión de datos** para la percepción
+  distribuida, con aplicaciones en monitorización ambiental, automatización industrial y
+  sistemas inteligentes.
 ---
 Wireless Sensor and Actuator Networks form the backbone of many modern cyber-physical infrastructures. Our work explores **low-power communication**, **network reliability**, and **data fusion** for distributed sensing, with applications in environmental monitoring, industrial automation, and intelligent systems.

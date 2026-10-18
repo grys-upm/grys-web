@@ -7,7 +7,8 @@
 #    pubs      → lista de publicaciones de papers.bib, de la más reciente a la
 #                más antigua: { key, kind, year, title, authors, venue, doi,
 #                portal_upm, archivo_upm, projects[], lines[], members[] }
-#    pub_index → el mismo contenido indexado por clave BibTeX (lo usa bib.html)
+#    pub_index → el mismo contenido indexado por clave BibTeX (lo usan bib.html
+#                y cita.html), MÁS las tesis de theses.bib (kind: "thesis")
 #  · projects/lines salen de los campos «project»/«lines» (etiquetas.yml).
 #  · members se calcula por AUTORÍA comparando los autores del BibTeX con
 #    given/family de _members/ (sin tildes ni mayúsculas):
@@ -42,7 +43,15 @@ module GRyS
       pubs.sort_by! { |p| [-p["year"].to_i, -p["_month"], p["title"].to_s.downcase] }
       pubs.each { |p| p.delete("_month") }
       site.data["pubs"] = pubs
-      site.data["pub_index"] = pubs.to_h { |p| [p["key"], p] }
+      index = pubs.to_h { |p| [p["key"], p] }
+      tpath = File.join(site.source, "_bibliography", "theses.bib")
+      (File.exist?(tpath) ? load(tpath) : []).each do |e|
+        h = to_hash(e, people)
+        h.delete("_month")
+        h["kind"] = "thesis"
+        index[h["key"]] ||= h
+      end
+      site.data["pub_index"] = index
     end
 
     private
@@ -50,7 +59,7 @@ module GRyS
     def load(path)
       BibTeX.open(path, parse_comments: false).data.select { |e| e.is_a?(BibTeX::Entry) }
     rescue StandardError => e
-      Jekyll.logger.warn("GRyS:", "bib_index: no se pudo leer papers.bib: #{e.message}")
+      Jekyll.logger.warn("GRyS:", "bib_index: no se pudo leer #{File.basename(path)}: #{e.message}")
       []
     end
 
@@ -119,12 +128,15 @@ module GRyS
         people.each { |m| slugs << m["slug"] if same_person?(m, last, first) }
       end
       month = e[:month].to_s.downcase[0, 3]
+      first = names.find { |x| x.respond_to?(:last) }
       {
         "key" => e.key.to_s,
         "kind" => KIND.fetch(e.type.to_s.downcase, "book"),
         "year" => e[:year].to_s,
         "_month" => (MONTHS.index(month) || (month.to_i - 1)).to_i + 1,
         "title" => clean(e[:title]),
+        "autor1" => first ? clean([first.prefix, first.last].compact.join(" ")) : "",
+        "n_autores" => names.size,
         "authors" => names.map { |n| n.respond_to?(:last) ? clean("#{n.first} #{n.prefix} #{n.last}") : clean(n) }.join(", "),
         "venue" => clean(e[:journal] || e[:booktitle] || e[:publisher] || ""),
         "doi" => e[:doi].to_s.strip,
