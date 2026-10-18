@@ -16,6 +16,8 @@ Correcciones:
   - la cabecera (logotipo y botones) medía 358 px: por debajo de 400 px el logotipo pasa a 148 px y se reducen márgenes y separaciones;
   - en las fichas, las columnas de la rejilla no podían estrecharse por debajo de su contenido (`min-width:0`), y las URL y palabras largas no se partían (`overflow-wrap`);
   - las fichas de ámbito y los grupos de botones de filtro («Todas · Revistas · Congresos · Libros y capítulos») ahora pasan a la línea siguiente.
+  - las URL largas de la ficha lateral y del texto se parten (ficha de María Nieves Plaza: 870 px), y las marcas «por completar» con texto largo, como las claves de cita de DEMANES y WoO, ya pueden pasar a la línea siguiente;
+  - el detalle de lo que falla (WCAG, reflow, JS) se escribe también en el registro de Actions, no solo en el resumen.
 - **Saltos de encabezado (WCAG 1.3.1):**
   - página Noticias: los títulos pasan a `h2`, con el parámetro `h` en `listas/noticias.html`; en la portada siguen siendo `h3` bajo su `h2`;
   - Demostradores: las tarjetas pasan a `h2`;
