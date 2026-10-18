@@ -75,74 +75,75 @@
             "pattern": "^https?://"
           },
           "proteccion": {
-            "type": "object",
-            "required": [
-              "tipo"
-            ],
-            "additionalProperties": false,
-            "properties": {
-              "tipo": {
-                "type": "string",
-                "enum": [
-                  "registro_pi",
-                  "patente",
-                  "modelo_utilidad",
-                  "secreto",
-                  "abierto"
-                ]
-              },
-              "numero": {
-                "type": "string"
-              },
-              "oficina": {
-                "type": "object",
-                "required": [
-                  "es",
-                  "en"
-                ],
-                "additionalProperties": false,
-                "properties": {
-                  "es": {
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "en": {
-                    "type": "string",
-                    "minLength": 1
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "tipo"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "tipo": {
+                  "type": "string",
+                  "enum": [
+                    "registro_pi",
+                    "patente",
+                    "modelo_utilidad",
+                    "secreto"
+                  ]
+                },
+                "numero": {
+                  "type": "string"
+                },
+                "oficina": {
+                  "type": "object",
+                  "required": [
+                    "es",
+                    "en"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "es": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "en": {
+                      "type": "string",
+                      "minLength": 1
+                    }
                   }
-                }
-              },
-              "fecha": {
-                "type": "string",
-                "format": "date"
-              },
-              "titulares": {
-                "type": "object",
-                "required": [
-                  "es",
-                  "en"
-                ],
-                "additionalProperties": false,
-                "properties": {
-                  "es": {
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "en": {
-                    "type": "string",
-                    "minLength": 1
+                },
+                "fecha": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "titulares": {
+                  "type": "object",
+                  "required": [
+                    "es",
+                    "en"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "es": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "en": {
+                      "type": "string",
+                      "minLength": 1
+                    }
                   }
+                },
+                "url": {
+                  "type": "string",
+                  "pattern": "^https?://"
                 }
-              },
-              "url": {
-                "type": "string",
-                "pattern": "^https?://"
-              },
-              "licencia": {
-                "type": "string",
-                "minLength": 1
               }
             }
+          },
+          "licencia": {
+            "type": "string"
           }
         }
       }

@@ -1,6 +1,6 @@
 # Pendientes
 
-*Actualizado: fase 3, paso 3.6c (18-10-2026).* Marcas: 🔴 bloquea la publicación definitiva · 🟠 hay que revisarlo o decidirlo · 🔵 planificado para una fase posterior.
+*Actualizado: fase 3, paso 3.7 (18-10-2026).* Marcas: 🔴 bloquea la publicación definitiva · 🟠 hay que revisarlo o decidirlo · 🔵 planificado para una fase posterior.
 
 El detalle de los datos que faltan, elemento a elemento, lo genera `scripts/informe_pendientes.py` (`reports/pendientes-datos.md`). Ese informe también aparece en el resumen de cada ejecución de Actions. Lo que se decidió durante la migración está en `scripts/migracion/INFORME_MIGRACION.md`.
 
@@ -43,8 +43,8 @@ El detalle de los datos que faltan, elemento a elemento, lo genera `scripts/info
 - Ejes de las líneas (`_data/axes.yml`) y la asignación de cada línea a un eje.
 - **OpenTech Lab:** revisar la traducción del texto y las capacidades (`_data/laboratorio.yml`). Hace falta una **foto del laboratorio**: ahora la página usa el vídeo del Industry Day.
 - **Demostradores** (`_data/demostradores.yml`): son los dos del Industry Day 2025. Para el de lenguaje natural falta imagen o vídeo; el de Smart Fleet Manager usa una foto de la noticia.
-- 🔴 **SISS: asiento registral** del Registro de la Propiedad Intelectual (y fecha y registro territorial exactos) en `_data/transferencia.yml` → `proteccion`. Ahora sale «por completar» y `comprobar_datos` avisa. ¿El controlador de potencia de transmisión tiene algún tipo de protección?
-- 🔴 **Privacidad:** el texto de `/privacidad/` hay que **validarlo con el Delegado de Protección de Datos de la UPM** (proteccion.datos@upm.es) antes de pasar a producción.
+- 🔴 **SISS: asiento registral** del Registro de la Propiedad Intelectual (y fecha y registro territorial exactos) en `_data/transferencia.yml` → `proteccion`, y **licencia** del código abierto (SPDX) en `licencia`. Las dos salen «por completar» y `comprobar_datos` avisa. ¿El controlador de potencia de transmisión tiene algún tipo de protección?
+- ✅ **Privacidad:** texto validado (18-10-2026). Si se añade un servicio externo o una clave de `localStorage`, hay que volver a revisarlo (lo exige `verificar_sitio.py`).
 - **Accesibilidad:** la declaración dice «parcialmente conforme» (autoevaluación del 18-10-2026). En la fase 4 (revisión WCAG 2.2 AA) se actualizarán la lista de incumplimientos y `a11y_revision`. Hay que confirmar con la Unidad Responsable de Accesibilidad de la UPM si el sitio debe figurar en su inventario.
 - **Prensa:** revisar las descripciones breve y larga del grupo (`_data/prensa.yml`). Faltan para el kit los **logotipos en SVG** y el **manual de identidad** en PDF (ver F).
 - **Transferencia** (`_data/transferencia.yml`): confirmar las dos ofertas del mockup y, si se puede, añadir el **enlace directo** a la ficha del controlador de potencia en el HUB de Innovación (ahora enlaza al catálogo del grupo).
@@ -77,7 +77,7 @@ SVG oficiales del logotipo y del favicon · marca de la UPM para el pie · marca
 
 | Fase | Pendiente |
 |---|---|
-| 3 | Diseño de componentes, en pasos con una PR cada uno:<br>3.1 ✅ pestañas en Equipo y Tesis<br>3.2 ✅ tabla de Proyectos con filtros<br>3.3 ✅ Publicaciones: filtros e insignias oficiales de Altmetric y Dimensions<br>3.4 ✅ publicaciones en las fichas de proyecto, línea y miembro<br>3.5 ✅ portada completa<br>3.6a ✅ páginas de texto del menú Grupo (Quiénes somos, ODS, Contacto)<br>3.6b ✅ páginas de OpenTech Lab y Colabora (Laboratorio, Demostradores, Transferencia, Estudiantes, Docencia)<br>3.6c ✅ Prensa, Accesibilidad y Privacidad<br>3.7 buscador |
+| 3 | Diseño de componentes, en pasos con una PR cada uno:<br>3.1 ✅ pestañas en Equipo y Tesis<br>3.2 ✅ tabla de Proyectos con filtros<br>3.3 ✅ Publicaciones: filtros e insignias oficiales de Altmetric y Dimensions<br>3.4 ✅ publicaciones en las fichas de proyecto, línea y miembro<br>3.5 ✅ portada completa<br>3.6a ✅ páginas de texto del menú Grupo (Quiénes somos, ODS, Contacto)<br>3.6b ✅ páginas de OpenTech Lab y Colabora (Laboratorio, Demostradores, Transferencia, Estudiantes, Docencia)<br>3.6c ✅ Prensa, Accesibilidad y Privacidad<br>3.7 ✅ buscador |
 | 4 | Revisión del bilingüe y de la accesibilidad (WCAG 2.2 AA) |
 | Más adelante | **Completar `portal_upm` consultando el Portal publicación a publicación por DOI**. Las exportaciones CSV solo traen el ID de la ficha en 25 de las 157 coincidencias. Un script consultaría el buscador del Portal por cada DOI del BibTeX y propondría el ID, con prueba en seco y `--aplicar` como `cruce_portal.py`. Antes hay que comprobar si el Portal tiene una API o permite búsquedas automatizadas (condiciones de uso) |
 | 3.6 | **Política de privacidad** (`/privacidad/`): mencionar las insignias de Altmetric y Dimensions. Solo se cargan si el visitante pulsa «Mostrar métricas de impacto», y entonces su navegador se conecta con esos servicios; la preferencia se guarda en `localStorage` (`grys-metrics`), igual que el tema (`grys-theme`). No hay cookies propias |

@@ -9,12 +9,14 @@
 <article class="card line-card"><span class="hexi">{% include icono.html n=o.icon %}</span>
 <h3>{{ o.title | l10n }}</h3>
 <p>{{ o.desc | l10n }}</p>
-{%- assign pr = o.proteccion %}
-{%- if pr %}
-{%- assign pr_tipo = "ip_" | append: pr.tipo %}
+{%- assign tf_r = false %}{% if o.repo %}{% assign tf_r = site.data.repos | where: "name", o.repo | first %}{% endif %}
+{%- assign tf_lic = o.licencia | default: tf_r.license %}
+{%- if o.proteccion.size > 0 or tf_lic %}
 <dl class="spec">
+{%- for pr in o.proteccion %}
+{%- assign pr_tipo = "ip_" | append: pr.tipo %}
 <dt>{{ t.transfer_page.protection }}</dt><dd>{{ t.transfer_page[pr_tipo] }}</dd>
-{%- unless pr.tipo == "secreto" or pr.tipo == "abierto" %}
+{%- unless pr.tipo == "secreto" %}
 {%- assign pr_url = pr.url %}
 {%- if pr_url == nil and pr.numero != "" and pr.numero %}{% if pr.tipo == "patente" or pr.tipo == "modelo_utilidad" %}{% assign pr_url = pr.numero | remove: " " | remove: "/" | prepend: "https://worldwide.espacenet.com/patent/search?q=pn%3D" %}{% endif %}{% endif %}
 <dt>{% if pr.tipo == "registro_pi" %}{{ t.transfer_page.entry }}{% else %}{{ t.transfer_page.number }}{% endif %}</dt>
@@ -22,11 +24,13 @@
 {%- endunless %}
 {%- if pr.oficina %}<dt>{{ t.transfer_page.office }}</dt><dd>{{ pr.oficina | l10n }}</dd>{% endif %}
 {%- if pr.fecha %}<dt>{{ t.transfer_page.date }}</dt><dd><time datetime="{{ pr.fecha | date: '%Y-%m-%d' }}">{{ pr.fecha | date: "%d/%m/%Y" }}</time></dd>{% endif %}
-{%- unless pr.tipo == "abierto" %}<dt>{{ t.transfer_page.holders }}</dt><dd>{% if pr.titulares %}{{ pr.titulares | l10n }}{% else %}Universidad Politécnica de Madrid{% endif %}</dd>{% endunless %}
-{%- if pr.licencia %}<dt>{{ t.transfer_page.licence }}</dt><dd>{{ pr.licencia }}</dd>{% endif %}
+<dt>{{ t.transfer_page.holders }}</dt><dd>{% if pr.titulares %}{{ pr.titulares | l10n }}{% else %}Universidad Politécnica de Madrid{% endif %}</dd>
+{%- endfor %}
+{%- if tf_lic and tf_lic != "" %}<dt>{{ t.transfer_page.open_source }}</dt><dd><a href="https://spdx.org/licenses/{{ tf_lic }}.html">{{ tf_lic }}</a></dd>
+{%- elsif o.licencia == "" %}<dt>{{ t.transfer_page.open_source }}</dt><dd><span class="todo">{{ t.tbc }}</span></dd>{% endif %}
 </dl>
 {%- endif %}
-{%- if o.repo %}{% assign tr_r = site.data.repos | where: "name", o.repo | first %}<p><a href="https://github.com/{{ tr_r.owner | default: 'grys-upm' }}/{{ o.repo }}">GitHub · {{ o.repo }}</a></p>{% endif %}
+{%- if o.repo %}<p><a href="https://github.com/{{ tf_r.owner | default: 'grys-upm' }}/{{ o.repo }}">GitHub · {{ o.repo }}</a></p>{% endif %}
 {%- if o.url %}<p><a href="{{ o.url }}">{{ t.more_info }}</a></p>{% endif %}
 </article>
 {%- endfor %}

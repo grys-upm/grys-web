@@ -112,13 +112,12 @@ transfer_page:
   ip_patente: Patente
   ip_modelo_utilidad: Modelo de utilidad
   ip_secreto: Secreto industrial (know-how)
-  ip_abierto: Código abierto
   entry: Asiento registral
   number: Nº de publicación
   office: Registro u oficina
   date: Fecha
   holders: Titularidad
-  licence: Licencia
+  open_source: Código abierto (licencia)
   how_label: Cómo colaborar
   how_title: Formas de trabajar con nosotros
   cta: Hablemos
@@ -162,6 +161,27 @@ press_page:
   kit_note: "Usa los logotipos sin deformarlos ni cambiar sus colores, y respeta el área de seguridad que indica el manual de identidad."
   contact: Contacto de prensa
   see_news: Ver las noticias del grupo
+search_ui:
+  title: Buscar en el sitio
+  placeholder: Proyectos, personas, publicaciones…
+  hint: "Escribe al menos dos letras. Atajo: tecla «/»."
+  one: resultado
+  many: resultados
+  more: "Se muestran los %n primeros: añade otra palabra para afinar."
+  none: Ningún resultado. Prueba con otras palabras.
+  error: No se ha podido cargar el índice de búsqueda.
+  loading: Cargando…
+  kinds:
+    page: Sección
+    project: Proyecto
+    member: Persona
+    line: Línea
+    domain: Ámbito
+    demo: Demostrador
+    news: Noticia
+    event: Evento
+    repo: Código
+    pub: Publicación
 portada:
   facts_label: El grupo en cifras
   f_projects: proyectos

@@ -21,6 +21,8 @@ Comprueba:
     filtro de autoría de Publicaciones (si no, el enlace mostraría todo);
   · la portada (ES y EN) tiene todas sus secciones, las 4 cifras, una tarjeta por
     proyecto destacado de _data/portada.yml y el nº de publicaciones configurado;
+  · el índice del buscador (ES y EN) es JSON válido, cubre todos los tipos de
+    contenido y todas sus URL internas existen; cada página tiene el diálogo;
   · las páginas de texto ya migradas no dicen «pendiente de migración» ni
     «próximamente» y tienen
     su contenido (ODS: una tarjeta por elemento de _data/ods.yml; Contacto: mapa).
@@ -427,6 +429,45 @@ def main():
             b = _base(hst)
             if b not in h:
                 errors.append(f"{rel}/index.html: no menciona el servicio externo «{hst}»")
+    # 12. Buscador: índice JSON por idioma
+    import json
+    tipos = {"page", "project", "member", "line", "domain", "news", "event", "repo", "pub", "demo"}
+    n_proj = len(glob.glob(os.path.join(ROOT, "_projects", "*.md")))
+    for rel, lg in (("indice-busqueda.json", "es"), (os.path.join("en", "indice-busqueda.json"), "en")):
+        f = os.path.join(site, rel)
+        if not os.path.exists(f):
+            errors.append(f"falta el índice del buscador {rel}")
+            continue
+        try:
+            datos = json.load(open(f, encoding="utf-8"))
+        except ValueError as e:
+            errors.append(f"{rel}: no es JSON válido ({e})")
+            continue
+        meta = datos[0] if datos and datos[0].get("k") == "meta" else {}
+        if meta.get("lang") != lg:
+            errors.append(f"{rel}: idioma «{meta.get('lang')}» y debería ser «{lg}»")
+        items = [d for d in datos if d.get("k") != "meta"]
+        vistos = {d.get("k") for d in items}
+        for falta in sorted(tipos - vistos):
+            errors.append(f"{rel}: el índice no tiene elementos de tipo «{falta}»")
+        if sum(1 for d in items if d.get("k") == "project") != n_proj:
+            errors.append(f"{rel}: el índice no tiene los {n_proj} proyectos")
+        for d in items:
+            if not d.get("t") or not d.get("u"):
+                errors.append(f"{rel}: elemento sin título o sin URL: {d}")
+                continue
+            tf = target_file(site, base, d["u"].split("#")[0])
+            if tf and not os.path.exists(tf):
+                errors.append(f"{rel}: URL rota {d['u']} ({d['t'][:50]})")
+            if lg == "en" and d["u"].startswith((base or "") + "/") and not d["u"].startswith((base or "") + "/en/"):
+                errors.append(f"{rel}: URL en español en el índice inglés: {d['u']}")
+    for dirpath, _, files in os.walk(site):
+        for fn in files:
+            if fn.endswith(".html"):
+                fp = os.path.join(dirpath, fn)
+                h = open(fp, encoding="utf-8").read()
+                if 'id="searchbtn"' in h and 'id="search"' not in h:
+                    errors.append(f"{os.path.relpath(fp, site)}: tiene el botón de búsqueda pero no el diálogo")
     todo = sum(1 for w in warnings if "por completar" in w)
     for e in errors:
         print(f"ERROR  {e}")

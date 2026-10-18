@@ -114,23 +114,27 @@ Mientras la lista esté vacía, la sección no aparece.
 
 `comprobar_datos.py` avisa si una persona, un repositorio, un ámbito o un icono no existen.
 
-## Indicar la protección de un resultado (registro, patente…)
+## Indicar la protección de un resultado (registro, patente…) y su licencia
 
-En `_data/transferencia.yml`, dentro de la oferta, añade `proteccion`:
+En `_data/transferencia.yml`, dentro de la oferta, se indican **dos cosas independientes**:
+- **`proteccion`:** cómo está protegido el resultado. Es una lista, porque un mismo resultado puede tener varios títulos.
+- **`licencia`:** si además se publica como **código abierto**. Un programa inscrito en el Registro de la Propiedad Intelectual puede ser también código abierto.
 
 ```yaml
     proteccion:
-      tipo: registro_pi          # registro_pi | patente | modelo_utilidad | secreto | abierto
-      numero: "M-000123/2024"    # asiento registral o nº de publicación, tal como figura en el título
-      oficina: { es: "Registro Territorial de la Propiedad Intelectual de la Comunidad de Madrid", en: "Madrid Regional Intellectual Property Registry" }
-      fecha: 2024-05-12          # inscripción o concesión
-      titulares: { es: "Universidad Politécnica de Madrid", en: "Universidad Politécnica de Madrid" }  # opcional (es el valor por defecto)
-      url: https://…             # opcional: enlace a la publicación
-      licencia: Apache-2.0       # opcional: si además el código es abierto
+      - tipo: registro_pi          # registro_pi | patente | modelo_utilidad | secreto
+        numero: "M-000123/2024"    # asiento registral o nº de publicación, tal como figura en el título
+        oficina: { es: "Registro Territorial de la Propiedad Intelectual de la Comunidad de Madrid", en: "Madrid Regional Intellectual Property Registry" }
+        fecha: 2024-05-12          # inscripción o concesión
+        titulares: { es: "Universidad Politécnica de Madrid", en: "Universidad Politécnica de Madrid" }  # opcional (es el valor por defecto)
+        url: https://…             # opcional: enlace a la publicación
+    licencia: Apache-2.0           # opcional: identificador SPDX; si no se pone, se usa «license» del repo en _data/repos.yml
 ```
 
-- **Patentes y modelos de utilidad sin `url`:** el número enlaza solo a su búsqueda en Espacenet (p. ej. `ES2912345B2`).
-- **Número vacío:** en registros, patentes y modelos de utilidad, `comprobar_datos.py` avisa y la web muestra «por completar».
+- **Enlaces automáticos:**
+  - en patentes y modelos de utilidad sin `url`, el número enlaza a su búsqueda en Espacenet (p. ej. `ES2912345B2`);
+  - la licencia enlaza a su texto en spdx.org.
+- **Datos que faltan:** si el número de un registro, una patente o un modelo de utilidad está vacío, o si `licencia: ""` (vacía a propósito, pendiente), `comprobar_datos.py` avisa y la web muestra «por completar».
 
 ## Añadir una aparición en prensa
 
@@ -150,6 +154,16 @@ Se ordenan solas por fecha, de la más reciente a la más antigua.
 ## Privacidad y servicios externos
 
 Si se añade un servicio externo (un vídeo de otra plataforma, un mapa, un script) o una clave nueva de `localStorage`, hay que explicarlo en `_pages/es/privacy.md` y `_pages/en/privacy.md`. Si no se hace, `verificar_sitio.py` da error.
+
+## Buscador
+
+No hay que mantener nada: el índice se genera en cada compilación a partir de los mismos datos que las páginas. Incluye:
+- las secciones de los menús;
+- proyectos, personas, líneas y ámbitos;
+- demostradores, noticias, eventos y repositorios;
+- publicaciones, que abren Publicaciones filtrada por esa publicación.
+
+Lo que se añade al sitio aparece solo en el buscador.
 
 ## Cambiar datos de contacto, cómo llegar o accesibilidad
 

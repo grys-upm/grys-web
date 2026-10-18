@@ -1,0 +1,23 @@
+{%- comment -%}
+  Diálogo del buscador (mockup v4). Oculto hasta que assets/js/grys.js lo abre
+  con el botón #searchbtn de la cabecera o con la tecla «/». El índice se
+  descarga la primera vez (data-index) y se busca en el navegador: no se envía
+  nada a ningún servidor. Sin JavaScript, ni el botón ni el diálogo aparecen.
+{%- endcomment -%}
+<div class="search" id="search" role="dialog" aria-modal="true" aria-labelledby="searchtitle" hidden
+     data-index="{{ '/indice-busqueda.json' | url_lang: lang }}"
+     data-one="{{ t.search_ui.one }}" data-many="{{ t.search_ui.many }}" data-more="{{ t.search_ui.more }}"
+     data-none="{{ t.search_ui.none }}" data-error="{{ t.search_ui.error }}" data-loading="{{ t.search_ui.loading }}"
+     data-kinds="{{ t.search_ui.kinds | jsonify | escape }}">
+  <div class="searchbox">
+    <div class="searchhead">
+      <h2 id="searchtitle">{{ t.search_ui.title }}</h2>
+      <button type="button" class="iconbtn" id="searchclose">{{ t.close }}</button>
+    </div>
+    <label class="sr" for="q">{{ t.search }}</label>
+    <input id="q" type="search" autocomplete="off" spellcheck="false" placeholder="{{ t.search_ui.placeholder }}" aria-describedby="searchstatus searchhint" aria-controls="results">
+    <p class="datos searchhint" id="searchhint">{{ t.search_ui.hint }}</p>
+    <p class="sr" id="searchstatus" role="status" aria-live="polite"></p>
+    <ul id="results" class="results"></ul>
+  </div>
+</div>

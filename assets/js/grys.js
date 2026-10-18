@@ -5,6 +5,7 @@
    - Pestañas accesibles (Equipo, Tesis) con ancla en la URL
    - Filtros de Proyectos y Publicaciones, con su estado en la URL
    - Insignias de Altmetric y Dimensions bajo demanda
+   - Buscador del sitio (índice JSON generado al compilar)
    (El tema inicial lo aplica el <script> en línea del <head>, sin parpadeo.) */
 (function () {
   "use strict";
@@ -283,5 +284,123 @@
       showMetrics(on);
     });
     if (mpref === "1") showMetrics(true);
+  }
+  /* ---------- Buscador ----------
+     Botón #searchbtn (cabecera) o tecla «/» → diálogo #search. El índice
+     (data-index, generado al compilar: _includes/indice-busqueda.json) se
+     descarga la primera vez y se busca aquí, sin enviar nada a ningún servidor.
+     Búsqueda: sin mayúsculas ni tildes; todas las palabras deben aparecer.
+     Orden: título que empieza por la consulta > título que la contiene >
+     todas las palabras en el título > el resto; después, por tipo.
+     Teclado: Esc cierra; ↓/↑ recorren los resultados; Tab queda dentro del
+     diálogo; al cerrar, el foco vuelve a donde estaba. */
+  var sdlg = document.getElementById("search");
+  var sbtn = document.getElementById("searchbtn");
+  if (sdlg && sbtn) {
+    var sq = document.getElementById("q");
+    var sout = document.getElementById("results");
+    var sstatus = document.getElementById("searchstatus");
+    var sclose = document.getElementById("searchclose");
+    var KIND_ORDER = ["page", "project", "member", "line", "domain", "demo", "news", "event", "repo", "pub"];
+    var MAX = 20;
+    var sindex = null, sloading = null, slast = null, skinds = {};
+    try { skinds = JSON.parse(sdlg.getAttribute("data-kinds") || "{}"); } catch (e) { skinds = {}; }
+    sbtn.hidden = false;
+
+    function loadIndex() {
+      if (sindex) return Promise.resolve(sindex);
+      if (sloading) return sloading;
+      sloading = fetch(sdlg.getAttribute("data-index"), { credentials: "same-origin" })
+        .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+        .then(function (data) {
+          sindex = data.filter(function (i) { return i.k !== "meta"; }).map(function (i, n) {
+            i._t = norm(i.t);
+            i._h = norm([i.t, i.s, i.x].join(" "));
+            i._k = KIND_ORDER.indexOf(i.k);
+            i._n = n;
+            return i;
+          });
+          return sindex;
+        });
+      return sloading;
+    }
+    function esc(s) {
+      return String(s || "").replace(/[&<>"']/g, function (c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+      });
+    }
+    function rank(i, q, terms) {
+      if (i._t.indexOf(q) === 0) return 0;
+      if (i._t.indexOf(q) > 0) return 1;
+      if (terms.every(function (w) { return i._t.indexOf(w) >= 0; })) return 2;
+      return 3;
+    }
+    function render() {
+      var q = norm(sq.value.trim().replace(/\s+/g, " "));
+      if (q.length < 2) { sout.innerHTML = ""; sstatus.textContent = ""; return; }
+      if (!sindex) {
+        sstatus.textContent = sdlg.getAttribute("data-loading");
+        loadIndex().then(render, function () {
+          sout.innerHTML = '<li class="datos noresult">' + esc(sdlg.getAttribute("data-error")) + "</li>";
+          sstatus.textContent = sdlg.getAttribute("data-error");
+          sloading = null;
+        });
+        return;
+      }
+      var terms = q.split(" ");
+      var hits = sindex.filter(function (i) {
+        return terms.every(function (w) { return i._h.indexOf(w) >= 0; });
+      }).map(function (i) { return { i: i, r: rank(i, q, terms) }; });
+      hits.sort(function (a, b) { return a.r - b.r || a.i._k - b.i._k || a.i._n - b.i._n; });
+      var n = hits.length;
+      if (!n) {
+        sout.innerHTML = '<li class="datos noresult">' + esc(sdlg.getAttribute("data-none")) + "</li>";
+      } else {
+        sout.innerHTML = hits.slice(0, MAX).map(function (h) {
+          var i = h.i;
+          return '<li><a href="' + esc(i.u) + '"><span class="kind">' + esc(skinds[i.k] || "") + "</span>" +
+            esc(i.t) + (i.s ? "<small>" + esc(i.s) + "</small>" : "") + "</a></li>";
+        }).join("") + (n > MAX ? '<li class="datos noresult">' + esc(sdlg.getAttribute("data-more").replace("%n", MAX)) + "</li>" : "");
+      }
+      sstatus.textContent = n + " " + sdlg.getAttribute(n === 1 ? "data-one" : "data-many");
+    }
+    function links() { return Array.prototype.slice.call(sout.querySelectorAll("a")); }
+    function openSearch() {
+      slast = document.activeElement;
+      sdlg.hidden = false;
+      document.body.classList.add("search-open");
+      sq.focus();
+      sq.select();
+      loadIndex().then(function () { if (sq.value) render(); }, function () {});
+    }
+    function closeSearch() {
+      sdlg.hidden = true;
+      document.body.classList.remove("search-open");
+      if (slast && slast.focus) slast.focus();
+    }
+    sbtn.addEventListener("click", openSearch);
+    sclose.addEventListener("click", closeSearch);
+    sdlg.addEventListener("click", function (e) { if (e.target === sdlg) closeSearch(); });
+    sq.addEventListener("input", render);
+    sout.addEventListener("click", function (e) { if (e.target.closest("a")) closeSearch(); });
+    sdlg.addEventListener("keydown", function (e) {
+      var ls = links(), idx = ls.indexOf(document.activeElement);
+      if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); closeSearch(); }
+      else if (e.key === "ArrowDown" && ls.length) { e.preventDefault(); (ls[idx + 1] || ls[0]).focus(); }
+      else if (e.key === "ArrowUp" && ls.length) { e.preventDefault(); if (idx <= 0) sq.focus(); else ls[idx - 1].focus(); }
+      else if (e.key === "Tab") {
+        // Foco atrapado en el diálogo (aria-modal)
+        var f = [sclose, sq].concat(ls), first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key !== "/" || !sdlg.hidden || e.ctrlKey || e.metaKey || e.altKey) return;
+      var tg = e.target, tn = tg && tg.tagName;
+      if (tn === "INPUT" || tn === "TEXTAREA" || tn === "SELECT" || (tg && tg.isContentEditable)) return;
+      e.preventDefault();
+      openSearch();
+    });
   }
 })();

@@ -25,6 +25,8 @@ Solo dos preferencias, en el almacenamiento local del navegador (`localStorage`)
 
 El idioma no se guarda: va en la dirección de la página (`/en/` para el inglés).
 
+El **buscador** funciona dentro de tu navegador: descarga un índice del propio sitio y lo que escribes no se envía a ningún servidor.
+
 ## Alojamiento
 
 El sitio es estático y está alojado en **GitHub Pages**. Como cualquier servidor web, GitHub puede registrar la dirección IP de los visitantes por motivos de seguridad y funcionamiento, según su [declaración de privacidad](https://docs.github.com/es/site-policy/privacy-policies/github-general-privacy-statement).

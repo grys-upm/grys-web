@@ -541,3 +541,13 @@ p.todo,div.todo{display:inline-block;white-space:normal;font-size:14px;padding:6
 .prensa .box h2{font-size:21px;margin-bottom:12px}
 .prensa .box p{margin-top:10px}
 .press-list li{grid-template-columns:1fr}
+
+/* Buscador (fase 3.7) */
+#searchbtn[hidden]{display:none}
+body.search-open{overflow:hidden}
+.searchhint{margin-top:8px;font-size:13px}
+.results li a{display:grid;grid-template-columns:auto 1fr;column-gap:10px;align-items:baseline}
+.results li a small{grid-column:2}
+.results .kind{grid-row:span 2;font:700 11px var(--f-datos);letter-spacing:.6px;text-transform:uppercase;color:var(--accent);border:1px solid var(--chip);border-radius:999px;padding:2px 8px;white-space:nowrap;align-self:start;margin-top:2px}
+.results .noresult{padding:10px 12px}
+@media(max-width:640px){.search{padding:16px 8px}.results{max-height:60vh}.results li a{grid-template-columns:1fr}.results .kind{grid-row:auto;justify-self:start;margin-bottom:4px}}
