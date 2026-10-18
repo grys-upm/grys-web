@@ -1,5 +1,21 @@
 # Registro de cambios
 
+## Fase 5 · Paso 5.5: sincronización con Zotero (18-10-2026)
+
+- **`scripts/sincronizar_zotero.py`:** descarga la biblioteca de grupo 5287048 (API v3, sin tesis, notas ni adjuntos) y reescribe `papers.bib`.
+  - **Claves:** conserva las claves BibTeX emparejando por identificador de Zotero (`_bibliography/zotero-claves.yml`), DOI o título y año, con desempates por tipo, clave, título exacto y revista. Las nuevas reciben sufijo si chocan.
+  - **Campos propios:** copia a `etiquetas.yml` los que solo estaban en el `.bib` antes de reescribirlo.
+  - **Etiquetas de Zotero:** `proyecto:`/`linea:` clasifican la publicación; las que no existen se avisan.
+  - **Fusiones:** al fusionar dos ítems en Zotero, los campos propios de la entrada que desaparece pasan a la que queda (resuelve la duplicada C15).
+  - **Limpieza:** quita `urldate`, `copyright`, `file`… y las etiquetas de servicio de `keywords`.
+  - **Seguridad:** se detiene si borraría más del 10 % o si Zotero no devuelve nada.
+  - **Pruebas sin red:** con Zotero igual a la web, el resultado es idéntico salvo `keywords`; título y DOI corregidos, entradas nuevas, borradas y etiquetadas; segunda pasada sin cambios; borrado masivo; respuesta vacía; fusión.
+- **`zotero.yml` (Actions):**
+  - cada lunes y a mano: sincroniza, aplica las etiquetas y comprueba los datos;
+  - abre o actualiza la PR «Publicaciones: sincronización con Zotero» con el informe y los errores de comprobación;
+  - si ya no hay diferencias, la cierra.
+- Documentación: `docs/COMPILAR.md` §10, `docs/RECETAS.md` («Añadir o corregir una publicación») y `docs/EDITAR.md` §6.
+
 ## Fase 5 · Paso 5.4: formularios de issue que generan la PR (18-10-2026)
 
 - **5 formularios** en *New issue*: Noticia, Evento, Convocatoria, Miembro y Proyecto. Los genera `scripts/issue_a_contenido.py --plantillas`; los puestos, líneas y ámbitos salen de los datos, y `comprobar_datos.py` avisa si quedan desfasados. Hay además enlaces al gestor y a la guía.

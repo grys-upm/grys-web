@@ -1,0 +1,155 @@
+# Sincronización de las publicaciones con Zotero.
+# · Cada lunes a las 05:45 UTC y a mano («Run workflow»).
+# · scripts/sincronizar_zotero.py descarga la biblioteca de grupo (conserva
+#   las claves BibTeX), aplicar_etiquetas.py vuelve a poner los campos
+#   propios y comprobar_datos.py revisa el resultado.
+# · Si hay cambios, abre o actualiza la PR «zotero/sincronizacion» con el
+#   informe (nuevas, cambiadas, borradas, sin etiquetar). Si ya no hay
+#   diferencias, cierra la PR que hubiera abierta.
+# · Si Zotero falla o la sincronización se detiene por seguridad (borraría
+#   más del 10 %), la ejecución falla y GitHub avisa por correo.
+# Configuración: docs/COMPILAR.md §10 (ZOTERO_API_KEY si el grupo es privado;
+# ZOTERO_GRUPO y ZOTERO_COLECCION opcionales).
+name: Sincronizar con Zotero
+
+on:
+  schedule:
+    - cron: "45 5 * * 1"
+  workflow_dispatch:
+    inputs:
+      permitir_borrados:
+        description: "Permitir que se borre más del 10 % de las publicaciones (solo si es intencionado)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: zotero
+  cancel-in-progress: false
+
+env:
+  RAMA: zotero/sincronizacion
+
+jobs:
+  zotero:
+    runs-on: ubuntu-24.04   # fijo: ubuntu-latest pasa a Ubuntu 26 desde el 19-10-2026
+    env:
+      TIENE_APP: ${{ secrets.CONTENIDO_APP_KEY != '' && vars.CONTENIDO_APP_ID != '' }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --quiet pyyaml
+
+      - name: Descargar de Zotero y comparar
+        id: sync
+        env:
+          ZOTERO_API_KEY: ${{ secrets.ZOTERO_API_KEY }}
+          ZOTERO_GRUPO: ${{ vars.ZOTERO_GRUPO || '5287048' }}
+          ZOTERO_COLECCION: ${{ vars.ZOTERO_COLECCION }}
+          PERMITIR: ${{ inputs.permitir_borrados }}
+        run: |
+          set +e
+          EXTRA=""
+          if [ "$PERMITIR" = "true" ]; then EXTRA="--permitir-borrados"; fi
+          python scripts/sincronizar_zotero.py --informe reports/zotero.md $EXTRA; RC=$?
+          cat reports/zotero.md >> "$GITHUB_STEP_SUMMARY"
+          exit $RC
+
+      - name: Aplicar etiquetas y comprobar
+        id: comprobar
+        run: |
+          python scripts/aplicar_etiquetas.py
+          set +e
+          python scripts/comprobar_datos.py > "$RUNNER_TEMP/comprobacion.txt" 2>&1; RC=$?
+          cat "$RUNNER_TEMP/comprobacion.txt"
+          echo "rc=$RC" >> "$GITHUB_OUTPUT"
+          # git status (no git diff): también ve los ficheros nuevos, como zotero-claves.yml
+          if [ -z "$(git status --porcelain -- _bibliography)" ]; then
+            echo "diferencias=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "diferencias=true" >> "$GITHUB_OUTPUT"
+            git diff --stat -- _bibliography
+          fi
+
+      - name: Token de la aplicación (si está configurada)
+        id: app
+        if: steps.comprobar.outputs.diferencias == 'true' && env.TIENE_APP == 'true'
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ vars.CONTENIDO_APP_ID }}
+          private-key: ${{ secrets.CONTENIDO_APP_KEY }}
+
+      - name: Subir la rama
+        id: rama
+        if: steps.comprobar.outputs.diferencias == 'true'
+        env:
+          TOKEN: ${{ steps.app.outputs.token || github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          REMOTO="https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git switch -c "$RAMA"
+          git add -- _bibliography
+          git commit -q -m "Publicaciones: sincronización con Zotero ($(date -u +%Y-%m-%d))"
+          # Si la rama remota ya tiene exactamente este contenido, no se sube otra vez
+          if git fetch -q "$REMOTO" "$RAMA" 2>/dev/null && git diff --quiet FETCH_HEAD HEAD -- _bibliography; then
+            echo "subida=false" >> "$GITHUB_OUTPUT"
+          else
+            git push -q --force "$REMOTO" "HEAD:refs/heads/$RAMA"
+            echo "subida=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Abrir, actualizar o cerrar la propuesta
+        uses: actions/github-script@v7
+        env:
+          DIFERENCIAS: ${{ steps.comprobar.outputs.diferencias }}
+          RC: ${{ steps.comprobar.outputs.rc }}
+          SUBIDA: ${{ steps.rama.outputs.subida }}
+          CON_APP: ${{ steps.app.outputs.token != '' }}
+        with:
+          github-token: ${{ steps.app.outputs.token || github.token }}
+          script: |
+            const fs = require("fs");
+            const { owner, repo } = context.repo;
+            const rama = process.env.RAMA;
+            const abiertas = (await github.rest.pulls.list({ owner, repo, state: "open", head: `${owner}:${rama}` })).data;
+            const ejecucion = `${context.serverUrl}/${owner}/${repo}/actions/runs/${context.runId}`;
+            if (process.env.DIFERENCIAS !== "true") {
+              for (const pr of abiertas) {
+                await github.rest.issues.createComment({ owner, repo, issue_number: pr.number,
+                  body: `La sincronización del ${new Date().toISOString().slice(0, 10)} ya no encuentra diferencias con Zotero ([ejecución](${ejecucion})). Se cierra.` });
+                await github.rest.pulls.update({ owner, repo, pull_number: pr.number, state: "closed" });
+              }
+              core.notice("Publicaciones al día: no hay cambios en Zotero");
+              return;
+            }
+            let informe = fs.readFileSync("reports/zotero.md", "utf8");
+            if (informe.length > 55000) informe = informe.slice(0, 55000) + "\n\n… (recortado; completo en la ejecución)";
+            const errores = fs.readFileSync(`${process.env.RUNNER_TEMP}/comprobacion.txt`, "utf8").split("\n").filter(l => l.startsWith("ERROR"));
+            const body = [informe,
+              ...(process.env.RC !== "0" ? ["", "### ❌ Comprobación de datos", "", "Hay que corregirlo antes de fusionar (en Zotero o en `_bibliography/etiquetas.yml`):", "", ...errores.map(e => "- " + e.replace(/^ERROR\s+/, ""))] : []),
+              "", "---", "**Cómo revisarla:** mira la lista de arriba y la vista previa (página Publicaciones). Si todo está bien, fusiona.",
+              "Si algo está mal, corrígelo **en Zotero** y lanza otra vez *Actions → Sincronizar con Zotero → Run workflow*: esta PR se actualiza.",
+              "", `<sub>[Ejecución](${ejecucion})</sub>`].join("\n");
+            const titulo = "Publicaciones: sincronización con Zotero";
+            let pr = abiertas[0];
+            if (pr) {
+              await github.rest.pulls.update({ owner, repo, pull_number: pr.number, title: titulo, body });
+            } else {
+              pr = (await github.rest.pulls.create({ owner, repo, head: rama, base: "main", title: titulo, body })).data;
+              try { await github.rest.issues.createLabel({ owner, repo, name: "zotero", color: "cc2936" }); } catch (e) { /* ya existe */ }
+              await github.rest.issues.addLabels({ owner, repo, issue_number: pr.number, labels: ["zotero"] });
+            }
+            if (process.env.CON_APP !== "true" && process.env.SUBIDA === "true") {
+              await github.rest.issues.createComment({ owner, repo, issue_number: pr.number, body:
+                "⚠️ Las comprobaciones no se lanzan solas en las PR que crea GitHub Actions sin la aplicación «grys-web-contenido». " +
+                "Para lanzarlas: **Close pull request** y después **Reopen pull request** (docs/COMPILAR.md §9)." });
+            }
+            core.notice(`Propuesta: ${pr.html_url}`);

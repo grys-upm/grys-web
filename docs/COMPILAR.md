@@ -187,3 +187,32 @@ Los formularios de `.github/ISSUE_TEMPLATE/` (Noticia, Evento, Convocatoria, Mie
    Después borra el `.pem` de tu ordenador.
 
 **En la migración a producción:** cambia en `.github/ISSUE_TEMPLATE/config.yml` la dirección del gestor por `https://grys.etsist.upm.es/admin/` e instala la aplicación también en el repositorio de producción.
+
+## 10. Sincronización con Zotero
+
+Las publicaciones (`_bibliography/papers.bib`) salen de la biblioteca de grupo de Zotero (grupo 5287048). Las tesis (`theses.bib`) no se sincronizan: se editan a mano.
+
+**Cuándo se sincroniza.** Cada lunes a las 05:45 UTC, y cuando se quiera desde *Actions → Sincronizar con Zotero → Run workflow*. Si hay cambios, se abre o actualiza la PR **«Publicaciones: sincronización con Zotero»** con un informe:
+- publicaciones nuevas, con cambios y borradas;
+- las clasificadas con etiquetas;
+- las nuevas que aún no tienen proyecto o línea.
+
+Se revisa en la vista previa y se fusiona. Si ya no hay diferencias, la PR se cierra sola.
+
+**Qué hace `scripts/sincronizar_zotero.py`:**
+- **Conserva las claves BibTeX** (de ellas dependen `etiquetas.yml`, las citas y las anclas): empareja cada ítem por su identificador de Zotero (guardado en `_bibliography/zotero-claves.yml`), por DOI o por título y año.
+- **Quita los campos internos** (`urldate`, `copyright`…) y las etiquetas de servicio de `keywords` (`⛔ No DOI found`…).
+- **Etiquetas `proyecto:<slug>` y `linea:<id>` en Zotero:** clasifican la publicación y mandan sobre `etiquetas.yml`. Es la forma más cómoda de etiquetar: se hace en Zotero y llega a la web en la siguiente sincronización.
+- **Fusiones en Zotero:** si se fusionan dos ítems duplicados, los campos propios de la entrada que desaparece (`portal_upm`…) pasan a la que queda.
+- **Seguridad:** no borra más del 10 % de las publicaciones (ni ninguna si Zotero no devuelve nada). En ese caso la ejecución falla y GitHub avisa por correo; si el borrado es intencionado, se repite con *Permitir borrados*.
+
+**Configuración (una vez):**
+1. **Clave de la API.** Si el grupo de Zotero es **público**, no hace falta. Si es privado: en zotero.org, *Settings → Security → Create new private key*, con acceso **solo de lectura** al grupo 5287048 y sin acceso a la biblioteca personal. Guárdala en `grys-web` → *Settings → Secrets and variables → Actions* como secreto **`ZOTERO_API_KEY`**.
+2. *(Opcional)* Variables `ZOTERO_GRUPO` (otro grupo) y `ZOTERO_COLECCION` (clave de una colección, si solo una parte de la biblioteca son publicaciones del grupo).
+3. **Permitir que Actions abra PR.** En `grys-web` → *Settings → Actions → General → Workflow permissions*, marca **Allow GitHub Actions to create and approve pull requests**. Lo necesitan también los formularios de §9.
+4. **Primera ejecución.** Lánzala a mano y revisa la PR. Lo normal es que aparezcan:
+   - limpiezas de `keywords`;
+   - pequeñas diferencias de formato en algunas entradas, porque el `.bib` actual viene de una exportación anterior;
+   - lo que se haya cambiado en Zotero desde la migración.
+
+Las comprobaciones de la PR se lanzan solas si está configurada la aplicación de §9; si no, hay que cerrarla y reabrirla una vez.
