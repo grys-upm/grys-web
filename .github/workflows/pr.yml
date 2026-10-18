@@ -5,6 +5,11 @@
 #   previa, lo publica en el repositorio de vistas previas y deja el enlace en
 #   un comentario de la PR. No bloquea: si falla o no está configurado, la PR
 #   se puede fusionar igual. Configuración (una vez): docs/COMPILAR.md.
+# · job «enlaces» (Enlaces nuevos): comprueba con lychee solo las URL que
+#   añade la PR. Informativo (no lo exige la protección de main).
+# · job «lighthouse» (Lighthouse): rendimiento, accesibilidad, buenas
+#   prácticas y SEO de 8 páginas representativas, con el sitio de «build».
+#   Informativo.
 name: Comprobar PR
 
 on:
@@ -183,3 +188,94 @@ jobs:
             if (previo) await github.rest.issues.updateComment({ owner, repo, comment_id: previo.id, body });
             else await github.rest.issues.createComment({ owner, repo, issue_number, body });
             await core.summary.addRaw(`Vista previa: ${process.env.URL}`).write();
+
+  enlaces:
+    name: Enlaces nuevos
+    runs-on: ubuntu-24.04   # fijo: ubuntu-latest pasa a Ubuntu 26 desde el 19-10-2026
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: URL añadidas en esta PR
+        id: urls
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          mkdir -p reports
+          git diff --unified=0 "$BASE" "$HEAD" -- . ':(exclude).github' ':(exclude)scripts' ':(exclude)*.lock' ':(exclude)lighthouserc.json' ':(exclude)lychee.toml' \
+            | grep '^+' | grep -v '^+++' | sed 's/^+//' > reports/lineas-nuevas.txt || true
+          grep -oE 'https?://[^ )"<>]+' reports/lineas-nuevas.txt | sort -u > reports/urls-nuevas.txt || true
+          N=$(wc -l < reports/urls-nuevas.txt)
+          echo "n=$N" >> "$GITHUB_OUTPUT"
+          echo "URL nuevas en la PR: $N"
+      - name: Caché de lychee
+        if: steps.urls.outputs.n != '0'
+        uses: actions/cache/restore@v5
+        with:
+          path: .lycheecache
+          key: lychee-${{ github.run_id }}
+          restore-keys: lychee-
+      - name: Comprobar las URL nuevas
+        if: steps.urls.outputs.n != '0'
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --config lychee.toml --no-progress reports/lineas-nuevas.txt
+          format: markdown
+          output: reports/enlaces.md
+          fail: true
+          failIfEmpty: false
+          jobSummary: true
+      - name: Sin URL nuevas
+        if: steps.urls.outputs.n == '0'
+        run: echo "Esta PR no añade enlaces externos." >> "$GITHUB_STEP_SUMMARY"
+
+  lighthouse:
+    name: Lighthouse
+    needs: build
+    runs-on: ubuntu-24.04   # fijo: ubuntu-latest pasa a Ubuntu 26 desde el 19-10-2026
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          sparse-checkout: lighthouserc.json
+          sparse-checkout-cone-mode: false
+      - uses: actions/download-artifact@v5
+        with:
+          name: sitio-compilado
+          path: _site
+      - name: Las páginas de lighthouserc.json existen
+        run: |
+          python3 - <<'PY'
+          import json, os, sys
+          from urllib.parse import urlsplit
+          faltan = []
+          for u in json.load(open("lighthouserc.json"))["ci"]["collect"]["url"]:
+              p = urlsplit(u).path
+              if not os.path.exists(os.path.join("_site", p.lstrip("/"), "index.html")):
+                  faltan.append(p)
+          if faltan:
+              print("::error::lighthouserc.json apunta a páginas que no existen: " + ", ".join(faltan))
+              sys.exit(1)
+          PY
+      - name: Lighthouse CI
+        id: lh
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          configPath: ./lighthouserc.json
+          uploadArtifacts: true
+          artifactName: informe-lighthouse
+          temporaryPublicStorage: false   # los informes no salen de GitHub
+      - name: Resumen
+        if: always() && steps.lh.outputs.manifest != ''
+        env:
+          MANIFEST: ${{ steps.lh.outputs.manifest }}
+        run: |
+          {
+            echo "## Lighthouse (mediana de 3 ejecuciones, móvil simulado)"
+            echo
+            echo "| Página | Rendimiento | Accesibilidad | Buenas prácticas | SEO |"
+            echo "|---|---|---|---|---|"
+            echo "$MANIFEST" | jq -r '.[] | select(.isRepresentativeRun) | "| `\(.url | sub("^https?://[^/]+"; ""))` | \(.summary.performance*100|round) | \(.summary.accessibility*100|round) | \(.summary["best-practices"]*100|round) | \(.summary.seo*100|round) |"'
+            echo
+            echo "Umbrales: accesibilidad ≥ 95 y SEO ≥ 90 (error), rendimiento ≥ 80 y buenas prácticas ≥ 90 (aviso). Informes completos en el artefacto «informe-lighthouse»."
+          } >> "$GITHUB_STEP_SUMMARY"

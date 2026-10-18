@@ -74,6 +74,9 @@ exclude:
   - .devcontainer/
   - docker-compose.yml
   - assets/fonts/LEEME.md
+  - lychee.toml
+  - lighthouserc.json
+  - .lycheecache
 
 keep_files: ["CNAME", ".nojekyll"]
 

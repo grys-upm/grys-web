@@ -1,5 +1,22 @@
 # Registro de cambios
 
+## Fase 5 · Paso 5.2: enlaces (lychee) y Lighthouse CI (18-10-2026)
+
+- **Enlaces nuevos** (job `enlaces` en `pr.yml`): lychee comprueba solo las URL externas añadidas en la PR. Es informativo.
+- **Enlaces externos** (`enlaces.yml`): todo el sitio cada lunes y a mano. Abre, actualiza o cierra la issue «Enlaces rotos».
+- **`lychee.toml`:**
+  - solo comprueba http y https, con caché de 3 días entre ejecuciones;
+  - excluye el propio dominio, los DOI, los sitios que bloquean robots (LinkedIn, Google Scholar, ResearchGate, ACM, IEEE…), archive.org y los incrustados.
+- **Lighthouse CI** (job `lighthouse` en `pr.yml`, `lighthouserc.json`):
+  - 8 páginas representativas, mediana de 3 ejecuciones;
+  - error si accesibilidad < 95 o SEO < 90; aviso si rendimiento < 80 o buenas prácticas < 90;
+  - se omite la auditoría `is-crawlable`, porque el sitio de pruebas lleva `noindex`;
+  - tabla de puntuaciones en el resumen y los informes como artefacto, sin subirlos a servidores de Google.
+
+  Es informativo.
+- Las comprobaciones informativas están explicadas en `docs/COMPILAR.md` §3.
+- **Corrección:** la primera ejecución de «Enlaces nuevos» comprobó las direcciones `http://localhost/…` de `lighthouserc.json`, que solo existen dentro de Lighthouse. Ahora se excluyen las direcciones locales y los ficheros de configuración de las comprobaciones.
+
 ## Fase 5 · Paso 5.1: vista previa de cada PR y Dependabot (18-10-2026)
 
 - **Vista previa por PR:**
