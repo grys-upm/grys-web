@@ -364,6 +364,11 @@ def main():
         "colabora/transferencia": ['class="transfer"'], "en/collaborate/technology-transfer": ['class="transfer"'],
         "colabora/tfg-tfm-doctorado": ['class="estudiantes"'], "en/collaborate/student-projects-and-phd": ['class="estudiantes"'],
         "colabora/docencia": ['class="docencia"'], "en/collaborate/teaching": ['class="docencia"'],
+        # fase 3.6c
+        "actualidad/prensa": ['class="grid2 prensa"'], "en/press": ['class="grid2 prensa"'],
+        "accesibilidad": ["1112/2018", "upm.es/UPM/WebUPM/Accesibilidad"],
+        "en/accessibility": ["1112/2018", "upm.es/UPM/WebUPM/Accesibilidad"],
+        "privacidad": ["proteccion.datos@upm.es"], "en/privacy": ["proteccion.datos@upm.es"],
     }
     def _n(nombre, clave=None):
         d = yaml.safe_load(open(os.path.join(ROOT, "_data", nombre), encoding="utf-8")) or {}
@@ -394,6 +399,34 @@ def main():
             n = html.count('<article class="card sdg">')
             if n != n_ods:
                 errors.append(f"{rel}/index.html: {n} tarjetas de ODS y _data/ods.yml tiene {n_ods}")
+    # 11. Privacidad al día: toda clave de localStorage y todo servicio externo
+    #     cargado en <iframe>/<script> (o desde grys.js) debe estar explicado
+    codigo = ""
+    for f in (os.path.join(ROOT, "assets", "js", "grys.js"), os.path.join(ROOT, "_includes", "head.html")):
+        if os.path.exists(f):
+            codigo += open(f, encoding="utf-8").read()
+    claves = set(re.findall(r'localStorage\.(?:get|set)Item\(\s*"([^"]+)"', codigo))
+    hosts = set(re.findall(r'https://([a-z0-9.-]+)/', " ".join(re.findall(r'"https://[^"]+\.js"', codigo))))
+    for dirpath, _, files in os.walk(site):
+        for fn in files:
+            if fn.endswith(".html"):
+                h = open(os.path.join(dirpath, fn), encoding="utf-8").read()
+                hosts |= set(re.findall(r'<(?:iframe|script)[^>]+src="https://([a-z0-9.-]+)/', h))
+    def _base(hst):
+        partes = hst.split(".")
+        return partes[-2] if len(partes) >= 2 else hst
+    for rel in ("privacidad", os.path.join("en", "privacy")):
+        f = os.path.join(site, rel, "index.html")
+        if not os.path.exists(f):
+            continue
+        h = open(f, encoding="utf-8").read().lower()
+        for k in sorted(claves):
+            if k.lower() not in h:
+                errors.append(f"{rel}/index.html: no explica la clave de localStorage «{k}»")
+        for hst in sorted(hosts):
+            b = _base(hst)
+            if b not in h:
+                errors.append(f"{rel}/index.html: no menciona el servicio externo «{hst}»")
     todo = sum(1 for w in warnings if "por completar" in w)
     for e in errors:
         print(f"ERROR  {e}")

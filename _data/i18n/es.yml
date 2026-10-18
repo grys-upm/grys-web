@@ -107,6 +107,18 @@ transfer_page:
   offer_label: Oferta tecnológica
   offer_title: Soluciones disponibles
   catalogue: Ver todas nuestras soluciones en el HUB de Innovación UPM
+  protection: Protección
+  ip_registro_pi: Registro de propiedad intelectual (software)
+  ip_patente: Patente
+  ip_modelo_utilidad: Modelo de utilidad
+  ip_secreto: Secreto industrial (know-how)
+  ip_abierto: Código abierto
+  entry: Asiento registral
+  number: Nº de publicación
+  office: Registro u oficina
+  date: Fecha
+  holders: Titularidad
+  licence: Licencia
   how_label: Cómo colaborar
   how_title: Formas de trabajar con nosotros
   cta: Hablemos
@@ -139,6 +151,17 @@ teaching_page:
   link_students: TFG, TFM y doctorado
   link_opps: Ofertas y convocatorias
   link_contact: Contacto
+press_page:
+  coverage: Apariciones en prensa
+  none: Sin apariciones registradas todavía
+  none_text: "Cuando el grupo aparezca en un medio, se añadirá aquí con el medio, la fecha y el enlace."
+  about: Sobre el grupo
+  short: Descripción breve (unas 50 palabras)
+  long: Descripción larga (unas 150 palabras)
+  kit: Kit de prensa
+  kit_note: "Usa los logotipos sin deformarlos ni cambiar sus colores, y respeta el área de seguridad que indica el manual de identidad."
+  contact: Contacto de prensa
+  see_news: Ver las noticias del grupo
 portada:
   facts_label: El grupo en cifras
   f_projects: proyectos

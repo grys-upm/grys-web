@@ -287,7 +287,7 @@ repo_names = {r.get("name") for r in repos_data}
 for e in validate(normalize(repos_data), schema("repos")):
     err(f"_data/repos.yml: {e}")
 for dname in ("positions", "roles", "metrics", "axes", "portada", "ods", "quienes_somos",
-              "laboratorio", "demostradores", "transferencia", "estudiantes", "docencia"):
+              "laboratorio", "demostradores", "transferencia", "estudiantes", "docencia", "prensa"):
     data = load_yaml(os.path.join(ROOT, "_data", f"{dname}.yml"))
     for e in validate(normalize(data), schema(dname)):
         err(f"_data/{dname}.yml: {e}")
@@ -304,6 +304,10 @@ for d in load_yaml(os.path.join(ROOT, "_data", "demostradores.yml")) or []:
     if d.get("repo"):
         _ref(o, "repositorio (en _data/repos.yml)", d["repo"], repo_names)
 for of in (load_yaml(os.path.join(ROOT, "_data", "transferencia.yml")) or {}).get("ofertas") or []:
+    _pr = of.get("proteccion") or {}
+    if _pr.get("tipo") in ("registro_pi", "patente", "modelo_utilidad") and not str(_pr.get("numero") or "").strip():
+        warn(f"_data/transferencia.yml ({(of.get('title') or {}).get('es')}): falta el "
+             f"{'asiento registral' if _pr['tipo'] == 'registro_pi' else 'número de publicación'} (sale «por completar»)")
     if of.get("repo"):
         _ref("_data/transferencia.yml", "repositorio (en _data/repos.yml)", of["repo"], repo_names)
 for p in (load_yaml(os.path.join(ROOT, "_data", "estudiantes.yml")) or {}).get("propuestas") or []:
@@ -312,6 +316,15 @@ for p in (load_yaml(os.path.join(ROOT, "_data", "estudiantes.yml")) or {}).get("
 for a in (load_yaml(os.path.join(ROOT, "_data", "docencia.yml")) or {}).get("asignaturas") or []:
     for s in a.get("profesorado") or []:
         _ref("_data/docencia.yml", "miembro (profesorado)", s, items["members"])
+_pz = load_yaml(os.path.join(ROOT, "_data", "prensa.yml")) or {}
+for k in _pz.get("kit") or []:
+    if not os.path.exists(os.path.join(ROOT, str(k.get("src", "")).lstrip("/"))):
+        err(f"_data/prensa.yml: el fichero del kit «{k.get('src')}» no existe")
+for nivel, (mn, mx) in (("corta", (35, 70)), ("larga", (110, 190))):
+    for lg, txt in ((_pz.get("descripciones") or {}).get(nivel) or {}).items():
+        n = len(str(txt).split())
+        if not mn <= n <= mx:
+            warn(f"_data/prensa.yml: descripción {nivel} [{lg}] tiene {n} palabras (se esperan {mn}-{mx})")
 for o in load_yaml(os.path.join(ROOT, "_data", "ods.yml")) or []:
     for s in o.get("proyectos") or []:
         if s not in items["projects"]:

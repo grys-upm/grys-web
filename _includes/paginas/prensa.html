@@ -1,0 +1,43 @@
+{%- comment -%} Página «Prensa»: _data/prensa.yml. {%- endcomment -%}
+{%- include page-vars.html -%}
+{%- assign pz = site.data.prensa -%}
+{%- assign pz_ap = pz.apariciones | sort: "fecha" | reverse -%}
+<div class="grid2 prensa">
+<div>
+<h2 class="rule">{{ t.press_page.coverage }}</h2>
+{%- if pz_ap.size > 0 %}
+<ul class="news press-list">
+{%- for a in pz_ap %}
+<li><div><time class="datos" datetime="{{ a.fecha | date: '%Y-%m-%d' }}">{{ a.fecha | date: "%d/%m/%Y" }}</time> · <span class="datos">{{ a.medio }}</span>
+<h3><a href="{{ a.url }}"{% if a.lang and a.lang != lang %} hreflang="{{ a.lang }}"{% endif %}><span{% if a.lang and a.lang != lang %} lang="{{ a.lang }}"{% endif %}>{{ a.titulo }}</span></a></h3></div></li>
+{%- endfor %}
+</ul>
+{%- else %}
+<div class="empty"><span class="bub">{% include icono.html n="mega" %}</span><div>
+<h3>{{ t.press_page.none }}</h3>
+<p>{{ t.press_page.none_text }}</p>
+</div></div>
+{%- endif %}
+<h2 class="rule pz-desc">{{ t.press_page.about }}</h2>
+<h3>{{ t.press_page.short }}</h3>
+<p>{{ pz.descripciones.corta | l10n }}</p>
+<h3>{{ t.press_page.long }}</h3>
+<p>{{ pz.descripciones.larga | l10n }}</p>
+</div>
+<div>
+<div class="box">
+<h2>{{ t.press_page.kit }}</h2>
+<ul class="nodes">
+{%- for k in pz.kit %}{% assign pz_ok = k.src | asset_exists %}{% if pz_ok %}
+<li><a href="{{ k.src | relative_url }}" download>{{ k.titulo | l10n }}</a> <span class="datos">({{ k.src | split: "." | last | upcase }})</span></li>
+{%- endif %}{% endfor %}
+</ul>
+<p class="datos">{{ t.press_page.kit_note }}</p>
+</div>
+<div class="box">
+<h2>{{ t.press_page.contact }}</h2>
+<p><a href="mailto:{{ site.data.grupo.email }}">{{ site.data.grupo.email }}</a> · <a href="tel:{{ site.data.grupo.phone | remove: ' ' }}">{{ site.data.grupo.phone }}</a></p>
+<p><a href="{{ 'news' | route_url }}">{{ t.press_page.see_news }}</a></p>
+</div>
+</div>
+</div>

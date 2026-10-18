@@ -107,6 +107,18 @@ transfer_page:
   offer_label: Technology offer
   offer_title: Available solutions
   catalogue: See all our solutions in the UPM Innovation Hub
+  protection: Protection
+  ip_registro_pi: Intellectual property registration (software)
+  ip_patente: Patent
+  ip_modelo_utilidad: Utility model
+  ip_secreto: Trade secret (know-how)
+  ip_abierto: Open source
+  entry: Registration entry
+  number: Publication number
+  office: Registry or office
+  date: Date
+  holders: Rights holder
+  licence: Licence
   how_label: How to collaborate
   how_title: Ways to work with us
   cta: Let's talk
@@ -139,6 +151,17 @@ teaching_page:
   link_students: Student projects and PhD
   link_opps: Opportunities
   link_contact: Contact
+press_page:
+  coverage: Press coverage
+  none: No press coverage recorded yet
+  none_text: "When the group appears in the media, it will be listed here with the outlet, date and link."
+  about: About the group
+  short: Short description (about 50 words)
+  long: Long description (about 150 words)
+  kit: Press kit
+  kit_note: "Use the logos without distorting them or changing their colours, and keep the clear space set out in the brand manual."
+  contact: Press contact
+  see_news: See the group's news
 portada:
   facts_label: The group in figures
   f_projects: projects
