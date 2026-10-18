@@ -35,6 +35,6 @@ We had the privilege of working with Estela throughout both projects, and it was
 ## Related Links
 
 - [COITT Press Release (full news article)](https://www.telecos.zone/index.php/actualidad/noticias-coitt/1931-ciberseguridad-ia-aplicada-a-la-salud-robots-autonomos-y-agricultura-inteligente-protagonistas-de-los-mejores-tfg-de-telecomunicaciones-de-2025)
-- [First prize work (Telematic Engineering) – Archivo Digital UPM](https://oa.upm.es/89100/)
-- [Third prize work (Electronic Systems) – Archivo Digital UPM](https://oa.upm.es/90982/)
+- [First prize work (Telematic Engineering) – <span lang="es">Archivo Digital UPM</span>](https://oa.upm.es/89100/)
+- [Third prize work (Electronic Systems) – <span lang="es">Archivo Digital UPM</span>](https://oa.upm.es/90982/)
 - [GRyS Research Group](https://grys.etsist.upm.es/)

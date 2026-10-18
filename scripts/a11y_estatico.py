@@ -102,7 +102,8 @@ class Pagina(HTMLParser):
             if a.get("aria-labelledby"):
                 inter.append("(aria-labelledby)")
         lang = a.get("lang")
-        self.stack.append([tag, "aria-hidden" in a and a.get("aria-hidden") != "false", lang, inter])
+        oculto = ("aria-hidden" in a and a.get("aria-hidden") != "false") or "hidden" in a
+        self.stack.append([tag, oculto, lang, inter])
         if tag == "head":
             self.en_head = True
         if tag in ("script", "style"):
@@ -277,8 +278,10 @@ def main():
         for pag, det in v:
             por_det.setdefault(det, []).append(pag)
         for det, pags in list(por_det.items())[:25]:
-            ej = ", ".join(pags[:3]) + (f" y {len(pags) - 3} más" if len(pags) > 3 else "")
-            out.append(f"- `{det}` · {len(pags)} página(s): {ej}")
+            unicas = list(dict.fromkeys(pags))
+            ej = ", ".join(unicas[:3]) + (f" y {len(unicas) - 3} más" if len(unicas) > 3 else "")
+            veces = f" ({len(pags)} veces)" if len(pags) != len(unicas) else ""
+            out.append(f"- `{det}` · {len(unicas)} página(s){veces}: {ej}")
         if len(por_det) > 25:
             out.append(f"- … y {len(por_det) - 25} casos distintos más")
     os.makedirs(os.path.dirname(args.salida), exist_ok=True)

@@ -5,4 +5,4 @@ page_id: news
 permalink: /actualidad/noticias/
 ---
 
-{% include listas/noticias.html %}
+{% include listas/noticias.html h=2 %}

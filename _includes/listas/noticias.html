@@ -1,10 +1,12 @@
 {%- comment -%}
   Noticias (más recientes primero). Las breves («detail: false») no tienen ficha.
-  Parámetro opcional: limite (número de noticias).
+  Parámetros opcionales: limite (número de noticias) y h (nivel del título de
+  cada noticia: 3 por defecto, bajo un h2; 2 en la página Noticias).
 {%- endcomment -%}
 {%- include page-vars.html -%}
 {%- assign nw_list = site.news | sort: "date", "first" | reverse -%}
 {%- assign nw_lim = include.limite | default: nw_list.size -%}
+{%- assign nw_h = include.h | default: 3 -%}
 <ul class="news">
 {%- for n in nw_list limit: nw_lim %}
   {%- assign nw_title = n | tr: "title" %}
@@ -19,7 +21,7 @@
       <time class="datos" datetime="{{ n.date | date: '%Y-%m-%d' }}">{{ n.date | date: "%d/%m/%Y" }}</time>
       {%- if n.category %} · <span class="datos">{{ t.news.categories[n.category] }}</span>{% endif %}
       {%- assign nw_key = "title_" | append: lang %}
-      <h3{% unless n[nw_key] %} lang="{{ n.lang }}"{% endunless %}>{% if nw_url %}<a href="{{ nw_url }}">{{ nw_title }}</a>{% else %}{{ nw_title }}{% endif %}</h3>
+      <h{{ nw_h }} class="nw-t"{% unless n[nw_key] %} lang="{{ n.lang }}"{% endunless %}>{% if nw_url %}<a href="{{ nw_url }}">{{ nw_title }}</a>{% else %}{{ nw_title }}{% endif %}</h{{ nw_h }}>
     </div>
   </li>
 {%- endfor %}

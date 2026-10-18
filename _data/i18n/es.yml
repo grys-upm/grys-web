@@ -7,6 +7,7 @@ go_home: Ir al inicio
 skip: Saltar al contenido
 menu: Menú
 main_nav: Principal
+util_nav: Accesos rápidos
 mobile_nav: Menú móvil
 breadcrumb: Ruta de navegación
 home: Inicio
@@ -189,6 +190,10 @@ search_ui:
     event: Evento
     repo: Código
     pub: Publicación
+gallery:
+  photo: Foto
+  of: de
+  full: a tamaño completo
 portada:
   facts_label: El grupo en cifras
   f_projects: proyectos

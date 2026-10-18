@@ -14,7 +14,7 @@
 <div class="img demo-img"><img src="{{ d.imagen | relative_url }}" alt="" loading="lazy" decoding="async"></div>
 {%- endif %}
 <div class="body">
-<h3>{{ dm_title }}</h3>
+<h2>{{ dm_title }}</h2>
 <p>{{ d.desc | l10n }}</p>
 {%- if d.domains.size > 0 %}
 <div class="chips">{% for k in d.domains %}{% assign dm_d = site.domains | where: "key", k | first %}{% if dm_d %}<span class="chip">{% include icono.html n=dm_d.icon %}{{ dm_d | tr: "title" }}</span>{% endif %}{% endfor %}</div>

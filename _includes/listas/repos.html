@@ -1,6 +1,7 @@
 {%- comment -%} Repositorios destacados (_data/repos.yml, featured: true). {%- endcomment -%}
 {%- include page-vars.html -%}
 {%- assign rp_list = site.data.repos | where: "featured", true %}
+<h2 class="rule">{{ t.software.repos }}</h2>
 <div class="grid3">
 {%- for r in rp_list %}
   <article class="repo">

@@ -3,10 +3,13 @@
   Uso:  include video.html youtube="ID" titulo="Descripción del vídeo"
   Sin JavaScript también funciona: el iframe se carga de forma diferida.
 {%- endcomment -%}
-{%- assign v_t = include.titulo | default: site.data.i18n[lang].video | default: "YouTube" -%}
+{%- comment -%} Dentro del contenido de una página la variable «lang» del layout no existe: se calcula aquí. {%- endcomment -%}
+{%- assign v_lang = page.lang | default: site.active_lang | default: site.default_lang -%}
+{%- assign v_i18n = site.data.i18n[v_lang] -%}
+{%- assign v_t = include.titulo | default: v_i18n.video | default: "YouTube" -%}
 <figure class="video">
   <div class="video-marco">
     <iframe src="https://www.youtube-nocookie.com/embed/{{ include.youtube }}" title="{{ v_t | escape }}" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
   </div>
-  <figcaption><a href="https://www.youtube.com/watch?v={{ include.youtube }}">{{ site.data.i18n[lang].video_link }}</a></figcaption>
+  <figcaption><a href="https://www.youtube.com/watch?v={{ include.youtube }}">{{ v_i18n.video_link }}<span class="sr">: {{ v_t | escape }}</span></a></figcaption>
 </figure>

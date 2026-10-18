@@ -3,7 +3,13 @@
     include galeria.html fotos="/ruta/a.webp,/ruta/b.webp" alts="Texto a|Texto b" pie="Pie común"
   · fotos: rutas separadas por comas.
   · alts: textos alternativos separados por «|», en el mismo orden (recomendado).
+  · Cada foto enlaza a la imagen grande. Si falta su texto alternativo, el
+    enlace lleva igualmente un nombre («Foto 2 de 4, a tamaño completo»), para
+    que nunca haya enlaces sin nombre (WCAG 2.4.4 y 4.1.2). Las fotos sin
+    texto alternativo aparecen en el informe de pendientes.
 {%- endcomment -%}
+{%- assign g_lang = page.lang | default: site.active_lang | default: site.default_lang -%}
+{%- assign g_t = site.data.i18n[g_lang] -%}
 {%- assign g_fotos = include.fotos | split: "," -%}
 {%- assign g_alts = include.alts | default: "" | split: "|" -%}
 <figure class="galeria">
@@ -11,7 +17,9 @@
   {%- for g_f in g_fotos %}
     {%- assign g_src = g_f | strip -%}
     {%- assign g_small = g_src | replace: ".webp", "-480.webp" -%}
-    <li><a href="{{ g_src | relative_url }}"><img src="{{ g_small | relative_url }}" alt="{{ g_alts[forloop.index0] | strip | escape }}" loading="lazy" decoding="async" width="480" height="320"></a></li>
+    {%- assign g_alt = g_alts[forloop.index0] | strip -%}
+    {%- capture g_name %}{{ g_t.gallery.photo }} {{ forloop.index }} {{ g_t.gallery.of }} {{ g_fotos.size }}, {{ g_t.gallery.full }}{% endcapture -%}
+    <li><a href="{{ g_src | relative_url }}"{% if g_alt == "" %} aria-label="{{ g_name | strip | escape }}"{% endif %}><img src="{{ g_small | relative_url }}" alt="{{ g_alt | escape }}" loading="lazy" decoding="async" width="480" height="320"></a></li>
   {%- endfor %}
   </ul>
   {%- if include.pie %}

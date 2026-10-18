@@ -12,7 +12,7 @@
 <div class="card"><div class="yr">{{ mx.master_theses }}</div><p>{{ t.students_page.n_master }}</p></div>
 <div class="card"><div class="yr">{{ mx.phd_theses }}</div><p>{{ t.students_page.n_phd }}</p></div>
 </div>
-<p class="datos">{{ t.portada.facts_source }}: {% if mx.source_url %}<a href="{{ mx.source_url }}">{{ mx.source }}</a>{% else %}{{ mx.source }}{% endif %} ({{ mx.date }}) · <a href="{{ 'theses' | route_url }}">{{ t.students_page.see_theses }}</a></p>
+<p class="datos">{{ t.portada.facts_source }}: {% if mx.source_url %}<a href="{{ mx.source_url }}">{{ mx.source | l10n }}</a>{% else %}{{ mx.source | l10n }}{% endif %} ({{ mx.date }}) · <a href="{{ 'theses' | route_url }}">{{ t.students_page.see_theses }}</a></p>
 
 <div class="label es-sec"><span class="bub">{% include icono.html n="cap" %}</span>{{ t.students_page.topics_label }}</div>
 <h2 class="rule">{{ t.students_page.topics_title }}</h2>

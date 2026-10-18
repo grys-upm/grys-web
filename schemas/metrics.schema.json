@@ -35,8 +35,22 @@
       "type": "integer"
     },
     "source": {
-      "type": "string",
-      "minLength": 1
+      "type": "object",
+      "required": [
+        "es",
+        "en"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "es": {
+          "type": "string",
+          "minLength": 1
+        },
+        "en": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
     },
     "source_url": {
       "type": "string",

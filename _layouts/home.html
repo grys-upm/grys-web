@@ -36,7 +36,7 @@ layout: default
         <div><b>{{ mx.scopus_h }}</b><span>{{ h.f_h }}</span></div>
         <div><b>{{ mx.phd_theses }}</b><span>{{ h.f_phd }}</span></div>
       </div>
-      <p class="datos facts-src">{{ h.facts_source }}: {% if mx.source_url %}<a href="{{ mx.source_url }}">{{ mx.source }}</a>{% else %}{{ mx.source }}{% endif %} ({{ mx.date }}) · {{ h.facts_projects_src }}</p>
+      <p class="datos facts-src">{{ h.facts_source }}: {% if mx.source_url %}<a href="{{ mx.source_url }}">{{ mx.source | l10n }}</a>{% else %}{{ mx.source | l10n }}{% endif %} ({{ mx.date }}) · {{ h.facts_projects_src }}</p>
     </div>
   </div>
 </section>
