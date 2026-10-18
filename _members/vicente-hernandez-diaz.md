@@ -2,7 +2,7 @@
 given: Vicente
 family: Hernández-Díaz
 gender: m
-position: assoc
+position: pteu
 status: current
 since: 2009-01-01
 photo: /assets/img/equipo/vicente-hernandez-diaz.webp
@@ -19,7 +19,7 @@ old_urls:
 - /team/vicente-hernandez-diaz/
 traduccion: borrador
 texto_es: |-
-  **Vicente Hernández Díaz** es *profesor titular* en la [Escuela Técnica Superior de Ingeniería y Sistemas de Telecomunicación](https://www.etsist.upm.es) de la [Universidad Politécnica de Madrid (UPM)](https://www.upm.es).
+  **Vicente Hernández Díaz** es *profesor titular de escuela universitaria* en la [Escuela Técnica Superior de Ingeniería y Sistemas de Telecomunicación](https://www.etsist.upm.es) de la [Universidad Politécnica de Madrid (UPM)](https://www.upm.es).
   Obtuvo el **máster en Ingeniería Electrónica** por la *Universidad de Alcalá* en 2013 y es miembro del [Grupo de Redes y Servicios de Próxima Generación (GRyS)](https://grys.etsist.upm.es/) desde 2005.
 
   Sus intereses de investigación incluyen la **computación ubicua**, el **Internet de las cosas (IoT)** y la **resiliencia de redes**.

@@ -33,9 +33,10 @@
 {%- endunless %}
 <div class="yr">{{ entry.year }}<small>{{ b_venue }}</small></div>
 <div>
-  {%- comment -%} Ancla estable «ref-<clave>» (ASCII): la usan las citas de cita.html. jekyll-scholar
-  solo pone id en su <span> de referencia, que esta plantilla no usa. {%- endcomment %}
-  <h3 id="ref-{{ entry.key | slugify: 'latin' }}">{{ b_title }}</h3>
+  {%- comment -%} Ancla única «ref-<clave>» calculada en _plugins/bib_index.rb (no se usa
+  slugify aquí: dos claves que solo difieren en mayúsculas o tildes chocarían). {%- endcomment %}
+  {%- assign b_ancla = site.data.pub_index[entry.key].ancla %}
+  <h3{% if b_ancla %} id="{{ b_ancla }}"{% endif %}>{{ b_title }}</h3>
   <p class="au">{% for a in entry.author_array %}{{ a.first }} {{ a.last }}{% unless forloop.last %}, {% endunless %}{% endfor %}</p>
   {%- if b_thesis %}
   <dl class="spec">

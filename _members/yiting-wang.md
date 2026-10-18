@@ -1,7 +1,7 @@
 ---
 given: Yiting
 family: Wang
-gender: m
+gender: f
 position: gta
 status: current
 since: 2019-12-01

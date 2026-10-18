@@ -9,6 +9,8 @@
 #                portal_upm, archivo_upm, projects[], lines[], members[] }
 #    pub_index → el mismo contenido indexado por clave BibTeX (lo usan bib.html
 #                y cita.html), MÁS las tesis de theses.bib (kind: "thesis")
+#  · ancla: id HTML único de cada entrada («ref-<clave en ASCII>»); si dos
+#    claves solo se distinguen por mayúsculas o tildes, la segunda lleva «-2».
 #  · projects/lines salen de los campos «project»/«lines» (etiquetas.yml).
 #  · members se calcula por AUTORÍA comparando los autores del BibTeX con
 #    given/family de _members/ (sin tildes ni mayúsculas):
@@ -50,6 +52,12 @@ module GRyS
         h.delete("_month")
         h["kind"] = "thesis"
         index[h["key"]] ||= h
+      end
+      usadas = Hash.new(0)
+      index.each_value do |h|
+        base = "ref-" + Jekyll::Utils.slugify(h["key"].to_s, mode: "latin")
+        usadas[base] += 1
+        h["ancla"] = usadas[base] == 1 ? base : "#{base}-#{usadas[base]}"
       end
       site.data["pub_index"] = index
     end

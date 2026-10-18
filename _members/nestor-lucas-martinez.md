@@ -37,7 +37,7 @@ texto_es: |-
   Ha participado en varios proyectos internacionales y europeos, entre ellos:
   - *ITEA2 Web of Objects (WoO)*
   - *FP7 DEMANES*
-  - *FP7 ACUSS*
+  - *ACCUS*
   - *H2020 SWARMs*
   - *H2020 AFarCloud*
   - *Horizonte Europa NexTArc* (desde 2025, **IP por la UPM**)
@@ -45,7 +45,7 @@ texto_es: |-
 
   ## Cargos y responsabilidades actuales
   - **Profesor permanente laboral**, DTE, UPM (desde mayo de 2025)
-  - **Investigador principal (IP)**, *proyecto H2020 NexTArc* (desde septiembre de 2025)
+  - **Investigador principal (IP)**, *proyecto Horizonte Europa NexTArc* (desde septiembre de 2025)
   - **Secretario académico**, Consejo de Departamento, DTE (desde noviembre de 2025)
   - **Investigador**, *Grupo de Redes y Servicios de Próxima Generación (GRyS)* (desde enero de 2013)
 
@@ -77,7 +77,7 @@ Dr. Lucas-Martínez’s research focuses on **adaptive middleware** and **missio
 He has participated in several international and European projects, including:  
 - *ITEA2 Web of Objects (WoO)*  
 - *FP7 DEMANES*  
-- *FP7 ACUSS*  
+- *ACCUS*  
 - *H2020 SWARMs*  
 - *H2020 AFarCloud*  
 - *Horizon Europe NexTArc* (since 2025 – **PI for UPM**)
@@ -95,7 +95,7 @@ He has participated in several international and European projects, including:
 
 ## Current Roles and Responsibilities
 - **Associate Professor**, DTE, UPM (since May 2025)  
-- **Principal Investigator (PI)**, *H2020 NexTArc Project* (since Sep 2025)  
+- **Principal Investigator (PI)**, *Horizon Europe NexTArc Project* (since Sep 2025)  
 - **Academic Secretary**, Department Council, DTE (since Nov 2025)  
 - **Researcher**, *Next-Generation Networks and Services (GRyS)* (since January 2013)
 

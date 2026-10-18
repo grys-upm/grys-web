@@ -2,7 +2,7 @@
 given: Gregorio
 family: Rubio-Cifuentes
 gender: m
-position: assoc
+position: pteu
 status: former
 since: 2011-01-01
 until: 2025-01-09
@@ -18,7 +18,7 @@ old_urls:
 traduccion: borrador
 texto_es: |-
   **Gregorio Rubio Cifuentes** es **ingeniero técnico de Telecomunicación** por la [Universidad Politécnica de Madrid (UPM)](https://www.upm.es) (1988) y **licenciado en Documentación** por la *Universitat Oberta de Catalunya* (2008).
-  Fue *profesor titular* en el [Departamento de Ingeniería Telemática y Electrónica (DTE)](https://www.etsist.upm.es/escuela/departamentos/DTE) de la UPM hasta su **jubilación en enero de 2025**.
+  Fue *profesor titular de escuela universitaria* en el [Departamento de Ingeniería Telemática y Electrónica (DTE)](https://www.etsist.upm.es/escuela/departamentos/DTE) de la UPM hasta su **jubilación en enero de 2025**.
 
   Miembro del [Grupo de Redes y Servicios de Próxima Generación (GRyS)](https://grys.etsist.upm.es/) desde 2009, centró su trabajo en la **semántica y las ontologías** aplicadas a las **redes inalámbricas de sensores (WSN)**, la **gestión de servicios** y el **Internet de las cosas (IoT)**.
 

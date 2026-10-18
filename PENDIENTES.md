@@ -36,10 +36,11 @@ El detalle de los datos que faltan, elemento a elemento, lo genera `scripts/info
 | C7 🟠 | **Tipos de evento**: `tech_hub`, `industry_day` y `upm_investiga` pasan a `fair`; `award_ceremony`, a `award`; `honored_guest`, a `guest` |
 | C8 🟠 | **PDF que no existen** en el repositorio antiguo: las ofertas de 2025 (beca IA-edge y NexTArc). Ya estaban rotos en la web anterior |
 | C9 🟠 | **Imágenes de financiación** de ACCUS y SWARMs: la ruta apuntaba a ficheros que no existen (`accus/ACCUSFunding.png`, `accus/SWARMsFunding.png`). Ya estaban rotas |
-| C11 🟠 | **Yiting Wang:** `gender: m`, pero su biografía dice «she». Si es mujer, cambia a `gender: f` (afecta al puesto en español) |
-| C12 🟠 | **Estela Mora Barba:** puesto `r1` y biografía «investigadora predoctoral», pero la noticia de 03-11-2025 dice que se incorpora como **técnica de apoyo a la investigación** en NexTArc (`tech`). ¿Cuál es el actual? |
-| C13 🟠 | **Puesto «assoc» = «Profesor Titular de Universidad»** en Gregorio Rubio, Pedro Castillejo, Santiago Higuera y Vicente Hernández: confirmar la figura de cada uno (titular, contratado doctor, permanente laboral…). Néstor ya usa el nuevo puesto `ppl` (Profesor Permanente Laboral / Associate Professor) |
-| C14 🟠 | **Biografía de Néstor:** «FP7 ACUSS» (¿ACCUS?, que además no era FP7) y «H2020 NexTArc» en «Cargos actuales» (en el resto del texto es Horizonte Europa). Se ha traducido tal cual |
+| C11 ✅ | Yiting Wang: `gender: f` |
+| C12 🟠 | **Estela Mora Barba:** sigue como R1 (correcto). Falta la noticia de su paso a R1 (octubre de 2026), junto con otras noticias pendientes |
+| C13 ✅ | Puestos: Gregorio y Vicente `pteu` (PTEU), Pedro `assoc` (PTU), Santiago y Néstor `ppl` (PPL, Santiago desde septiembre de 2026) |
+| C14 ✅ | Biografía de Néstor: ACCUS y Horizon Europe NexTArc |
+| C15 🟠 | **Publicación duplicada en Zotero:** «Modelling QoS for wireless sensor networks» (2007) está dos veces: `martínezModellingQoSWireless2007` (inproceedings, con `portal_upm`) y `martinezModellingQoSWireless2007` (incollection, con DOI). Fusionad las dos en Zotero conservando DOI y portal_upm |
 | C10 🟠 | **Cita sin localizar** en DEMANES: `HernandezDiaz2015` no está en el BibTeX (marcada «por completar»). Las demás ya usan `cita.html` |
 
 ## D. Propuestas que hay que revisar (marcadas en los ficheros)

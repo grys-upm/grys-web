@@ -2,7 +2,7 @@
 given: Santiago
 family: Higuera de Frutos
 gender: m
-position: assoc
+position: ppl
 status: current
 since: 2023-12-15
 photo: /assets/img/equipo/santiago-higuera-de-frutos.webp
@@ -19,7 +19,7 @@ texto_es: |-
   **Santiago Higuera de Frutos** es **doctor en Ingeniería Civil** por la [Universidad Politécnica de Madrid (UPM)](https://www.upm.es).
   Desde 1992 compagina su trabajo en **construcción e infraestructuras** con una participación activa en las comunidades de **software libre** y **SIG**.
 
-  Es *profesor e investigador* de la UPM desde 2014, actualmente en el *Campus Sur (Teleco)*.
+  Es *profesor e investigador* de la UPM desde 2014 y *profesor permanente laboral* desde septiembre de 2026, actualmente en el *Campus Sur (Teleco)*.
   Es autor de *[Programación en Rust](https://www.garceta.es/catalogo/libro.php?ISBN=978-84-1728-988-1&idd=12)* y de *[Programación y Métodos Numéricos para Ingeniería con MATLAB y Octave](https://www.garceta.es/catalogo/libro.php?ISBN=978-84-1903-435-9&idd=12)* (Editorial Garceta).
 
   Sus intereses de investigación incluyen los **simuladores de conducción**, el **trazado y diseño de carreteras** y el **desarrollo de SIG de código abierto**.
