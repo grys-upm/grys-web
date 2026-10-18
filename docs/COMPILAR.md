@@ -111,4 +111,52 @@ Para Dependabot con las gemas hace falta que **`Gemfile.lock` esté en el reposi
 3. **Añadir el dominio.** Añade el fichero `CNAME` con una sola línea: `grys.etsist.upm.es`.
 4. **Activar el despliegue nuevo.** En *Settings → Pages*, pon *Source: GitHub Actions*. El dominio personalizado se mantiene. Desactiva el despliegue antiguo a `gh-pages` y borra esa rama.
 5. **Retirar las pruebas.** Desactiva Pages en `grys-web` o archiva ese repositorio, y archiva también `grys-web-previews` si la web de producción no va a usar vistas previas. Si las va a usar, mueve el secreto `PREVIEW_DEPLOY_KEY` al repositorio de producción.
-6. **Revisar las redirecciones.** Comprueba que las URL antiguas redirigen, por ejemplo `/team/` → `/en/group/team/`.
+6. **Gestor de contenidos.** En la aplicación OAuth (§8.3), cambia *Homepage URL* si hace falta. `cms.repo` toma el valor de `repository:`, así que el gestor pasa a guardar en el repositorio de producción. Repite los ajustes de §8.1 y §8.2 en ese repositorio.
+7. **Revisar las redirecciones.** Comprueba que las URL antiguas redirigen, por ejemplo `/team/` → `/en/group/team/`.
+
+## 8. Gestor de contenidos (una sola vez)
+
+El gestor (Sveltia CMS) está en `/admin/` y permite editar Noticias, Eventos, Convocatorias, Miembros y Proyectos sin Git. La guía para editores está en [EDITAR.md](EDITAR.md).
+
+**Cómo funciona.** Cada cambio guardado se convierte en una PR (rama `cms/…`): pasa «Comprobar PR» y tiene vista previa. «Publicar» la fusiona. Si las comprobaciones aún no han terminado, deja programada la fusión automática. La configuración está en `admin/config.yml`, una plantilla que Jekyll rellena con los puestos, roles, líneas, ámbitos y repositorios de `_data/` y de las colecciones.
+
+`comprobar_datos.py` da error si al gestor le falta algún campo de los esquemas, porque lo borraría al guardar una ficha, o si ofrece una opción que el esquema no admite. Al añadir un campo a un esquema, añádelo también en `admin/config.yml`.
+
+### 8.1 Quién puede editar
+
+1. **Crear el equipo.** En la organización `grys-upm`, *Teams → New team*: nombre `web`, visibilidad *Visible*. Añade a los miembros del grupo que vayan a editar.
+2. **Dar permiso al equipo.** En `grys-web`, *Settings → Collaborators and teams → Add teams*: equipo `web`, rol **Write**.
+3. **Revisar el permiso base.** En la organización, *Settings → Member privileges → Base permissions*: mejor **Read**, para que solo el equipo `web` (y los administradores) puedan guardar.
+
+### 8.2 Ajustes del repositorio
+
+1. **Fusión automática.** En `grys-web`, *Settings → General → Pull Requests*: activa **Allow auto-merge**. Así «Publicar» funciona aunque las comprobaciones sigan en marcha.
+2. **Fusión con *squash*.** En el mismo apartado, deja activado **Allow squash merging**. El gestor fusiona así: un commit por cambio.
+3. **Borrar las ramas fusionadas.** Activa también **Automatically delete head branches**.
+4. **Tokens de la organización.** Si se va a entrar con token: en la organización, *Settings → Personal access tokens*, permite los *fine-grained tokens*. Puedes exigir aprobación de cada token.
+
+### 8.3 Inicio de sesión con GitHub (recomendado)
+
+Sin este paso solo se puede entrar con un token personal, que funciona pero es incómodo. Con él aparece el botón «Iniciar sesión con GitHub». Hace falta un pequeño servicio gratuito en Cloudflare que intercambia el código de GitHub por la sesión:
+
+1. **Desplegar el autenticador.** Crea una cuenta gratuita en Cloudflare. Abre [sveltia-cms-auth](https://github.com/sveltia/sveltia-cms-auth) y pulsa **Deploy to Cloudflare Workers**. Al terminar, copia la dirección del *worker* (algo como `sveltia-cms-auth.NOMBRE.workers.dev`, con `https://` delante).
+2. **Registrar la aplicación OAuth en la organización.** *grys-upm → Settings → Developer settings → OAuth Apps → New OAuth App*:
+   - *Application name*: `GRyS · gestor de contenidos`;
+   - *Homepage URL*: `https://grys.etsist.upm.es/`;
+   - *Authorization callback URL*: `<dirección del worker>/callback`.
+
+   Después pulsa *Generate a new client secret*.
+3. **Configurar el worker.** En Cloudflare, *Workers → sveltia-cms-auth → Settings → Variables*, añade:
+   - `GITHUB_CLIENT_ID`;
+   - `GITHUB_CLIENT_SECRET` (márcala como cifrada);
+   - `ALLOWED_DOMAINS` = `grys-upm.github.io, grys.etsist.upm.es`.
+4. **Activarlo en la web.** En `_config.yml`, pon la dirección del worker en `cms: oauth_url:`. Súbelo por PR como cualquier otro cambio.
+
+### 8.4 Comprobar que funciona
+
+1. **Entrar.** Abre `/admin/` en la web de pruebas y entra.
+2. **Guardar un cambio de prueba.** Edita una noticia, cambia una coma y guarda. ✅ En `grys-web` aparece una PR de la rama `cms/news/…`, con «Comprobar PR» y el comentario de la vista previa.
+3. **Ver la vista previa.** ✅ En el gestor aparece «Ver vista previa». Usa el estado `vista-previa` que pone el job «Vista previa».
+4. **Publicar.** Pon la noticia en «Listo» y pulsa «Publicar». ✅ La PR se fusiona cuando «Comprobar PR» termina, y la rama se borra.
+
+**Versión del gestor.** `admin/index.html` carga siempre la última versión publicada de Sveltia CMS. Está en beta y recibe correcciones casi a diario. Si una versión nueva diera problemas, se puede fijar una concreta cambiando la dirección del *script* (por ejemplo `@sveltia/cms@0.235.1`).

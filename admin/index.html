@@ -1,0 +1,62 @@
+<!doctype html>
+<!--
+  Gestor de contenidos (Sveltia CMS) para editar Noticias, Eventos, Miembros,
+  Proyectos y Convocatorias desde el navegador, sin Git. Configuración:
+  admin/config.yml (plantilla que Jekyll rellena con puestos, líneas, ámbitos…).
+  Guía para editores: docs/EDITAR.md · Puesta en marcha: docs/COMPILAR.md §8.
+  La meta «grys-herramienta» excluye esta página de las comprobaciones del
+  sitio público (verificar_sitio, accesibilidad, privacidad): no es contenido
+  para visitantes.
+-->
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="grys-herramienta" content="cms">
+  <title>Gestor de contenidos · GRyS</title>
+  <link rel="icon" href="../assets/img/marca/favicon-32.png">
+  <!-- Última versión publicada de Sveltia CMS (en beta, recibe correcciones con frecuencia). -->
+  <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
+</head>
+<body>
+<script>
+  // Botones del editor para los bloques propios del sitio: se ven como fichas
+  // en el modo visual y se guardan como {% include … %} en el Markdown.
+  (function () {
+    if (!window.CMS) return;
+    var limpiar = function (s) { return String(s || "").replace(/"/g, "”").trim(); };
+    CMS.registerEditorComponent({
+      id: "grys-figura",
+      label: "Imagen con pie",
+      fields: [
+        { name: "src", label: "Imagen", widget: "image" },
+        { name: "alt", label: "Descripción para quien no ve la imagen (obligatoria salvo si es decorativa)", widget: "string", required: false },
+        { name: "pie", label: "Pie de foto (opcional)", widget: "string", required: false }
+      ],
+      pattern: /^\{%-?\s*include\s+figura\.html\s+src="([^"]*)"(?:\s+alt="([^"]*)")?(?:\s+pie="([^"]*)")?\s*-?%\}$/,
+      fromBlock: function (m) { return { src: m[1], alt: m[2] || "", pie: m[3] || "" }; },
+      toBlock: function (d) {
+        return '{% include figura.html src="' + limpiar(d.src) + '" alt="' + limpiar(d.alt) + '"' +
+          (d.pie ? ' pie="' + limpiar(d.pie) + '"' : "") + " %}";
+      },
+      toPreview: function (d) { return '<figure><img src="' + d.src + '" alt="' + limpiar(d.alt) + '" style="max-width:100%">' + (d.pie ? "<figcaption>" + limpiar(d.pie) + "</figcaption>" : "") + "</figure>"; }
+    });
+    CMS.registerEditorComponent({
+      id: "grys-video",
+      label: "Vídeo de YouTube",
+      fields: [
+        { name: "youtube", label: "Identificador del vídeo (en youtube.com/watch?v=ABC123 es ABC123)", widget: "string" },
+        { name: "titulo", label: "Título del vídeo (lo anuncian los lectores de pantalla)", widget: "string" }
+      ],
+      pattern: /^\{%-?\s*include\s+video\.html\s+youtube="([^"]*)"(?:\s+titulo="([^"]*)")?\s*-?%\}$/,
+      fromBlock: function (m) { return { youtube: m[1], titulo: m[2] || "" }; },
+      toBlock: function (d) {
+        return '{% include video.html youtube="' + limpiar(d.youtube) + '"' + (d.titulo ? ' titulo="' + limpiar(d.titulo) + '"' : "") + " %}";
+      },
+      toPreview: function (d) { return "<p>▶ Vídeo de YouTube: " + limpiar(d.titulo || d.youtube) + "</p>"; }
+    });
+  })();
+</script>
+</body>
+</html>

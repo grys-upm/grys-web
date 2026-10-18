@@ -1,5 +1,25 @@
 # Registro de cambios
 
+## Fase 5 · Paso 5.3: gestor de contenidos (18-10-2026)
+
+- **Sveltia CMS en `/admin/`** para Noticias, Eventos, Convocatorias, Miembros y Proyectos. Solo pueden guardar quienes tengan permiso de escritura en el repositorio (equipo `web` de la organización).
+- **Flujo editorial:** cada cambio se guarda en una PR (rama `cms/…`) que pasa «Comprobar PR» y tiene vista previa. «Publicar» la fusiona con *squash*, o la deja en fusión automática si las comprobaciones siguen en marcha. No hace falta saber Git.
+- **`admin/config.yml` es una plantilla de Jekyll:**
+  - las opciones (puestos, roles, líneas, ámbitos, repositorios) salen de `_data/` y de las colecciones;
+  - los proyectos, miembros y noticias relacionados se eligen de listas;
+  - las imágenes se convierten a WebP (máx. 1600 px);
+  - hay botones «Imagen con pie» y «Vídeo de YouTube» que generan los `{% include %}`;
+  - los campos opcionales vacíos no se escriben.
+- **Comprobaciones:**
+  - `comprobar_datos.py` exige que el gestor tenga todos los campos de cada esquema (si no, los borraría al guardar), que no tenga campos ajenos y que sus opciones fijas coincidan con los esquemas;
+  - `verificar_sitio.py` comprueba que la plantilla genera un YAML válido, con las 5 colecciones y listas de opciones no vacías, y que no se duplica en `/en/`;
+  - el gestor queda fuera de las comprobaciones del sitio público (meta `grys-herramienta`) y de `robots.txt`.
+- **Vista previa:** el job «Vista previa» pone en el commit el estado `vista-previa` con su dirección, para que el gestor la enlace.
+- **Documentación:**
+  - guía para editores en `docs/EDITAR.md`;
+  - puesta en marcha en `docs/COMPILAR.md` §8: equipo `web`, *auto-merge*, autenticador OAuth en Cloudflare y prueba.
+- `schemas/members.schema.json`: añadido `pteu` a la lista de puestos (la validación real ya la tomaba de `_data/positions.yml`).
+
 ## Fase 5 · Paso 5.2: enlaces (lychee) y Lighthouse CI (18-10-2026)
 
 - **Enlaces nuevos** (job `enlaces` en `pr.yml`): lychee comprueba solo las URL externas añadidas en la PR. Es informativo.

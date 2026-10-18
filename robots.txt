@@ -8,5 +8,6 @@ sitemap: false
 ---
 User-agent: *
 {% if site.noindex %}Disallow: /{% else %}Allow: /
+Disallow: /admin/
 
 Sitemap: {{ site.url }}{{ '/sitemap.xml' | relative_url }}{% endif %}

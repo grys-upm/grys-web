@@ -10,6 +10,8 @@ Debe terminar con `0 errores`. Los campos de cada tipo de contenido están en [D
 
 ---
 
+> **Noticias, eventos, convocatorias, miembros y proyectos** se editan normalmente desde el gestor de contenidos (`/admin/`): ver [EDITAR.md](EDITAR.md). Estas recetas sirven para editar los ficheros directamente y para todo lo demás.
+
 ## Añadir un ámbito de aplicación
 
 1. **Crea el fichero** `_domains/<clave>.md`. La clave va en minúsculas y sin espacios, por ejemplo `industria`, y es también el nombre del fichero:

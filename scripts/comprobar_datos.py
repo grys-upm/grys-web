@@ -349,6 +349,53 @@ for _f in sorted(glob.glob(os.path.join(ROOT, "_*", "*.md")) + glob.glob(os.path
         if _k not in _bibkeys:
             err(f"{rel(_f)}: cita a «{_k}», que no está en papers.bib ni en theses.bib")
 
+# Gestor de contenidos (admin/config.yml): cada campo de los esquemas debe estar
+# en el gestor (si no, lo BORRARÍA al guardar una ficha) y cada campo del gestor
+# debe existir en el esquema, con opciones fijas válidas.
+_cms = os.path.join(ROOT, "admin", "config.yml")
+if os.path.exists(_cms):
+    _t = open(_cms, encoding="utf-8").read()
+    _t = re.sub(r"\A---\n.*?\n---\n", "", _t, flags=re.S)
+    _t = re.sub(r"{%-?\s*raw\s*-?%}(.*?){%-?\s*endraw\s*-?%}",
+                lambda m: m.group(1).replace("{{", "<<").replace("}}", ">>"), _t, flags=re.S)
+    _t = re.sub(r"^[ \t]*{%.*?%}[ \t]*$\n?", "", _t, flags=re.M)     # bucles e ifs (líneas sueltas)
+    _t = re.sub(r"{%-?.*?-?%}", "", _t)
+    _t = re.sub(r"{{[^}]*}}", '"x"', _t)                             # {{ expr | filtros }} → valor
+    try:
+        _cfg = yaml.safe_load(_t) or {}
+    except yaml.YAMLError as e:
+        err(f"admin/config.yml no es YAML válido: {e}")
+        _cfg = {}
+    import json as _json
+    for _c in _cfg.get("collections") or []:
+        _name = _c.get("name")
+        _sp = os.path.join(SCHEMAS, f"{_name}.schema.json")
+        if not os.path.exists(_sp):
+            err(f"admin/config.yml: la colección «{_name}» no tiene esquema")
+            continue
+        _props = _json.load(open(_sp, encoding="utf-8")).get("properties", {})
+        _fields = {fl.get("name"): fl for fl in _c.get("fields") or []}
+        for _p in _props:
+            if _p not in _fields:
+                err(f"admin/config.yml ({_name}): falta el campo «{_p}»; el gestor lo borraría al guardar")
+        for _fn, _fl in _fields.items():
+            if _fn == "body":
+                continue
+            if _fn not in _props:
+                err(f"admin/config.yml ({_name}): el campo «{_fn}» no está en schemas/{_name}.schema.json")
+                continue
+            _enum = _props[_fn].get("enum") or (_props[_fn].get("items") or {}).get("enum")
+            _opts = [o.get("value") for o in (_fl.get("options") or []) if isinstance(o, dict)]
+            if _enum and _opts and _fn not in ("position", "role", "lines", "domains", "line"):
+                for _o in _opts:
+                    if _o not in _enum:
+                        err(f"admin/config.yml ({_name}.{_fn}): la opción «{_o}» no está en el esquema")
+                for _e in _enum:
+                    if _e not in _opts:
+                        warn(f"admin/config.yml ({_name}.{_fn}): el valor «{_e}» del esquema no se ofrece en el gestor")
+            if _fn in _props and _fn in (_c.get("identifier_field"),) and _fl.get("required") is False:
+                err(f"admin/config.yml ({_name}): el identificador «{_fn}» debe ser obligatorio")
+
 # Referencias cruzadas entre colecciones
 repos_data = load_yaml(os.path.join(ROOT, "_data", "repos.yml")) or []
 repo_names = {r.get("name") for r in repos_data}
@@ -502,7 +549,7 @@ FILTERS = LIQUID4_FILTERS | JEKYLL_FILTERS | OWN_FILTERS
 
 LIQ_FILES = []
 for pat in ("_layouts/*.html", "_includes/*.html", "_includes/*/*.html", "_includes/*.svg", "_pages/*/*.md",
-            "_includes/*.json", "*.json", "*.html", "*.xml", "*.txt",
+            "_includes/*.json", "*.json", "*.html", "*.xml", "*.txt", "admin/*.yml",
             "_members/*.md", "_projects/*.md", "_lines/*.md", "_domains/*.md", "_news/*.md",
             "_events/*.md", "_opportunities/*.md"):
     LIQ_FILES += glob.glob(os.path.join(ROOT, pat))

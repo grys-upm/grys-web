@@ -25,6 +25,7 @@
       "enum": [
         "full",
         "assoc",
+        "pteu",
         "ppl",
         "assist",
         "gta",
