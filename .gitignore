@@ -6,6 +6,10 @@ _site/
 .bundle/
 vendor/
 
+# Herramienta de auditoría de accesibilidad (npm install en scripts/a11y)
+scripts/a11y/node_modules/
+scripts/a11y/package-lock.json
+
 # Informes generados en local (en CI se publican como artefactos)
 reports/
 
