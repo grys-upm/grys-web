@@ -56,21 +56,27 @@ jobs:
       - name: Verificar el resultado
         run: python scripts/verificar_sitio.py _site
 
-      # ---- Accesibilidad (fase 4). De momento solo INFORMA: no bloquea la PR.
-      #      Cuando esté todo corregido, se añadirá --estricto a los dos scripts.
+      # ---- Accesibilidad (fase 4). BLOQUEANTE desde el paso 4.2: cualquier
+      #      incumplimiento WCAG, problema de reflow o error de JavaScript hace
+      #      fallar la PR. El informe se publica siempre (también si falla).
       - name: Accesibilidad · comprobaciones estáticas
         run: |
-          python scripts/a11y_estatico.py _site
+          set +e
+          python scripts/a11y_estatico.py _site --estricto; RC=$?
           cat reports/a11y/estatico.md >> "$GITHUB_STEP_SUMMARY"
+          exit $RC
       - uses: actions/setup-node@v5
+        if: always()
         with:
           node-version: "22"
       - name: Accesibilidad · axe-core en navegador (oscuro, claro y 320 px)
-        continue-on-error: true   # un fallo de la herramienta no debe bloquear la PR
+        if: always()
         run: |
           npm install --prefix scripts/a11y --no-audit --no-fund --loglevel=error
-          node scripts/a11y/auditar.mjs _site
+          set +e
+          node scripts/a11y/auditar.mjs _site --estricto; RC=$?
           cat reports/a11y/axe.md >> "$GITHUB_STEP_SUMMARY"
+          exit $RC
       - uses: actions/upload-artifact@v6
         if: always()
         with:

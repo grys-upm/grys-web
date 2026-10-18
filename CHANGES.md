@@ -1,5 +1,40 @@
 # Registro de cambios
 
+## Fase 4 · Paso 4.2: correcciones de la auditoría y auditoría bloqueante (18-10-2026)
+
+Resultado de la primera auditoría (paso 4.1, 231 páginas × 3 pasadas):
+- **1 regla WCAG incumplida**: `link-name`, en 20 páginas y 136 elementos;
+- **reflow a 320 px en las 231 páginas**;
+- **0 errores de JavaScript**;
+- **87 hallazgos estáticos.**
+
+Correcciones:
+- **Enlaces sin nombre (WCAG 2.4.4 y 4.1.2):**
+  - **Vídeos:** el enlace «Ver en YouTube» salía vacío en el texto de noticias y proyectos, porque la variable `lang` del layout no existe al renderizar el contenido. `video.html` calcula ahora el idioma por su cuenta y añade el título del vídeo para lectores de pantalla.
+  - **Galerías:** las fotos sin texto alternativo dejaban el enlace a la imagen grande sin nombre. Ahora llevan `aria-label` («Foto 2 de 4, a tamaño completo»); la falta de `alts` sigue en el informe de pendientes.
+- **Reflow a 320 px (WCAG 1.4.10):**
+  - la cabecera (logotipo y botones) medía 358 px: por debajo de 400 px el logotipo pasa a 148 px y se reducen márgenes y separaciones;
+  - en las fichas, las columnas de la rejilla no podían estrecharse por debajo de su contenido (`min-width:0`), y las URL y palabras largas no se partían (`overflow-wrap`);
+  - las fichas de ámbito y los grupos de botones de filtro («Todas · Revistas · Congresos · Libros y capítulos») ahora pasan a la línea siguiente.
+  - las URL largas de la ficha lateral y del texto se parten (ficha de María Nieves Plaza: 870 px), y las marcas «por completar» con texto largo, como las claves de cita de DEMANES y WoO, ya pueden pasar a la línea siguiente;
+  - el detalle de lo que falla (WCAG, reflow, JS) se escribe también en el registro de Actions, no solo en el resumen.
+- **Saltos de encabezado (WCAG 1.3.1):**
+  - página Noticias: los títulos pasan a `h2`, con el parámetro `h` en `listas/noticias.html`; en la portada siguen siendo `h3` bajo su `h2`;
+  - Demostradores: las tarjetas pasan a `h2`;
+  - Software: nuevo `h2` «Repositorios»;
+  - bloques «sin convocatorias» y «sin resultados»: `h2`;
+  - SIMGEOSEV: `###` → `##`.
+- **Textos en el otro idioma (WCAG 3.1.2):**
+  - la fuente de las métricas (`_data/metrics.yml` → `source`) es ahora bilingüe: «Portal Científico UPM» / «UPM Scientific Portal»;
+  - «Archivo Digital UPM» dentro de una noticia en inglés va marcado con `lang="es"`.
+- **Barra superior** (institución, Contacto, tema, idioma): pasa a ser `<nav aria-label="Accesos rápidos">`, para que todo el contenido esté en una región (buena práctica `region`).
+- **Prevención:**
+  - `comprobar_datos.py` da error si el texto de un elemento usa `#` (nivel 1) o salta niveles de encabezado; se ha probado con el caso de SIMGEOSEV;
+  - `a11y_estatico.py` no revisa lo que está oculto (`hidden`: diálogo del buscador, filtros sin JavaScript), igual que axe, y cuenta las páginas sin repetir.
+  - **Corrección dentro del paso:** la primera versión trataba `hidden` como `aria-hidden` y descartaba también el texto de los botones ocultos, lo que daba 604 falsos «sin nombre» («Buscar», «Cerrar», botones de filtro). Ahora `aria-hidden` solo excluye ese texto del nombre (iconos) y `hidden` hace que el elemento no se compruebe. Se ha probado con 5 casos: 2 problemas reales detectados y 0 falsos positivos.
+- **`pr.yml`: auditoría BLOQUEANTE** (`--estricto` en los dos scripts). El informe se publica aunque falle.
+- **`docs/ACCESIBILIDAD.md`:** qué hacer si una PR falla por accesibilidad.
+
 ## Fase 4 · Paso 4.1: auditoría automática de accesibilidad (18-10-2026)
 
 - **`scripts/a11y/auditar.mjs`** (nuevo, con su `package.json`): auditoría con navegador real (Chrome sin ventana + axe-core) de **todas las páginas ES/EN**, salvo las redirecciones. Hace tres pasadas por página:

@@ -9,6 +9,8 @@ phd_theses: 23
 master_theses: 30
 master_theses_detail: 21 DEA/máster + 9 TFM
 bachelor_theses: 88
-source: Portal Científico UPM
+source:
+  es: Portal Científico UPM
+  en: UPM Scientific Portal
 source_url: https://portalcientifico.upm.es/es/ipublic/entity/16280
 date: 2026-09

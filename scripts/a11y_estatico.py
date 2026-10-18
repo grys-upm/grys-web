@@ -68,6 +68,10 @@ class Pagina(HTMLParser):
 
     # --- utilidades
     def _oculto(self):
+        """Fuera del árbol de accesibilidad: aria-hidden o hidden en algún antecesor."""
+        return any(e[1] or e[4] for e in self.stack)
+
+    def _sin_nombre_aria(self):
         return any(e[1] for e in self.stack)
 
     def _lang(self):
@@ -81,7 +85,7 @@ class Pagina(HTMLParser):
             self.textos.append((self._lang(), s))
 
     def _nombre(self, s):
-        if not s or self._oculto():
+        if not s or self._sin_nombre_aria():
             return
         for e in self.stack:
             if e[3] is not None:
@@ -102,7 +106,8 @@ class Pagina(HTMLParser):
             if a.get("aria-labelledby"):
                 inter.append("(aria-labelledby)")
         lang = a.get("lang")
-        self.stack.append([tag, "aria-hidden" in a and a.get("aria-hidden") != "false", lang, inter])
+        aria_oculto = "aria-hidden" in a and a.get("aria-hidden") != "false"
+        self.stack.append([tag, aria_oculto, lang, inter, "hidden" in a])
         if tag == "head":
             self.en_head = True
         if tag in ("script", "style"):
@@ -153,8 +158,9 @@ class Pagina(HTMLParser):
         for i in range(len(self.stack) - 1, -1, -1):
             if self.stack[i][0] == tag:
                 e = self.stack[i]
+                invisible = self._oculto()   # el propio elemento o un antecesor
                 del self.stack[i:]
-                if e[3] is not None and not "".join(e[3]).strip():
+                if e[3] is not None and not invisible and not "".join(e[3]).strip():
                     self.problemas.append(("sin-nombre", f"<{tag}> vacío"))
                 return
 
@@ -277,8 +283,10 @@ def main():
         for pag, det in v:
             por_det.setdefault(det, []).append(pag)
         for det, pags in list(por_det.items())[:25]:
-            ej = ", ".join(pags[:3]) + (f" y {len(pags) - 3} más" if len(pags) > 3 else "")
-            out.append(f"- `{det}` · {len(pags)} página(s): {ej}")
+            unicas = list(dict.fromkeys(pags))
+            ej = ", ".join(unicas[:3]) + (f" y {len(unicas) - 3} más" if len(unicas) > 3 else "")
+            veces = f" ({len(pags)} veces)" if len(pags) != len(unicas) else ""
+            out.append(f"- `{det}` · {len(unicas)} página(s){veces}: {ej}")
         if len(por_det) > 25:
             out.append(f"- … y {len(por_det) - 25} casos distintos más")
     os.makedirs(os.path.dirname(args.salida), exist_ok=True)

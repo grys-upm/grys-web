@@ -31,7 +31,7 @@
 {%- endfor %}
 {%- else %}
 <div class="empty"><span class="bub">{% include icono.html n="cal" %}</span><div>
-  <h3>{{ t.opps.none_title }}</h3>
+  <h2>{{ t.opps.none_title }}</h2>
   <p>{{ t.opps.none_text }} <a href="{{ 'students' | route_url }}">{{ site.data.routes.pages | where: "id", "students" | map: "title" | first | l10n }}</a> · <a href="mailto:{{ site.data.grupo.email }}">{{ site.data.grupo.email }}</a></p>
 </div></div>
 {%- endif %}

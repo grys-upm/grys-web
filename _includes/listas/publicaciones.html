@@ -17,7 +17,7 @@
 {%- assign mx = site.data.metrics -%}
 <p class="count">{{ pb_s.total }} {{ t.pubs_extra.count }} · {{ pb_s.journal }} {{ t.pubs.n_journal }} · {{ pb_s.conference }} {{ t.pubs.n_conference }} · {{ pb_s.chapter | plus: pb_s.book | plus: pb_s.other }} {{ t.pubs.n_book }}</p>
 {%- assign dm = site.data.metricas_pubs -%}
-<p class="datos">Scopus: {{ mx.scopus_docs }} {{ t.pubs.documents }} · {{ mx.scopus_citations }} {{ t.pubs.citations }} · h = {{ mx.scopus_h }} ({{ mx.source }}, {{ mx.date }}){% if dm.total_citas > 0 %} · Dimensions: {{ dm.total_citas }} {{ t.pubs.citations }} ({{ dm.fecha | date: "%Y-%m-%d" }}){% endif %}</p>
+<p class="datos">Scopus: {{ mx.scopus_docs }} {{ t.pubs.documents }} · {{ mx.scopus_citations }} {{ t.pubs.citations }} · h = {{ mx.scopus_h }} ({{ mx.source | l10n }}, {{ mx.date }}){% if dm.total_citas > 0 %} · Dimensions: {{ dm.total_citas }} {{ t.pubs.citations }} ({{ dm.fecha | date: "%Y-%m-%d" }}){% endif %}</p>
 
 <form class="filters" role="search" aria-label="{{ t.filters.label }}" data-filter="pb" hidden>
   <label class="sr" for="pb-q">{{ t.filters.search }}</label>
@@ -65,7 +65,7 @@
 {% bibliography --file papers %}
 </div>
 <div class="empty" id="pb-empty" hidden><span class="bub">{% include icono.html n="search" %}</span><div>
-  <h3>{{ t.filters.no_results }}</h3>
+  <h2>{{ t.filters.no_results }}</h2>
   <p>{{ t.filters.no_results_hint }}</p>
 </div></div>
 {%- if dm.total_citas > 0 %}

@@ -16,7 +16,18 @@ Detalles del informe de axe:
 - Las «buenas prácticas» que no son requisito WCAG van en una sección aparte.
 - «Para revisar a mano» recoge lo que axe no puede decidir; un caso típico es el contraste sobre la trama de fondo.
 
-Mientras dure la fase 4, los informes **no bloquean** la PR. Cuando esté todo corregido se añadirá `--estricto` a los dos scripts en `.github/workflows/pr.yml`, y a partir de ahí **cualquier regresión hará fallar la PR**.
+**Desde el paso 4.2 son bloqueantes** (`--estricto`): la PR falla si aparece cualquiera de estos problemas:
+- un incumplimiento WCAG;
+- desplazamiento horizontal a 320 px;
+- un error de JavaScript;
+- un hallazgo de las comprobaciones estáticas.
+
+Aunque falle, el informe se publica igual en el resumen y en el artefacto. Las «buenas prácticas» y la lista «para revisar a mano» no bloquean.
+
+**Qué hacer si una PR falla por accesibilidad:** abre el resumen de la ejecución, busca la regla y el ejemplo (página y elemento) y corrige la plantilla o el dato. Los casos más habituales al editar contenido:
+- **Imágenes:** en `figura.html` y en las galerías, pon siempre `alt=` y `alts=`.
+- **Encabezados del texto:** empiezan por `##` y no se saltan niveles. Esto ya lo comprueba `comprobar_datos.py` antes de compilar.
+- **Texto en otro idioma dentro de una frase:** márcalo con `<span lang="es">…</span>`, salvo los nombres propios muy conocidos.
 
 ## 2. Ejecutarlo en tu ordenador (opcional)
 

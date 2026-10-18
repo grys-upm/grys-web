@@ -281,6 +281,23 @@ for f in sorted(glob.glob(os.path.join(ROOT, "_data", "**", "*.yml"), recursive=
     except yaml.YAMLError as e:
         err(f"{rel(f)}: {getattr(e, 'problem', None) or e}")
 
+# Encabezados del texto de cada elemento: la página ya tiene su <h1> (el título),
+# así que el texto empieza en «##» y no salta niveles (WCAG 1.3.1)
+for _coll in COLLECTIONS:
+    for _f in sorted(glob.glob(os.path.join(ROOT, f"_{_coll}", "*.md"))):
+        _fm, _body = front_matter(_f)
+        _body = re.sub(r"```.*?```", "", _body or "", flags=re.S)
+        _prev = 1
+        for _m in re.finditer(r"^(#{1,6})\s+(.+)$", _body, re.M):
+            _lv = len(_m.group(1))
+            if _lv == 1:
+                err(f"{rel(_f)}: «# {_m.group(2)[:40]}»: no uses encabezados de nivel 1 en el texto (el título ya lo es); empieza por «##»")
+                break
+            if _lv > _prev + 1:
+                err(f"{rel(_f)}: «{_m.group(1)} {_m.group(2)[:40]}»: salta del encabezado de nivel {_prev} al {_lv}; usa «{'#' * (_prev + 1)}»")
+                break
+            _prev = _lv
+
 # Referencias cruzadas entre colecciones
 repos_data = load_yaml(os.path.join(ROOT, "_data", "repos.yml")) or []
 repo_names = {r.get("name") for r in repos_data}

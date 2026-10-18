@@ -4,14 +4,14 @@
   aria-expanded> + Esc (assets/js/grys.js). Sin JS: menús por foco/ratón y
   cajón siempre visible en pantallas estrechas.
 {%- endcomment -%}
-<div class="util"><div class="wrap">
+<nav class="util" aria-label="{{ t.util_nav }}"><div class="wrap">
   <span class="inst">{{ t.inst }}</span>
   <div class="r">
     <a class="opt" href="{{ 'contact' | route_url: lang }}">{{ t.contact }}</a>
     {% include theme-toggle.html %}
     {% include lang-switch.html %}
   </div>
-</div></div>
+</div></nav>
 
 <header class="site">
   <div class="wrap">
