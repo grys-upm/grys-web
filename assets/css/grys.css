@@ -588,3 +588,8 @@ details.met .note{font-size:13.5px;color:var(--muted);max-width:460px;margin:0}
 
 /* Citas al BibTeX dentro de los textos (include cita.html) */
 a.cita{white-space:nowrap}
+
+/* Anclas de publicaciones y tesis (#ref-…): que la cabecera fija no tape
+   el destino (WCAG 2.4.11) y que se vea a qué entrada se ha llegado */
+[id^="ref-"]{scroll-margin-top:140px}
+li:has(h3:target){outline:2px solid var(--accent);outline-offset:6px;border-radius:var(--r)}

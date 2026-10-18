@@ -180,13 +180,16 @@ def _icons():
 def _dynamic_enums(node):
     """Las listas de ámbitos, líneas e iconos NO se fijan en los esquemas: se
     toman de lo que existe (_domains/*.md, _lines/*.md, _includes/iconos.svg).
-    Así, para añadir un ámbito o una línea basta con crear su fichero."""
+    Así, para añadir un ámbito o una línea basta con crear su fichero.
+    Los puestos (position) se toman de las claves de _data/positions.yml."""
     if isinstance(node, dict):
         for k, v in node.items():
             if k in ("domains", "lines") and isinstance(v, dict) and "enum" in v.get("items", {}):
                 v["items"]["enum"] = _keys(f"_{k}")
             elif k == "icon" and isinstance(v, dict) and "enum" in v:
                 v["enum"] = _icons()
+            elif k == "position" and isinstance(v, dict) and "enum" in v:
+                v["enum"] = list(yaml.safe_load(open(os.path.join(ROOT, "_data", "positions.yml"), encoding="utf-8")) or {})
             else:
                 _dynamic_enums(v)
     elif isinstance(node, list):
@@ -321,6 +324,26 @@ for _coll in ("members", "projects", "lines", "news"):
                 warn(f"{rel(_f)}: texto_{_lg} no tiene las mismas imágenes/vídeos/galerías (include) que el cuerpo")
         if _fm.get("traduccion") and not (_fm.get("texto_es") or _fm.get("texto_en")):
             warn(f"{rel(_f)}: «traduccion: {_fm.get('traduccion')}» sin texto_es ni texto_en")
+# Duplicados en papers.bib: claves que solo difieren en mayúsculas o tildes, o
+# el mismo DOI. (Mismo título no basta: hay versiones en congreso y en revista.)
+import unicodedata as _ud
+_vistas, _dois = {}, {}
+_pp = os.path.join(ROOT, "_bibliography", "papers.bib")
+if os.path.exists(_pp):
+    for _m in re.finditer(r"^@\w+\s*\{\s*([^,\s]+)\s*,(.*?)^\}", open(_pp, encoding="utf-8").read(), re.M | re.S):
+        _k = _m.group(1)
+        _sig = _ud.normalize("NFKD", _k).encode("ascii", "ignore").decode().lower()
+        if _sig in _vistas:
+            warn(f"_bibliography/papers.bib: «{_vistas[_sig]}» y «{_k}» solo se distinguen por mayúsculas o tildes: ¿publicación duplicada en Zotero?")
+        else:
+            _vistas[_sig] = _k
+        _d = re.search(r"^\s*doi\s*=\s*\{([^}]+)\}", _m.group(2), re.M)
+        if _d:
+            _dk = _d.group(1).strip().lower()
+            if _dk in _dois:
+                warn(f"_bibliography/papers.bib: «{_dois[_dk]}» y «{_k}» tienen el mismo DOI ({_dk}): publicación duplicada")
+            else:
+                _dois[_dk] = _k
 for _f in sorted(glob.glob(os.path.join(ROOT, "_*", "*.md")) + glob.glob(os.path.join(ROOT, "_pages", "*", "*.md"))):
     for _k in re.findall(r'include\s+cita\.html\s+clave="([^"]+)"', open(_f, encoding="utf-8").read()):
         if _k not in _bibkeys:

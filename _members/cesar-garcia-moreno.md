@@ -12,6 +12,19 @@ lines: []
 lang: en
 old_urls:
 - /team/cesar-garcia-moreno/
+traduccion: borrador
+texto_es: |-
+  **César García Moreno** terminó el **doble grado en Ingeniería Electrónica de Comunicaciones e Ingeniería Telemática** en la [Universidad Politécnica de Madrid (UPM)](https://www.upm.es) en 2024.
+
+  Se incorporó al [Grupo de Redes y Servicios de Próxima Generación (GRyS)](https://grys.etsist.upm.es/) como **estudiante en prácticas**, donde colaboró en el desarrollo de las páginas web del grupo y estudió la viabilidad de desplegar una **red LoRa** para aplicaciones de agricultura de precisión.
+
+  Su trabajo académico fue reconocido entre los **mejores Trabajos Fin de Grado (TFG) de 2024** por el *Colegio Oficial de Ingenieros Técnicos de Telecomunicación (COITT)*, en la XVIII edición de los *Premios Futuro de las Telecomunicaciones*.
+
+  Por primera vez en la historia del COITT, una misma persona obtuvo el **primer premio en dos categorías distintas** el mismo año, un logro sin precedentes que refleja la innovación y el impacto de su trabajo.
+
+  Los trabajos premiados fueron:
+  - **Sistema de comunicación y procesado** para la obtención de la elevación del horizonte
+  - **Diseño y desarrollo de un sistema de apuntamiento estabilizado en tres ejes**, basado en microprocesadores, para obtener imágenes autoniveladas y orientadas magnéticamente
 ---
 **César García Moreno** completed his **Double Degree in Communication Electronics and Telematics** at the [Universidad Politécnica de Madrid (UPM)](https://www.upm.es) in 2024.
 

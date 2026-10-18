@@ -115,6 +115,10 @@ El texto principal de cada ficha (lo que va después del segundo `---`) está en
 
 Sin traducción, la página muestra el texto original con el aviso «Este texto solo está disponible en inglés».
 
+## Añadir un puesto
+
+Añade la clave en `_data/positions.yml` con `es_m`, `es_f` y `en` (por ejemplo, `ppl`). El orden del fichero es el orden de los grupos en la página Equipo. Después ya puedes usar esa clave en `position:` de cualquier miembro.
+
 ## Citar una publicación o tesis dentro de un texto
 
 Escribe `{% include cita.html clave="ClaveBibTeX" %}` (la clave es la del `.bib`, lo que va tras `@article{`). Se muestra «Autor et al. (año)» enlazado: si es una publicación, a Publicaciones ya filtrada; si es una tesis, a su entrada en Tesis. Si la clave no existe, la comprobación da un error.

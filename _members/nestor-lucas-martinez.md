@@ -2,7 +2,7 @@
 given: Néstor
 family: Lucas-Martínez
 gender: m
-position: assoc
+position: ppl
 status: current
 since: 2013-01-01
 photo: /assets/img/equipo/nestor-lucas-martinez.webp
@@ -21,6 +21,36 @@ lines: []
 lang: en
 old_urls:
 - /team/nestor-lucas-martinez/
+traduccion: borrador
+texto_es: |-
+  ## Resumen
+  **El Dr. Néstor Lucas-Martínez** es **profesor permanente laboral** en el [Departamento de Ingeniería Telemática y Electrónica (DTE)](https://www.etsist.upm.es/escuela/departamentos/DTE) de la [Universidad Politécnica de Madrid (UPM)](https://www.upm.es) e **investigador principal (IP)** de la UPM en el **proyecto Horizonte Europa NexTArc** (*Next-Generation Architectures for Resilient Cyber-Physical Autonomy*). Su investigación se centra en el **middleware adaptativo**, los **sistemas ciberfísicos autónomos** y la **inteligencia distribuida** para infraestructuras de computación resilientes y fiables.
+
+  Con más de una década de experiencia en iniciativas europeas de I+D (ITEA2, 7PM, H2020 y Horizonte Europa), ha contribuido al avance de los **marcos de gestión de misiones**, la **interoperabilidad semántica** y las **arquitecturas con inteligencia en el borde**. Su trabajo une la **ingeniería del software**, los **sistemas embebidos** y el **soporte a decisiones basado en IA**, y aborda retos clave de **confiabilidad**, **autonomía** e **integración de sistemas**.
+
+  Actualmente es **secretario académico del Consejo de Departamento del DTE** y ha recibido varias distinciones académicas, entre ellas el **Premio Extraordinario de Doctorado (2023)**, una **mención especial de honor en la Formación Inicial para la Docencia Universitaria (2024)** y su primer **sexenio de investigación**, concedido por la **ANECA** en **2025**.
+
+
+  ## Investigación
+  Su investigación se centra en el **middleware adaptativo** y los **marcos de gestión de misiones** para **sistemas autónomos**, así como en el **IoT**, los **sistemas ciberfísicos (CPS)**, la **computación en la nube y en el borde** y los **sistemas de soporte a decisiones**.
+
+  Ha participado en varios proyectos internacionales y europeos, entre ellos:
+  - *ITEA2 Web of Objects (WoO)*
+  - *FP7 DEMANES*
+  - *ACCUS*
+  - *H2020 SWARMs*
+  - *H2020 AFarCloud*
+  - *Horizonte Europa NexTArc* (desde 2025, **IP por la UPM**)
+
+
+  ## Cargos y responsabilidades actuales
+  - **Profesor permanente laboral**, DTE, UPM (desde mayo de 2025)
+  - **Investigador principal (IP)**, *proyecto Horizonte Europa NexTArc* (desde septiembre de 2025)
+  - **Secretario académico**, Consejo de Departamento, DTE (desde noviembre de 2025)
+  - **Investigador**, *Grupo de Redes y Servicios de Próxima Generación (GRyS)* (desde enero de 2013)
+
+
+   **Contacto:** [nestor.lucas@upm.es](mailto:nestor.lucas@upm.es)
 ---
 ## Summary
 **Dr. Néstor Lucas-Martínez** is an **Associate Professor** at the [Department of Telematic Engineering and Electronics (DTE)](https://www.etsist.upm.es/escuela/departamentos/DTE), [Universidad Politécnica de Madrid (UPM)](https://www.upm.es), and **Principal Investigator (PI)** for UPM in the **Horizon Europe NexTArc Project** (*Next-Generation Architectures for Resilient Cyber-Physical Autonomy*). His research focuses on **adaptive middleware**, **autonomous cyber-physical systems**, and **distributed intelligence** for resilient and trustworthy computing infrastructures.
@@ -47,7 +77,7 @@ Dr. Lucas-Martínez’s research focuses on **adaptive middleware** and **missio
 He has participated in several international and European projects, including:  
 - *ITEA2 Web of Objects (WoO)*  
 - *FP7 DEMANES*  
-- *FP7 ACUSS*  
+- *ACCUS*  
 - *H2020 SWARMs*  
 - *H2020 AFarCloud*  
 - *Horizon Europe NexTArc* (since 2025 – **PI for UPM**)
@@ -65,7 +95,7 @@ He has participated in several international and European projects, including:
 
 ## Current Roles and Responsibilities
 - **Associate Professor**, DTE, UPM (since May 2025)  
-- **Principal Investigator (PI)**, *H2020 NexTArc Project* (since Sep 2025)  
+- **Principal Investigator (PI)**, *Horizon Europe NexTArc Project* (since Sep 2025)  
 - **Academic Secretary**, Department Council, DTE (since Nov 2025)  
 - **Researcher**, *Next-Generation Networks and Services (GRyS)* (since January 2013)
 

@@ -335,6 +335,24 @@ def main():
                     errors.append(f"{relf}: enlace ?autor={slug} sin opción en el filtro de autoría")
     if opciones and n_autor == 0:
         print("AVISO  ninguna ficha de miembro enlaza a sus publicaciones (¿falla _plugins/bib_index.rb?)")
+    # 8b. Citas (cita.html) con ancla: la página de destino debe tener ese id
+    n_cita = 0
+    for dirpath, _, files in os.walk(site):
+        for fn in files:
+            if not fn.endswith(".html"):
+                continue
+            fp = os.path.join(dirpath, fn)
+            relf = os.path.relpath(fp, site)
+            for href in re.findall(r'<a class="cita" href="([^"]+)"', open(fp, encoding="utf-8").read()):
+                n_cita += 1
+                url, _, frag = href.partition("#")
+                if not frag:
+                    continue
+                tf = target_file(site, base, url)
+                if not tf or not os.path.exists(tf):
+                    errors.append(f"{relf}: cita a {href}: no existe la página")
+                elif f'id="{unquote(frag)}"' not in open(tf, encoding="utf-8").read():
+                    errors.append(f"{relf}: cita a {href}: la página no tiene el ancla #{frag}")
     # 9. Portada: secciones, cifras, destacados y publicaciones
     po = yaml.safe_load(open(os.path.join(ROOT, "_data", "portada.yml"), encoding="utf-8")) or {}
     for rel in ("index.html", os.path.join("en", "index.html")):

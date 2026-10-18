@@ -1,6 +1,7 @@
 # Puestos: clave → es_m (masculino), es_f (femenino), en.
 # El puesto en español se elige con el campo «gender» (m/f) de cada miembro.
-# Traducción al español: PROPUESTA del mockup v4 · pendiente de validar.
+# Figuras validadas por el grupo (18-10-2026): full = CU, assoc = PTU,
+# pteu = PTEU, ppl = PPL. Las tres últimas se muestran en inglés como Associate Professor.
 full:
   es_m: Catedrático de Universidad
   es_f: Catedrática de Universidad
@@ -8,6 +9,14 @@ full:
 assoc:
   es_m: Profesor Titular de Universidad
   es_f: Profesora Titular de Universidad
+  en: Associate Professor
+pteu:
+  es_m: Profesor Titular de Escuela Universitaria
+  es_f: Profesora Titular de Escuela Universitaria
+  en: Associate Professor
+ppl:
+  es_m: Profesor Permanente Laboral
+  es_f: Profesora Permanente Laboral
   en: Associate Professor
 assist:
   es_m: Profesor Ayudante Doctor
