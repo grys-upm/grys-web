@@ -224,8 +224,11 @@ def main():
                 continue
             fp = os.path.join(dirpath, fn)
             rel = os.path.relpath(fp, site).replace(os.sep, "/")
+            html_txt = open(fp, encoding="utf-8", errors="replace").read()
+            if 'name="grys-herramienta"' in html_txt:   # gestor de contenidos: no es del sitio público
+                continue
             p = Pagina()
-            p.feed(open(fp, encoding="utf-8", errors="replace").read())
+            p.feed(html_txt)
             if p.refresh:
                 continue
             n += 1

@@ -1,0 +1,408 @@
+---
+# Plantilla: Jekyll la convierte en /admin/config.yml al compilar. Las listas de
+# opciones (puestos, roles, líneas, ámbitos) salen de _data/ y de las
+# colecciones, así que nunca se desincronizan. Los campos siguen los esquemas de
+# schemas/*.schema.json: verificar_sitio.py comprueba que no falte ninguno
+# (si faltara, el gestor lo borraría al guardar).
+layout: null
+lang: es
+lang-exclusive: [es]
+page_id: cms_config
+permalink: /admin/config.yml
+sitemap: false
+---
+{%- assign cms_repo = site.cms.repo | default: site.repository -%}
+{%- assign cms_lines = site.lines | sort: "order" -%}
+{%- assign cms_domains = site.domains | sort: "order" -%}
+# Generado a partir de admin/config.yml del repositorio. No editar aquí.
+backend:
+  name: github
+  repo: {{ cms_repo | jsonify }}
+  branch: main
+{%- if site.cms.oauth_url %}
+  base_url: {{ site.cms.oauth_url | jsonify }}
+{%- endif %}
+  # Cada cambio va en una PR (rama cms/…): pasa «Comprobar PR» y tiene vista
+  # previa. «Publicar» la fusiona (o la deja programada hasta que las
+  # comprobaciones terminen).
+  squash_merges: true
+  preview_context: vista-previa
+  commit_messages:
+    create: "Gestor: nueva entrada en {% raw %}{{collection}}{% endraw %} «{% raw %}{{slug}}{% endraw %}»"
+    update: "Gestor: cambios en {% raw %}{{collection}}{% endraw %} «{% raw %}{{slug}}{% endraw %}»"
+    delete: "Gestor: borrado en {% raw %}{{collection}}{% endraw %} «{% raw %}{{slug}}{% endraw %}»"
+    uploadMedia: "Gestor: sube {% raw %}{{path}}{% endraw %}"
+    deleteMedia: "Gestor: borra {% raw %}{{path}}{% endraw %}"
+
+publish_mode: editorial_workflow
+
+# Los campos opcionales vacíos no se escriben (un «slug: ''» rompería las comprobaciones)
+output:
+  omit_empty_optional_fields: true
+
+# Nombres de fichero: minúsculas, sin tildes y con guiones (como pide comprobar_datos.py)
+slug:
+  encoding: ascii
+  clean_accents: true
+  sanitize_replacement: "-"
+
+media_folder: /assets/img/subidas
+public_folder: /assets/img/subidas
+# Las imágenes se convierten a WebP y se reducen al subirlas
+media_libraries:
+  default:
+    config:
+      max_file_size: 15000000
+      transformations:
+        raster_image:
+          format: webp
+          quality: 85
+          width: 1600
+          height: 1600
+
+collections:
+  # ================================================================ Noticias
+  - name: news
+    label: "Noticias"
+    label_singular: "Noticia"
+    folder: _news
+    create: true
+    identifier_field: title_es
+    slug: "{% raw %}{{year}}{% endraw %}-{% raw %}{{month}}{% endraw %}-{% raw %}{{day}}{% endraw %}-{% raw %}{{slug}}{% endraw %}"
+    summary: "{% raw %}{{date}}{% endraw %} · {% raw %}{{title_es}}{% endraw %}"
+    sortable_fields: { fields: [date, title_es], default: { field: date, direction: descending } }
+    media_folder: /assets/img/noticias
+    public_folder: /assets/img/noticias
+    preview_path: "/actualidad/noticias/{% raw %}{{slug}}{% endraw %}/"
+    fields:
+      - &f_fecha { name: date, label: "Fecha", widget: datetime, time_format: false, format: "YYYY-MM-DD", picker_utc: true }
+      - { name: title_es, label: "Título en español", widget: string }
+      - { name: title_en, label: "Título en inglés", widget: string, required: false, hint: "Si lo dejas vacío, la versión inglesa muestra el título en español con un aviso." }
+      - name: category
+        label: "Categoría"
+        widget: select
+        required: false
+        options:
+          - { label: "Premio", value: award }
+          - { label: "Evento", value: event }
+          - { label: "Proyecto", value: project }
+          - { label: "Personas", value: people }
+          - { label: "Transferencia", value: transfer }
+          - { label: "Laboratorio", value: lab }
+      - { name: image, label: "Imagen de la tarjeta", widget: image, required: false }
+      - { name: detail, label: "¿Tiene página propia?", widget: boolean, required: false, default: true, hint: "Desactívalo para noticias breves que solo salen en la lista." }
+      - &f_lang
+        name: lang
+        label: "Idioma en que está escrito el texto"
+        widget: select
+        default: es
+        options: [{ label: "Español", value: es }, { label: "Inglés", value: en }]
+      - &f_cuerpo
+        name: body
+        label: "Texto"
+        widget: markdown
+        required: false
+        hint: "Encabezados desde «Título 2». Para imágenes y vídeos usa los botones «Imagen con pie» y «Vídeo de YouTube». Si el texto tiene HTML (p. ej. <p class=\"pie\">), edítalo en modo Markdown."
+      - &f_texto_es
+        name: texto_es
+        label: "Traducción al español (si el texto está en inglés)"
+        widget: markdown
+        required: false
+      - &f_texto_en
+        name: texto_en
+        label: "Traducción al inglés (si el texto está en español)"
+        widget: markdown
+        required: false
+      - &f_traduccion
+        name: traduccion
+        label: "Estado de la traducción"
+        widget: select
+        required: false
+        hint: "«Borrador» muestra el aviso de traducción provisional."
+        options: [{ label: "Borrador (pendiente de revisar)", value: borrador }, { label: "Revisada", value: revisada }]
+      - &f_only_lang
+        name: only_lang
+        label: "Publicar solo en este idioma (avanzado)"
+        widget: select
+        required: false
+        options: [{ label: "Solo en español", value: es }, { label: "Solo en inglés", value: en }]
+      - &f_slug { name: slug, label: "Dirección propia (avanzado; vacío = la del nombre del fichero)", widget: string, required: false, pattern: ['^[a-z0-9]+(-[a-z0-9]+)*$', "Solo minúsculas, números y guiones"] }
+      - { name: slug_es, label: "Dirección en español (avanzado)", widget: string, required: false }
+      - { name: slug_en, label: "Dirección en inglés (avanzado)", widget: string, required: false }
+      - &f_old_urls
+        name: old_urls
+        label: "Direcciones antiguas que redirigen aquí (avanzado; no tocar)"
+        widget: list
+        required: false
+        field: { name: url, label: "Dirección", widget: string }
+      - &f_published { name: published, label: "Publicado", widget: boolean, required: false, default: true }
+
+  # ================================================================ Eventos
+  - name: events
+    label: "Eventos"
+    label_singular: "Evento"
+    folder: _events
+    create: true
+    identifier_field: title_es
+    slug: "{% raw %}{{year}}{% endraw %}-{% raw %}{{month}}{% endraw %}-{% raw %}{{day}}{% endraw %}-{% raw %}{{slug}}{% endraw %}"
+    summary: "{% raw %}{{date}}{% endraw %} · {% raw %}{{title_es}}{% endraw %}"
+    sortable_fields: { fields: [date, title_es], default: { field: date, direction: descending } }
+    preview_path: "/actualidad/eventos/"
+    fields:
+      - *f_fecha
+      - { name: end, label: "Fecha de fin (si dura más de un día)", widget: datetime, time_format: false, format: "YYYY-MM-DD", picker_utc: true, required: false }
+      - { name: title_es, label: "Título en español", widget: string }
+      - { name: title_en, label: "Título en inglés", widget: string, required: false }
+      - name: type
+        label: "Tipo"
+        widget: select
+        required: false
+        options:
+          - { label: "Taller", value: workshop }
+          - { label: "Congreso", value: conference }
+          - { label: "Seminario", value: seminar }
+          - { label: "Escuela de verano", value: summer_school }
+          - { label: "Reunión", value: meeting }
+          - { label: "Feria", value: fair }
+          - { label: "Entrega de premios", value: award }
+          - { label: "Otro", value: other }
+      - name: involvement
+        label: "Participación del grupo"
+        widget: select
+        required: false
+        options:
+          - { label: "Organiza", value: organizer }
+          - { label: "Presenta", value: presenter }
+          - { label: "Participa", value: participant }
+          - { label: "Expone", value: exhibitor }
+          - { label: "Recibe un premio", value: awardee }
+          - { label: "Invitado", value: guest }
+          - { label: "Asiste", value: attendee }
+      - { name: place, label: "Lugar", widget: string, required: false }
+      - name: format
+        label: "Formato"
+        widget: select
+        required: false
+        options: [{ label: "Presencial", value: in_person }, { label: "En línea", value: online }, { label: "Híbrido", value: hybrid }]
+      - &f_web { name: website, label: "Página web", widget: string, required: false, pattern: ['^https?://', "Debe empezar por https://"] }
+      - { name: projects, label: "Proyectos relacionados", widget: relation, collection: projects, value_field: "{% raw %}{{slug}}{% endraw %}", search_fields: [acronym, title_es], display_fields: [acronym], multiple: true, required: false }
+      - { name: news, label: "Noticia relacionada", widget: relation, collection: news, value_field: "{% raw %}{{slug}}{% endraw %}", search_fields: [title_es, title_en], display_fields: [title_es], required: false }
+      - { name: summary_es, label: "Resumen en español", widget: text, required: false }
+      - { name: summary_en, label: "Resumen en inglés", widget: text, required: false }
+      - *f_lang
+      - *f_cuerpo
+      - *f_old_urls
+      - *f_published
+
+  # ================================================================ Convocatorias
+  - name: opportunities
+    label: "Convocatorias"
+    label_singular: "Convocatoria"
+    folder: _opportunities
+    create: true
+    identifier_field: title_es
+    slug: "{% raw %}{{year}}{% endraw %}-{% raw %}{{month}}{% endraw %}-{% raw %}{{day}}{% endraw %}-{% raw %}{{slug}}{% endraw %}"
+    summary: "{% raw %}{{deadline}}{% endraw %} · {% raw %}{{title_es}}{% endraw %}"
+    sortable_fields: { fields: [date, deadline], default: { field: date, direction: descending } }
+    media_folder: /assets/convocatorias
+    public_folder: /assets/convocatorias
+    preview_path: "/colabora/convocatorias/"
+    fields:
+      - { name: date, label: "Fecha de publicación", widget: datetime, time_format: false, format: "YYYY-MM-DD", picker_utc: true }
+      - { name: deadline, label: "Plazo (deja de publicarse después)", widget: datetime, format: "YYYY-MM-DD HH:mm:ss ZZ" }
+      - name: type
+        label: "Tipo"
+        widget: select
+        options:
+          - { label: "Contrato", value: job }
+          - { label: "Beca", value: scholarship }
+          - { label: "TFG o TFM", value: student_project }
+          - { label: "Doctorado", value: phd }
+      - { name: title_es, label: "Título en español", widget: string }
+      - { name: title_en, label: "Título en inglés", widget: string, required: false }
+      - { name: project, label: "Proyecto", widget: relation, collection: projects, value_field: "{% raw %}{{slug}}{% endraw %}", search_fields: [acronym, title_es], display_fields: [acronym], required: false }
+      - name: line
+        label: "Línea de investigación"
+        widget: select
+        required: false
+        options:
+{%- for l in cms_lines %}
+          - { label: {{ l.title_es | jsonify }}, value: {{ l.key | jsonify }} }
+{%- endfor %}
+      - { name: pdf, label: "Convocatoria en PDF", widget: file, required: false }
+      - { name: contact, label: "Correo de contacto", widget: string, required: false, pattern: ['^[^@\s]+@[^@\s]+\.[a-z]{2,}$', "Correo no válido"] }
+      - *f_lang
+      - *f_cuerpo
+      - *f_old_urls
+      - *f_published
+
+  # ================================================================ Miembros
+  - name: members
+    label: "Miembros"
+    label_singular: "Miembro"
+    folder: _members
+    create: true
+    identifier_field: family
+    slug: "{% raw %}{{fields.given}}{% endraw %}-{% raw %}{{fields.family}}{% endraw %}"
+    summary: "{% raw %}{{family}}{% endraw %}, {% raw %}{{given}}{% endraw %} · {% raw %}{{status}}{% endraw %}"
+    sortable_fields: { fields: [family, since], default: { field: family, direction: ascending } }
+    media_folder: /assets/img/equipo
+    public_folder: /assets/img/equipo
+    preview_path: "/grupo/equipo/{% raw %}{{slug}}{% endraw %}/"
+    fields:
+      - { name: given, label: "Nombre", widget: string }
+      - { name: family, label: "Apellidos", widget: string }
+      - name: gender
+        label: "Género gramatical del puesto en español"
+        widget: select
+        options: [{ label: "Masculino (Profesor…)", value: m }, { label: "Femenino (Profesora…)", value: f }]
+      - name: position
+        label: "Puesto"
+        widget: select
+        options:
+{%- for p in site.data.positions %}
+          - { label: {{ p[1].es_m | append: " / " | append: p[1].es_f | jsonify }}, value: {{ p[0] | jsonify }} }
+{%- endfor %}
+      - name: role
+        label: "Papel especial en el grupo"
+        widget: select
+        required: false
+        options:
+{%- for r in site.data.roles %}
+          - { label: {{ r[1].es_m | append: " / " | append: r[1].es_f | jsonify }}, value: {{ r[0] | jsonify }} }
+{%- endfor %}
+      - name: status
+        label: "Situación"
+        widget: select
+        default: current
+        options: [{ label: "Miembro actual", value: current }, { label: "Antiguo miembro", value: former }, { label: "In memoriam", value: memoriam }]
+      - { name: since, label: "En el grupo desde", widget: datetime, time_format: false, format: "YYYY-MM-DD", picker_utc: true, required: false }
+      - { name: until, label: "En el grupo hasta", widget: datetime, time_format: false, format: "YYYY-MM-DD", picker_utc: true, required: false }
+      - { name: photo, label: "Foto (cuadrada)", widget: image, required: false }
+      - { name: email, label: "Correo", widget: string, required: false, pattern: ['^[^@\s]+@[^@\s]+\.[a-z]{2,}$', "Correo no válido"] }
+      - { name: orcid, label: "ORCID", widget: string, required: false, pattern: ['^\d{4}-\d{4}-\d{4}-\d{3}[\dX]$', "Formato 0000-0000-0000-0000"] }
+      - { name: scholar, label: "Google Scholar (identificador de 12 caracteres)", widget: string, required: false, pattern: ['^[\w-]{12}$', "12 caracteres: lo que va tras user= en la URL"] }
+      - { name: portal_upm, label: "Portal Científico UPM (URL)", widget: string, required: false, pattern: ['^https?://', "Debe empezar por https://"] }
+      - { name: scopus, label: "Scopus Author ID", widget: string, required: false, pattern: ['^\d+$', "Solo números"] }
+      - { name: researcherid, label: "Web of Science ResearcherID", widget: string, required: false }
+      - { name: researchgate, label: "ResearchGate (usuario)", widget: string, required: false }
+      - { name: linkedin, label: "LinkedIn (URL)", widget: string, required: false, pattern: ['^https?://', "Debe empezar por https://"] }
+      - { name: github, label: "GitHub (usuario)", widget: string, required: false }
+      - { name: sciprofiles, label: "SciProfiles (usuario)", widget: string, required: false }
+      - *f_web
+      - name: lines
+        label: "Líneas de investigación"
+        widget: select
+        multiple: true
+        required: false
+        options:
+{%- for l in cms_lines %}
+          - { label: {{ l.title_es | jsonify }}, value: {{ l.key | jsonify }} }
+{%- endfor %}
+      - name: bib_names
+        label: "Formas de firmar que no se detectan solas (avanzado)"
+        widget: list
+        required: false
+        hint: "Tal como aparecen en el BibTeX, p. ej. «Lucas Martínez, N.»."
+        field: { name: nombre, label: "Firma", widget: string }
+      - *f_lang
+      - { name: body, label: "Biografía", widget: markdown, required: false }
+      - *f_texto_es
+      - *f_texto_en
+      - *f_traduccion
+      - *f_only_lang
+      - *f_slug
+      - *f_old_urls
+      - *f_published
+
+  # ================================================================ Proyectos
+  - name: projects
+    label: "Proyectos"
+    label_singular: "Proyecto"
+    folder: _projects
+    create: true
+    identifier_field: acronym
+    slug: "{% raw %}{{fields.acronym}}{% endraw %}"
+    summary: "{% raw %}{{acronym}}{% endraw %} · {% raw %}{{title_es}}{% endraw %}"
+    sortable_fields: { fields: [acronym, start, end], default: { field: start, direction: descending } }
+    media_folder: /assets/img/proyectos
+    public_folder: /assets/img/proyectos
+    preview_path: "/investigacion/proyectos/{% raw %}{{slug}}{% endraw %}/"
+    fields:
+      - { name: acronym, label: "Acrónimo", widget: string }
+      - { name: title_es, label: "Título en español", widget: string, required: false }
+      - { name: title_en, label: "Título en inglés", widget: string, required: false }
+      - name: type
+        label: "Tipo"
+        widget: select
+        options: [{ label: "Competitivo (convocatoria pública)", value: competitive }, { label: "Contrato o convenio", value: private }]
+      - name: status
+        label: "Forzar el estado (normalmente se calcula con las fechas)"
+        widget: select
+        required: false
+        options: [{ label: "En curso", value: ongoing }, { label: "Finalizado", value: completed }, { label: "Próximo", value: upcoming }, { label: "Desconocido", value: unknown }]
+      - { name: start, label: "Inicio", widget: datetime, time_format: false, format: "YYYY-MM-DD", picker_utc: true, required: false }
+      - { name: end, label: "Fin", widget: datetime, time_format: false, format: "YYYY-MM-DD", picker_utc: true, required: false }
+      - { name: programme, label: "Programa", widget: string, required: false, hint: "P. ej. Horizon Europe, Plan Estatal 2021-2023" }
+      - { name: programme_url, label: "Web del programa", widget: string, required: false, pattern: ['^https?://', "Debe empezar por https://"] }
+      - { name: call, label: "Convocatoria", widget: string, required: false }
+      - { name: funder, label: "Financiador", widget: string, required: false, hint: "Organismos españoles con su nombre oficial en español; «European Commission» para la UE." }
+      - { name: funding, label: "Otras entidades financiadoras", widget: list, required: false, field: { name: entidad, label: "Entidad", widget: string } }
+      - { name: grant_ids, label: "Referencias de la ayuda", widget: list, required: false, field: { name: ref, label: "Referencia", widget: string } }
+      - name: role
+        label: "Papel de la UPM"
+        widget: select
+        required: false
+        options: [{ label: "Coordinador", value: coordinator }, { label: "Socio", value: partner }, { label: "Subcontratado", value: subcontractor }]
+      - { name: pi, label: "Investigador/a principal (del grupo)", widget: relation, collection: members, value_field: "{% raw %}{{slug}}{% endraw %}", search_fields: [given, family], display_fields: ["{% raw %}{{given}}{% endraw %} {% raw %}{{family}}{% endraw %}"], multiple: true, required: false }
+      - { name: pi_name, label: "Responsable si no es del grupo", widget: string, required: false }
+      - { name: coordinator, label: "Entidad coordinadora", widget: string, required: false }
+      - { name: coordinator_pi, label: "Coordinador/a del proyecto", widget: string, required: false }
+      - { name: partners, label: "Número de socios", widget: string, required: false }
+      - { name: budget, label: "Presupuesto", widget: string, required: false, hint: "P. ej. «1 250 000 € (UPM: 310 000 €)»" }
+      - name: domains
+        label: "Ámbitos de aplicación"
+        widget: select
+        multiple: true
+        required: false
+        options:
+{%- for d in cms_domains %}
+          - { label: {{ d.title_es | jsonify }}, value: {{ d.key | jsonify }} }
+{%- endfor %}
+      - name: lines
+        label: "Líneas de investigación"
+        widget: select
+        multiple: true
+        required: false
+        options:
+{%- for l in cms_lines %}
+          - { label: {{ l.title_es | jsonify }}, value: {{ l.key | jsonify }} }
+{%- endfor %}
+      - name: repos
+        label: "Repositorios de software"
+        widget: select
+        multiple: true
+        required: false
+        options:
+{%- for r in site.data.repos %}
+          - { label: {{ r.name | jsonify }}, value: {{ r.name | jsonify }} }
+{%- endfor %}
+      - { name: doi, label: "DOI del proyecto", widget: string, required: false, pattern: ['^10\.', "Empieza por 10."] }
+      - *f_web
+      - name: links
+        label: "Otros enlaces"
+        widget: list
+        required: false
+        fields:
+          - { name: url, label: "Dirección", widget: string, pattern: ['^https?://', "Debe empezar por https://"] }
+          - { name: title, label: "Texto del enlace", widget: string }
+      - { name: image, label: "Logotipo", widget: image, required: false }
+      - *f_lang
+      - *f_cuerpo
+      - *f_texto_es
+      - *f_texto_en
+      - *f_traduccion
+      - *f_only_lang
+      - *f_slug
+      - *f_old_urls
+      - *f_published

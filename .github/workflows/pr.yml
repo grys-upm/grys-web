@@ -107,6 +107,7 @@ jobs:
     permissions:
       contents: read
       pull-requests: write   # para el comentario con el enlace
+      statuses: write        # estado «vista-previa»: el gestor de contenidos lo usa para enlazarla
     concurrency:
       group: vista-previa-${{ github.event.pull_request.number }}
       cancel-in-progress: true   # un push nuevo sustituye a la compilación anterior
@@ -187,6 +188,9 @@ jobs:
             const previo = todos.find(c => c.body && c.body.includes(marca));
             if (previo) await github.rest.issues.updateComment({ owner, repo, comment_id: previo.id, body });
             else await github.rest.issues.createComment({ owner, repo, issue_number, body });
+            await github.rest.repos.createCommitStatus({ owner, repo, sha: context.payload.pull_request.head.sha,
+              state: "success", context: "vista-previa", description: "Vista previa publicada",
+              target_url: process.env.URL.replace(/\/$/, "") });
             await core.summary.addRaw(`Vista previa: ${process.env.URL}`).write();
 
   enlaces:

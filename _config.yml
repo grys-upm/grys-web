@@ -29,7 +29,7 @@ timezone: Europe/Madrid
 languages: ["es", "en"]
 default_lang: "es"
 # Lo que no se duplica en /en/
-exclude_from_localization: ["assets", "favicon.ico", "robots.txt", "CNAME", ".nojekyll"]
+exclude_from_localization: ["assets", "admin", "favicon.ico", "robots.txt", "CNAME", ".nojekyll"]
 # En serie: más predecible, funciona en Windows y evita choques con otros plugins
 parallel_localization: false
 
@@ -77,6 +77,15 @@ exclude:
   - lychee.toml
   - lighthouserc.json
   - .lycheecache
+
+# ---------------------------------------------------------------------
+#  Gestor de contenidos (/admin/, Sveltia CMS). docs/COMPILAR.md §8.
+#  oauth_url: dirección del autenticador (Cloudflare Workers). Vacío = solo
+#  se puede entrar con un token personal de GitHub.
+#  repo: repositorio donde se guardan los cambios (por defecto, «repository»).
+# ---------------------------------------------------------------------
+cms:
+  oauth_url: ""
 
 keep_files: ["CNAME", ".nojekyll"]
 

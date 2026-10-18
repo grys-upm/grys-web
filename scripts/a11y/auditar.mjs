@@ -59,6 +59,7 @@ export function listarPaginas(site) {
       else if (f.name.endsWith(".html")) {
         const html = fs.readFileSync(p, "utf8");
         if (/http-equiv=["']?refresh/i.test(html)) continue;   // redirecciones
+        if (html.includes('name="grys-herramienta"')) continue;   // gestor de contenidos (no es del sitio público)
         let url = "/" + path.relative(site, p).split(path.sep).join("/");
         url = url.replace(/index\.html$/, "");
         out.push(url);

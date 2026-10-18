@@ -186,6 +186,8 @@ def main():
             p.feed(text)
             if p.refresh:            # páginas de redirección
                 continue
+            if 'name="grys-herramienta"' in text:   # herramientas internas (gestor de contenidos)
+                continue
             n += 1
             expected = "en" if relf.startswith("en" + os.sep) else "es"
             if p.lang != expected and fn != "404.html":
@@ -437,6 +439,8 @@ def main():
         for fn in files:
             if fn.endswith(".html"):
                 h = open(os.path.join(dirpath, fn), encoding="utf-8").read()
+                if 'name="grys-herramienta"' in h:   # el gestor no es para visitantes
+                    continue
                 hosts |= set(re.findall(r'<(?:iframe|script)[^>]+src="https://([a-z0-9.-]+)/', h))
     def _base(hst):
         partes = hst.split(".")
@@ -453,6 +457,30 @@ def main():
             b = _base(hst)
             if b not in h:
                 errors.append(f"{rel}/index.html: no menciona el servicio externo «{hst}»")
+    # 11b. Gestor de contenidos: la plantilla admin/config.yml se ha convertido en
+    #      YAML válido, con sus 5 colecciones y las listas de opciones rellenas
+    cms = os.path.join(site, "admin", "config.yml")
+    if os.path.exists(os.path.join(ROOT, "admin", "config.yml")):
+        if not os.path.exists(cms) or not os.path.exists(os.path.join(site, "admin", "index.html")):
+            errors.append("falta el gestor de contenidos (admin/index.html o admin/config.yml)")
+        else:
+            try:
+                ccfg = yaml.safe_load(open(cms, encoding="utf-8")) or {}
+            except yaml.YAMLError as e:
+                ccfg = {}
+                errors.append(f"admin/config.yml: la plantilla no genera YAML válido: {e}")
+            colls = {c.get("name"): c for c in ccfg.get("collections") or []}
+            for c in ("news", "events", "opportunities", "members", "projects"):
+                if c not in colls:
+                    errors.append(f"admin/config.yml: falta la colección «{c}»")
+            for c in colls.values():
+                for fl in c.get("fields") or []:
+                    if fl.get("widget") == "select" and not fl.get("options"):
+                        errors.append(f"admin/config.yml ({c.get('name')}.{fl.get('name')}): lista de opciones vacía")
+            if "{{" in str(ccfg.get("backend", {}).get("repo", "")) or "/" not in str(ccfg.get("backend", {}).get("repo", "")):
+                errors.append("admin/config.yml: backend.repo no es «organización/repositorio»")
+        if os.path.exists(os.path.join(site, "en", "admin")):
+            errors.append("en/admin/: el gestor no debe duplicarse en /en/ (exclude_from_localization)")
     # 12. Buscador: índice JSON por idioma
     import json
     tipos = {"page", "project", "member", "line", "domain", "news", "event", "repo", "pub", "demo"}

@@ -11,7 +11,7 @@ Una persona del grupo. El nombre del fichero es su slug (URL).
 | `given` | string | sí | Nombre |
 | `family` | string | sí | Apellidos |
 | `gender` | string | sí | m/f: forma del puesto en español: `m`, `f` |
-| `position` | string | sí | Puesto (clave de _data/positions.yml): `full`, `assoc`, `ppl`, `assist`, `gta`, `predoc`, `postdoc`, `r1`, `tech`, `intern`, `admin` |
+| `position` | string | sí | Puesto (clave de _data/positions.yml): `full`, `assoc`, `pteu`, `ppl`, `assist`, `gta`, `predoc`, `postdoc`, `r1`, `tech`, `intern`, `admin` |
 | `role` | string |  | pi = investigador/a principal; ext = colaboración externa: `pi`, `ext` |
 | `status` | string | sí | current = actual; former = antiguo; memoriam: `current`, `former`, `memoriam` |
 | `since` | fecha |  | Fecha de incorporación (AAAA-MM-DD) |
