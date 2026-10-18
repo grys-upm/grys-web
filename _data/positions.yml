@@ -9,6 +9,10 @@ assoc:
   es_m: Profesor Titular de Universidad
   es_f: Profesora Titular de Universidad
   en: Associate Professor
+ppl:
+  es_m: Profesor Permanente Laboral
+  es_f: Profesora Permanente Laboral
+  en: Associate Professor
 assist:
   es_m: Profesor Ayudante Doctor
   es_f: Profesora Ayudante Doctora

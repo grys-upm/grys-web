@@ -14,6 +14,28 @@ lines: []
 lang: en
 old_urls:
 - /team/jose-antonio-sanchez-fernandez/
+traduccion: borrador
+texto_es: |-
+  ## Una vida dedicada a la Universidad Politécnica de Madrid
+  **José-Antonio Sánchez-Fernández** se licenció en **Ciencias Físicas** por la [Universidad Complutense de Madrid](https://www.ucm.es) en **1989**.
+  Poco después se incorporó a la [Universidad Politécnica de Madrid (UPM)](https://www.upm.es), a la que dedicó toda su vida profesional con entrega, rigor y un profundo sentido del servicio.
+
+  A lo largo de su trayectoria ocupó varios cargos académicos y de gestión, entre ellos:
+
+  - **Subdirector de Investigación, Postgrado y Relaciones Externas** de la antigua *Escuela Universitaria de Ingeniería Técnica de Telecomunicación (EUITT)*, hoy *Escuela Técnica Superior de Ingeniería y Sistemas de Telecomunicación (ETSIST)*.
+  - **Subdirector de Asuntos Económicos** del mismo centro.
+  - **Director en funciones** de la EUITT.
+  - **Adjunto al Vicerrector de Gestión Académica y Profesorado** de la UPM.
+  - **Secretario Académico** de la ETSIST.
+
+  Su liderazgo y compromiso fueron decisivos para el desarrollo de la Escuela y para el fortalecimiento de las estructuras académicas y de investigación de la UPM.
+
+
+  ## Su legado
+  José-Antonio falleció en **septiembre de 2024** y deja un profundo legado de **entrega, profesionalidad y humanidad**.
+  Compañeros, estudiantes y amigos lo recuerdan por su generosidad, su liderazgo sereno y su apoyo incansable a la comunidad universitaria.
+
+  > *«Tu sabiduría, tu bondad y tu ejemplo seguirán guiando a quienes tuvimos el privilegio de trabajar a tu lado.»*
 ---
 ## A Lifelong Commitment to the Universidad Politécnica de Madrid
 **José-Antonio Sánchez-Fernández** earned his **Master Degree in Physical Sciences** from the [Universidad Complutense de Madrid](https://www.ucm.es) in **1989**.  

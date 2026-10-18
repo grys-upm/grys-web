@@ -180,13 +180,16 @@ def _icons():
 def _dynamic_enums(node):
     """Las listas de ámbitos, líneas e iconos NO se fijan en los esquemas: se
     toman de lo que existe (_domains/*.md, _lines/*.md, _includes/iconos.svg).
-    Así, para añadir un ámbito o una línea basta con crear su fichero."""
+    Así, para añadir un ámbito o una línea basta con crear su fichero.
+    Los puestos (position) se toman de las claves de _data/positions.yml."""
     if isinstance(node, dict):
         for k, v in node.items():
             if k in ("domains", "lines") and isinstance(v, dict) and "enum" in v.get("items", {}):
                 v["items"]["enum"] = _keys(f"_{k}")
             elif k == "icon" and isinstance(v, dict) and "enum" in v:
                 v["enum"] = _icons()
+            elif k == "position" and isinstance(v, dict) and "enum" in v:
+                v["enum"] = list(yaml.safe_load(open(os.path.join(ROOT, "_data", "positions.yml"), encoding="utf-8")) or {})
             else:
                 _dynamic_enums(v)
     elif isinstance(node, list):

@@ -10,6 +10,7 @@
       (lo rellena scripts/metricas_dimensions.py en Actions antes de compilar);
     · «Más métricas»: <details class="met"> con las insignias oficiales de
       Altmetric y Dimensions, que assets/js/grys.js carga solo al abrirlo.
+  Ancla: <h3 id="ref-<clave en ASCII>">, destino de las citas (_includes/cita.html).
   El BibTeX publicado omite los campos de scholar.bibtex_skip_fields.
   Para limpiar llaves y LaTeX de un campo se usa el filtro bib_text (_plugins/grys.rb).
 {%- endcomment -%}
@@ -32,7 +33,9 @@
 {%- endunless %}
 <div class="yr">{{ entry.year }}<small>{{ b_venue }}</small></div>
 <div>
-  <h3>{{ b_title }}</h3>
+  {%- comment -%} Ancla estable «ref-<clave>» (ASCII): la usan las citas de cita.html. jekyll-scholar
+  solo pone id en su <span> de referencia, que esta plantilla no usa. {%- endcomment %}
+  <h3 id="ref-{{ entry.key | slugify: 'latin' }}">{{ b_title }}</h3>
   <p class="au">{% for a in entry.author_array %}{{ a.first }} {{ a.last }}{% unless forloop.last %}, {% endunless %}{% endfor %}</p>
   {%- if b_thesis %}
   <dl class="spec">

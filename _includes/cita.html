@@ -2,13 +2,15 @@
   Cita a una publicación (papers.bib) o tesis (theses.bib) dentro de un texto:
     include cita.html clave="lucas-martínezVirtualizationEventSources2014"
   Muestra «Autor et al. (año)» enlazado: las publicaciones abren Publicaciones
-  filtrada por su DOI (o título); las tesis, su ficha en la página Tesis.
+  filtrada por su DOI (o título); las tesis, su entrada en la página Tesis (#ref-<clave>,
+  ancla que pone _layouts/bib.html; grys.js abre la pestaña que la contiene).
   La clave es la del BibTeX; comprobar_datos.py da error si no existe.
 {%- endcomment -%}
 {%- assign c_p = site.data.pub_index[include.clave] -%}
 {%- if c_p -%}
   {%- if c_p.kind == "thesis" -%}
-    {%- assign c_url = 'theses' | route_url | append: "#" | append: include.clave -%}
+    {%- assign c_ancla = include.clave | slugify: 'latin' -%}
+    {%- assign c_url = 'theses' | route_url | append: "#ref-" | append: c_ancla -%}
   {%- else -%}
     {%- if c_p.doi != "" %}{% assign c_q = c_p.doi %}{% else %}{% assign c_q = c_p.title %}{% endif -%}
     {%- assign c_url = 'publications' | route_url | append: "?q=" -%}{%- assign c_qe = c_q | url_encode -%}{%- assign c_url = c_url | append: c_qe -%}

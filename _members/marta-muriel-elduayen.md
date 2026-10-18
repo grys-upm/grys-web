@@ -16,6 +16,15 @@ lines: []
 lang: en
 old_urls:
 - /team/marta-muriel-elduayen/
+traduccion: borrador
+texto_es: |-
+  **Marta Muriel Elduayen** comenzó su carrera investigadora en **2021**, tras terminar el *Máster Universitario en Desarrollo de Aplicaciones y Servicios para Dispositivos Móviles*.
+
+  Como miembro del [Grupo de Redes y Servicios de Próxima Generación (GRyS)](https://grys.etsist.upm.es/), participó en el **proyecto europeo [AFarCloud](https://cordis.europa.eu/project/id/783221)**, con trabajos sobre sistemas agrícolas inteligentes y conectados.
+
+  Actualmente es **ayudante** en el Departamento de Ingeniería Telemática y Electrónica (DTE) de la [Escuela Técnica Superior de Ingeniería y Sistemas de Telecomunicación (ETSIST)](https://www.etsist.upm.es), donde imparte asignaturas de **redes móviles** y **programación**.
+
+  Su investigación actual se centra en la **optimización de sistemas de soporte a decisiones (DSS) basados en casos**, y estudia cómo los modelos inteligentes pueden mejorar la toma de decisiones en entornos dinámicos y basados en datos.
 ---
 **Marta Muriel Elduayen** began her research career in **2021**, after completing her *Master’s Degree in Development of Applications and Services for Mobile Devices*.
 
