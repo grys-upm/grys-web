@@ -31,6 +31,9 @@ Una persona del grupo. El nombre del fichero es su slug (URL).
 | `lines` | lista |  | Ids de líneas de investigación: `cps`, `wsan`, `iot`, `sec`, `nca`, `rob`, `dss`, `mw`, `sw`, `edge`, `smart` |
 | `bib_names` | lista de string |  | Formas del nombre en el BibTeX que no se reconocen solas (p. ej. «Martinez, Joser Fernan») |
 | `lang` | string | sí | Idioma en que está escrito el texto (es/en): `es`, `en` |
+| `texto_es` | string |  | Texto en español si el cuerpo está en inglés (Markdown; ver docs/RECETAS.md) |
+| `texto_en` | string |  | Texto en inglés si el cuerpo está en español (Markdown) |
+| `traduccion` | string |  | Estado de texto_es/texto_en: borrador (muestra un aviso) o revisada: `borrador`, `revisada` |
 | `only_lang` | string |  | Publicar solo en ese idioma: `es`, `en` |
 | `slug` | string |  | Parte final de la URL (por defecto, el nombre del fichero) |
 | `old_urls` | lista de string |  | URL antiguas que redirigen aquí |
@@ -70,6 +73,9 @@ Proyecto competitivo o contrato. El estado se calcula con las fechas.
 | `links` | lista de object |  | Otros enlaces (url + title) |
 | `image` | string |  | Imagen o logotipo (WebP) |
 | `lang` | string | sí | Idioma en que está escrito el texto (es/en): `es`, `en` |
+| `texto_es` | string |  | Texto en español si el cuerpo está en inglés (Markdown; ver docs/RECETAS.md) |
+| `texto_en` | string |  | Texto en inglés si el cuerpo está en español (Markdown) |
+| `traduccion` | string |  | Estado de texto_es/texto_en: borrador (muestra un aviso) o revisada: `borrador`, `revisada` |
 | `only_lang` | string |  | Publicar solo en ese idioma: `es`, `en` |
 | `slug` | string |  | Parte final de la URL (por defecto, el nombre del fichero) |
 | `old_urls` | lista de string |  | URL antiguas que redirigen aquí |
@@ -87,6 +93,9 @@ Proyecto competitivo o contrato. El estado se calcula con las fechas.
 | `category` | string |  | Categoría: `award`, `event`, `project`, `people`, `transfer`, `lab` |
 | `image` | string |  | Imagen o logotipo (WebP) |
 | `lang` | string | sí | Idioma en que está escrito el texto (es/en): `es`, `en` |
+| `texto_es` | string |  | Texto en español si el cuerpo está en inglés (Markdown; ver docs/RECETAS.md) |
+| `texto_en` | string |  | Texto en inglés si el cuerpo está en español (Markdown) |
+| `traduccion` | string |  | Estado de texto_es/texto_en: borrador (muestra un aviso) o revisada: `borrador`, `revisada` |
 | `only_lang` | string |  | Publicar solo en ese idioma: `es`, `en` |
 | `detail` | boolean |  | false = noticia breve sin página propia |
 | `slug` | string |  | Parte final de la URL (por defecto, el nombre del fichero) |
@@ -160,6 +169,9 @@ Hace falta al menos uno de: `title_es` o `title_en`.
 | `slug_es` | string | sí |  |
 | `slug_en` | string | sí |  |
 | `lang` | string |  | Idioma en que está escrito el texto (es/en): `es`, `en` |
+| `texto_es` | string |  | Texto en español si el cuerpo está en inglés (Markdown; ver docs/RECETAS.md) |
+| `texto_en` | string |  | Texto en inglés si el cuerpo está en español (Markdown) |
+| `traduccion` | string |  | Estado de texto_es/texto_en: borrador (muestra un aviso) o revisada: `borrador`, `revisada` |
 | `keywords` | lista de string |  |  |
 | `old_urls` | lista de string |  | URL antiguas que redirigen aquí |
 

@@ -1,5 +1,6 @@
 ---
 date: 2024-02-20
+title_es: "Néstor Lucas-Martínez recibe una mención especial de honor en la formación inicial para la docencia universitaria del ICE"
 title_en: Néstor Lucas-Martínez Received a Special Mention of Honor in the initial training for university teaching by ICE
 category: award
 image: /assets/img/noticias/2024-02-20-ice-diploma-award-ceremony/53552334542-07e6d2535f-o.webp

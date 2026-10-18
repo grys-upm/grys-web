@@ -298,6 +298,34 @@ for _coll in COLLECTIONS:
                 break
             _prev = _lv
 
+# Traducciones (texto_es / texto_en) y citas al BibTeX (include cita.html)
+_bibkeys = set()
+for _b in ("papers.bib", "theses.bib"):
+    _p = os.path.join(ROOT, "_bibliography", _b)
+    if os.path.exists(_p):
+        _bibkeys |= set(re.findall(r"^@\w+\s*\{\s*([^,\s]+)\s*,", open(_p, encoding="utf-8").read(), re.M))
+_INC = re.compile(r"\{%-?\s*include\s+([\w./-]+)")
+for _coll in ("members", "projects", "lines", "news"):
+    for _f in sorted(glob.glob(os.path.join(ROOT, f"_{_coll}", "*.md"))):
+        _fm, _body = front_matter(_f)
+        if _fm is None:
+            continue
+        _lang = _fm.get("lang")
+        for _lg in ("es", "en"):
+            _tx = _fm.get(f"texto_{_lg}")
+            if not _tx:
+                continue
+            if _lg == _lang:
+                err(f"{rel(_f)}: texto_{_lg} sobra: el cuerpo ya está en {_lg} (lang: {_lang})")
+            elif sorted(_INC.findall(_tx)) != sorted(_INC.findall(_body or "")):
+                warn(f"{rel(_f)}: texto_{_lg} no tiene las mismas imágenes/vídeos/galerías (include) que el cuerpo")
+        if _fm.get("traduccion") and not (_fm.get("texto_es") or _fm.get("texto_en")):
+            warn(f"{rel(_f)}: «traduccion: {_fm.get('traduccion')}» sin texto_es ni texto_en")
+for _f in sorted(glob.glob(os.path.join(ROOT, "_*", "*.md")) + glob.glob(os.path.join(ROOT, "_pages", "*", "*.md"))):
+    for _k in re.findall(r'include\s+cita\.html\s+clave="([^"]+)"', open(_f, encoding="utf-8").read()):
+        if _k not in _bibkeys:
+            err(f"{rel(_f)}: cita a «{_k}», que no está en papers.bib ni en theses.bib")
+
 # Referencias cruzadas entre colecciones
 repos_data = load_yaml(os.path.join(ROOT, "_data", "repos.yml")) or []
 repo_names = {r.get("name") for r in repos_data}

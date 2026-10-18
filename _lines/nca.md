@@ -13,5 +13,11 @@ slug_es: agentes-cooperativos-en-red
 slug_en: networked-cooperative-agents
 lang: en
 keywords: []
+traduccion: borrador
+texto_es: >-
+  Los agentes cooperativos en red son entidades autónomas capaces de **colaborar y tomar
+  decisiones** mediante la comunicación y objetivos compartidos. Desarrollamos mecanismos
+  de coordinación distribuida y middleware inteligente para el control basado en agentes
+  en entornos complejos y dinámicos.
 ---
 Networked Cooperative Agents are autonomous entities capable of **collaboration and decision-making** through communication and shared goals. We develop distributed coordination mechanisms and intelligent middleware to support agent-based control in complex, dynamic environments.

@@ -13,5 +13,11 @@ slug_es: robotica-cooperativa-en-red
 slug_en: networked-cooperative-robotics
 lang: en
 keywords: []
+traduccion: borrador
+texto_es: >-
+  A partir de los sistemas multiagente, nuestro trabajo en robótica cooperativa se centra
+  en la **comunicación, la coordinación y el comportamiento colectivo** de robots
+  autónomos, tanto terrestres como submarinos. Estos sistemas son clave en escenarios de
+  **búsqueda y rescate**, **agricultura** y **exploración ambiental**.
 ---
 Building on multi-agent systems, our work in cooperative robotics focuses on **communication, coordination, and collective behavior** among autonomous robots — both ground-based and underwater. These systems are key enablers of **search and rescue**, **agriculture**, and **environmental exploration** scenarios.

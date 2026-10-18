@@ -97,6 +97,28 @@ propuestas:
     estado: abierta                # cuando se asigne, cámbialo a «asignada» y deja de mostrarse
 ```
 
+## Traducir un texto (miembros, proyectos, líneas, noticias)
+
+El texto principal de cada ficha (lo que va después del segundo `---`) está en el idioma que indica `lang`. Para el otro idioma:
+
+1. Añade en la cabecera `texto_es:` (si el cuerpo está en inglés) o `texto_en:` (si está en español), con el texto traducido en Markdown, sangrado con dos espacios:
+   ```yaml
+   lang: en
+   traduccion: borrador
+   texto_es: >-
+     Primer párrafo de la traducción…
+   ```
+   Si el texto tiene varios párrafos, usa `|` en lugar de `>-` y deja una línea en blanco entre párrafos.
+2. Mientras nadie la haya revisado, deja `traduccion: borrador`: la web muestra el aviso «Traducción provisional…». Cuando esté revisada, pon `traduccion: revisada` y el aviso desaparece.
+3. Si el cuerpo tiene imágenes, vídeos o galerías (`{% include … %}`), copia los mismos en la traducción: la comprobación avisa si no coinciden.
+4. Los títulos se traducen aparte con `title_es` / `title_en`.
+
+Sin traducción, la página muestra el texto original con el aviso «Este texto solo está disponible en inglés».
+
+## Citar una publicación o tesis dentro de un texto
+
+Escribe `{% include cita.html clave="ClaveBibTeX" %}` (la clave es la del `.bib`, lo que va tras `@article{`). Se muestra «Autor et al. (año)» enlazado: si es una publicación, a Publicaciones ya filtrada; si es una tesis, a su entrada en Tesis. Si la clave no existe, la comprobación da un error.
+
 ## Añadir una asignatura
 
 En `_data/docencia.yml` → `asignaturas`, cada elemento lleva:

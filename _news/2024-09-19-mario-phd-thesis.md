@@ -1,5 +1,6 @@
 ---
 date: 2024-09-19
+title_es: "Mario San Emeterio defiende su tesis doctoral"
 title_en: Mario San-Emeterio disserted his PhD thesis
 category: project
 lang: en

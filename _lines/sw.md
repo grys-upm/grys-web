@@ -13,5 +13,11 @@ slug_es: ingenieria-de-software-avanzada
 slug_en: advanced-software-engineering
 lang: en
 keywords: []
+traduccion: borrador
+texto_es: >-
+  Los sistemas complejos exigen métodos avanzados de **diseño, verificación y gestión del
+  ciclo de vida del software**. Nuestra experiencia abarca la ingeniería dirigida por
+  modelos, la verificación formal y los procesos de integración continua que garantizan un
+  software de calidad y fácil de mantener.
 ---
 Complex systems demand advanced methods for **software design, verification, and lifecycle management**. Our expertise includes model-driven engineering, formal verification, and continuous integration processes that ensure high-quality and maintainable software solutions.

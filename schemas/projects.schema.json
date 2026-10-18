@@ -191,6 +191,19 @@
       ],
       "description": "Idioma en el que está escrito el texto"
     },
+    "texto_es": {
+      "type": "string"
+    },
+    "texto_en": {
+      "type": "string"
+    },
+    "traduccion": {
+      "type": "string",
+      "enum": [
+        "borrador",
+        "revisada"
+      ]
+    },
     "only_lang": {
       "type": "string",
       "enum": [

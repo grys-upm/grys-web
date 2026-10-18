@@ -1,5 +1,6 @@
 ---
 date: 2025-09-04
+title_es: "Reunión de lanzamiento de NexTArc en Estocolmo"
 title_en: NexTArc Kickoff Meeting in Stockholm
 category: project
 image: /assets/img/noticias/2025-09-04-nextarc-kickoff/nextarc-kickoff-group.webp

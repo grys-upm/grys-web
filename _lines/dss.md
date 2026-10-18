@@ -13,5 +13,12 @@ slug_es: soporte-a-decisiones-e-ia
 slug_en: decision-support-systems-and-ai
 lang: en
 keywords: []
+traduccion: borrador
+texto_es: >-
+  Los sistemas de soporte a decisiones combinan **analítica de datos, inteligencia
+  artificial y conocimiento del dominio** para ayudar a personas y sistemas a tomar
+  decisiones fundamentadas. GRyS desarrolla marcos inteligentes de soporte a decisiones
+  que integran razonamiento, aprendizaje y realimentación adaptativa para entornos
+  inteligentes y sistemas autónomos.
 ---
 Decision Support Systems combine **data analytics, AI, and domain knowledge** to help humans and systems make informed choices. GRyS develops intelligent DSS frameworks that integrate reasoning, learning, and adaptive feedback for smart environments and autonomous systems.

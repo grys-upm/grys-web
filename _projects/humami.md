@@ -3,6 +3,7 @@
 # confirmados por el grupo el 16-10-2026.
 # El responsable en la UPM no es del grupo: indicar su nombre en «pi_name».
 acronym: HumAMI
+title_es: "Inteligencia artificial avanzada de inspiración humana para acelerar la innovación, la cooperación y la adopción industrial de la IA en Europa"
 title_en: Human-inspired Advanced Machine Intelligence for accelerating European AI innovation, cooperation and industrial adoption
 type: competitive
 programme: Horizon Europe

@@ -13,5 +13,12 @@ slug_es: sistemas-ciberfisicos
 slug_en: cyber-physical-systems
 lang: en
 keywords: []
+traduccion: borrador
+texto_es: >-
+  Los sistemas ciberfísicos (CPS) integran de forma fluida algoritmos computacionales y
+  procesos físicos, y hacen posibles comportamientos autónomos, adaptativos y basados en
+  datos. GRyS contribuye al modelado, la simulación y el control de CPS en ámbitos como la
+  agricultura inteligente, la movilidad y la robótica, donde la **respuesta en tiempo
+  real** y la **resiliencia del sistema** son clave.
 ---
 Cyber-Physical Systems (CPS) seamlessly integrate computational algorithms with physical processes, enabling autonomous, adaptive, and data-driven behaviors. GRyS contributes to the modeling, simulation, and control of CPS for domains such as smart agriculture, mobility, and robotics — where **real-time responsiveness** and **system resilience** are key.
