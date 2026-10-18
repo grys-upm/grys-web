@@ -11,7 +11,9 @@ aplicar_etiquetas.py y abre una PR con el informe.
 
 Qué hace:
   · Descarga los ítems principales (sin notas ni adjuntos) con su BibTeX
-    (API v3, de 100 en 100). Las tesis se excluyen: viven en theses.bib.
+    (API v3, de 100 en 100). Se excluyen las tesis (viven en theses.bib) y
+    los registros de software y las patentes (son transferencia); estos se
+    listan en el informe. Otros tipos: --excluir-tipos o ZOTERO_EXCLUIR_TIPOS.
   · CONSERVA LAS CLAVES BibTeX existentes, porque de ellas dependen
     etiquetas.yml, las citas (cita.html) y las anclas. Cada ítem se empareja
     con su entrada actual por, en este orden:
@@ -60,6 +62,11 @@ BIB = os.path.join(ROOT, "_bibliography", "papers.bib")
 MAPA = os.path.join(ROOT, "_bibliography", "zotero-claves.yml")
 API = "https://api.zotero.org"
 NO_PRINCIPALES = {"note", "attachment", "annotation"}
+# Tipos de Zotero que no son publicaciones de la página Publicaciones: las tesis
+# viven en theses.bib y los registros de software y las patentes son resultados
+# de transferencia (_data/transferencia.yml). Se listan en el informe.
+EXCLUIR_TIPOS = {"thesis", "computerProgram", "patent"}
+NOMBRE_TIPO = {"thesis": "tesis", "computerProgram": "programa de ordenador (registro de software)", "patent": "patente"}
 QUITAR = {"urldate", "copyright", "dimensions", "altmetric", "bibtex_show", "file", "annotation"}
 PROPIOS = set(etq.FIELDS)                       # portal_upm, archivo_upm, project, lines
 ETIQUETA_SERVICIO = re.compile(r"^(proyecto:|linea:|línea:|⛔|_)", re.I)
@@ -135,7 +142,8 @@ def slugs(carpeta):
 
 
 # ------------------------------------------------------------------ sincronización
-def sincronizar(items, permitir_borrados=False):
+def sincronizar(items, permitir_borrados=False, excluir=None):
+    excluir = EXCLUIR_TIPOS if excluir is None else excluir
     texto = open(BIB, encoding="utf-8").read()
     cabecera = re.match(r"((?:%[^\n]*\n)*\n?)", texto).group(1)
     actuales = parse(texto)
@@ -143,7 +151,8 @@ def sincronizar(items, permitir_borrados=False):
     mapa = (yaml.safe_load(open(MAPA, encoding="utf-8")) or {}) if os.path.exists(MAPA) else {}
     etiquetas = etq.load_tags()
     proyectos, lineas = slugs("_projects"), slugs("_lines")
-    avisos, informe = [], {"nuevas": [], "cambiadas": [], "borradas": [], "sin_etiquetar": [], "clasificadas": []}
+    avisos, informe = [], {"nuevas": [], "cambiadas": [], "borradas": [], "sin_etiquetar": [], "clasificadas": [],
+                           "excluidas": []}
 
     # 0. Campos propios que solo están en el .bib → etiquetas.yml (no se pierden)
     rescatados = 0
@@ -158,8 +167,14 @@ def sincronizar(items, permitir_borrados=False):
     principales = []
     for it in items:
         d = it.get("data") or {}
-        if d.get("itemType") in NO_PRINCIPALES or d.get("itemType") == "thesis" or d.get("deleted"):
+        if d.get("itemType") in NO_PRINCIPALES or d.get("deleted"):
             continue
+        if d.get("itemType") in excluir:
+            if d.get("itemType") != "thesis":
+                informe["excluidas"].append((d.get("itemType"), d.get("title", ""), (d.get("date") or "")[:4]))
+            continue
+        if "\ufffd" in (d.get("title") or "") or "\ufffd" in (it.get("bibtex") or ""):
+            avisos.append(f"«{(d.get('title') or '')[:70]}»: tiene caracteres dañados (�) en Zotero; corrígelos allí")
         bib = parse(it.get("bibtex") or "")
         if len(bib) != 1:
             avisos.append(f"el ítem {it.get('key')} («{d.get('title', '')[:60]}») no trae BibTeX; se omite")
@@ -312,6 +327,8 @@ def informe_md(r, grupo, coleccion):
          f"- Nuevas: **{len(i['nuevas'])}** · Con cambios: **{len(i['cambiadas'])}** · Borradas: **{len(i['borradas'])}**"]
     if i["clasificadas"]:
         L.append(f"- Clasificadas desde etiquetas de Zotero: {len(i['clasificadas'])}")
+    if i["excluidas"]:
+        L.append(f"- No son publicaciones (no se añaden): {len(i['excluidas'])}")
     if r["rescatados"]:
         L.append(f"- Campos propios copiados del .bib a etiquetas.yml: {r['rescatados']}")
     if i["nuevas"]:
@@ -332,6 +349,11 @@ def informe_md(r, grupo, coleccion):
               "Para que salgan en las fichas de proyecto y de línea, añade en Zotero las etiquetas "
               "`proyecto:<slug>` y `linea:<id>` (o edítalo en `_bibliography/etiquetas.yml`).", ""]
         L += [f"- `{k}`" for k in nuevas_sin]
+    if i["excluidas"]:
+        L += ["", "### En Zotero, pero no son publicaciones", "",
+              "No se añaden a Publicaciones. Si son resultados de transferencia (registros de software, patentes), "
+              "van en `_data/transferencia.yml`, con su asiento registral o número de patente.", ""]
+        L += [f"- {NOMBRE_TIPO.get(t, t)} · {tit} ({y})" for t, tit, y in i["excluidas"]]
     if r["avisos"]:
         L += ["", "### Avisos", ""] + [f"- {a}" for a in r["avisos"]]
     return "\n".join(L) + "\n"
@@ -344,12 +366,14 @@ def main():
     ap.add_argument("--informe", default=os.path.join(ROOT, "reports", "zotero.md"))
     ap.add_argument("--desde-fichero", help="JSON con los ítems (pruebas, sin red)")
     ap.add_argument("--permitir-borrados", action="store_true")
+    ap.add_argument("--excluir-tipos", default=os.environ.get("ZOTERO_EXCLUIR_TIPOS") or ",".join(sorted(EXCLUIR_TIPOS)),
+                    help="tipos de ítem de Zotero que no son publicaciones (separados por comas)")
     ap.add_argument("--seco", action="store_true", help="no escribe nada; solo el informe")
     a = ap.parse_args()
     try:
         items = (json.load(open(a.desde_fichero, encoding="utf-8")) if a.desde_fichero
                  else descargar(a.grupo, a.coleccion, os.environ.get("ZOTERO_API_KEY") or None))
-        r = sincronizar(items, a.permitir_borrados)
+        r = sincronizar(items, a.permitir_borrados, {t.strip() for t in a.excluir_tipos.split(",") if t.strip()})
     except SystemExit as e:
         msg = str(e)
         os.makedirs(os.path.dirname(a.informe), exist_ok=True)
