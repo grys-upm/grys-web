@@ -1,40 +1,37 @@
 ---
-# Ámbitos (domains) y título en español: propuesta del mockup · REVISAR
-# Estado: se calcula con las fechas al compilar (campo «status» solo para forzarlo)
 acronym: NexTArc
 title_es: IA embarcada fiable de nueva generación para ciudades inteligentes, movilidad y logística
 title_en: Next Generation Open Innovations in Trustworthy Embedded AI Architectures for Smart Cities, Mobility and Logistics
 type: competitive
-programme: Horizon Europe
-programme_url: https://research-and-innovation.ec.europa.eu/funding/funding-opportunities/funding-programmes-and-open-calls/horizon-europe_en
-funder: European Commission
-funding:
-- European Union
-grant_ids:
-- '101194287'
-- PCI2025-163248
 start: 2025-09-01
 end: 2028-08-31
+programme: Horizon Europe
+programme_url: https://research-and-innovation.ec.europa.eu/funding/funding-opportunities/funding-programmes-and-open-calls/horizon-europe_en
+call: HORIZON-JU-Chips-2024-2-RIA-T1
+funder: European Commission
+funding:
+  - European Union
+grant_ids:
+  - '101194287'
+  - PCI2025-163248
 role: partner
 pi:
-- nestor-lucas-martinez
+  - nestor-lucas-martinez
 coordinator: Mälardalen University
 coordinator_pi: Baran Çürüklü
+partners: '33'
+budget: '€ 27 213 529,50 (UPM: € 485 125,00)'
 domains:
-- ciudad
-lines: []
+  - ciudad
 repos:
-- NexTArc-AURA
+  - NexTArc-AURA
 doi: 10.3030/101194287
 website: https://nextarc.eu
 links:
-- url: https://cordis.europa.eu/project/id/101194287
-  title: CORDIS
+  - url: https://cordis.europa.eu/project/id/101194287
+    title: CORDIS
 image: /assets/img/proyectos/nextarc/logo.webp
 lang: en
-old_urls:
-- /research/projects/nextarc/
-traduccion: borrador
 texto_es: |-
   > *Una IA y un IoT fiables para ciudades, industrias y movilidad sostenibles en Europa.*
 
@@ -106,7 +103,12 @@ texto_es: |-
   {% include figura.html src="/assets/img/proyectos/nextarc/nextarc-chipsju-horizon.webp" alt="Este proyecto ha recibido financiación del programa de investigación e innovación Horizonte Europa de la Unión Europea en virtud del acuerdo de subvención n.º 101194287" %}
 
   {% include figura.html src="/assets/img/proyectos/nextarc/miciu-cofinanciado-aei.webp" alt="Este proyecto ha recibido financiación del Ministerio de Ciencia, Innovación y Universidades (PCI2025-163248)" %}
+traduccion: borrador
+old_urls:
+  - /research/projects/nextarc/
+published: true
 ---
+
 > *Shaping trustworthy AI and IoT for sustainable cities, industries, and mobility in Europe.*
 
 ---
