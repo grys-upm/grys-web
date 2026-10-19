@@ -10,6 +10,10 @@
   - **Limpieza:** quita `urldate`, `copyright`, `file`… y las etiquetas de servicio de `keywords`.
   - **Seguridad:** se detiene si borraría más del 10 % o si Zotero no devuelve nada.
   - **Pruebas sin red:** con Zotero igual a la web, el resultado es idéntico salvo `keywords`; título y DOI corregidos, entradas nuevas, borradas y etiquetadas; segunda pasada sin cambios; borrado masivo; respuesta vacía; fusión.
+- **Corrección tras la primera ejecución real:**
+  - Zotero tiene 5 registros de software (tipo «programa de ordenador») que no son publicaciones. Ahora se excluyen, con las tesis y las patentes, y se listan en el informe para llevarlos a Transferencia.
+  - Se avisa de los títulos con caracteres dañados (�).
+  - Si GitHub no deja abrir la PR, el error explica qué permiso activar.
 - **`zotero.yml` (Actions):**
   - cada lunes y a mano: sincroniza, aplica las etiquetas y comprueba los datos;
   - abre o actualiza la PR «Publicaciones: sincronización con Zotero» con el informe y los errores de comprobación;

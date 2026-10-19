@@ -53,6 +53,7 @@ jobs:
           ZOTERO_API_KEY: ${{ secrets.ZOTERO_API_KEY }}
           ZOTERO_GRUPO: ${{ vars.ZOTERO_GRUPO || '5287048' }}
           ZOTERO_COLECCION: ${{ vars.ZOTERO_COLECCION }}
+          ZOTERO_EXCLUIR_TIPOS: ${{ vars.ZOTERO_EXCLUIR_TIPOS }}
           PERMITIR: ${{ inputs.permitir_borrados }}
         run: |
           set +e
@@ -140,14 +141,26 @@ jobs:
               "", `<sub>[Ejecución](${ejecucion})</sub>`].join("\n");
             const titulo = "Publicaciones: sincronización con Zotero";
             let pr = abiertas[0];
+            let creada = false;
             if (pr) {
               await github.rest.pulls.update({ owner, repo, pull_number: pr.number, title: titulo, body });
             } else {
-              pr = (await github.rest.pulls.create({ owner, repo, head: rama, base: "main", title: titulo, body })).data;
+              try {
+                pr = (await github.rest.pulls.create({ owner, repo, head: rama, base: "main", title: titulo, body })).data;
+                creada = true;
+              } catch (e) {
+                if (e.status === 403) {
+                  core.setFailed("GitHub no deja que Actions abra PR. Actívalo en Settings → Actions → General → Workflow permissions → " +
+                    "«Allow GitHub Actions to create and approve pull requests» (si sale en gris, antes en la organización: " +
+                    "grys-upm → Settings → Actions → General). La rama «" + rama + "» ya está subida: después, relanza esta ejecución.");
+                  return;
+                }
+                throw e;
+              }
               try { await github.rest.issues.createLabel({ owner, repo, name: "zotero", color: "cc2936" }); } catch (e) { /* ya existe */ }
               await github.rest.issues.addLabels({ owner, repo, issue_number: pr.number, labels: ["zotero"] });
             }
-            if (process.env.CON_APP !== "true" && process.env.SUBIDA === "true") {
+            if (process.env.CON_APP !== "true" && (process.env.SUBIDA === "true" || creada)) {
               await github.rest.issues.createComment({ owner, repo, issue_number: pr.number, body:
                 "⚠️ Las comprobaciones no se lanzan solas en las PR que crea GitHub Actions sin la aplicación «grys-web-contenido». " +
                 "Para lanzarlas: **Close pull request** y después **Reopen pull request** (docs/COMPILAR.md §9)." });

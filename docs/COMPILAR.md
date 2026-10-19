@@ -208,8 +208,8 @@ Se revisa en la vista previa y se fusiona. Si ya no hay diferencias, la PR se ci
 
 **Configuración (una vez):**
 1. **Clave de la API.** Si el grupo de Zotero es **público**, no hace falta. Si es privado: en zotero.org, *Settings → Security → Create new private key*, con acceso **solo de lectura** al grupo 5287048 y sin acceso a la biblioteca personal. Guárdala en `grys-web` → *Settings → Secrets and variables → Actions* como secreto **`ZOTERO_API_KEY`**.
-2. *(Opcional)* Variables `ZOTERO_GRUPO` (otro grupo) y `ZOTERO_COLECCION` (clave de una colección, si solo una parte de la biblioteca son publicaciones del grupo).
-3. **Permitir que Actions abra PR.** En `grys-web` → *Settings → Actions → General → Workflow permissions*, marca **Allow GitHub Actions to create and approve pull requests**. Lo necesitan también los formularios de §9.
+2. *(Opcional)* Variables `ZOTERO_GRUPO` (otro grupo), `ZOTERO_COLECCION` (clave de una colección, si solo una parte de la biblioteca son publicaciones del grupo) y `ZOTERO_EXCLUIR_TIPOS` (tipos de Zotero que no van a Publicaciones; por defecto `computerProgram,patent,thesis`: los registros de software y las patentes se listan en el informe para llevarlos a Transferencia).
+3. **Permitir que Actions abra PR.** En `grys-web` → *Settings → Actions → General → Workflow permissions*, marca **Allow GitHub Actions to create and approve pull requests** y pulsa *Save*. Si la casilla sale en gris, la organización lo tiene bloqueado: actívala antes en `grys-upm` → *Settings → Actions → General* (misma casilla). Lo necesitan también los formularios de §9.
 4. **Primera ejecución.** Lánzala a mano y revisa la PR. Lo normal es que aparezcan:
    - limpiezas de `keywords`;
    - pequeñas diferencias de formato en algunas entradas, porque el `.bib` actual viene de una exportación anterior;

@@ -143,7 +143,13 @@ jobs:
             if (pr) {
               await github.rest.pulls.update({ owner, repo, pull_number: pr.number, title: res.titulo, body });
             } else {
-              pr = (await github.rest.pulls.create({ owner, repo, head: process.env.RAMA, base: "main", title: res.titulo, body })).data;
+              try {
+                pr = (await github.rest.pulls.create({ owner, repo, head: process.env.RAMA, base: "main", title: res.titulo, body })).data;
+              } catch (e) {
+                if (e.status === 403) core.setFailed("GitHub no deja que Actions abra PR: activa «Allow GitHub Actions to create and approve pull requests» " +
+                  "en Settings → Actions → General (y antes en la organización si sale en gris). Después, edita la issue para reintentarlo.");
+                throw e;
+              }
             }
             if (process.env.CON_APP !== "true" && process.env.CAMBIOS === "true") {
               await github.rest.issues.createComment({ owner, repo, issue_number: pr.number, body:
