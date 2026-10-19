@@ -12,6 +12,17 @@ address:
   city: Madrid
   country: { es: España, en: Spain }
 
+# Marca institucional UPM del pie (cofirma, §11.6). Sube los ficheros oficiales a
+# assets/img/marca/ con estos nombres; el formato se detecta solo (svg, png o webp):
+#   upm.svg      versión en color (tema claro)
+#   upm-neg.svg  versión en negativo (tema oscuro); si no existe se usa la de color
+# Mientras no haya fichero, el pie muestra el recuadro provisional.
+upm_brand:
+  file: /assets/img/marca/upm
+  name: Universidad Politécnica de Madrid
+  url: https://www.upm.es/
+  width: 156   # 0,81 × 192 px del logotipo del grupo
+
 links:
   upm:
     - title: { es: Portal Científico, en: Scientific Portal }

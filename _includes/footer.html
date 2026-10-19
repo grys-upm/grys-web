@@ -1,13 +1,14 @@
 {%- comment -%}
   Pie con cofirma UPM + GRyS (§11.6): marca institucional UPM primero, filete
   gris y logotipo del grupo sin endoso. La UPM va al 0,81 del ancho del logo
-  del grupo (156 px frente a 192 px). PENDIENTE: fichero oficial de la UPM.
+  del grupo (156 px frente a 192 px). La marca UPM sale de _includes/marca-upm.html
+  (ficheros en assets/img/marca/upm.* y upm-neg.*; ver upm_brand en _data/grupo.yml).
 {%- endcomment -%}
 {%- assign g = site.data.grupo -%}
 <footer>
   <div class="wrap">
     <div class="cosign" role="group" aria-label="{{ t.footer.cosign_label }}">
-      <div class="upm">{{ t.footer.upm_slot }}</div>
+      {% include marca-upm.html %}
       <span class="filete" aria-hidden="true"></span>
       {% include logo.html kind="logo" w="192" h="62" alt=t.logo_alt %}
     </div>
