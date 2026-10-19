@@ -6,6 +6,24 @@ Para miembros del grupo con cuenta de GitHub que pertenezcan al equipo **web** d
 
 Desde el gestor se editan **Noticias, Eventos, Convocatorias, Miembros y Proyectos**. El resto (líneas, ámbitos, textos de las páginas, publicaciones) lo mantiene quien administra la web: ver `docs/RECETAS.md`.
 
+## ¿Qué quieres hacer?
+
+| Quiero… | Cómo |
+|---|---|
+| Publicar una noticia, un evento o una convocatoria | Gestor → *Nueva* en su colección (§2), o un formulario (§5) |
+| Dar de alta a una persona o un proyecto | Gestor → *Miembros* o *Proyectos* → *Nuevo* |
+| Corregir algo que ya está en la web | Gestor → busca la ficha, cámbiala y publica |
+| Marcar a alguien como antiguo miembro | Gestor → su ficha → *Situación: Antiguo miembro* y *En el grupo hasta* |
+| Añadir o corregir una publicación | En Zotero (§6) |
+| Cambiar el texto de una página fija (Quiénes somos, Contacto…), líneas, ámbitos, puestos | Pídelo al administrador (`docs/RECETAS.md`) |
+| Avisar de un error en la web | *Issues → New issue → Blank issue* |
+
+**Vocabulario:**
+- **Propuesta de cambios (PR, *pull request*):** un cambio guardado que todavía no está en la web. Tiene sus comprobaciones y su vista previa.
+- **Publicar:** fusionar la propuesta; la web se actualiza en 2–3 minutos.
+- **Issue:** una petición o aviso en el repositorio de GitHub; los formularios crean una.
+- **Comprobaciones:** revisión automática de datos, enlaces y accesibilidad. Si fallan, el cambio no se puede publicar.
+
 ## 1. Entrar
 
 - **Con el botón «Iniciar sesión con GitHub»**, si el administrador ya ha configurado el inicio de sesión (`docs/COMPILAR.md` §8).
@@ -61,3 +79,7 @@ Los formularios solo **crean** contenido nuevo. Para cambiar algo que ya existe,
 ## 6. Publicaciones
 
 Las publicaciones no se editan aquí: se añaden en la **biblioteca de Zotero del grupo**. Cada lunes se sincronizan solas, y se abre una propuesta de cambios para revisarlas. Para que una publicación salga en la ficha de un proyecto o de una línea, ponle en Zotero las etiquetas `proyecto:nextarc`, `linea:iot`…
+
+## 7. Por qué no se puede publicar «directamente»
+
+La rama principal del repositorio (`main`) está protegida: todo cambio entra por una propuesta que tiene que pasar las comprobaciones. Así ningún error (una fecha mal escrita, un enlace roto, una imagen sin descripción) llega a la web, y cualquier cambio se puede deshacer. Para ti no supone ningún paso más: el gestor y los formularios crean la propuesta por su cuenta.

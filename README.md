@@ -21,6 +21,17 @@ Es un sitio Jekyll propio, sin tema externo. Todo el contenido se guarda como da
 - **Español** en `/` e **inglés** en `/en/`, con *jekyll-polyglot*.
 - Las **fichas de detalle** (personas, proyectos, líneas, noticias) se generan en los dos idiomas a partir de un único fichero de datos.
 
+## Documentación
+
+| Para… | Lee |
+|---|---|
+| **Editar contenido** (noticias, eventos, convocatorias, miembros, proyectos, publicaciones) | [docs/EDITAR.md](docs/EDITAR.md) |
+| **Administrar** la web (tareas periódicas, permisos, protección de `main`, deshacer cambios) | [docs/MANTENIMIENTO.md](docs/MANTENIMIENTO.md) |
+| Cambios que no hace el gestor (páginas fijas, líneas, ámbitos, puestos…) | [docs/RECETAS.md](docs/RECETAS.md) |
+| Campos de cada tipo de contenido | [docs/DATOS.md](docs/DATOS.md) |
+| Poner en marcha cada pieza, compilar, migrar a producción | [docs/COMPILAR.md](docs/COMPILAR.md), [docs/PROBAR_EN_LOCAL.md](docs/PROBAR_EN_LOCAL.md) |
+| Accesibilidad | [docs/ACCESIBILIDAD.md](docs/ACCESIBILIDAD.md), [docs/REVISION_ACCESIBILIDAD.md](docs/REVISION_ACCESIBILIDAD.md) |
+
 ## Compilar y comprobar
 
 Ver [docs/COMPILAR.md](docs/COMPILAR.md). En resumen:
@@ -34,7 +45,7 @@ python3 scripts/verificar_sitio.py _site
 python3 scripts/informe_pendientes.py   # qué datos faltan → reports/pendientes-datos.md
 ```
 
-Otras herramientas: `scripts/cruce_portal.py` (BibTeX ↔ Portal Científico o Archivo Digital), `scripts/aplicar_etiquetas.py`, `scripts/migrar_imagenes.py` (una sola vez) y `scripts/doc_esquemas.py`.
+Otras herramientas: `scripts/sincronizar_zotero.py` (publicaciones desde Zotero), `scripts/aplicar_etiquetas.py`, `scripts/cruce_portal.py` (BibTeX ↔ Portal Científico o Archivo Digital), `scripts/issue_a_contenido.py` (formularios de issue), `scripts/metricas_dimensions.py`, `scripts/migrar_imagenes.py` (una sola vez) y `scripts/doc_esquemas.py`.
 
 ## Estado
 

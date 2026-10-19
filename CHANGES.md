@@ -1,5 +1,25 @@
 # Registro de cambios
 
+## Fase 5 · Paso 5.6: guía para editores y protección de `main` (19-10-2026)
+
+- **Protección de `main`** en `.github/rulesets/main.json`, para importar en *Settings → Rules → Rulesets*. Reglas:
+  - no se puede borrar `main` ni reescribir su historial;
+  - todo cambio entra por PR (sin aprobación obligatoria);
+  - la comprobación `build` tiene que estar en verde;
+  - los administradores pueden saltárselo solo dentro de una PR.
+
+  `comprobar_datos.py` da error si la regla exige una comprobación que no existe en `pr.yml`.
+- **`docs/EDITAR.md`:** añadidos «¿Qué quieres hacer?», vocabulario (PR, publicar, issue, comprobaciones) y por qué no se publica directamente.
+- **`docs/MANTENIMIENTO.md` (nuevo, para administradores):**
+  - qué llega solo y qué hacer (Zotero, enlaces, Dependabot, compilación diaria, revisiones anuales);
+  - protección de `main`;
+  - personas y permisos (altas y bajas de editores);
+  - secretos y variables;
+  - cómo deshacer un cambio;
+  - qué hacer si algo deja de funcionar.
+- **`.github/pull_request_template.md`:** lista breve para las PR hechas a mano.
+- **`README.md`:** tabla de documentación por perfil y lista de herramientas actualizada.
+
 ## Fase 5 · Paso 5.5: sincronización con Zotero (18-10-2026)
 
 - **`scripts/sincronizar_zotero.py`:** descarga la biblioteca de grupo 5287048 (API v3, sin tesis, notas ni adjuntos) y reescribe `papers.bib`.
