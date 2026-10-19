@@ -1,0 +1,37 @@
+{%- comment -%}
+  Marca institucional UPM para la cofirma del pie (§11.6).
+  Datos en _data/grupo.yml (upm_brand). Busca el fichero en svg, png o webp:
+    <file>.<ext>      color, para el tema claro
+    <file>-neg.<ext>  negativo, para el tema oscuro (opcional)
+  Si no hay ninguno, muestra el recuadro provisional (t.footer.upm_slot).
+{%- endcomment -%}
+{%- assign mu = site.data.grupo.upm_brand -%}
+{%- assign mu_pos = "" -%}
+{%- assign mu_neg = "" -%}
+{%- assign mu_exts = "svg,png,webp" | split: "," -%}
+{%- for ext in mu_exts -%}
+  {%- if mu_pos == "" -%}
+    {%- assign c = mu.file | append: "." | append: ext -%}
+    {%- assign ok = c | asset_exists -%}
+    {%- if ok -%}{%- assign mu_pos = c -%}{%- endif -%}
+  {%- endif -%}
+  {%- if mu_neg == "" -%}
+    {%- assign c = mu.file | append: "-neg." | append: ext -%}
+    {%- assign ok = c | asset_exists -%}
+    {%- if ok -%}{%- assign mu_neg = c -%}{%- endif -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- if mu_pos == "" and mu_neg != "" -%}{%- assign mu_pos = mu_neg -%}{%- endif -%}
+{%- if mu_pos == "" -%}
+<div class="upm">{{ t.footer.upm_slot }}</div>
+{%- else -%}
+{%- comment -%} width/height reservan el hueco antes de que cargue la imagen (loading=lazy) {%- endcomment -%}
+{%- capture mu_dim -%}width="{{ mu.width }}"{% if mu.height %} height="{{ mu.height }}"{% endif %}{%- endcapture -%}
+<a class="upm-logo" href="{{ mu.url }}">
+  {%- if mu_neg == "" -%}
+  <img src="{{ mu_pos | relative_url }}" alt="{{ mu.name | escape }}" {{ mu_dim }} loading="lazy" decoding="async">
+  {%- else -%}
+  <img class="logo-pos" src="{{ mu_pos | relative_url }}" alt="{{ mu.name | escape }}" {{ mu_dim }} loading="lazy" decoding="async"><img class="logo-neg" src="{{ mu_neg | relative_url }}" alt="{{ mu.name | escape }}" {{ mu_dim }} loading="lazy" decoding="async">
+  {%- endif -%}
+</a>
+{%- endif -%}
