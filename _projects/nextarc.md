@@ -20,7 +20,7 @@ pi:
 coordinator: Mälardalen University
 coordinator_pi: Baran Çürüklü
 partners: '33'
-budget: '€ 27 213 529,50 (UPM: € 485 125,00)'
+budget: € 485 125
 domains:
   - ciudad
 repos:
