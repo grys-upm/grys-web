@@ -25,11 +25,13 @@
 {%- if mu_pos == "" -%}
 <div class="upm">{{ t.footer.upm_slot }}</div>
 {%- else -%}
+{%- comment -%} width/height reservan el hueco antes de que cargue la imagen (loading=lazy) {%- endcomment -%}
+{%- capture mu_dim -%}width="{{ mu.width }}"{% if mu.height %} height="{{ mu.height }}"{% endif %}{%- endcapture -%}
 <a class="upm-logo" href="{{ mu.url }}">
   {%- if mu_neg == "" -%}
-  <img src="{{ mu_pos | relative_url }}" alt="{{ mu.name | escape }}" width="{{ mu.width }}" loading="lazy" decoding="async">
+  <img src="{{ mu_pos | relative_url }}" alt="{{ mu.name | escape }}" {{ mu_dim }} loading="lazy" decoding="async">
   {%- else -%}
-  <img class="logo-pos" src="{{ mu_pos | relative_url }}" alt="{{ mu.name | escape }}" width="{{ mu.width }}" loading="lazy" decoding="async"><img class="logo-neg" src="{{ mu_neg | relative_url }}" alt="{{ mu.name | escape }}" width="{{ mu.width }}" loading="lazy" decoding="async">
+  <img class="logo-pos" src="{{ mu_pos | relative_url }}" alt="{{ mu.name | escape }}" {{ mu_dim }} loading="lazy" decoding="async"><img class="logo-neg" src="{{ mu_neg | relative_url }}" alt="{{ mu.name | escape }}" {{ mu_dim }} loading="lazy" decoding="async">
   {%- endif -%}
 </a>
 {%- endif -%}

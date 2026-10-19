@@ -22,6 +22,9 @@ upm_brand:
   name: Universidad Politécnica de Madrid
   url: https://www.upm.es/
   width: 156   # 0,81 × 192 px del logotipo del grupo
+  # Alto en px a 156 de ancho (= 156 × alto_original / ancho_original del fichero).
+  # Reserva el hueco antes de que cargue la imagen; si se deja vacío, no se pone.
+  height:
 
 links:
   upm:
