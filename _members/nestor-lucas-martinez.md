@@ -6,10 +6,9 @@ position: ppl
 status: current
 since: 2013-01-01
 photo: /assets/img/equipo/nestor-lucas-martinez.webp
+email: nestor.lucas@upm.es
 orcid: 0000-0003-3333-4077
 scholar: t0_ZrjQAAAAJ
-email: nestor.lucas@upm.es
-website: http://humitsec.net/
 portal_upm: https://portalcientifico.upm.es/es/ipublic/researcher/308896
 scopus: '56437328900'
 researcherid: M-5383-2015
@@ -17,11 +16,17 @@ researchgate: Nestor-Lucas-Martinez
 linkedin: https://www.linkedin.com/in/nestor-lucas-martinez
 github: humitsec
 sciprofiles: '91088'
-lines: []
+website: http://humitsec.net/
+lines:
+  - smart
+  - nca
+  - rob
+  - dss
+  - edge
+  - iot
+  - sw
+  - mw
 lang: en
-old_urls:
-- /team/nestor-lucas-martinez/
-traduccion: borrador
 texto_es: |-
   ## Resumen
   **El Dr. Néstor Lucas-Martínez** es **profesor permanente laboral** en el [Departamento de Ingeniería Telemática y Electrónica (DTE)](https://www.etsist.upm.es/escuela/departamentos/DTE) de la [Universidad Politécnica de Madrid (UPM)](https://www.upm.es) e **investigador principal (IP)** de la UPM en el **proyecto Horizonte Europa NexTArc** (*Next-Generation Architectures for Resilient Cyber-Physical Autonomy*). Su investigación se centra en el **middleware adaptativo**, los **sistemas ciberfísicos autónomos** y la **inteligencia distribuida** para infraestructuras de computación resilientes y fiables.
@@ -51,7 +56,12 @@ texto_es: |-
 
 
    **Contacto:** [nestor.lucas@upm.es](mailto:nestor.lucas@upm.es)
+traduccion: revisada
+old_urls:
+  - /team/nestor-lucas-martinez/
+published: true
 ---
+
 ## Summary
 **Dr. Néstor Lucas-Martínez** is an **Associate Professor** at the [Department of Telematic Engineering and Electronics (DTE)](https://www.etsist.upm.es/escuela/departamentos/DTE), [Universidad Politécnica de Madrid (UPM)](https://www.upm.es), and **Principal Investigator (PI)** for UPM in the **Horizon Europe NexTArc Project** (*Next-Generation Architectures for Resilient Cyber-Physical Autonomy*). His research focuses on **adaptive middleware**, **autonomous cyber-physical systems**, and **distributed intelligence** for resilient and trustworthy computing infrastructures.
 
