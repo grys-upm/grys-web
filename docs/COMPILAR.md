@@ -63,6 +63,10 @@ La protección de `main` solo exige el job `build` («Comprobar PR»). Estas otr
 | **Lighthouse** | cada PR que compila | Rendimiento, accesibilidad, buenas prácticas y SEO de 8 páginas representativas (mediana de 3 ejecuciones, móvil simulado). Las páginas están en `lighthouserc.json` | Error si accesibilidad < 95 o SEO < 90. Rendimiento < 80 y buenas prácticas < 90 solo dan aviso. Los informes completos están en el artefacto `informe-lighthouse` |
 | **Enlaces externos** | cada lunes y a mano | Comprueba todos los enlaces externos del sitio | Abre o actualiza la issue «Enlaces rotos» con la lista, y la cierra cuando ya no quedan |
 
+### Protección de `main`
+
+La regla que exige pasar «Comprobar PR» para fusionar está en `.github/rulesets/main.json`. Cómo activarla y qué hace: [MANTENIMIENTO.md](MANTENIMIENTO.md) §2.
+
 ## 4. Si algo falla
 
 En *Actions*, abre la ejecución fallida, despliega el paso en rojo y copia el texto completo del error. Para el paso *Compilar*, copia el registro entero.
@@ -111,8 +115,9 @@ Para Dependabot con las gemas hace falta que **`Gemfile.lock` esté en el reposi
 3. **Añadir el dominio.** Añade el fichero `CNAME` con una sola línea: `grys.etsist.upm.es`.
 4. **Activar el despliegue nuevo.** En *Settings → Pages*, pon *Source: GitHub Actions*. El dominio personalizado se mantiene. Desactiva el despliegue antiguo a `gh-pages` y borra esa rama.
 5. **Retirar las pruebas.** Desactiva Pages en `grys-web` o archiva ese repositorio, y archiva también `grys-web-previews` si la web de producción no va a usar vistas previas. Si las va a usar, mueve el secreto `PREVIEW_DEPLOY_KEY` al repositorio de producción.
-6. **Gestor de contenidos.** En la aplicación OAuth (§8.3), cambia *Homepage URL* si hace falta. `cms.repo` toma el valor de `repository:`, así que el gestor pasa a guardar en el repositorio de producción. Repite los ajustes de §8.1 y §8.2 en ese repositorio.
-7. **Revisar las redirecciones.** Comprueba que las URL antiguas redirigen, por ejemplo `/team/` → `/en/group/team/`.
+6. **Protección de `main`.** Importa `.github/rulesets/main.json` también en el repositorio de producción (MANTENIMIENTO §2).
+7. **Gestor de contenidos.** En la aplicación OAuth (§8.3), cambia *Homepage URL* si hace falta. `cms.repo` toma el valor de `repository:`, así que el gestor pasa a guardar en el repositorio de producción. Repite los ajustes de §8.1 y §8.2 en ese repositorio.
+8. **Revisar las redirecciones.** Comprueba que las URL antiguas redirigen, por ejemplo `/team/` → `/en/group/team/`.
 
 ## 8. Gestor de contenidos (una sola vez)
 

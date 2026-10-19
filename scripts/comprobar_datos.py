@@ -411,6 +411,27 @@ try:
 except Exception as _e:   # nunca bloquea por esto
     warn(f"no se pudieron revisar los formularios de issue: {_e}")
 
+# Protección de main (.github/rulesets/*.json): cada comprobación obligatoria
+# tiene que ser el nombre de un job de pr.yml; si no, ninguna PR se podría fusionar.
+_pr = os.path.join(ROOT, ".github", "workflows", "pr.yml")
+for _rs in sorted(glob.glob(os.path.join(ROOT, ".github", "rulesets", "*.json"))):
+    import json as _json
+    try:
+        _regla = _json.load(open(_rs, encoding="utf-8"))
+    except ValueError as _e:
+        err(f"{rel(_rs)}: JSON no válido: {_e}")
+        continue
+    if not os.path.exists(_pr):
+        continue
+    _jobs = (yaml.safe_load(open(_pr, encoding="utf-8")) or {}).get("jobs") or {}
+    _nombres = {(_j or {}).get("name") or _id for _id, _j in _jobs.items()}
+    for _r in _regla.get("rules") or []:
+        if _r.get("type") == "required_status_checks":
+            for _chk in (_r.get("parameters") or {}).get("required_status_checks") or []:
+                if _chk.get("context") not in _nombres:
+                    err(f"{rel(_rs)}: exige la comprobación «{_chk.get('context')}», que no es ningún job de pr.yml "
+                        f"({', '.join(sorted(_nombres))}): ninguna PR se podría fusionar")
+
 # Referencias cruzadas entre colecciones
 repos_data = load_yaml(os.path.join(ROOT, "_data", "repos.yml")) or []
 repo_names = {r.get("name") for r in repos_data}
