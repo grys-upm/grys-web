@@ -16,7 +16,6 @@ pi:
   - jose-fernan-martinez-ortega
 coordinator: CENTRIA-AMMATTIKORKEAKOULU OY (Finland)
 partners: '36'
-budget: € 27 577 762,50
 domains:
   - campo
 doi: 10.3030/101252360
