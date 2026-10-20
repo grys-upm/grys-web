@@ -3,6 +3,7 @@ given: Melaku Eneayehu
 family: Getnet
 gender: m
 position: predoc
+role: ext
 status: current
 since: 2026-11-01
 photo: /assets/img/equipo/MelakuEneayehuGetnet.webp
