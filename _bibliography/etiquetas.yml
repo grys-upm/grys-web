@@ -235,6 +235,9 @@ sánchezalcónSistemaAyudaSelección2016:
   archivo_upm: '39379'
 sánchezalcónTrustPrivacySolutions2015:
   archivo_upm: '39905'
+tao_multi-agent_2026:
+  project: nextarc
+  lines: dss,nca,rob
 wangEdgeenabledIAMIoTs2025:
   portal_upm: '10267242'
   archivo_upm: '91623'
