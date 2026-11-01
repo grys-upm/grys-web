@@ -49,12 +49,12 @@ jobs:
           fi
       # Este repositorio (solo para el script), desde la rama principal: la
       # referencia de una PR cerrada puede no existir ya.
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         if: steps.clave.outputs.ok == 'true'
         with:
           ref: ${{ github.event.repository.default_branch }}
           sparse-checkout: scripts
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         if: steps.clave.outputs.ok == 'true'
         with:
           repository: ${{ env.PREVIEW_REPO }}
